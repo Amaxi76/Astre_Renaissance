@@ -38,5 +38,22 @@ public class ExempleFormalisme
 
 	// On ne retourne pas le metier, on fait le lien dans le controleur
 	private boolean estMetier ( ) { return this.metier.test ( ); }
-	
+
+
+	/*---------------------------------------*/
+	/*                TOSTRING               */
+	/*---------------------------------------*/
+
+	public String toString ()
+	{
+		String sRet = "";
+
+		sRet = String.format ( "Nom : %-20s - ",                   this.nom                 ) +
+			   String.format ( "Heure Service Contrat : %02d - ",  this.heureServiceContrat ) +
+			   String.format ( "Heure Max Contrat : %02d - ",      this.heureMaxContrat     ) +
+			   String.format ( "Ratio TP : %,.2f",                 this.ratioTP             );
+
+		return sRet;
+	}
+
 }
