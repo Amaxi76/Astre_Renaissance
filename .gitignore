@@ -23,5 +23,9 @@
 hs_err_pid*
 replay_pid*
 
+<<<<<<< HEAD
 .DS_Store
 .*
+=======
+.DS_Store
+>>>>>>> 01e26075b817470ba4fb495d0c2f15bcdc49c26c
