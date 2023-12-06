@@ -46,7 +46,7 @@ public class ExempleFormalisme
 
 
 	/*---------------------------------------*/
-	/*                METHODE                */
+	/*                METHODES               */
 	/*---------------------------------------*/ 
 
 	public String toString ()
