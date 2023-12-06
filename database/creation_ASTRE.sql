@@ -1,5 +1,5 @@
 /*
-	@author Alizéa LEBARON, Clémentin LI, Matéo SA, Maximilien LESTERLIN, Maxime LEMOINE
+	@author Alizéa LEBARON
 	@version 1.1.0 - 06/12/2023 
 	@date 06/12/2023 
 	@description Script de création de la base de données
@@ -7,7 +7,7 @@
 
 /* ---------------------------------------------------- */
 /*          Suppression des tables existantes           */
-/* ---------------------------------------------------- */
+/* ---------------------------------------------------- */ 
 
 DROP TABLE Semestre    CASCADE;
 DROP TABLE Contrat     CASCADE;

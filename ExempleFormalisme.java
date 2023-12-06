@@ -1,3 +1,8 @@
+/** Classe Semestre 
+  * @author : Prénom NOM, ajoutez le votre si vous modifier
+  * @version : 1.0 - 06/12/2023
+  */
+
 public class ExempleFormalisme
 {
 	private static int[] tab;
@@ -17,7 +22,7 @@ public class ExempleFormalisme
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
-	/*---------------------------------------*/
+	/*---------------------------------------*/ 
 
 	private int getArg  ( ) { return this.arg; }
 	private int getArg2 ( ) { return this.arg; }
@@ -41,8 +46,8 @@ public class ExempleFormalisme
 
 
 	/*---------------------------------------*/
-	/*                TOSTRING               */
-	/*---------------------------------------*/
+	/*                METHODE                */
+	/*---------------------------------------*/ 
 
 	public String toString ()
 	{
