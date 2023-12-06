@@ -16,13 +16,25 @@ public class Heure
 		this.coefTd = coefTd;
 	}
 
+	/*---------------------------------------*/
+	/*                GETTEUR                */
+	/*---------------------------------------*/
+
 	public static List<Heure> getHeures ( ) { return Heure.ensHeure;  }
 
 	public String getNom    ( ) { return nom;    }
 	public double getCoefTd ( ) { return coefTd; }
+
+	/*---------------------------------------*/
+	/*                SETTEUR                */
+	/*---------------------------------------*/
 	
 	public void setNom    ( String nom    ) { this.nom    = nom;    }
 	public void setCoefTd ( double coefTd ) { this.coefTd = coefTd; }
+
+	/*---------------------------------------*/
+	/*                METHODES               */
+	/*---------------------------------------*/
 
 	public boolean retirerListe ( )
 	{

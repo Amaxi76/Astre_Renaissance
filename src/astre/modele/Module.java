@@ -15,10 +15,18 @@ public class Module
 		this.libCourt = libCourt;
 	}
 
+	/*---------------------------------------*/
+	/*                GETTEUR                */
+	/*---------------------------------------*/
+
 	public Semestre getSemestre ( ) { return semestre; }
 	public String   getCode     ( ) { return code;     }
 	public String   getLibLong  ( ) { return libLong;  }
 	public String   getLibCourt ( ) { return libCourt; }
+
+	/*---------------------------------------*/
+	/*                SETTEUR                */
+	/*---------------------------------------*/
 
 	public void setSemestre ( Semestre semestre ) { this.semestre = semestre; }
 	public void setCode     ( String   code     ) { this.code     = code;     }

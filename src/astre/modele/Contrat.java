@@ -39,7 +39,7 @@ public class Contrat
 	public void setRatioTP             ( double ratioTP          ) { this.ratioTP             = ratioTP;             }
 
 	/*---------------------------------------*/
-	/*                METHODE                */
+	/*                METHODES               */
 	/*---------------------------------------*/
 
 	public boolean retirerListe ( )
