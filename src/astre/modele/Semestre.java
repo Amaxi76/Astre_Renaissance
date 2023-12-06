@@ -11,7 +11,27 @@ public class Semestre
 	private int nbGroupeTP;
 	private int nbGroupeTD;
 	private int nbEtudiant;
-	private int nbSemestre;
+	private int nbSemaine;
+
+	/*---------------------------------------*/
+	/*             CONSTRUCTEUR              */
+	/*---------------------------------------*/ 
+
+	/**
+	 * @param idSemestre
+	 * @param nbGroupeTP
+	 * @param nbGroupeTD
+	 * @param nbEtudiant
+	 * @param nbSemaine
+	 */
+	public Semestre  (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
+	{
+		this.idSemestre = idSemestre;
+		this.nbGroupeTP = nbGroupeTP;
+		this.nbGroupeTD = nbGroupeTD;
+		this.nbEtudiant = nbEtudiant;
+		this.nbSemaine  = nbSemaine ;
+	}
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
@@ -38,9 +58,9 @@ public class Semestre
 	public int getNbEtudiant ( ) { return nbEtudiant; }
 
 	/**
-	 * @return the nbSemestre
+	 * @return the nbSemaine
 	 */
-	public int getNbSemestre ( ) { return nbSemestre; }
+	public int getNbSemaine ( ) { return nbSemaine; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
@@ -67,10 +87,28 @@ public class Semestre
 	public void setNbEtudiant ( int nbEtudiant ) { this.nbEtudiant = nbEtudiant; }
 
 	/**
-	 * @param nbSemestre the nbSemestre to set
+	 * @param nbSemaine the nbSemaine to set
 	 */
-	public void setNbSemestre ( int nbSemestre ) { this.nbSemestre = nbSemestre; }
+	public void setNbSemaine ( int nbSemaine ) { this.nbSemaine = nbSemaine; }
 
+	/*---------------------------------------*/
+	/*                METHODES               */
+	/*---------------------------------------*/
 
+	/**
+	 * @return descriptif des attributs de semestre
+	 */
+	public String toString ()
+	{
+		String sRet = "";
+
+		sRet = String.format ( "Nom : %-5d - ",                    this.idSemestre ) +
+			   String.format ( "Heure Service Contrat : %02d - ",  this.nbGroupeTD ) +
+			   String.format ( "Heure Max Contrat : %02d - ",      this.nbGroupeTP ) +
+			   String.format ( "Nombre d'étudiant : %02d",         this.nbEtudiant ) +
+			   String.format ( "Nombre de semaine : %02d",         this.nbSemaine  ) ;
+
+		return sRet;
+	}
 	
 }

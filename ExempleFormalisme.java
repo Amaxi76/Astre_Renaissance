@@ -56,7 +56,7 @@ public class ExempleFormalisme
 		sRet = String.format ( "Nom : %-20s - ",                   this.nom                 ) +
 			   String.format ( "Heure Service Contrat : %02d - ",  this.heureServiceContrat ) +
 			   String.format ( "Heure Max Contrat : %02d - ",      this.heureMaxContrat     ) +
-			   String.format ( "Ratio TP : %,.2f",                 this.ratioTP             );
+			   String.format ( "Ratio TP : %,.2f",                 this.ratioTP             ) ;
 
 		return sRet;
 	}
