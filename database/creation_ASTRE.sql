@@ -63,14 +63,17 @@ CREATE TABLE TypeModule
 
 CREATE TABLE ModuleIUT
 (
-   Id_ModuleIUT VARCHAR(5),
-   libLong      VARCHAR(60),
-   libCourt     VARCHAR(15),
-   Id_Semestre  INTEGER    NOT NULL,
-   
+   Id_ModuleIUT  VARCHAR(5) ,
+   libLong       VARCHAR(60) ,
+   libCourt      VARCHAR(15) ,
+   Id_TypeModule INTEGER NOT NULL,
+   Id_Semestre   INTEGER NOT NULL,
+
    PRIMARY KEY(Id_ModuleIUT),
+   FOREIGN KEY(Id_TypeModule) REFERENCES TypeModule(Id_TypeModule),
    FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
 );
+
 
 CREATE TABLE Intervenant
 (
@@ -98,16 +101,15 @@ CREATE TABLE Enseigne
 );
 
 CREATE TABLE Horaire
-(
-   nomHeure      VARCHAR(50),
-   Id_TypeModule INTEGER,
-   Id_ModuleIUT  VARCHAR(5) ,
-   nbHeurePN     INTEGER,
-   nbHeure       INTEGER,
-   nbSemaine     VARCHAR(50) ,
-
-   PRIMARY KEY(nomHeure, Id_TypeModule, Id_ModuleIUT),
+( 
+   nomHeure     VARCHAR(50) ,
+   Id_ModuleIUT VARCHAR(5) ,
+   nbHeurePN    INTEGER,
+   nbHeure      INTEGER,
+   nbSemaine    VARCHAR(50) ,
+   
+   PRIMARY KEY(nomHeure, Id_ModuleIUT),
    FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),
-   FOREIGN KEY(Id_TypeModule) REFERENCES TypeModule(Id_TypeModule),
    FOREIGN KEY(Id_ModuleIUT) REFERENCES ModuleIUT(Id_ModuleIUT)
 );
+
