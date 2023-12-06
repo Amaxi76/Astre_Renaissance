@@ -30,9 +30,9 @@ public class Contrat
 	public double  getRatioTP             ( ) { return ratioTP;             }
 	
 	public void setHeureServiceContrat ( int heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
-	public void setNom                 ( String nom              ) { this.nom = nom;                                 }
-	public void setHeureMaxContrat     ( int heureMaxContrat     ) { this.heureMaxContrat = heureMaxContrat;         }
-	public void setRatioTP             ( double ratioTP          ) { this.ratioTP         = ratioTP;                 }
+	public void setNom                 ( String nom              ) { this.nom                 = nom;                 }
+	public void setHeureMaxContrat     ( int heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
+	public void setRatioTP             ( double ratioTP          ) { this.ratioTP             = ratioTP;             }
 
 	public boolean retirerListe ( )
 	{
@@ -48,7 +48,6 @@ public class Contrat
 		       String.format ( "Heure Service Contrat : %02d - ", this.heureServiceContrat ) +
 		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
 		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             );
-
 	}
 
 	private static void test ( )
