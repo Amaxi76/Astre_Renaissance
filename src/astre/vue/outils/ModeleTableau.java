@@ -1,3 +1,5 @@
+package astre.vue.outils;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
