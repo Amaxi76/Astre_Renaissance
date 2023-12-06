@@ -20,9 +20,9 @@ public class Module
 	public String   getLibLong  ( ) { return libLong;  }
 	public String   getLibCourt ( ) { return libCourt; }
 
-	public void setSemestre (Semestre semestre ) { this.semestre = semestre; }
-	public void setCode     (String   code     ) { this.code     = code;     }
-	public void setLibLong  (String   libLong  ) { this.libLong  = libLong;  }
-	public void setLibCourt (String   libCourt ) { this.libCourt = libCourt; }
+	public void setSemestre ( Semestre semestre ) { this.semestre = semestre; }
+	public void setCode     ( String   code     ) { this.code     = code;     }
+	public void setLibLong  ( String   libLong  ) { this.libLong  = libLong;  }
+	public void setLibCourt ( String   libCourt ) { this.libCourt = libCourt; }
 
 }
