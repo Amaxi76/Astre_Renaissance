@@ -20,15 +20,27 @@ public class Contrat
 		this.ratioTP             = ratioTP;
 	}
 
+	/*---------------------------------------*/
+	/*                GETTEUR                */
+	/*---------------------------------------*/
+
 	public String getNom                 ( ) { return this.nom;                 }
 	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
 	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
 	public double getRatioTP             ( ) { return ratioTP;                  }
 
+	/*---------------------------------------*/
+	/*                SETTEUR                */
+	/*---------------------------------------*/
+
 	public void setHeureServiceContrat ( int heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
 	public void setNom                 ( String nom              ) { this.nom                 = nom;                 }
 	public void setHeureMaxContrat     ( int heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
 	public void setRatioTP             ( double ratioTP          ) { this.ratioTP             = ratioTP;             }
+
+	/*---------------------------------------*/
+	/*                METHODE                */
+	/*---------------------------------------*/
 
 	public boolean retirerListe ( )
 	{
@@ -37,6 +49,7 @@ public class Contrat
 		Contrat.ensContrat.remove ( this );
 		return true;
 	}
+	
 
 	public String toString ( )
 	{
