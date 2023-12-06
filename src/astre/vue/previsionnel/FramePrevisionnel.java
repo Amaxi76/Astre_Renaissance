@@ -31,7 +31,7 @@ public class FramePrevisionnel extends JFrame implements ActionListener
 	/*--Constructeur--*/
 	/*----------------*/
 
-	/** Constructuer de FramePrevisionnel qui crée un panelGraphe et panelAction
+	/** Constructeur de FramePrevisionnel qui crée un panelGraphe et panelAction
 	 * @param ctrl le controleur
 	 * 
 	 */
