@@ -19,13 +19,16 @@ public class ExempleFormalisme
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	private int getArg ( ) { return this.arg; }
+	private int getArg  ( ) { return this.arg; }
+	private int getArg2 ( ) { return this.arg; }
+
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
 	private void setArg ( int valeur ) { this.arg = valeur; }
+
 
 	/*---------------------------------------*/
 	/*                TESTEUR                */
@@ -35,9 +38,5 @@ public class ExempleFormalisme
 
 	// On ne retourne pas le metier, on fait le lien dans le controleur
 	private boolean estMetier ( ) { return this.metier.test ( ); }
-
-	/*---------------------------------------*/
-	/*                TESTEUR                */
-	/*---------------------------------------*/
-
+	
 }
