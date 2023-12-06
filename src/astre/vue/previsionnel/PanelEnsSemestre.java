@@ -20,7 +20,7 @@ public class PanelEnsSemestre extends JTabbedPane
 	{
 		// Configuration
 		this.ctrl = ctrl;
-		this.setPreferredSize ( PanelSelection.DIMENSION_TAB );
+		this.setPreferredSize ( PanelEnsSemestre.DIMENSION_TAB );
 		this.setUI ( new CustomTabbedPaneUI ( ) );
 		this.setTabLayoutPolicy ( JTabbedPane.SCROLL_TAB_LAYOUT );
 
@@ -29,5 +29,10 @@ public class PanelEnsSemestre extends JTabbedPane
 		{
 			this.add ( "S"+cptSemestre, new PanelSemestre ( cptSemestre, this.ctrl ) );
 		}
+	}
+	
+	class CustomTabbedPaneUI extends BasicTabbedPaneUI
+	{
+		//pour changer l'aspect par la suite
 	}
 }

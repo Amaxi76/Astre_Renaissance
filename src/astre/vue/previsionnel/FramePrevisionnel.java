@@ -39,9 +39,11 @@ public class FramePrevisionnel extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		panelPrevisionnel = new JPanel(new BorderLayout());
+		//panelPrevisionnel = new JPanel(new BorderLayout());
 
-		this.add(panelPrevisionnel);
+		//this.add(panelPrevisionnel);
+		
+		this.add ( new PanelPrevisionnel ( this.ctrl ) );
 
 
 		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
