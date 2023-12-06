@@ -1,3 +1,5 @@
+package astre.vue.intervenants;
+
 import javax.swing.*;
 
 /**
