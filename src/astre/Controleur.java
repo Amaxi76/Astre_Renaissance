@@ -8,6 +8,7 @@ public class Controleur
 	
 	public Controleur ( )
 	{
+		//
 		this.ihm = new FrameAccueil ( this );
 	}
 
