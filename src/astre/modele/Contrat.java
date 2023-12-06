@@ -1,13 +1,18 @@
 package astre.modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Contrat
 {
+	private static List<Contrat> ensContrat = new ArrayList<> ( );
+
 	private String nom;
 	private int    heureServiceContrat;
 	private int    heureMaxContrat;
 	private double ratioTP;
 
-	public Contrat(String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP)
+	public Contrat ( String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
 		this.nom                 = nom;
 		this.heureServiceContrat = heureServiceContrat;
@@ -15,10 +20,11 @@ public class Contrat
 		this.ratioTP             = ratioTP;
 	}
 
-	public String getNom (            ) { return nom;     }
-	public void   setNom ( String nom ) { this.nom = nom; }
+	public String getNom                 ( ) { return this.nom;                 }
+	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
+	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
+	public double getRatioTP             ( ) { return ratioTP;                  }
 
-	public int  getHeureServiceContrat (                         ) { return heureServiceContrat;                     }
 	public void setHeureServiceContrat ( int heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
 	public void setNom                 ( String nom              ) { this.nom                 = nom;                 }
 	public void setHeureMaxContrat     ( int heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
@@ -32,8 +38,7 @@ public class Contrat
 		return true;
 	}
 
-
-	public String toString ()
+	public String toString ( )
 	{
 		return String.format ( "Nom : %-20s - "                 , this.nom                 ) +
 		       String.format ( "Heure Service Contrat : %02d - ", this.heureServiceContrat ) +
