@@ -15,7 +15,7 @@ DROP TABLE Heure       CASCADE;
 DROP TABLE TypeModule  CASCADE;
 DROP TABLE ModuleIUT   CASCADE;
 DROP TABLE Intervenant CASCADE;
-DROP TABLE Enseigne    CASCADE;
+DROP TABLE Enseigne    CASCADE; 
 DROP TABLE Horaire     CASCADE;
 
 /* ---------------------------------------------------- */
