@@ -131,7 +131,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 		// }
 		if ( e.getSource ( ) == this.btnIntervenants )
 		{
-			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE ); //Affiche qu'il y a une biffurcation
+			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
 			new FrameAccueil ( this.ctrl );
 		}
 
