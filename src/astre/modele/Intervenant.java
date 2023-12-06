@@ -19,12 +19,20 @@ public class Intervenant
 		this.heureMaximum = heureMaximum;
 	}
 
+	/*---------------------------------------*/
+	/*                GETTEUR                */
+	/*---------------------------------------*/
+
 	public String  getNom          ( ) { return nom;          }
 	public String  getPrenom       ( ) { return prenom;       }
 	public Contrat getStatut       ( ) { return statut;       }
 	public double  getCoefTp       ( ) { return coefTp;       }
 	public int     getService      ( ) { return service;      }
 	public int     getHeureMaximum ( ) { return heureMaximum; }
+
+	/*---------------------------------------*/
+	/*                SETTEUR                */
+	/*---------------------------------------*/
 
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
