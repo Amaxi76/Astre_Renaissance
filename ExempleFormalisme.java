@@ -1,3 +1,8 @@
+/** Classe Semestre 
+  * @author : Prénom NOM, ajoutez le votre si vous modifier
+  * @version : 1.0 - 06/12/2023
+  */
+
 public class ExempleFormalisme
 {
 	private static int[] tab;
@@ -41,7 +46,7 @@ public class ExempleFormalisme
 
 
 	/*---------------------------------------*/
-	/*                TOSTRING               */
+	/*                METHODE                */
 	/*---------------------------------------*/
 
 	public String toString ()
