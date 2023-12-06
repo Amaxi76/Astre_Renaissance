@@ -34,6 +34,14 @@ public class Contrat
 	public void setHeureMaxContrat     ( int heureMaxContrat     ) { this.heureMaxContrat = heureMaxContrat;         }
 	public void setRatioTP             ( double ratioTP          ) { this.ratioTP         = ratioTP;                 }
 
+	public boolean retirerListe ( )
+	{
+		if ( ! Contrat.ensContrat.contains ( this ) ) return false;
+		
+		Contrat.ensContrat.remove ( this );
+		return true;
+	}
+
 	public String toString ( )
 	{
 		return String.format ( "Nom : %-20s - "                 , this.nom                 ) +
@@ -41,6 +49,24 @@ public class Contrat
 		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
 		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             );
 
+	}
+
+	private static void test ( )
+	{
+		System.out.println ( Contrat.ensContrat );
+
+		Contrat c = new Contrat ( "test", 0, 0, 0 );
+
+		System.out.println ( Contrat.ensContrat );
+
+		c.retirerListe ( );
+
+		System.out.println ( Contrat.ensContrat );
+	}
+
+	public static void main(String[] args)
+	{
+		Contrat.test ( );
 	}
 	
 }
