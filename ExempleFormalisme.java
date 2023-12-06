@@ -22,7 +22,7 @@ public class ExempleFormalisme
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
-	/*---------------------------------------*/
+	/*---------------------------------------*/ 
 
 	private int getArg  ( ) { return this.arg; }
 	private int getArg2 ( ) { return this.arg; }
