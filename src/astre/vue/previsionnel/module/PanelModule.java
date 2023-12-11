@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import astre.Controleur;
@@ -43,10 +44,19 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.tfLibLong	= new TextField ();
 		this.tfLibCourt	= new TextField ();
 
+		this.add ( new JLabel ( "Type : " ) );
 		this.add ( this.tfType     );
+
+		this.add ( new JLabel ( "Semestre : " ) );
 		this.add ( this.tfSemestre );
+
+		this.add ( new JLabel ( "Code : "  ) );
 		this.add ( this.tfCode     );
+
+		this.add ( new JLabel ( "Libellé long : " ) );
 		this.add ( this.tfLibLong  );
+
+		this.add ( new JLabel ( "Libellé court : " ) );
 		this.add ( this.tfLibCourt );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );

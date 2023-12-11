@@ -16,7 +16,7 @@ public class BD
 	PreparedStatement ps;
 	private static BD dbInstance;
 	
-	private BD()
+	private BD ( )
 	{
 		try 
 		{
@@ -27,7 +27,9 @@ public class BD
 		catch (ClassNotFoundException e) 
 		{
 			System.out.println(e);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			System.out.println(e);
 		}
 	}
@@ -47,7 +49,8 @@ public class BD
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre>();
 		
-		try {
+		try
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Semestre");
 			while (rs.next()) {
@@ -153,22 +156,26 @@ public class BD
 	{
 		Contrat contrat = null;
 		
-		try {
+		try
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Contrat where Id_Contrat = " + c );
-			while (rs.next()) {
+			while (rs.next())
+			{
 				contrat = new Contrat( rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4) );
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			System.out.println(e);
 		}
 		
 		return contrat;
 	}
 
-	public static void main(String[] args) 
+	public static void main ( String[] args ) 
 	{
-		BD bd = BD.getInstance();
+		BD bd = BD.getInstance ( );
 
 		
 
