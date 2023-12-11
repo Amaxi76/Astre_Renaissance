@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.Image;
 import java.awt.event.*;
 
-/** Page de gestion des intervenants
+/** Menu de l'application
   * @author : Maxime Lemoine
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
-  
+
 public class MenuBarAstre extends JMenuBar implements ActionListener
 {
 	private static final String REPERTOIRE = "../../../../data/images/";
