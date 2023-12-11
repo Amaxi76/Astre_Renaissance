@@ -35,11 +35,6 @@ INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Enseignant chercheur' , 25 , 389, 0.66 ),
 ('Contractuel'          , 85 , 125, 0.66 );
 
-INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
-('De la Fontaine', 'Jean'   , 250, 360, 1 ),
-('Orwell'        , 'Georges',  25, 389, 2 ),
-('Lovecraft'     , 'Howard' ,  85, 125, 2 );
-
 INSERT INTO TypeModule (nom) VALUES
 ('Ressource'),
 ('SAE'      ),
@@ -56,4 +51,11 @@ INSERT INTO ModuleIUT VALUES
 ('S5.01', 'Développement avancé'        , 'dev_avancé'   , 2, 5),
 ('S6.01', 'évolution dune application'  , 'ev_appli'     , 2, 6),
 ('S6.ST', 'Stages'                      , 'stages'       , 3, 6);
+
+INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
+('De la Fontaine', 'Jean'   , 250, 360, 1 ),
+('Orwell'        , 'Georges',  25, 389, 2 ),
+('Lovecraft'     , 'Howard' ,  85, 125, 2 );
+
+INSERT INTO Enseigne ()
 
