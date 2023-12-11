@@ -1,5 +1,7 @@
 package astre.vue;
 
+import astre.vue.previsionnel.FramePrevisionnel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -129,6 +131,11 @@ public class FrameAccueil extends JFrame implements ActionListener
 		// {
 		// 	this.ctrl.initialiserJeu ( );
 		// }
+		if ( e.getSource ( ) == this.btnPrevisionnel )
+		{
+			new FramePrevisionnel ( this.ctrl );
+		}
+		
 		if ( e.getSource ( ) == this.btnIntervenants )
 		{
 			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
