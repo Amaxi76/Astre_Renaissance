@@ -1,17 +1,22 @@
 package astre.vue.previsionnel;
 
+import java.awt.event.*;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.FlowLayout;
+
 import astre.Controleur;
-import javax.swing.*;
-import java.awt.*;
 
 
 /** Classe PanelEnsSemestre
-  * @author : Maximeuuu
+  * @author : Maximeuuu et Amaxi76
   * @version : 1.0 le 11/12/23
   * @date : 06/12/2023
   */
 
-public class PanelSemestre extends JPanel
+public class PanelSemestre extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 	private int        numSemestre;
@@ -25,8 +30,13 @@ public class PanelSemestre extends JPanel
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
 		this.ctrl = ctrl;
+		this.numSemestre = numSemestre;
 
 		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
+
+		/* ----------------------------- */
+		/*    Création des composants    */
+		/* -----------------------    -- */
 
 		this.txtNbGrTD = new JTextField ( );
 		this.txtNbGrTP = new JTextField ( );
@@ -38,6 +48,10 @@ public class PanelSemestre extends JPanel
 		this.nbEtud   .setColumns ( 2 );
 		this.nbSemaine.setColumns ( 2 );
 
+		/* ----------------------------- */
+		/* Positionnement des composants */
+		/* -----------------------    -- */
+
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
 		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
@@ -47,7 +61,20 @@ public class PanelSemestre extends JPanel
 		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
-		
 		this.add ( this.pnlOptionSemestre );
+
+		/* ----------------------------- */
+		/*   Activation des composants   */
+		/* -----------------------    -- */
+
+		this.txtNbGrTD.addActionListener ( this );
+		this.txtNbGrTP.addActionListener ( this );
+		this.nbEtud   .addActionListener ( this );
+		this.nbSemaine.addActionListener ( this );
+	}
+
+	public void actionPerformed ( ActionEvent e )
+	{
+
 	}
 }

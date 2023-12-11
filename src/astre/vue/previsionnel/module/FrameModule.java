@@ -44,7 +44,11 @@ public class FrameModule extends JFrame
 		/* ------------------------- */
 
 		this.add ( new PanelModule  ( this.ctrl ) );
+<<<<<<< HEAD
 
-		this.setVisible               ( true        );
+=======
+		
+>>>>>>> f26d9dcaf3fa98a1e9334a33bc16d8480da1c583
+		this.setVisible ( true );
 	}
 }
