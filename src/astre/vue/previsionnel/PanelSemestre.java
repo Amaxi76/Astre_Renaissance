@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 import astre.vue.outils.Tableau;
+import java.awt.Dimension;
 
 
 /** Classe PanelEnsSemestre
@@ -62,7 +63,9 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 
 		this.tableauEnsembleModule = new Tableau ( this.ctrl.getTableauModule ( ), false );
-
+		this.tableauEnsembleModule.setShowGrid(false);
+		this.tableauEnsembleModule.setIntercellSpacing(new Dimension(0, 0));
+		
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
