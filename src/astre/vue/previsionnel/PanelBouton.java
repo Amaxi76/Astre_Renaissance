@@ -68,6 +68,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		{
 			System.out.println("créerRessource");
 			//((JFrame) (this.getParent())).dispose();
+			this.ctrl.ouvrirFrameModule();
 		}
 	}
 }
