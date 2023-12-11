@@ -5,8 +5,27 @@
 	@description Script d'insertion pour tester notre base'
 */
 
-DELETE FROM Intervenant CASCADE;
+/* ---------------------------------------------------- */
+/*          Suppression des tuples existantes           */
+/* ---------------------------------------------------- */ 
+
+DELETE FROM Semestre    CASCADE;
 DELETE FROM Contrat     CASCADE;
+DELETE FROM Heure       CASCADE;
+DELETE FROM TypeModule  CASCADE;
+DELETE FROM ModuleIUT   CASCADE;
+DELETE FROM Intervenant CASCADE;
+DELETE FROM Enseigne    CASCADE; 
+DELETE FROM Horaire     CASCADE;
+
+/* ---------------------------------------------------- */
+/*                  Création des tuples                 */
+/* ---------------------------------------------------- */
+
+INSERT INTO Semestre (nbGroupeTP, nbGroupeTD, nbEtud, nbSemaine) VALUES
+(6, 3, 84, 15),
+(2, 1, 26, 14),
+(5, 3, 56, 12);
 
 INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Enseignant 2nd degrès', 250, 360, 1.0  ),
