@@ -1,12 +1,15 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import astre.Controleur;
 
@@ -18,11 +21,11 @@ public class PanelModule  extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 
-	private TextField tfType;
-	private TextField tfSemestre;
-	private TextField tfCode;
-	private TextField tfLibLong;
-	private TextField tfLibCourt;
+	private JTextField tfType;
+	private JTextField tfSemestre;
+	private JTextField tfCode;
+	private JTextField tfLibLong;
+	private JTextField tfLibCourt;
 
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
@@ -38,11 +41,11 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.tfType	    = new TextField ("", 10);
-		this.tfSemestre	= new TextField ("", 2);
-		this.tfCode	    = new TextField ("", 5);
-		this.tfLibLong	= new TextField ("", 20);
-		this.tfLibCourt	= new TextField ("", 10);
+		this.tfType	    = new JTextField ("", 10);
+		this.tfSemestre	= new JTextField ("", 2);
+		this.tfCode	    = new JTextField ("", 5);
+		this.tfLibLong	= new JTextField ("", 20);
+		this.tfLibCourt	= new JTextField ("", 10);
 
 		this.add ( new JLabel ( "Type : " ) );
 		this.add ( this.tfType     );
@@ -69,19 +72,52 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.tfType    .setEnabled ( false );
-		this.tfSemestre.setEnabled ( false );
+		this.tfType    .setEnabled ( false  );
+		this.tfType    .setOpaque  ( false );
 
-		this.tfCode        .addActionListener(this);
+		this.tfSemestre.setEnabled ( false  );
+		this.tfSemestre.setOpaque  ( false );
+
+		 this.tfCode.addKeyListener(new KeyListener()
+		 {
+            @Override
+            public void keyTyped(KeyEvent e) { validateTextField(); }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+		 });
 
 		this.btnEnregistrer.addActionListener(this);
 		this.btnAnnuler    .addActionListener(this);
 	}
 
+	private void validateTextField()
+	{
+        String code = this.tfCode.getText();
+
+        if (code.startsWith("R"))
+		{
+            this.tfType.setText("Ressource");
+        }
+
+        if (code.startsWith("S"))
+		{
+            this.tfType.setText("SAE");
+        }
+
+        int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
+
+        if (valSemestre >= 1 && valSemestre <= 6)
+            this.tfSemestre.setText("S" + valSemestre);
+    }
+
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if (e.getSource() == this.tfCode)
+		/*if (e.getSource() == this.tfCode)
 		{
 			String code = this.tfCode.getText();
 	
@@ -101,7 +137,7 @@ public class PanelModule  extends JPanel implements ActionListener
 			{
 				this.tfSemestre.setText("S" + valSemestre);
 			}
-		}
+		}*/
 
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
