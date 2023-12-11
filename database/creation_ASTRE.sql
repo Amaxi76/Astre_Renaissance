@@ -91,12 +91,12 @@ CREATE TABLE Intervenant
 CREATE TABLE Enseigne
 (
    Id_Intervenant INTEGER,
-   nomHeure VARCHAR(50) ,
-   Id_ModuleIUT VARCHAR(5) ,
-   nbSemaine INTEGER,
-   nbGroupe INTEGER,
-   nbHeure INTEGER,
-   commentaire VARCHAR(50) ,
+   nomHeure       VARCHAR(50) ,
+   Id_ModuleIUT   VARCHAR(5) ,
+   nbSemaine      INTEGER,
+   nbGroupe       INTEGER,
+   nbHeure        INTEGER,
+   commentaire    VARCHAR(50) ,
    PRIMARY KEY(Id_Intervenant, nomHeure, Id_ModuleIUT),
    FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
    FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),

@@ -57,5 +57,16 @@ INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
 ('Orwell'        , 'Georges',  25, 389, 2 ),
 ('Lovecraft'     , 'Howard' ,  85, 125, 2 );
 
-INSERT INTO Enseigne ()
+INSERT INTO Heure VALUES
+('TP' , 1   ),
+('TD' , 1   ),
+('CM' , 1.33),
+('REH', 1   ),
+('SAE', 1   ),
+('Tut', 1   );
+
+INSERT INTO Enseigne (Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
+(1, 'TD', 'R5.03', 6, 2, NULL, NULL),
+(1, 'TP', 'R1.01', 8, 1, NULL, NULL),
+
 
