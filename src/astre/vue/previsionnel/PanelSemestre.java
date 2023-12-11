@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 
 import astre.Controleur;
+import astre.vue.outils.Tableau;
 
 
 /** Classe PanelEnsSemestre
@@ -26,6 +27,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 	private JTextField txtNbGrTP;
 	private JTextField nbEtud;
 	private JTextField nbSemaine;
+	
+	private Tableau tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
@@ -47,21 +50,18 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.txtNbGrTP.setColumns ( 2 );
 		this.nbEtud   .setColumns ( 2 );
 		this.nbSemaine.setColumns ( 2 );
+		
+		this.tableauEnsembleModule = new Tableau ( );
 
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 
-		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
-		this.pnlOptionSemestre.add ( this.nbEtud                  );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
-		this.pnlOptionSemestre.add ( this.nbSemaine               );
+		this.placerEnsembleOptionSemestre();
 
 		this.add ( this.pnlOptionSemestre );
+		
+		this.add ( this.tableauEnsembleModule );
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
@@ -72,6 +72,20 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbEtud   .addActionListener ( this );
 		this.nbSemaine.addActionListener ( this );
 	}
+	
+	private void placerEnsembleOptionSemestre ( )
+	{
+		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
+		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
+		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
+		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
+		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
+		this.pnlOptionSemestre.add ( this.nbEtud                  );
+		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
+		this.pnlOptionSemestre.add ( this.nbSemaine               );
+	}
+	
+	
 
 	public void actionPerformed ( ActionEvent e )
 	{

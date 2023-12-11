@@ -5,9 +5,9 @@ import java.awt.Component;
 import javax.swing.table.*;
 
 /** Classe représentant un tableau personnalisable.
- *  @author Matéo et Maxime
+ *  @author Maxime
  *  @version : 1.0 - 11/12/2023
- *  @date : 06/12/2023
+ *  @date : 11/12/2023
 */
 public class Tableau extends JTable
 {
@@ -29,20 +29,7 @@ public class Tableau extends JTable
 		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
 		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
 		this.setDragEnabled ( false );
-	}
-	
-	/**
-	 * Tableau sans titres de colonnes
-	 */
-	public Tableau ( )
-	{
-		//this.modele.addTableModelListener(this);
-		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
-		
-		//Permet au tableau de prendre toute la frame
-		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
-		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
-		this.setDragEnabled ( false );
+
 	}
 	
 	/**
