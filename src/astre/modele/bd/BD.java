@@ -196,6 +196,7 @@ public class BD
 			while (rs.next())
 			{
 				nbModule = rs.getInt(1);
+				System.out.println(nbModule);
 			}
 		}
 		catch (SQLException e)
