@@ -46,6 +46,11 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbEtud    = new JTextField ( );
 		this.nbSemaine = new JTextField ( );
 
+		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( ) );
+		this.txtNbGrTP.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTP ( ) );
+		this.nbEtud   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
+		this.nbSemaine.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbSemaine  ( ) );
+	
 		this.txtNbGrTD.setColumns ( 2 );
 		this.txtNbGrTP.setColumns ( 2 );
 		this.nbEtud   .setColumns ( 2 );
@@ -57,7 +62,15 @@ public class PanelSemestre extends JPanel implements ActionListener
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 
-		this.placerEnsembleOptionSemestre();
+		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
+		this.pnlOptionSemestre.add ( this.txtNbGrTD );
+		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
+		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
+		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
+		this.pnlOptionSemestre.add ( this.nbEtud                  );
+		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
+		this.pnlOptionSemestre.add ( this.nbSemaine               );
+
 		this.add ( this.pnlOptionSemestre );
 		
 		this.add ( this.tableauEnsembleModule );
@@ -75,24 +88,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		System.out.println( this.numSemestre );
 		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
-	
-	private void placerEnsembleOptionSemestre ( )
-	{
-		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
-		this.pnlOptionSemestre.add ( this.nbEtud                  );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
-		this.pnlOptionSemestre.add ( this.nbSemaine               );
-	}
-	
-	
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		System.out.println ( this.ctrl.getSemestre ( this.numSemestre ) );
-		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
 }
