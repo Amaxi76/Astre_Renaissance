@@ -153,6 +153,12 @@ public class FrameAccueil extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
 			new FrameAccueil ( this.ctrl );
 		}
+		
+		if ( e.getSource ( ) == this.btnParametre )
+		{
+			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
+			new FrameAccueil ( this.ctrl );
+		}
 
 		this.cacher ( );
 	}

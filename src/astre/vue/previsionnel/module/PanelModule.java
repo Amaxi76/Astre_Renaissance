@@ -38,11 +38,11 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.tfType	    = new TextField ();
-		this.tfSemestre	= new TextField ();
-		this.tfCode	    = new TextField ();
-		this.tfLibLong	= new TextField ();
-		this.tfLibCourt	= new TextField ();
+		this.tfType	    = new TextField ("", 10);
+		this.tfSemestre	= new TextField ("", 2);
+		this.tfCode	    = new TextField ("", 5);
+		this.tfLibLong	= new TextField ("", 20);
+		this.tfLibCourt	= new TextField ("", 10);
 
 		this.add ( new JLabel ( "Type : " ) );
 		this.add ( this.tfType     );
