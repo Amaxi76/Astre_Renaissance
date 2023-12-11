@@ -1,11 +1,13 @@
 package astre.vue.previsionnel;
 
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
 
 import astre.Controleur;
 import astre.vue.outils.Tableau;
@@ -34,6 +36,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 	{
 		this.ctrl = ctrl;
 		this.numSemestre = numSemestre;
+
+		this.setLayout ( new BorderLayout ( ) );
 
 		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
 
@@ -71,8 +75,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
-		this.add ( this.pnlOptionSemestre );
-		this.add ( this.tableauEnsembleModule );
+		this.add ( this.pnlOptionSemestre     , BorderLayout.NORTH );
+		this.add ( this.tableauEnsembleModule , BorderLayout.SOUTH );
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
@@ -82,7 +86,6 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.txtNbGrTP.addActionListener ( this );
 		this.nbEtud   .addActionListener ( this );
 		this.nbSemaine.addActionListener ( this );
-
 	}
 
 	public void actionPerformed ( ActionEvent e )

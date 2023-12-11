@@ -6,6 +6,8 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
+	//TODO: : Il n'y a pas les heures du PN pour TD / TP / CM
+
 import java.util.Map;
 import java.util.HashMap;
 
