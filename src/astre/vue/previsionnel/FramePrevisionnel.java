@@ -1,5 +1,10 @@
 package astre.vue.previsionnel;
 
+/** Classe FramePrevisionnel
+  * @author : Clémentin Ly
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
