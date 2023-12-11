@@ -2,7 +2,8 @@ package astre.modele;
 
 /** Classe Semestre 
   * @author : Alizéa LEBARON
-  * @version : 1.0 - jj/mm/aaaa (Sauf avec monsieur Seguin ou aaaa-mm-jj)
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
   */
 
 public class Semestre
@@ -24,7 +25,7 @@ public class Semestre
 	 * @param nbEtudiant
 	 * @param nbSemaine
 	 */
-	public Semestre  (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
+	Semestre  (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
 	{
 		this.idSemestre = idSemestre;
 		this.nbGroupeTP = nbGroupeTP;
@@ -40,27 +41,27 @@ public class Semestre
 	/**
 	 * @return the idSemestre
 	 */
-	public int getIdSemestre ( ) { return idSemestre; }
+	public int getIdSemestre ( ) { return this.idSemestre; }
 
 	/**
 	 * @return the nbGroupeTP
 	 */
-	public int getNbGroupeTP ( ) { return nbGroupeTP; }
+	public int getNbGroupeTP ( ) { return this.nbGroupeTP; }
 
 	/**
 	 * @return the nbGroupeTD
 	 */
-	public int getNbGroupeTD ( ) { return nbGroupeTD; }
+	public int getNbGroupeTD ( ) { return this.nbGroupeTD; }
 
 	/**
 	 * @return the nbEtudiant
 	 */
-	public int getNbEtudiant ( ) { return nbEtudiant; }
+	public int getNbEtudiant ( ) { return this.nbEtudiant; }
 
 	/**
 	 * @return the nbSemaine
 	 */
-	public int getNbSemaine ( ) { return nbSemaine; }
+	public int getNbSemaine ( ) { return this.nbSemaine; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
@@ -102,11 +103,11 @@ public class Semestre
 	{
 		String sRet = "";
 
-		sRet = String.format ( "Nom : %-5d - ",                    this.idSemestre ) +
-			   String.format ( "Heure Service Contrat : %02d - ",  this.nbGroupeTD ) +
-			   String.format ( "Heure Max Contrat : %02d - ",      this.nbGroupeTP ) +
-			   String.format ( "Nombre d'étudiant : %02d",         this.nbEtudiant ) +
-			   String.format ( "Nombre de semaine : %02d",         this.nbSemaine  ) ;
+		sRet = String.format ( "IdSemestre        : %-5d - ",  this.idSemestre ) +
+			   String.format ( "Nombre groupe TD  : %02d - ",  this.nbGroupeTD ) +
+			   String.format ( "Nombre groupe TP  : %02d - ",  this.nbGroupeTP ) +
+			   String.format ( "Nombre d'étudiant : %02d",     this.nbEtudiant ) +
+			   String.format ( "Nombre de semaine : %02d",     this.nbSemaine  ) ;
 
 		return sRet;
 	}

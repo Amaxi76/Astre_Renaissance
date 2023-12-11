@@ -1,21 +1,20 @@
-// @author : Maximilien Lesterlin
 package astre.modele;
 
-import java.util.ArrayList;
-import java.util.List;
+/** Classe SAE
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
 
 public class Sae extends Module
 {
-	private List<Heure> ensHeure;
-	
+
 	public Sae ( Semestre semestre, String code, String libLong, String libCourt )
 	{
 		super ( semestre, code, libLong, libCourt );
 
-		this.ensHeure = new ArrayList<> ( );
-
 		for ( Heure h : Heure.getHeures ( ) )
 			if ( h.getNom ( ).equals ( "SAE" ) || h.getNom ( ).equals ( "HP" ) )
-				this.ensHeure.add ( h );
+				super.hsHeure.put ( h, 0 );
 	}
 }

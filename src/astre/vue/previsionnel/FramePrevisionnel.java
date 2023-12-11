@@ -1,11 +1,14 @@
 package astre.vue.previsionnel;
 
-import java.awt.*;
+/** Classe FramePrevisionnel
+  * @author : Clémentin Ly
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
+import java.awt.BorderLayout;
 
 import astre.Controleur;
 
@@ -39,11 +42,10 @@ public class FramePrevisionnel extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		//panelPrevisionnel = new JPanel(new BorderLayout());
+		this.setLayout( new BorderLayout ( ) );
 
-		//this.add(panelPrevisionnel);
-		
-		this.add ( new PanelPrevisionnel ( this.ctrl ) );
+		this.add ( new PanelEnsSemestre  ( this.ctrl ), BorderLayout.CENTER );
+		this.add ( new PanelBouton ( this.ctrl ), BorderLayout.SOUTH );
 
 
 		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );

@@ -7,8 +7,10 @@ import java.awt.*;
 
 /** Classe PanelEnsSemestre
   * @author : Maximeuuu
-  * @version : 1.0 le 6/12/23
+  * @version : 1.0 le 11/12/23
+  * @date : 06/12/2023
   */
+
 public class PanelSemestre extends JPanel
 {
 	private Controleur ctrl;

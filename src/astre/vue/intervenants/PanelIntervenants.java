@@ -1,5 +1,11 @@
 package astre.vue.intervenants;
 
+/** Page de gestion des intervenants
+  * @author : Matéo Sa
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import astre.vue.outils.*;
 
 import javax.swing.*;

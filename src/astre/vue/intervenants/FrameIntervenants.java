@@ -1,13 +1,14 @@
 package astre.vue.intervenants;
 
-import javax.swing.*;
-import java.awt.event.*;
+/** Page de gestion des intervenants
+  * @author : Matéo Sa
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
 
-/**
- * Page de gestion des intervenants.
- * @author Matéo
- */
-public class FrameIntervenants extends JFrame implements KeyListener
+import javax.swing.*;
+
+public class FrameIntervenants extends JFrame
 {
 	private PanelIntervenants panel;
 	

@@ -1,5 +1,11 @@
 package astre.modele;
 
+/** Classe Contrat 
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +33,16 @@ public class Contrat
 	public String getNom                 ( ) { return this.nom;                 }
 	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
 	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
-	public double getRatioTP             ( ) { return ratioTP;                  }
+	public double getRatioTP             ( ) { return this.ratioTP;             }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	public void setHeureServiceContrat ( int heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
-	public void setNom                 ( String nom              ) { this.nom                 = nom;                 }
-	public void setHeureMaxContrat     ( int heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
-	public void setRatioTP             ( double ratioTP          ) { this.ratioTP             = ratioTP;             }
+	public void setHeureServiceContrat ( int    heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
+	public void setNom                 ( String nom                 ) { this.nom                 = nom;                 }
+	public void setHeureMaxContrat     ( int    heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
+	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
@@ -73,7 +79,7 @@ public class Contrat
 		System.out.println ( Contrat.ensContrat );
 	}
 
-	public static void main(String[] args)
+	public static void main ( String[] args )
 	{
 		Contrat.test ( );
 	}

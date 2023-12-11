@@ -1,14 +1,25 @@
 package astre.modele;
 
+/** Classe Module 
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
+import java.util.HashMap;
+
 public class Module
 {
-	private Semestre semestre;
-	private String   code;
-	private String   libLong;
-	private String   libCourt;
+	HashMap<Heure, Integer> hsHeure;
+	
+	Semestre semestre;
+	String   code;
+	String   libLong;
+	String   libCourt;
 
 	public Module ( Semestre semestre, String code, String libLong, String libCourt )
 	{
+		this.hsHeure  = new HashMap<> ( );
 		this.semestre = semestre;
 		this.code     = code;
 		this.libLong  = libLong;
@@ -19,10 +30,11 @@ public class Module
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Semestre getSemestre ( ) { return semestre; }
-	public String   getCode     ( ) { return code;     }
-	public String   getLibLong  ( ) { return libLong;  }
-	public String   getLibCourt ( ) { return libCourt; }
+	public Semestre                getSemestre ( ) { return this.semestre; }
+	public String                  getCode     ( ) { return this.code;     }
+	public String                  getLibLong  ( ) { return this.libLong;  }
+	public String                  getLibCourt ( ) { return this.libCourt; }
+	public HashMap<Heure, Integer> getHsHeure  ( ) { return this.hsHeure;  }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */

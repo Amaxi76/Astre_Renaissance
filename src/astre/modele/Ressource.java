@@ -1,28 +1,26 @@
-// @author : Maximilien Lesterlin
 package astre.modele;
 
-import java.util.ArrayList;
-import java.util.List;
+/** Classe Ressource 
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
 
 public class Ressource extends Module
 {
-	private List<Heure> ensHeure;
-	
 	public Ressource ( Semestre semestre, String code, String libLong, String libCourt )
 	{
 		super ( semestre, code, libLong, libCourt );
-
-		this.ensHeure = new ArrayList<> ( );
 
 		for ( Heure h : Heure.getHeures ( ) )
 		{
 			switch ( h.getNom ( ) )
 			{
-				case "CM": this.ensHeure.add ( h );
-				case "TD": this.ensHeure.add ( h );
-				case "TP": this.ensHeure.add ( h );
-				case "PN": this.ensHeure.add ( h );
-				case "HP": this.ensHeure.add ( h );
+				case "CM": super.hsHeure.put ( h, 0 );
+				case "TD": super.hsHeure.put ( h, 0 );
+				case "TP": super.hsHeure.put ( h, 0 );
+				case "PN": super.hsHeure.put ( h, 0 );
+				case "HP": super.hsHeure.put ( h, 0 );
 				default:
 					break;
 			}
