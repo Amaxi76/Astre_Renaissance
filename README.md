@@ -8,7 +8,10 @@
 ## Membres du groupe 
 
 	Groupe 7 :
+	- Alizéa     Lebaron
+	- Maxime     Lemoine
 	- Maximilien Lesterlin
-	- Matéo Sa
-	- Clémentin Ly
-	-
+	- Clémentin  Ly
+	- Matéo      Sa
+	
+	
