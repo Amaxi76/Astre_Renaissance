@@ -49,8 +49,6 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.add ( this.btnModifier       );
 		this.add ( this.btnSupprimer      );
 
-		this.add( this );
-
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
