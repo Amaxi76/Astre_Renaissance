@@ -81,12 +81,25 @@ public class PanelModule  extends JPanel implements ActionListener
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource( ) == this.tfCode )
+		if (e.getSource() == this.tfCode)
 		{
-			if( this.tfCode.getText().equals("R1.01") )
+			String code = this.tfCode.getText();
+	
+			if (code.startsWith("R"))
 			{
-				this.tfType    .setText ( "Ressource" );
-				this.tfSemestre.setText ( "S1"        );
+				this.tfType.setText("Ressource");
+			}
+
+			if (code.startsWith("S"))
+			{
+				this.tfType.setText("SAE");
+			}
+
+			int valSemestre = Character.getNumericValue(code.charAt(1));
+
+			if (valSemestre >= 1 && valSemestre <= 6)
+			{
+				this.tfSemestre.setText("S" + valSemestre);
 			}
 		}
 
