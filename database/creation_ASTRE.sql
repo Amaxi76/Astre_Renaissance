@@ -34,7 +34,7 @@ CREATE TABLE Semestre
 );
 
 CREATE TABLE Contrat
-(
+( 
    Id_Contrat      SERIAL,
    nomContrat      VARCHAR(50)  NOT NULL,
    hServiceContrat INTEGER,
