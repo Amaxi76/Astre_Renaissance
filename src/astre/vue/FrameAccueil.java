@@ -7,6 +7,7 @@ package astre.vue;
   */
 
 import astre.vue.previsionnel.FramePrevisionnel;
+import astre.vue.intervenants.FrameIntervenants;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -143,6 +144,17 @@ public class FrameAccueil extends JFrame implements ActionListener
 		}
 		
 		if ( e.getSource ( ) == this.btnIntervenants )
+		{
+			new FrameIntervenants ( this.ctrl );
+		}
+		
+		if ( e.getSource ( ) == this.btnParametre )
+		{
+			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
+			new FrameAccueil ( this.ctrl );
+		}
+		
+		if ( e.getSource ( ) == this.btnParametre )
 		{
 			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
 			new FrameAccueil ( this.ctrl );

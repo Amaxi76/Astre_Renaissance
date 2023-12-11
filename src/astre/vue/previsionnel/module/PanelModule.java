@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import astre.Controleur;
@@ -37,16 +38,25 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.tfType	    = new TextField ("Ressource");
-		this.tfSemestre	= new TextField ("S1");
-		this.tfCode	    = new TextField ();
-		this.tfLibLong	= new TextField ();
-		this.tfLibCourt	= new TextField ();
+		this.tfType	    = new TextField ("", 10);
+		this.tfSemestre	= new TextField ("", 2);
+		this.tfCode	    = new TextField ("", 5);
+		this.tfLibLong	= new TextField ("", 20);
+		this.tfLibCourt	= new TextField ("", 10);
 
+		this.add ( new JLabel ( "Type : " ) );
 		this.add ( this.tfType     );
+
+		this.add ( new JLabel ( "Semestre : " ) );
 		this.add ( this.tfSemestre );
+
+		this.add ( new JLabel ( "Code : "  ) );
 		this.add ( this.tfCode     );
+
+		this.add ( new JLabel ( "Libellé long : " ) );
 		this.add ( this.tfLibLong  );
+
+		this.add ( new JLabel ( "Libellé court : " ) );
 		this.add ( this.tfLibCourt );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
@@ -59,6 +69,11 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Activation des composants */
 		/* ------------------------- */
 
+		this.tfType    .setEnabled ( false );
+		this.tfSemestre.setEnabled ( false );
+
+		this.tfCode        .addActionListener(this);
+
 		this.btnEnregistrer.addActionListener(this);
 		this.btnAnnuler    .addActionListener(this);
 	}
@@ -66,6 +81,15 @@ public class PanelModule  extends JPanel implements ActionListener
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
+		if ( e.getSource( ) == this.tfCode )
+		{
+			if( this.tfCode.getText().equals("R1.01") )
+			{
+				this.tfType    .setText ( "Ressource" );
+				this.tfSemestre.setText ( "S1"        );
+			}
+		}
+
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			System.out.println("Enregistrer");

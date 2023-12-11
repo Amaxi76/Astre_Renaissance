@@ -6,43 +6,41 @@ package astre.vue.intervenants;
   * @date : 06/12/2023
   */
 
+import astre.Controleur;
 import javax.swing.*;
 import java.awt.event.*;
 
 public class FrameIntervenants extends JFrame implements KeyListener
 {
 	private PanelIntervenants panel;
+	private Controleur        ctrl;
 	
-	public FrameIntervenants ( )
+	public FrameIntervenants ( Controleur ctrl )
 	{
+		this.ctrl = ctrl;
 		this.panel = new PanelIntervenants();
 		
 		this.setTitle ( "Intervenants" );
 		this.setSize ( 1000,500 );
 		
-		this.add(this.panel );
+		this.add ( this.panel );
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+		this.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE ) ;
+		this.setVisible ( true );
 		
-		this.requestFocus();
+		this.requestFocus ( );
 	}
 	
-	public static void main(String[] a)
+	public void keyPressed​ ( KeyEvent e )
 	{
-		new FrameIntervenants();
+		System.out.println ( "test" );
 	}
 	
-	public void keyPressed​(KeyEvent e)
-	{
-		System.out.println("test");
-	}
-	
-	public void keyReleased​(KeyEvent e)
+	public void keyReleased​ ( KeyEvent e )
 	{
 		
 	}
-	public void keyTyped(KeyEvent e)
+	public void keyTyped ( KeyEvent e )
 	{
 		
 	}

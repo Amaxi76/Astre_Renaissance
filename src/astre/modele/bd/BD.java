@@ -16,7 +16,7 @@ public class BD
 	PreparedStatement ps;
 	private static BD dbInstance;
 	
-	private BD()
+	private BD ( )
 	{
 		try 
 		{
@@ -27,7 +27,9 @@ public class BD
 		catch (ClassNotFoundException e) 
 		{
 			System.out.println(e);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			System.out.println(e);
 		}
 	}
@@ -47,9 +49,10 @@ public class BD
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre>();
 		
-		try {
+		try
+		{
 			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select * from Semestre");
+			ResultSet rs = st.executeQuery("SELECT * FROM Semestre");
 			while (rs.next()) {
 				lst.add( new Semestre( rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5) ) );
 			}
@@ -66,7 +69,7 @@ public class BD
 		
 		try {
 			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select * from Contrat");
+			ResultSet rs = st.executeQuery("SELECT * FROM Contrat");
 			while (rs.next()) {
 				lst.add( new Contrat( rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4) ) );
 			}
@@ -153,24 +156,33 @@ public class BD
 	{
 		Contrat contrat = null;
 		
-		try {
+		try
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Contrat where Id_Contrat = " + c );
-			while (rs.next()) {
+			while (rs.next())
+			{
 				contrat = new Contrat( rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4) );
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			System.out.println(e);
 		}
 		
 		return contrat;
 	}
 
-	public static void main(String[] args) 
+	public static void main ( String[] args ) 
 	{
-		BD bd = BD.getInstance();
+		BD bd = BD.getInstance ( );
 
-		
+		ArrayList<Intervenant> test = bd.getIntervenants();
+
+		for(Intervenant i : test)
+		{
+			System.out.println(i.toString() );
+		}
 
 	}
 }
