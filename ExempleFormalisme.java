@@ -1,3 +1,5 @@
+package formalisme;
+
 /** Classe NomDeLaClasse
   * @author : Prénom NOM, ajoutez le votre si vous modifier
   * @version : 1.0 - 06/12/2023 (Dernière date de modification)
