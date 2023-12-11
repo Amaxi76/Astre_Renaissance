@@ -46,7 +46,7 @@ public class FrameModule extends JFrame
 		this.add ( new PanelModule  ( this.ctrl ) );
 
 
-		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
+		
 		this.setVisible               ( true        );
 	}
 }

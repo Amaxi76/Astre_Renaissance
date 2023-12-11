@@ -1,8 +1,13 @@
 package astre.vue.previsionnel;
 
+import java.awt.event.*;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.FlowLayout;
+
 import astre.Controleur;
-import javax.swing.*;
-import java.awt.*;
 
 
 /** Classe PanelEnsSemestre
@@ -11,7 +16,7 @@ import java.awt.*;
   * @date : 06/12/2023
   */
 
-public class PanelSemestre extends JPanel
+public class PanelSemestre extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 	private int        numSemestre;
@@ -47,7 +52,16 @@ public class PanelSemestre extends JPanel
 		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
-		
 		this.add ( this.pnlOptionSemestre );
+
+		this.txtNbGrTD.addActionListener ( this );
+		this.txtNbGrTP.addActionListener ( this );
+		this.nbEtud   .addActionListener ( this );
+		this.nbSemaine.addActionListener ( this );
+	}
+
+	public void actionPerformed ( ActionEvent e )
+	{
+
 	}
 }
