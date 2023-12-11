@@ -34,7 +34,7 @@ CREATE TABLE Semestre
 );
 
 CREATE TABLE Contrat
-(
+( 
    Id_Contrat      SERIAL,
    nomContrat      VARCHAR(50)  NOT NULL,
    hServiceContrat INTEGER,
@@ -80,8 +80,6 @@ CREATE TABLE Intervenant
    Id_Intervenant SERIAL,
    nomInter       VARCHAR(50)  NOT NULL,
    prenom         VARCHAR(50)  NOT NULL,
-   categorie      VARCHAR(50)  NOT NULL,
-   coeffTP        DOUBLE PRECISION,
    hService       INTEGER      NOT NULL,
    hMax           INTEGER      NOT NULL,
    Id_Contrat     INTEGER      NOT NULL,
