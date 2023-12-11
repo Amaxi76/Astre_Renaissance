@@ -1,6 +1,6 @@
 package astre.modele.bd;
 
-/** Page d'insertion de la base de données
+/** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
@@ -45,8 +45,9 @@ public class BD
 	
 	
 	/*---------------------------------------*/
-	/*                RECUP GENERALE         */
+	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
+
 	public ArrayList<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
@@ -140,7 +141,7 @@ public class BD
 	}*/
 	
 	/*---------------------------------------*/
-	/*                RECUP UNITAIRE         */
+	/*             RECUP UNITAIRE            */
 	/*---------------------------------------*/
 	public Semestre getSemestre ( int c )
 	{
@@ -182,7 +183,7 @@ public class BD
 
 
 	/*---------------------------------------*/
-	/*                RECUP TABLO            */
+	/*              RECUP TABLO              */
 	/*---------------------------------------*/
 
 	public Object[][] getModulesTableau()
