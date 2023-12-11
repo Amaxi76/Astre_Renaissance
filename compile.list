@@ -1,5 +1,7 @@
 src/astre/Controleur.java
 
+src/astre/modele/bd/BD.java
+
 src/astre/modele/Contrat.java
 src/astre/modele/Heure.java
 src/astre/modele/Intervenant.java

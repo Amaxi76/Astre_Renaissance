@@ -38,8 +38,8 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.tfType	    = new TextField ("Ressource");
-		this.tfSemestre	= new TextField ("S1");
+		this.tfType	    = new TextField ();
+		this.tfSemestre	= new TextField ();
 		this.tfCode	    = new TextField ();
 		this.tfLibLong	= new TextField ();
 		this.tfLibCourt	= new TextField ();
@@ -68,6 +68,16 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
+
+		this.tfType    .setEnabled ( false );
+		this.tfSemestre.setEnabled ( false );
+
+		if( this.tfCode.getText().equals("R1") )
+		{
+			this.tfType    .setText ( "Ressource" );
+			this.tfSemestre.setText ( "S1"        );
+		}
+
 
 		this.btnEnregistrer.addActionListener(this);
 		this.btnAnnuler    .addActionListener(this);
