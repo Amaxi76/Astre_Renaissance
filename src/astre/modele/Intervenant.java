@@ -6,7 +6,7 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
-public class Intervenantrgrgehhtt
+public class Intervenant
 {
 	private String  nom;
 	private String  prenom;
