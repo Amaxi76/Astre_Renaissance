@@ -34,6 +34,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
 
+		/* ----------------------------- */
+		/*    Création des composants    */
+		/* -----------------------    -- */
+
 		this.txtNbGrTD = new JTextField ( );
 		this.txtNbGrTP = new JTextField ( );
 		this.nbEtud    = new JTextField ( );
@@ -43,6 +47,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.txtNbGrTP.setColumns ( 2 );
 		this.nbEtud   .setColumns ( 2 );
 		this.nbSemaine.setColumns ( 2 );
+
+		/* ----------------------------- */
+		/* Positionnement des composants */
+		/* -----------------------    -- */
 
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
 		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
@@ -54,6 +62,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
 		this.add ( this.pnlOptionSemestre );
+
+		/* ----------------------------- */
+		/*   Activation des composants   */
+		/* -----------------------    -- */
 
 		this.txtNbGrTD.addActionListener ( this );
 		this.txtNbGrTP.addActionListener ( this );
