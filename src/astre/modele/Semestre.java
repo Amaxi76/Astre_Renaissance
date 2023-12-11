@@ -25,7 +25,7 @@ public class Semestre
 	 * @param nbEtudiant
 	 * @param nbSemaine
 	 */
-	Semestre ( int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
+	public Semestre ( int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
 	{
 		this.idSemestre = idSemestre;
 		this.nbGroupeTP = nbGroupeTP;
