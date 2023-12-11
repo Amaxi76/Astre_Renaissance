@@ -42,6 +42,15 @@ public class Controleur
 		//return this.bd.getModulesTableau();
 	}
 
+	public Object[][] getTableauIntervenant ( )
+	{
+		//à remplacer par une commande de BD
+		//Object[][] tableau = { {"R1.01", "Initia", "437/465", "V"}, {"R2.02", "Dev", "374/374", "V"} };
+		//return tableau;
+		
+		return this.bd.getIntervenantsTableau();
+	}
+
 	public static void main ( String[] args )
 	{
 		new Controleur ( );
