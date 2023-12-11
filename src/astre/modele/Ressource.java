@@ -14,15 +14,11 @@ public class Ressource extends Module
 
 		for ( Heure h : Heure.getHeures ( ) )
 		{
-			switch ( h.getNom ( ) )
+			if ( h.getNom ( ).equals ( "CM" ) || h.getNom ( ).equals ( "TD" ) ||
+			     h.getNom ( ).equals ( "TP" ) || h.getNom ( ).equals ( "HP" )    )
 			{
-				case "CM": super.hsHeure.put ( h, 0 );
-				case "TD": super.hsHeure.put ( h, 0 );
-				case "TP": super.hsHeure.put ( h, 0 );
-				case "PN": super.hsHeure.put ( h, 0 );
-				case "HP": super.hsHeure.put ( h, 0 );
-				default:
-					break;
+				super.hsHeuresPn       .put ( h, 0 );
+				super.hsHeuresRepariees.put ( h, 0 );
 			}
 		}
 	}
