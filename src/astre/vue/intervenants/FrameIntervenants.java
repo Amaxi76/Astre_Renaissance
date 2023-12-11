@@ -2,6 +2,7 @@ package astre.vue.intervenants;
 
 import javax.swing.*;
 
+
 /**
  * Page de gestion des intervenants.
  * @author Matéo

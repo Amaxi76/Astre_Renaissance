@@ -1,6 +1,6 @@
 package astre.vue.intervenants;
 
-import astre.outils.*;
+import astre.vue.outils.*;
 
 import javax.swing.*;
 import java.awt.event.*;
