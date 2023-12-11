@@ -1,4 +1,9 @@
-// @author : Maximilien Lesterlin
+/** Classe Stage 
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 package astre.modele;
 
 public class Stage extends Module
