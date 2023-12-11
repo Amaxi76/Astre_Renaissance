@@ -1,5 +1,11 @@
 package astre.modele;
 
+/** Classe Module 
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import java.util.HashMap;
 
 public class Module
