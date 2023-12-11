@@ -56,7 +56,6 @@ public class Intervenant
 
 		sRet = String.format ( "Nom               : %20s - ",  this.nom           ) +
 			   String.format ( "Prénom            : %20s - ",  this.prenom        ) +
-			   String.format ( "Statut            : %50d - ",  this.statut        ) +
 			   String.format ( "Service           : %3d  - ",  this.service       ) +
 			   String.format ( "Heure Max         : %3d  - ",  this.heureMaximum  ) ;
 
