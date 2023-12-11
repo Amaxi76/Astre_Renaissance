@@ -13,13 +13,17 @@ public class Contrat
 {
 	private static List<Contrat> ensContrat = new ArrayList<> ( );
 
+	private int    id;
+
+
 	private String nom;
 	private int    heureServiceContrat;
 	private int    heureMaxContrat;
 	private double ratioTP;
 
-	public Contrat ( String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
+	public Contrat ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
+		this.id                  = id;
 		this.nom                 = nom;
 		this.heureServiceContrat = heureServiceContrat;
 		this.heureMaxContrat     = heureMaxContrat;
@@ -30,6 +34,7 @@ public class Contrat
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	public int    getId                  ( ) { return this.id;                  }
 	public String getNom                 ( ) { return this.nom;                 }
 	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
 	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
@@ -43,6 +48,7 @@ public class Contrat
 	public void setNom                 ( String nom                 ) { this.nom                 = nom;                 }
 	public void setHeureMaxContrat     ( int    heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
 	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
+	public void setId                  ( int    id                  ) { this.id                  = id;                  }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
@@ -70,7 +76,7 @@ public class Contrat
 	{
 		System.out.println ( Contrat.ensContrat );
 
-		Contrat c = new Contrat ( "test", 0, 0, 0 );
+		Contrat c = new Contrat (1, "test", 0, 0, 0 );
 
 		System.out.println ( Contrat.ensContrat );
 

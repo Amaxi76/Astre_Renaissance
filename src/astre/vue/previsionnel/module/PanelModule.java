@@ -21,11 +21,11 @@ public class PanelModule  extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 
-	private JTextField tfType;
-	private JTextField tfSemestre;
-	private JTextField tfCode;
-	private JTextField tfLibLong;
-	private JTextField tfLibCourt;
+	private JLabel     lblType;
+	private JLabel     lblSemestre;
+	private JTextField txtCode;
+	private JTextField txtLibLong;
+	private JTextField txtLibCourt;
 
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
@@ -41,26 +41,26 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.tfType	    = new JTextField ("", 10);
-		this.tfSemestre	= new JTextField ("", 2);
-		this.tfCode	    = new JTextField ("", 5);
-		this.tfLibLong	= new JTextField ("", 20);
-		this.tfLibCourt	= new JTextField ("", 10);
+		this.lblType	 = new JLabel ();
+		this.lblSemestre = new JLabel ();
+		this.txtCode	 = new JTextField ("", 5);
+		this.txtLibLong	 = new JTextField ("", 20);
+		this.txtLibCourt = new JTextField ("", 10);
 
 		this.add ( new JLabel ( "Type : " ) );
-		this.add ( this.tfType     );
+		this.add ( this.lblType     );
 
 		this.add ( new JLabel ( "Semestre : " ) );
-		this.add ( this.tfSemestre );
+		this.add ( this.lblSemestre );
 
 		this.add ( new JLabel ( "Code : "  ) );
-		this.add ( this.tfCode     );
+		this.add ( this.txtCode     );
 
 		this.add ( new JLabel ( "Libellé long : " ) );
-		this.add ( this.tfLibLong  );
+		this.add ( this.txtLibLong  );
 
 		this.add ( new JLabel ( "Libellé court : " ) );
-		this.add ( this.tfLibCourt );
+		this.add ( this.txtLibCourt );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
@@ -72,23 +72,25 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.tfType    .setEnabled ( false  );
-		this.tfType    .setOpaque  ( false );
+		this.lblType    .setBackground ( Color.LIGHT_GRAY );
+		this.lblType    .setPreferredSize ( new Dimension ( 100, 15) );
+		this.lblType    .setOpaque ( true );
 
-		this.tfSemestre.setEnabled ( false  );
-		this.tfSemestre.setOpaque  ( false );
+		this.lblSemestre.setBackground ( Color.LIGHT_GRAY );
+		this.lblSemestre.setPreferredSize ( new Dimension ( 50, 15 ) );
+		this.lblSemestre.setOpaque ( true );
 
-		 this.tfCode.addKeyListener(new KeyListener()
-		 {
-            @Override
-            public void keyTyped(KeyEvent e) { validateTextField(); }
+		this.txtCode.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyTyped(KeyEvent e) { validateTextField(); }
 
-            @Override
-            public void keyPressed(KeyEvent e) {}
+			@Override
+			public void keyPressed(KeyEvent e) {}
 
-            @Override
-            public void keyReleased(KeyEvent e) {}
-		 });
+			@Override
+			public void keyReleased(KeyEvent e) {}
+		});
 
 		this.btnEnregistrer.addActionListener(this);
 		this.btnAnnuler    .addActionListener(this);
@@ -96,49 +98,27 @@ public class PanelModule  extends JPanel implements ActionListener
 
 	private void validateTextField()
 	{
-        String code = this.tfCode.getText();
+		String code = this.txtCode.getText();
 
-        if (code.startsWith("R"))
+		if (code.startsWith("R"))
 		{
-            this.tfType.setText("Ressource");
-        }
+			this.lblType.setText("Ressource");
+		}
 
-        if (code.startsWith("S"))
+		if (code.startsWith("S"))
 		{
-            this.tfType.setText("SAE");
-        }
+			this.lblType.setText("SAE");
+		}
 
-        int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
+		int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
 
-        if (valSemestre >= 1 && valSemestre <= 6)
-            this.tfSemestre.setText("S" + valSemestre);
-    }
+		if (valSemestre >= 1 && valSemestre <= 6)
+			this.lblSemestre.setText("S" + valSemestre);
+	}
 
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		/*if (e.getSource() == this.tfCode)
-		{
-			String code = this.tfCode.getText();
-	
-			if (code.startsWith("R"))
-			{
-				this.tfType.setText("Ressource");
-			}
-
-			if (code.startsWith("S"))
-			{
-				this.tfType.setText("SAE");
-			}
-
-			int valSemestre = Character.getNumericValue(code.charAt(1));
-
-			if (valSemestre >= 1 && valSemestre <= 6)
-			{
-				this.tfSemestre.setText("S" + valSemestre);
-			}
-		}*/
-
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			System.out.println("Enregistrer");

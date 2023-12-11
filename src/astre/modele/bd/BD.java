@@ -44,7 +44,9 @@ public class BD
 	}
 	
 	
-	//trucs qui renvoie les listes
+	/*---------------------------------------*/
+	/*                RECUP GENERALE         */
+	/*---------------------------------------*/
 	public ArrayList<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
@@ -74,7 +76,7 @@ public class BD
 			ResultSet rs = st.executeQuery ( "SELECT * FROM Contrat" );
 			while ( rs.next( ) )
 			{
-				lst.add( new Contrat( rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) ) );
+				lst.add( new Contrat(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) ) );
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -137,7 +139,9 @@ public class BD
 		
 	}*/
 	
-	//trucs qui recup 1 machins
+	/*---------------------------------------*/
+	/*                RECUP UNITAIRE         */
+	/*---------------------------------------*/
 	public Semestre getSemestre ( int c )
 	{
 		Semestre semestre = null;
@@ -165,7 +169,7 @@ public class BD
 			ResultSet rs = st.executeQuery("select * from Contrat where Id_Contrat = " + c );
 			while (rs.next())
 			{
-				contrat = new Contrat( rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) );
+				contrat = new Contrat(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) );
 			}
 		}
 		catch (SQLException e)
@@ -177,7 +181,9 @@ public class BD
 	}
 
 
-	//méthodes renvoyant un tableau a 2 dimension
+	/*---------------------------------------*/
+	/*                RECUP TABLO            */
+	/*---------------------------------------*/
 
 	public Object[][] getModulesTableau()
 	{
@@ -202,7 +208,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select libCourt, libLong from ModuleIUT" );
+			ResultSet rs = st.executeQuery("select Id_ModuleIUT, libLong from ModuleIUT" );
 			int cpt = 0;
 			while (rs.next())
 			{
@@ -218,6 +224,69 @@ public class BD
 			System.out.println(e);
 		}
 		return modules;
+	}
+
+	/*public Object[][] getIntervenantsTableau()
+	{
+		int nbInervenants = 0;
+		
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select count(*) from Intervenant" );
+			while (rs.next())
+			{
+				nbInervenants = rs.getInt(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		
+		Object[][] modules = new Object[nbInervenants][14];
+
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select Id_ModuleIUT, libLong from ModuleIUT" );
+			int cpt = 0;
+			while (rs.next())
+			{
+				modules[cpt][0] = rs.getString(1);
+				modules[cpt][1] = rs.getString(2);
+				modules[cpt][2] = null;
+				modules[cpt][3] = null;
+				cpt++;
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return modules;
+	}*/
+
+	/*---------------------------------------*/
+	/*                INSERT                 */
+	/*---------------------------------------*/
+	public void insert(Intervenant i)
+	{
+		String req = "INSERT INTO Intervenant VALUES(?,?,?,?,?)";
+		try
+		{
+			ps = co.prepareStatement(req);
+			ps.setString(1, i.getNom());
+			ps.setString(2, i.getPrenom());
+			ps.setInt(3, i.getService());
+			ps.setInt(4, i.getHeureMaximum());
+			ps.setInt(4, i.getContrat().getId());
+			ps.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
 	}
 
 
