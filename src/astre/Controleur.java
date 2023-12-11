@@ -19,7 +19,7 @@ public class Controleur
 	
 	public Controleur ( )
 	{
-		this.bd.getInstance ( );
+		this.bd = BD.getInstance ( );
 		this.ihm = new FrameAccueil ( this );
 	}
 
