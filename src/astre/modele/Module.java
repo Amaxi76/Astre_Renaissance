@@ -42,7 +42,7 @@ public class Module
 	public Map<Heure, Integer> getHsHeureRepartiees  ( ) { return this.hsHeuresRepariees; }
 	public Map<Heure, Integer> getHsHeurePn          ( ) { return this.hsHeuresPn;        }
 
-	public int getHeuresAffectees ( )
+	public int getHeureRepartiees ( )
 	{
 		int somme = 0;
 		
@@ -51,6 +51,17 @@ public class Module
 
 		return somme;
 	}
+
+	public int getHeurePn ( )
+	{
+		int somme = 0;
+		
+		for ( Heure h : this.hsHeuresPn.keySet ( ) )
+			somme += this.hsHeuresPn.get ( h );
+
+		return somme;
+	}
+
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
