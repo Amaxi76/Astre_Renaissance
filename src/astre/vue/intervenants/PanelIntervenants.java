@@ -34,7 +34,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		//création des composants
 		String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		this.tableau = new Tableau(noms);
+		this.tableau = new Tableau ( noms, true );
 		
 		this.btnAjouter = new JButton( "Ajouter" );
 		this.btnSupprimer = new JButton( "Supprimer" );

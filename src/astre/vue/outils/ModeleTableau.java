@@ -10,9 +10,11 @@ public class ModeleTableau extends AbstractTableModel
 {
     private String[]   tabEntetes;
 	private Object[][] tabDonnees;
+	private boolean    estModifiable=true;
 
-    public ModeleTableau(String[] tabEntetes)
+    public ModeleTableau ( String[] tabEntetes, boolean estModifiable )
     {
+    	this.estModifiable = estModifiable;
         this.tabEntetes = tabEntetes;
 		//this.tabEntetes = new String[] { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
         
@@ -23,8 +25,9 @@ public class ModeleTableau extends AbstractTableModel
         }
     }
     
-    public ModeleTableau(String[] tabEntetes, Object[][] tabDonnees )
+    public ModeleTableau ( String[] tabEntetes, Object[][] tabDonnees, boolean estModifiable )
     {
+    	this.estModifiable = estModifiable;
         this.tabEntetes = tabEntetes;
         this.tabDonnees = tabDonnees;
     }
@@ -42,7 +45,12 @@ public class ModeleTableau extends AbstractTableModel
 	*/
 	public boolean isCellEditable(int row, int col)
 	{
-		return true;
+		return this.estModifiable;
+	}
+	
+	public void setEditable( boolean editable )
+	{
+		this.estModifiable = editable;
 	}
 
     /**

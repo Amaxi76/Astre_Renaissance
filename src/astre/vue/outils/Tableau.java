@@ -15,11 +15,11 @@ public class Tableau extends JTable
 	//private DefaultTableModel modele;
 	private ModeleTableau modele;
 	
-	public Tableau ( String[] nomColonnes )  //répétition de code ici, peut être possible à simplifier
+	public Tableau ( String[] nomColonnes, boolean estModifiable )  //répétition de code ici, peut être possible à simplifier
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableau(this.nomColonnes);
+		this.modele = new ModeleTableau(this.nomColonnes, estModifiable);
 		
 		this.setModel ( this.modele );
 		//this.modele.addTableModelListener(this);
@@ -34,16 +34,16 @@ public class Tableau extends JTable
 	/**
 	 * Tableau sans titres de colonnes
 	 */
-	public Tableau ( )
+	public Tableau ( boolean estModifiable )
 	{
-		this ( new String[] { "","","","" } );
+		this ( new String[] { "","","","" }, estModifiable );
 	}
 	
-	public Tableau ( String[] nomColonnes, Object[][] tabDonnees )
+	public Tableau ( String[] nomColonnes, Object[][] tabDonnees, boolean estModifiable )
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableau(this.nomColonnes, tabDonnees);
+		this.modele = new ModeleTableau(this.nomColonnes, tabDonnees, estModifiable);
 		
 		this.setModel ( this.modele );
 		//this.modele.addTableModelListener(this);
@@ -55,9 +55,9 @@ public class Tableau extends JTable
 		this.setDragEnabled ( false );
 	}
 	
-	public Tableau ( Object[][] tabDonnees )
+	public Tableau ( Object[][] tabDonnees, boolean estModifiable )
 	{
-		this ( new String[] { "","","","" }, tabDonnees );
+		this ( new String[] { "","","","" }, tabDonnees, estModifiable );
 	}
 	
 	/**
