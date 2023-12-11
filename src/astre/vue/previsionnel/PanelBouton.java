@@ -67,7 +67,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
 			System.out.println("créerRessource");
-			((JFrame) (this.getParent())).dispose();
+			//((JFrame) (this.getParent())).dispose();
 		}
 	}
 }
