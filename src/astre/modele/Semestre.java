@@ -25,7 +25,7 @@ public class Semestre
 	 * @param nbEtudiant
 	 * @param nbSemaine
 	 */
-	Semestre  (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
+	Semestre (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
 	{
 		this.idSemestre = idSemestre;
 		this.nbGroupeTP = nbGroupeTP;
@@ -99,15 +99,15 @@ public class Semestre
 	/**
 	 * @return descriptif des attributs de semestre
 	 */
-	public String toString ()
+	public String toString ( )
 	{
 		String sRet = "";
 
 		sRet = String.format ( "IdSemestre        : %-5d - ",  this.idSemestre ) +
 			   String.format ( "Nombre groupe TD  : %02d - ",  this.nbGroupeTD ) +
 			   String.format ( "Nombre groupe TP  : %02d - ",  this.nbGroupeTP ) +
-			   String.format ( "Nombre d'étudiant : %02d",     this.nbEtudiant ) +
-			   String.format ( "Nombre de semaine : %02d",     this.nbSemaine  ) ;
+			   String.format ( "Nombre d'étudiant : %02d"   ,  this.nbEtudiant ) +
+			   String.format ( "Nombre de semaine : %02d"   ,  this.nbSemaine  ) ;
 
 		return sRet;
 	}
