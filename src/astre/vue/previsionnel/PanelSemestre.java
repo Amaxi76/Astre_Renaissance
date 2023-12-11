@@ -76,8 +76,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
-		this.add ( this.pnlOptionSemestre     , BorderLayout.NORTH );
-		this.add ( this.tableauEnsembleModule , BorderLayout.SOUTH );
+		this.add ( this.pnlOptionSemestre     , BorderLayout.NORTH  );
+		this.add ( this.tableauEnsembleModule , BorderLayout.CENTER );
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
