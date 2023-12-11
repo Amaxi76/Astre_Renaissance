@@ -43,7 +43,7 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.add ( new PanelModule  ( this.ctrl ));
+		this.add ( new PanelModule  ( this.ctrl ) );
 
 
 		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
