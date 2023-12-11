@@ -1,6 +1,7 @@
-/** Classe Semestre 
+/** Classe NomDeLaClasse
   * @author : Prénom NOM, ajoutez le votre si vous modifier
-  * @version : 1.0 - 06/12/2023
+  * @version : 1.0 - 06/12/2023 (Dernière date de modification)
+  * @date : 06/12/2023 (Date de création)
   */
 
 public class ExempleFormalisme
