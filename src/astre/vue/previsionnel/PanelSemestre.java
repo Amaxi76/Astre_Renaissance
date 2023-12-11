@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 
 import astre.Controleur;
+import astre.vue.outils.Tableau;
 
 
 /** Classe PanelEnsSemestre
@@ -26,6 +27,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 	private JTextField txtNbGrTP;
 	private JTextField nbEtud;
 	private JTextField nbSemaine;
+	
+	private Tableau tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
@@ -52,6 +55,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.txtNbGrTP.setColumns ( 2 );
 		this.nbEtud   .setColumns ( 2 );
 		this.nbSemaine.setColumns ( 2 );
+		
+		this.tableauEnsembleModule = new Tableau ( );
 
 		/* ----------------------------- */
 		/* Positionnement des composants */
@@ -67,6 +72,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
 		this.add ( this.pnlOptionSemestre );
+		
+		this.add ( this.tableauEnsembleModule );
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
@@ -77,6 +84,9 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbEtud   .addActionListener ( this );
 		this.nbSemaine.addActionListener ( this );
 
+		System.out.println ( this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
+		System.out.println( this.numSemestre );
+		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
 
 	public void actionPerformed ( ActionEvent e )
