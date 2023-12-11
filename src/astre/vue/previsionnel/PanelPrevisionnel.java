@@ -1,7 +1,7 @@
 package astre.vue.previsionnel;
 
-/** Classe FramePrevisionnel
-  * @author : Clémentin Ly, Maxime Lemoine
+/** Classe PanelPrevisionnel
+  * @author : Clémentin Ly
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
@@ -11,12 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import astre.Controleur;
 
-public class PanelBouton extends JPanel implements ActionListener
+public class PanelPrevisionnel extends JPanel implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -35,13 +34,13 @@ public class PanelBouton extends JPanel implements ActionListener
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelBouton ( Controleur ctrl )
+	public PanelPrevisionnel ( Controleur ctrl )
 	{
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.setLayout(new GridLayout(1, 5 ));
+		JPanel panelButton = new JPanel(new GridLayout(1, 5 ));
 
 		this.btncreerRessource = new JButton ( "créer Ressource"   );
 		this.btncreerSAE       = new JButton ( "créer SAÉ"         );
@@ -49,11 +48,13 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.btnModifier       = new JButton ( "modifier"          );
 		this.btnSupprimer      = new JButton ( "supprimer"         );
 
-		this.add ( this.btncreerRessource );
-		this.add ( this.btncreerSAE       );
-		this.add ( this.btncreerStage     );
-		this.add ( this.btnModifier       );
-		this.add ( this.btnSupprimer      );
+		panelButton.add ( this.btncreerRessource );
+		panelButton.add ( this.btncreerSAE       );
+		panelButton.add ( this.btncreerStage     );
+		panelButton.add ( this.btnModifier       );
+		panelButton.add ( this.btnSupprimer      );
+
+		this.add( panelButton );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -73,8 +74,6 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
 			System.out.println("créerRessource");
-			//((JFrame) (this.getParent())).dispose();
-			this.ctrl.ouvrirFrameModule();
 		}
 	}
 }
