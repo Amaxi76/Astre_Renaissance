@@ -1,3 +1,11 @@
+package astre.modele.bd;
+
+/** Page d'insertion de la base de données
+  * @author : Matéo Sa
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import java.sql.*;
 
 public class BD
@@ -8,11 +16,14 @@ public class BD
 	
 	private BD()
 	{
-		try {
+		try 
+		{
 			Class.forName("org.postgresql.Driver");
 			co = DriverManager.getConnection("jdbc:postgresql://woody/sm220306",                           "sm220306", "mateo2705");
 			
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) 
+		{
 			System.out.println(e);
 		} catch (SQLException e) {
 			System.out.println(e);

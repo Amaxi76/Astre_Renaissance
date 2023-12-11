@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import astre.Controleur;
@@ -37,11 +36,12 @@ public class PanelBouton extends JPanel implements ActionListener
 	
 	public PanelBouton ( Controleur ctrl )
 	{
+		this.ctrl = ctrl;
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.setLayout(new GridLayout(1, 5 ));
+		this.setLayout ( new GridLayout ( 1, 5 ) );
 
 		this.btncreerRessource = new JButton ( "créer Ressource"   );
 		this.btncreerSAE       = new JButton ( "créer SAÉ"         );
@@ -59,11 +59,11 @@ public class PanelBouton extends JPanel implements ActionListener
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.btncreerRessource.addActionListener(this);
-		this.btncreerSAE      .addActionListener(this);
-		this.btncreerStage    .addActionListener(this);
-		this.btnModifier      .addActionListener(this);
-		this.btnSupprimer     .addActionListener(this);
+		this.btncreerRessource.addActionListener ( this );
+		this.btncreerSAE      .addActionListener ( this );
+		this.btncreerStage    .addActionListener ( this );
+		this.btnModifier      .addActionListener ( this );
+		this.btnSupprimer     .addActionListener ( this );
 
 	}
 
@@ -72,8 +72,9 @@ public class PanelBouton extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
-			System.out.println("créerRessource");
+			System.out.println ( "créerRessource" );
 			//((JFrame) (this.getParent())).dispose();
+			this.ctrl.ouvrirFrameModule ( );
 		}
 	}
 }

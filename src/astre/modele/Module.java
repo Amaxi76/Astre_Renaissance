@@ -6,6 +6,7 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
+import java.util.Map;
 import java.util.HashMap;
 
 public class Module
@@ -30,11 +31,11 @@ public class Module
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Semestre                getSemestre ( ) { return this.semestre; }
-	public String                  getCode     ( ) { return this.code;     }
-	public String                  getLibLong  ( ) { return this.libLong;  }
-	public String                  getLibCourt ( ) { return this.libCourt; }
-	public HashMap<Heure, Integer> getHsHeure  ( ) { return this.hsHeure;  }
+	public Semestre            getSemestre ( ) { return this.semestre; }
+	public String              getCode     ( ) { return this.code;     }
+	public String              getLibLong  ( ) { return this.libLong;  }
+	public String              getLibCourt ( ) { return this.libCourt; }
+	public Map<Heure, Integer> getHsHeure  ( ) { return this.hsHeure;  }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
