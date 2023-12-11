@@ -16,11 +16,14 @@ public class BD
 	
 	private BD()
 	{
-		try {
+		try 
+		{
 			Class.forName("org.postgresql.Driver");
 			co = DriverManager.getConnection("jdbc:postgresql://woody/sm220306",                           "sm220306", "mateo2705");
 			
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) 
+		{
 			System.out.println(e);
 		} catch (SQLException e) {
 			System.out.println(e);
