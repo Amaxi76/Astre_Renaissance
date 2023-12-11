@@ -26,8 +26,6 @@ public class PanelSemestre extends JPanel
 	{
 		this.ctrl = ctrl;
 
-		//INSTRUCTIONS
-
 		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
 
 		this.txtNbGrTD = new JTextField ( );
@@ -41,18 +39,15 @@ public class PanelSemestre extends JPanel
 		this.nbSemaine.setColumns ( 2 );
 
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTD );
+		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTP );
+		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
-		this.pnlOptionSemestre.add ( this.nbEtud );
+		this.pnlOptionSemestre.add ( this.nbEtud                  );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
-		this.pnlOptionSemestre.add ( this.nbSemaine );
+		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
 		
 		this.add ( this.pnlOptionSemestre );
-		this.add ( new JLabel ( "Page du semestre : " + numSemestre ) );
-
-
 	}
 }
