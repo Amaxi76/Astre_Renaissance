@@ -202,7 +202,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select libCourt, libLong from ModuleIUT" );
+			ResultSet rs = st.executeQuery("select Id_ModuleIUT, libLong from ModuleIUT" );
 			int cpt = 0;
 			while (rs.next())
 			{
@@ -219,6 +219,47 @@ public class BD
 		}
 		return modules;
 	}
+
+	/*public Object[][] getIntervenantsTableau()
+	{
+		int nbInervenants = 0;
+		
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select count(*) from Intervenant" );
+			while (rs.next())
+			{
+				nbInervenants = rs.getInt(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		
+		Object[][] modules = new Object[nbInervenants][14];
+
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select Id_ModuleIUT, libLong from ModuleIUT" );
+			int cpt = 0;
+			while (rs.next())
+			{
+				modules[cpt][0] = rs.getString(1);
+				modules[cpt][1] = rs.getString(2);
+				modules[cpt][2] = null;
+				modules[cpt][3] = null;
+				cpt++;
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return modules;
+	}*/
 
 
 
