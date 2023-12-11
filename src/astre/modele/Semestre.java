@@ -24,7 +24,7 @@ public class Semestre
 	 * @param nbEtudiant
 	 * @param nbSemaine
 	 */
-	public Semestre  (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
+	Semestre  (int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine ) 
 	{
 		this.idSemestre = idSemestre;
 		this.nbGroupeTP = nbGroupeTP;
@@ -40,27 +40,27 @@ public class Semestre
 	/**
 	 * @return the idSemestre
 	 */
-	public int getIdSemestre ( ) { return idSemestre; }
+	public int getIdSemestre ( ) { return this.idSemestre; }
 
 	/**
 	 * @return the nbGroupeTP
 	 */
-	public int getNbGroupeTP ( ) { return nbGroupeTP; }
+	public int getNbGroupeTP ( ) { return this.nbGroupeTP; }
 
 	/**
 	 * @return the nbGroupeTD
 	 */
-	public int getNbGroupeTD ( ) { return nbGroupeTD; }
+	public int getNbGroupeTD ( ) { return this.nbGroupeTD; }
 
 	/**
 	 * @return the nbEtudiant
 	 */
-	public int getNbEtudiant ( ) { return nbEtudiant; }
+	public int getNbEtudiant ( ) { return this.nbEtudiant; }
 
 	/**
 	 * @return the nbSemaine
 	 */
-	public int getNbSemaine ( ) { return nbSemaine; }
+	public int getNbSemaine ( ) { return this.nbSemaine; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
