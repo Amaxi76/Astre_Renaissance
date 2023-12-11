@@ -47,8 +47,6 @@ public class FramePrevisionnel extends JFrame
 		this.add ( new PanelEnsSemestre  ( this.ctrl ), BorderLayout.CENTER );
 		this.add ( new PanelBouton ( this.ctrl ), BorderLayout.SOUTH );
 
-
-		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
-		this.setVisible               ( true        );
+		this.setVisible ( true );
 	}
 }

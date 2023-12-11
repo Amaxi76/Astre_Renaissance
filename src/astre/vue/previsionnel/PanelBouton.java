@@ -49,6 +49,10 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.btnModifier       = new JButton ( "modifier"          );
 		this.btnSupprimer      = new JButton ( "supprimer"         );
 
+		/* ----------------------------- */
+		/* Positionnement des composants */
+		/* -----------------------    -- */
+
 		this.add ( this.btncreerRessource );
 		this.add ( this.btncreerSAE       );
 		this.add ( this.btncreerStage     );
@@ -72,9 +76,18 @@ public class PanelBouton extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
-			System.out.println ( "créerRessource" );
 			//((JFrame) (this.getParent())).dispose();
 			this.ctrl.ouvrirFrameModule ( );
+		}
+
+		if ( e.getSource ( ) == this.btncreerSAE )
+		{
+			this.ctrl.ouvrirFrameModule( );
+		}
+
+		if ( e.getSource ( ) == this.btncreerStage )
+		{
+			this.ctrl.ouvrirFrameModule( );
 		}
 	}
 }
