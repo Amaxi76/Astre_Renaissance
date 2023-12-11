@@ -3,6 +3,7 @@ package astre.modele;
 /** Classe Semestre 
   * @author : Alizéa LEBARON
   * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
   */
 
 public class Semestre
