@@ -1,4 +1,5 @@
 DELETE FROM Intervenant CASCADE;
+DELETE FROM Contrat     CASCADE;
 
 INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Enseignant 2nd degrès', 250, 360, 1.0  ),
