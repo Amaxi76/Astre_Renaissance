@@ -1,3 +1,11 @@
+package astre.modele.bd;
+
+/** Page d'insertion de la base de données
+  * @author : Matéo Sa
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import java.sql.*;
 
 public class BD
