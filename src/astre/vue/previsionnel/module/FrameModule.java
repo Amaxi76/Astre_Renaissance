@@ -37,7 +37,7 @@ public class FrameModule extends JFrame
 		this.ctrl = ctrl;
 
 		this.setSize     ( 1000, 700 );
-		this.setTitle    ( "Prévisionnel : Module"   );
+		this.setTitle    ( "Prévisionnel : Module" );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -45,8 +45,11 @@ public class FrameModule extends JFrame
 
 		this.add ( new PanelModule  ( this.ctrl ) );
 
+<<<<<<< HEAD
 
 		
+=======
+>>>>>>> 0a91b74885ba8282ec53e9a7974b7ecfb517100d
 		this.setVisible               ( true        );
 	}
 }
