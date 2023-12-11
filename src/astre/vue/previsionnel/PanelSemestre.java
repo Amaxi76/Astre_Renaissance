@@ -43,6 +43,11 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbEtud    = new JTextField ( );
 		this.nbSemaine = new JTextField ( );
 
+		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( ) );
+		this.txtNbGrTP.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTP ( ) );
+		this.nbEtud   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
+		this.nbSemaine.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbSemaine  ( ) );
+	
 		this.txtNbGrTD.setColumns ( 2 );
 		this.txtNbGrTP.setColumns ( 2 );
 		this.nbEtud   .setColumns ( 2 );
@@ -53,10 +58,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		/* -----------------------    -- */
 
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
-
-		String m = this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( ) == null ? " " : "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( );
-
-		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
+		this.pnlOptionSemestre.add ( this.txtNbGrTD );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
 		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
@@ -75,14 +77,9 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbEtud   .addActionListener ( this );
 		this.nbSemaine.addActionListener ( this );
 
-		System.out.println ( this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
-		System.out.println( this.numSemestre );
-		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		System.out.println ( this.ctrl.getSemestre ( this.numSemestre ) );
-		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
 }
