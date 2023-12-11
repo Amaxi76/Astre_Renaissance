@@ -11,7 +11,7 @@ import astre.Controleur;
 
 
 /** Classe PanelEnsSemestre
-  * @author : Maximeuuu
+  * @author : Maximeuuu et Amaxi76
   * @version : 1.0 le 11/12/23
   * @date : 06/12/2023
   */
@@ -30,8 +30,13 @@ public class PanelSemestre extends JPanel implements ActionListener
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
 		this.ctrl = ctrl;
+		this.numSemestre = numSemestre;
 
 		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
+
+		/* ----------------------------- */
+		/*    Création des composants    */
+		/* -----------------------    -- */
 
 		this.txtNbGrTD = new JTextField ( );
 		this.txtNbGrTP = new JTextField ( );
@@ -43,6 +48,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbEtud   .setColumns ( 2 );
 		this.nbSemaine.setColumns ( 2 );
 
+		/* ----------------------------- */
+		/* Positionnement des composants */
+		/* -----------------------    -- */
+
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
 		this.pnlOptionSemestre.add ( this.txtNbGrTD               );
 		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
@@ -53,6 +62,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.pnlOptionSemestre.add ( this.nbSemaine               );
 
 		this.add ( this.pnlOptionSemestre );
+
+		/* ----------------------------- */
+		/*   Activation des composants   */
+		/* -----------------------    -- */
 
 		this.txtNbGrTD.addActionListener ( this );
 		this.txtNbGrTP.addActionListener ( this );

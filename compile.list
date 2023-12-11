@@ -19,6 +19,7 @@ src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelSemestre.java
 
 src/astre/vue/previsionnel/module/FrameModule.java
+src/astre/vue/previsionnel/module/PanelModule.java
 
 src/astre/vue/intervenants/PanelIntervenants.java
 src/astre/vue/intervenants/FrameIntervenants.java
