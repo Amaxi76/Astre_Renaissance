@@ -1,5 +1,7 @@
 package astre.vue.intervenants;
 
+import astre.Controleur;
+
 /** Page de gestion des intervenants
   * @author : Matéo Sa
   * @version : 1.0 - 11/12/2023
@@ -21,20 +23,26 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
+
+	private Controleur ctrl;
 	
 	/**
 	 * 	Panel pour la frame des intervenants..
 	 * @author Matéo
 	 */
-	public PanelIntervenants ( )
+	public PanelIntervenants ( Controleur ctrl )
 	{
+		this.ctrl = ctrl;
+		
 		this.setLayout( new BorderLayout() );
 		int marginSize = 10;
 		this.setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
 		
 		//création des composants
 		String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		this.tableau = new Tableau ( noms, true );
+		//this.tableau = new Tableau(noms);
+
+		this.tableau = new Tableau(noms, this.ctrl.getTableauIntervenant(), true);
 		
 		this.btnAjouter = new JButton( "Ajouter" );
 		this.btnSupprimer = new JButton( "Supprimer" );
