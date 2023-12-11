@@ -72,7 +72,7 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.tfType    .setEnabled ( false );
 		this.tfSemestre.setEnabled ( false );
 
-		if( this.tfCode.getText().equals("R1") )
+		if( this.tfCode.getText().equals("R1.01") )
 		{
 			this.tfType    .setText ( "Ressource" );
 			this.tfSemestre.setText ( "S1"        );
