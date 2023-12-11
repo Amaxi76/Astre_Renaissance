@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
  */
+
 public class ModeleTableau extends AbstractTableModel 
 {
     private String[]   tabEntetes;

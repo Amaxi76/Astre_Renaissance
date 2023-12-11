@@ -4,10 +4,11 @@ import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
 
-/**
- * Classe représentant un tableau personnalisable.
- * @author Matéo
- */
+/** Classe représentant un tableau personnalisable.
+ *  @author Matéo
+ *  @version : 1.0 - 11/12/2023
+ *  @date : 06/12/2023
+*/
 public class Tableau extends JTable
 {
 	private String[] nomColonnes;

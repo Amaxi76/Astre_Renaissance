@@ -1,5 +1,11 @@
 package astre.vue.outils;
 
+/** Classe PanelDiagramme
+  * @author : Maxime Lemoine
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+ */
+
 // General
 import java.util.*;
 
