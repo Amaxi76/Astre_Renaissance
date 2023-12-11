@@ -22,10 +22,13 @@ DELETE FROM Horaire     CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
-INSERT INTO Semestre (nbGroupeTP, nbGroupeTD, nbEtud, nbSemaine) VALUES
-(6, 3, 84, 15),
-(2, 1, 26, 14),
-(5, 3, 56, 12);
+INSERT INTO Semestre VALUES
+(1,  5, 6, 85, 10),
+(2,  5, 6, 66, 20),
+(3,  8, 6, 58, 30),
+(4,  8, 6, 45, 40),
+(5, 10, 6, 25, 50),
+(6, 10, 6, 10, 60);
 
 INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Enseignant 2nd degrès', 250, 360, 1.0  ),
@@ -37,9 +40,20 @@ INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
 ('Orwell'        , 'Georges',  25, 389, 2 ),
 ('Lovecraft'     , 'Howard' ,  85, 125, 2 );
 
-insert into semestre values ( 1, 5, 6, 85, 10);
-insert into semestre values ( 2, 5, 6, 66, 20);
-insert into semestre values ( 3, 8, 6, 58, 30);
-insert into semestre values ( 4, 8, 6, 45, 40);
-insert into semestre values ( 5,10, 6, 25, 50);
-insert into semestre values ( 6,10, 6, 10, 60);
+INSERT INTO TypeModule (nom) VALUES
+('Ressource'),
+('SAE'      ),
+('Stage'    );
+
+INSERT INTO ModuleIUT VALUES
+('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 1, 1),
+('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 1, 1),
+('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 2, 2),
+('R3.05', 'Programmation Système'       , 'prog_sys'     , 1, 3),
+('S4.ST', 'Stages'                      , 'stages'       , 3, 4),
+('R5.03', 'Politique de communication'  , 'comm'         , 1, 5),
+('R5.06', 'Programmation multimédia'    , 'prog_media'   , 1, 5),
+('S5.01', 'Développement avancé'        , 'dev_avancé'   , 2, 5),
+('S6.01', 'évolution dune application'  , 'ev_appli'     , 2, 6),
+('S6.ST', 'Stages'                      , 'stages'       , 3, 6);
+
