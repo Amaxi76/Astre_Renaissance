@@ -24,7 +24,6 @@ public class Ressource extends Module
 				default:
 					break;
 			}
-			
 		}
 	}
 }
