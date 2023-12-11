@@ -1,5 +1,10 @@
-// @author : Maximilien Lesterlin
 package astre.modele;
+
+/** Classe Ressource 
+  * @author : Maximilien Lesterlin
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
 
 public class Ressource extends Module
 {
