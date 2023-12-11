@@ -26,6 +26,7 @@ public class PanelModule  extends JPanel implements ActionListener
 	
 	public PanelModule ( Controleur ctrl )
 	{
+		this.ctrl = ctrl;
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */

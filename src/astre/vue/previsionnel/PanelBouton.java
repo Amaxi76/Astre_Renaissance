@@ -37,6 +37,7 @@ public class PanelBouton extends JPanel implements ActionListener
 	
 	public PanelBouton ( Controleur ctrl )
 	{
+		this.ctrl = ctrl;
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
