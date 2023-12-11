@@ -16,11 +16,12 @@ public class ModeleTableau extends AbstractTableModel
     public ModeleTableau(String[] tabEntetes)
     {
         this.tabEntetes = tabEntetes;
+		//this.tabEntetes = new String[] { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+        
         this.tabDonnees = new Object[1][this.tabEntetes.length];
-
         for(int cpt=0; cpt < tabDonnees[0].length; cpt++)
         {
-            tabDonnees[0][cpt] = "aa";
+            tabDonnees[0][cpt] = "aa";//mettre les trucs de la bd
         }
     }
     
@@ -29,6 +30,8 @@ public class ModeleTableau extends AbstractTableModel
 	public int    getRowCount   ()                 { return this.tabDonnees.length;      }
 	public Object getValueAt    (int row, int col) { return this.tabDonnees[row][col];   }
 	public String getNomColonne (int col)          { return this.tabEntetes[col];        }
+	public Class  getColumnClass(int c)            { return getValueAt(0, c).getClass(); }
+	public String getColumnName(int c)             { return this.tabEntetes[c];           }
 
     /**
 	* Donne la liste des cellules éditables.

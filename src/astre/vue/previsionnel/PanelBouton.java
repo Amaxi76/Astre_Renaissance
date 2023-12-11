@@ -1,5 +1,11 @@
 package astre.vue.previsionnel;
 
+/** Classe FramePrevisionnel
+  * @author : Clémentin Ly, Maxime Lemoine
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,7 +73,8 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
 			System.out.println("créerRessource");
-			((JFrame) (this.getParent())).dispose();
+			//((JFrame) (this.getParent())).dispose();
+			this.ctrl.ouvrirFrameModule();
 		}
 	}
 }
