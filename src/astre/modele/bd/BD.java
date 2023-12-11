@@ -135,7 +135,7 @@ public class BD
 	}*/
 	
 	//trucs qui recup 1 machins
-	public Semestre getSemestre( int c )
+	public Semestre getSemestre ( int c )
 	{
 		Semestre semestre = null;
 		
