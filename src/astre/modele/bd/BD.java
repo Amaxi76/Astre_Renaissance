@@ -187,6 +187,7 @@ public class BD
 		for(Intervenant i : test)
 		{
 			System.out.println(i.toString() );
+			System.out.println( i.getStatut().toString() );
 		}
 
 	}
