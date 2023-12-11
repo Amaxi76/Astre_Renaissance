@@ -15,7 +15,7 @@ public class Tableau extends JTable
 	//private DefaultTableModel modele;
 	private ModeleTableau modele;
 	
-	public Tableau ( String[] nomColonnes )
+	public Tableau ( String[] nomColonnes )  //répétition de code ici, peut être possible à simplifier
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
@@ -36,6 +36,16 @@ public class Tableau extends JTable
 	 */
 	public Tableau ( )
 	{
+		this ( new String[] { "","","","" } );
+	}
+	
+	public Tableau ( String[] nomColonnes, Object[][] tabDonnees )
+	{
+		this.nomColonnes = nomColonnes;
+		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
+		this.modele = new ModeleTableau(this.nomColonnes, tabDonnees);
+		
+		this.setModel ( this.modele );
 		//this.modele.addTableModelListener(this);
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
 		
@@ -43,6 +53,11 @@ public class Tableau extends JTable
 		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
 		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
 		this.setDragEnabled ( false );
+	}
+	
+	public Tableau ( Object[][] tabDonnees )
+	{
+		this ( new String[] { "","","","" }, tabDonnees );
 	}
 	
 	/**

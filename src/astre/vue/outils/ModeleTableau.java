@@ -25,6 +25,12 @@ public class ModeleTableau extends AbstractTableModel
         }
     }
     
+    public ModeleTableau(String[] tabEntetes, Object[][] tabDonnees )
+    {
+        this.tabEntetes = tabEntetes;
+        this.tabDonnees = tabDonnees;
+    }
+    
     //si la méthode est en anglais c'est qu'elle est obligatoire.
     public int    getColumnCount()                 { return this.tabEntetes.length;      }
 	public int    getRowCount   ()                 { return this.tabDonnees.length;      }
