@@ -7,6 +7,7 @@ package astre.vue;
   */
 
 import astre.vue.previsionnel.FramePrevisionnel;
+import astre.vue.intervenants.FrameIntervenants;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -140,6 +141,11 @@ public class FrameAccueil extends JFrame implements ActionListener
 		if ( e.getSource ( ) == this.btnPrevisionnel )
 		{
 			new FramePrevisionnel ( this.ctrl );
+		}
+		
+		if ( e.getSource ( ) == this.btnIntervenants )
+		{
+			new FrameIntervenants ( this.ctrl );
 		}
 		
 		if ( e.getSource ( ) == this.btnIntervenants )
