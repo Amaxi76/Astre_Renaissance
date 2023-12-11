@@ -39,3 +39,21 @@ INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
 ('Orwell'        , 'Georges',  25, 389, 2 ),
 ('Lovecraft'     , 'Howard' ,  85, 125, 2 );
+
+INSERT INTO TypeModule (nom) VALUES
+('Ressource'),
+('SAE'      ),
+('Stage'    );
+
+INSERT INTO ModuleIUT VALUES
+('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 1, 1),
+('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 1, 1),
+('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 2, 2),
+('R3.05', 'Programmation Système'       , 'prog_sys'     , 1, 3),
+('S4.ST', 'Stages'                      , 'stages'       , 3, 4),
+('R5.03', 'Politique de communication'  , 'comm'         , 1, 5),
+('R5.06', 'Programmation multimédia'    , 'prog_media'   , 1, 5),
+('S5.01', 'Développement avancé'        , 'dev_avancé'   , 2, 5),
+('S6.01', 'évolution dune application'  , 'ev_appli'     , 2, 6),
+('S6.ST', 'Stages'                      , 'stages'       , 3, 6);
+
