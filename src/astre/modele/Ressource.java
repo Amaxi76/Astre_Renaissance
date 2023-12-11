@@ -7,7 +7,6 @@ public class Ressource extends Module
 	{
 		super ( semestre, code, libLong, libCourt );
 
-
 		for ( Heure h : Heure.getHeures ( ) )
 		{
 			switch ( h.getNom ( ) )
