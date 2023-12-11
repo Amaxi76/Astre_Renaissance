@@ -48,6 +48,8 @@ public class PanelPrevisionnel extends JPanel implements ActionListener
 		panelButton.add ( this.btnModifier       );
 		panelButton.add ( this.btnSupprimer      );
 
+		this.add( panelButton );
+
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
