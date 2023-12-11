@@ -13,7 +13,8 @@ import java.util.HashMap;
 
 public class Module
 {
-	HashMap<Heure, Integer> hsHeure;
+	HashMap<Heure, Integer> hsHeuresPn;
+	HashMap<Heure, Integer> hsHeuresRepariees;
 	
 	Semestre semestre;
 	String   code;
@@ -22,22 +23,34 @@ public class Module
 
 	public Module ( Semestre semestre, String code, String libLong, String libCourt )
 	{
-		this.hsHeure  = new HashMap<> ( );
-		this.semestre = semestre;
-		this.code     = code;
-		this.libLong  = libLong;
-		this.libCourt = libCourt;
+		this.hsHeuresPn         = new HashMap<> ( );
+		this.hsHeuresRepariees  = new HashMap<> ( );
+		this.semestre           = semestre;
+		this.code               = code;
+		this.libLong            = libLong;
+		this.libCourt           = libCourt;
 	}
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Semestre            getSemestre ( ) { return this.semestre; }
-	public String              getCode     ( ) { return this.code;     }
-	public String              getLibLong  ( ) { return this.libLong;  }
-	public String              getLibCourt ( ) { return this.libCourt; }
-	public Map<Heure, Integer> getHsHeure  ( ) { return this.hsHeure;  }
+	public Semestre            getSemestre           ( ) { return this.semestre;          }
+	public String              getCode               ( ) { return this.code;              }
+	public String              getLibLong            ( ) { return this.libLong;           }
+	public String              getLibCourt           ( ) { return this.libCourt;          }
+	public Map<Heure, Integer> getHsHeureRepartiees  ( ) { return this.hsHeuresRepariees; }
+	public Map<Heure, Integer> getHsHeurePn          ( ) { return this.hsHeuresPn;        }
+
+	public int getHeuresAffectees ( )
+	{
+		int somme = 0;
+		
+		for ( Heure h : this.hsHeuresRepariees.keySet ( ) )
+			somme += this.hsHeuresRepariees.get ( h );
+
+		return somme;
+	}
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */

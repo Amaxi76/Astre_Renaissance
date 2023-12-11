@@ -12,9 +12,14 @@ public class Sae extends Module
 	public Sae ( Semestre semestre, String code, String libLong, String libCourt )
 	{
 		super ( semestre, code, libLong, libCourt );
-
+		
 		for ( Heure h : Heure.getHeures ( ) )
-			if ( h.getNom ( ).equals ( "SAE" ) || h.getNom ( ).equals ( "HP" ) )
-				super.hsHeure.put ( h, 0 );
+		{
+			if ( h.getNom ( ).equals ( "SAE" ) || h.getNom ( ).equals ( "HT" ) )
+			{
+				super.hsHeuresPn       .put ( h, 0 );
+				super.hsHeuresRepariees.put ( h, 0 );
+			}
+		}
 	}
 }
