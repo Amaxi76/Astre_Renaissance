@@ -8,6 +8,7 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import javax.swing.*;
+import java.awt.event.*;
 
 public class FrameIntervenants extends JFrame
 {
