@@ -1,5 +1,11 @@
 package astre.vue;
 
+/** Page de gestion des intervenants
+  * @author : Maxime Lemoine
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import astre.vue.previsionnel.FramePrevisionnel;
 
 import java.awt.*;
