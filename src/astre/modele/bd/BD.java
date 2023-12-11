@@ -24,54 +24,57 @@ public class BD
 			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
 			
 		} 
-		catch (ClassNotFoundException e) 
+		catch ( ClassNotFoundException e ) 
 		{
 			System.out.println(e);
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 	}
 	
-	public static BD getInstance()
+	public static BD getInstance( )
 	{
 		if ( dbInstance == null ) 
 		{
-			dbInstance = new BD();
+			dbInstance = new BD( );
 		}
 		return dbInstance;
 	}
 	
 	
 	//trucs qui renvoie les listes
-	public ArrayList<Semestre> getSemestres ()
+	public ArrayList<Semestre> getSemestres ( )
 	{
-		ArrayList<Semestre> lst = new ArrayList<Semestre>();
+		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
 		
 		try
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Semestre");
-			while (rs.next()) {
-				lst.add( new Semestre( rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5) ) );
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM Semestre" );
+			while ( rs.next ( ) )
+			{
+				lst.add ( new Semestre ( rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5) ) );
 			}
-		} catch (SQLException e) {
-			System.out.println(e);
+		} catch ( SQLException e ) {
+			System.out.println ( e );
 		}
 		
 		return lst;
 	}
 	
-	public ArrayList<Contrat> getContrats()
+	public ArrayList<Contrat> getContrats( )
 	{
-		ArrayList<Contrat> lst = new ArrayList<Contrat>();
+		ArrayList<Contrat> lst = new ArrayList<Contrat>( );
 		
-		try {
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Contrat");
-			while (rs.next()) {
-				lst.add( new Contrat( rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4) ) );
+		try
+		{
+			Statement st = co.createStatement( );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM Contrat" );
+			while ( rs.next( ) )
+			{
+				lst.add( new Contrat( rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) ) );
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -162,7 +165,7 @@ public class BD
 			ResultSet rs = st.executeQuery("select * from Contrat where Id_Contrat = " + c );
 			while (rs.next())
 			{
-				contrat = new Contrat( rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4) );
+				contrat = new Contrat( rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) );
 			}
 		}
 		catch (SQLException e)
@@ -173,6 +176,52 @@ public class BD
 		return contrat;
 	}
 
+
+	//méthodes renvoyant un tableau a 2 dimension
+
+	public Object[][] getModulesTableau()
+	{
+		int nbModule = 0;
+		
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select count(*) from ModuleIUT" );
+			while (rs.next())
+			{
+				nbModule = rs.getInt(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		
+		Object[][] modules = new Object[nbModule][4];
+
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select libCourt, libLong from ModuleIUT" );
+			int cpt = 0;
+			while (rs.next())
+			{
+				modules[cpt][0] = rs.getString(1);
+				modules[cpt][1] = rs.getString(2);
+				modules[cpt][2] = null;
+				modules[cpt][3] = null;
+				cpt++;
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return modules;
+	}
+
+
+
 	public static void main ( String[] args ) 
 	{
 		BD bd = BD.getInstance ( );
@@ -182,6 +231,7 @@ public class BD
 		for(Intervenant i : test)
 		{
 			System.out.println(i.toString() );
+			System.out.println( i.getContrat().toString() );
 		}
 
 	}

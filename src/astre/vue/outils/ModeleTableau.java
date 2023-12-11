@@ -2,12 +2,10 @@ package astre.vue.outils;
 
 import javax.swing.table.AbstractTableModel;
 
-/** Classe des données et d'affichage du tableau.
-  * @author : Maxime Lemoine
-  * @version : 1.0 - 11/12/2023
-  * @date : 06/12/2023
+/**
+ * Classe des données et d'affichage du tableau.
+ * @author Matéo
  */
-
 public class ModeleTableau extends AbstractTableModel 
 {
     private String[]   tabEntetes;

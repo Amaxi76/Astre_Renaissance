@@ -8,9 +8,8 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import javax.swing.*;
-import java.awt.event.*;
 
-public class FrameIntervenants extends JFrame implements KeyListener
+public class FrameIntervenants extends JFrame
 {
 	private PanelIntervenants panel;
 	private Controleur        ctrl;
