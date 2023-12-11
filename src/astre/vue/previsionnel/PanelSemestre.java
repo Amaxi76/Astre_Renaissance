@@ -58,7 +58,6 @@ public class PanelSemestre extends JPanel implements ActionListener
 		/* -----------------------    -- */
 
 		this.placerEnsembleOptionSemestre();
-
 		this.add ( this.pnlOptionSemestre );
 		
 		this.add ( this.tableauEnsembleModule );
@@ -71,6 +70,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.txtNbGrTP.addActionListener ( this );
 		this.nbEtud   .addActionListener ( this );
 		this.nbSemaine.addActionListener ( this );
+
+		System.out.println ( this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
+		System.out.println( this.numSemestre );
+		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
 	
 	private void placerEnsembleOptionSemestre ( )
@@ -89,6 +92,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-
+		System.out.println ( this.ctrl.getSemestre ( this.numSemestre ) );
+		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ) );
 	}
 }
