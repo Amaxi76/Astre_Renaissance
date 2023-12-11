@@ -7,8 +7,9 @@ package astre.vue.intervenants;
   */
 
 import javax.swing.*;
+import java.awt.event.*;
 
-public class FrameIntervenants extends JFrame
+public class FrameIntervenants extends JFrame implements KeyListener
 {
 	private PanelIntervenants panel;
 	
