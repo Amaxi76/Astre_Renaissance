@@ -27,6 +27,33 @@ public class BD
 		return dbInstance;
 	}
 	
+	
+	//trucs qui renvoie les listes
+	public ArrayList<Semestre> getSemestres()
+	{
+		
+	}
+	
+	public ArrayList<Contrat> getContrats()
+	{
+		
+	}
+	
+	public ArrayList<Heure> getHeures()
+	{
+		
+	}
+	
+	public ArrayList<TypeModule> getTypeModules()
+	{
+		
+	}
+	
+	public ArrayList<ModuleIUT> getModuleIUT()
+	{
+		
+	}
+	
 	public ArrayList<Intervenant> getIntervenants()
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
@@ -35,8 +62,8 @@ public class BD
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Intervenant");
 			while (rs.next()) {
-				lst.add(new Intervenant(rs.getString(1), rs.getString(2), rs.getString(3),rs.getDouble(4), rs.getInt(5), rs.getInt(6) ) );
-			}
+				lst.add(new Intervenant(rs.getString(1), rs.getString(2), getContrat(rs.getInt(7)),rs.getDouble(4), rs.getInt(5), rs.getInt(6) ) );
+			}//mettre un contrat genre wesh
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -44,4 +71,31 @@ public class BD
 		return lst;
 	}
 	
+	public ArrayList<Enseigne> getEnseignes()
+	{
+		
+	}
+	
+	public ArrayList<Horaire> getHoraires()
+	{
+		
+	}
+	
+	//trucs qui recup 1 machins
+	public Contrat getContrat(int c)
+	{
+		Contrat contrat;
+		
+		try {
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select * from Contrat where Id_Contrat = " + c );
+			while (rs.next()) {
+				contrat = new Contrat( rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4) );
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return contrat;
+	}
 }
