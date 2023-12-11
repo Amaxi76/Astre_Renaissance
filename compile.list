@@ -15,7 +15,7 @@ src/astre/vue/outils/Tableau.java
 
 src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
-src/astre/vue/previsionnel/PanelPrevisionnel.java
+src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelSemestre.java
 
 src/astre/vue/intervenants/PanelIntervenants.java
