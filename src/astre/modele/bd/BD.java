@@ -215,8 +215,8 @@ public class BD
 			{
 				modules[cpt][0] = rs.getString(1);
 				modules[cpt][1] = rs.getString(2);
-				modules[cpt][2] = null;
-				modules[cpt][3] = null;
+				modules[cpt][2] = "";
+				modules[cpt][3] = "";
 				cpt++;
 			}
 		}
