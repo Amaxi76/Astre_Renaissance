@@ -23,12 +23,12 @@ public class Intervenant
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public String  getNom          ( ) { return nom;          }
-	public String  getPrenom       ( ) { return prenom;       }
-	public Contrat getStatut       ( ) { return statut;       }
-	public double  getCoefTp       ( ) { return coefTp;       }
-	public int     getService      ( ) { return service;      }
-	public int     getHeureMaximum ( ) { return heureMaximum; }
+	public String  getNom          ( ) { return this.nom;          }
+	public String  getPrenom       ( ) { return this.prenom;       }
+	public Contrat getStatut       ( ) { return this.statut;       }
+	public double  getCoefTp       ( ) { return this.coefTp;       }
+	public int     getService      ( ) { return this.service;      }
+	public int     getHeureMaximum ( ) { return this.heureMaximum; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
