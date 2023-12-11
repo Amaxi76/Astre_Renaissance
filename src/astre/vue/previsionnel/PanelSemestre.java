@@ -11,7 +11,7 @@ import astre.Controleur;
 
 
 /** Classe PanelEnsSemestre
-  * @author : Maximeuuu
+  * @author : Maximeuuu et Amaxi76
   * @version : 1.0 le 11/12/23
   * @date : 06/12/2023
   */
@@ -30,6 +30,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
 		this.ctrl = ctrl;
+		this.numSemestre = numSemestre;
 
 		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
 
