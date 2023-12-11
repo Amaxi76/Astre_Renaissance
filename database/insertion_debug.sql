@@ -8,4 +8,6 @@ INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
 INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ("Enseignant 2nd degrès", 250, 360, 1.0  ),
 ("Enseignant chercheur" , 25 , 389, 0.66 ),
-("Contractuel"          , 85 , 125, 0.66 ); 
+("Contractuel"          , 85 , 125, 0.66 );
+
+INSERT
