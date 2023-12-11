@@ -1,5 +1,11 @@
 package astre.vue.previsionnel;
 
+/** Classe PanelPrevisionnel
+  * @author : Clémentin Ly
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
