@@ -177,6 +177,50 @@ public class BD
 	}
 
 
+	//méthodes renvoyant un tableau a 2 dimension
+
+	public Object[][] getModulesTableau()
+	{
+		int nbModule = 0;
+		
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select count(*) from ModuleIUT" );
+			while (rs.next())
+			{
+				nbModule = rs.getInt(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		
+		Object[][] modules = new Object[nbModule][4];
+
+		try
+		{
+			Statement st = co.createStatement();
+			ResultSet rs = st.executeQuery("select libCourt, libLong from ModuleIUT" );
+			int cpt = 0;
+			while (rs.next())
+			{
+				modules[cpt][0] = rs.getString(1);
+				modules[cpt][1] = rs.getString(2);
+				modules[cpt][2] = null;
+				modules[cpt][3] = null;
+				cpt++;
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return modules;
+	}
+
+
 
 	public static void main ( String[] args ) 
 	{
@@ -187,7 +231,7 @@ public class BD
 		for(Intervenant i : test)
 		{
 			System.out.println(i.toString() );
-			System.out.println( i.getStatut().toString() );
+			System.out.println( i.getContrat().toString() );
 		}
 
 	}
