@@ -7,7 +7,6 @@ package astre.vue.previsionnel;
   */
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 import astre.Controleur;
@@ -19,8 +18,6 @@ public class FramePrevisionnel extends JFrame
 	/*-------------*/
 
 	private Controleur ctrl;
-	
-	private JPanel panelPrevisionnel;
 
 	/*----------------*/
 	/*--Constructeur--*/

@@ -1,14 +1,23 @@
 src/astre/Controleur.java
 
-src/astre/modele/bd/BD.java
 
-src/astre/modele/Contrat.java
-src/astre/modele/Heure.java
-src/astre/modele/Intervenant.java
-src/astre/modele/Module.java
-src/astre/modele/Semestre.java
 
-src/astre/vue/FrameAccueil.java
+src/astre/modele/BD.java
+src/astre/modele/Astre.java
+
+src/astre/modele/elements/Contrat.java
+src/astre/modele/elements/Heure.java
+src/astre/modele/elements/Intervenant.java
+src/astre/modele/elements/Module.java
+src/astre/modele/elements/Ressource.java
+src/astre/modele/elements/Sae.java
+src/astre/modele/elements/Semestre.java
+src/astre/modele/elements/Stage.java
+
+
+
+src/astre/vue/intervenants/PanelIntervenants.java
+src/astre/vue/intervenants/FrameIntervenants.java
 
 src/astre/vue/outils/MenuBarAstre.java
 src/astre/vue/outils/PanelDiagramme.java
@@ -17,12 +26,14 @@ src/astre/vue/outils/Tableau.java
 src/astre/vue/outils/PopUpErreur.java
 
 src/astre/vue/previsionnel/FramePrevisionnel.java
-src/astre/vue/previsionnel/PanelEnsSemestre.java
 src/astre/vue/previsionnel/PanelBouton.java
+src/astre/vue/previsionnel/PanelEnsSemestre.java
+src/astre/vue/previsionnel/PanelPrevisionnel.java
 src/astre/vue/previsionnel/PanelSemestre.java
+src/astre/vue/previsionnel/TableauModules.java
 
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModule.java
 
-src/astre/vue/intervenants/PanelIntervenants.java
-src/astre/vue/intervenants/FrameIntervenants.java
+src/astre/vue/FrameAccueil.java
+
