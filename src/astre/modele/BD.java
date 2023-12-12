@@ -107,13 +107,11 @@ public class BD
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "select * from Heure" );
 			while ( rs.next ( ) ) 
-			{
-				lst.add ( new Heure( rs.getString(1), rs.getDouble(2) ) );
-			}
+				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble(2) ) );
 		} 
 		catch ( SQLException e ) 
 		{
-			System.out.println ( "Erreur getHeure() : " + e );
+			System.out.println ( "Erreur getHeure ( ) : " + e );
 		}
 		
 		return lst;
@@ -343,16 +341,15 @@ public class BD
 
 	public Object[][] getIntervenantsTableau ( )
 	{
+		//TODO: première partie de la requete inutile ? faire la taille du resultSet ? 
 		int nbInervenants = 0;
 		
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery( "select count(*) from Intervenant" );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervenant" );
 			while ( rs.next ( ) )
-			{
 				nbInervenants = rs.getInt ( 1 );
-			}
 		}
 		catch ( SQLException e )
 		{
@@ -368,16 +365,16 @@ public class BD
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0] = rs.getString(1);//contrat
-				intervenants[cpt][1] = rs.getString(2);//nom
-				intervenants[cpt][2] = rs.getString(3);//prenom
-				intervenants[cpt][3] = rs.getString(4);//hservice
-				intervenants[cpt][4] = rs.getInt(4);//hmax
-				intervenants[cpt][5] = rs.getInt(4);//hservice
-				intervenants[cpt][6] = "";
-				intervenants[cpt][7] = "";
-				intervenants[cpt][8] = "";
-				intervenants[cpt][9] = "";
+				intervenants[cpt][0]  = rs.getString ( 1 ); // contrat
+				intervenants[cpt][1]  = rs.getString ( 2 ); // nom
+				intervenants[cpt][2]  = rs.getString ( 3 ); // prenom
+				intervenants[cpt][3]  = rs.getString ( 4 ); // hservice
+				intervenants[cpt][4]  = rs.getInt    ( 4 ); // hmax
+				intervenants[cpt][5]  = rs.getInt    ( 4 ); // hservice
+				intervenants[cpt][6]  = "";
+				intervenants[cpt][7]  = "";
+				intervenants[cpt][8]  = "";
+				intervenants[cpt][9]  = "";
 				intervenants[cpt][10] = "";
 				intervenants[cpt][11] = "";
 				intervenants[cpt][12] = "";
@@ -389,7 +386,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ("Erreur 2 getIntervenantsTableau() : " +  e );
+			System.out.println ( "Erreur 2 getIntervenantsTableau ( ) : " +  e );
 		}
 		return intervenants;
 	}
@@ -412,7 +409,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(Contrat c) : " + e );
+			System.out.println ( "Erreur insert ( Contrat c ) : " + e );
 		}
 	}
 
@@ -428,7 +425,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(Heure h) : " +  e );
+			System.out.println ( "Erreur insert ( Heure h ) : " +  e );
 		}
 	}
 
@@ -466,7 +463,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(intervenant i) : " + e );
+			System.out.println ( "Erreur insert ( Intervenant i ) : " + e );
 		}
 	}
 
@@ -487,7 +484,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur insert(intervient e) : " + x );
+			System.out.println ( "Erreur insert ( Intervient e ) : " + x );
 		}
 	}
 
@@ -507,7 +504,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(horaire h) : " + e );
+			System.out.println ( "Erreur insert ( Horaire h ) : " + e );
 		}
 	}
 
@@ -526,7 +523,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Contrat c) : " + e );
+			System.out.println ( "Erreur delete ( Contrat c ) : " + e );
 		}
 	}
 
@@ -541,7 +538,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Heure h) : " + e );
+			System.out.println ( "Erreur delete ( Heure h ) : " + e );
 		}
 	}
 
@@ -556,7 +553,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Module m) : " +  e );
+			System.out.println ( "Erreur delete ( Module m ) : " +  e );
 		}
 	}
 
@@ -571,7 +568,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Intervenant i) : " + e );
+			System.out.println ( "Erreur delete ( Intervenant i ) : " + e );
 		}
 	}
 	
@@ -588,7 +585,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur delete(Intervient e) : " + x );
+			System.out.println ( "Erreur delete ( Intervient e ) : " + x );
 		}
 	}
 
@@ -605,11 +602,10 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(horaire h) : " + e );
+			System.out.println ( "Erreur delete ( horaire h ) : " + e );
 		}
 	}
 
-	
 
 	/*---------------------------------------*/
 	/*                UPDATE                 */
@@ -632,7 +628,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Semestre s) : " + e );
+			System.out.println ( "Erreur update ( Semestre s ) : " + e );
 		}
 	}
 
@@ -651,7 +647,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Contrat c) : " + e );
+			System.out.println ( "Erreur update ( Contrat c ) : " + e );
 		}
 	}
 
@@ -667,7 +663,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Heure h) : " + e );
+			System.out.println ( "Erreur update ( Heure h ) : " + e );
 		}
 	}
 
@@ -686,7 +682,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Module m) : " + e);
+			System.out.println ( "Erreur update ( Module m ) : " + e);
 		}
 	}
 
@@ -705,7 +701,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Intervenant i) : " + e);
+			System.out.println ( "Erreur update ( Intervenant i ) : " + e);
 		}
 	}
 
@@ -726,7 +722,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur update(Intervient e ) : " + x );
+			System.out.println ( "Erreur update ( Intervient e ) : " + x );
 		}
 	}
 
@@ -745,7 +741,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Horaire h) : " + e);
+			System.out.println ( "Erreur update ( Horaire h ) : " + e );
 		}
 	}
 	
@@ -756,12 +752,12 @@ public class BD
 	{
 		BD bd = BD.getInstance ( );
 
-		List<Intervenant> test = bd.getIntervenants();
+		List<Intervenant> test = bd.getIntervenants ( );
 
-		for(Intervenant i : test)
+		for ( Intervenant i : test )
 		{
-			System.out.println(i.toString() );
-			System.out.println( i.getContrat().toString() );
+			System.out.println ( i.toString   ( ) );
+			System.out.println ( i.getContrat ( ) );
 		}
 
 	}

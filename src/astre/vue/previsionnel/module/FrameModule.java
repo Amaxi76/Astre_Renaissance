@@ -33,8 +33,7 @@ public class FrameModule extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setLayout ( new BorderLayout ( ) );
-		this.setSize   ( 1000, 700 );
+		this.setSize   ( 1000, 700               );
 		this.setTitle  ( "Prévisionnel : Module" );
 
 		/* ------------------------- */

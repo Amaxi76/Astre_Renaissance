@@ -8,7 +8,6 @@ package astre.vue.previsionnel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import javax.swing.border.EmptyBorder;
 
 import astre.Controleur;
 import astre.vue.outils.ConstantesVue;

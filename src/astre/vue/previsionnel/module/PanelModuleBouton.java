@@ -40,8 +40,8 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.btnEnregistrer.addActionListener(this);
-		this.btnAnnuler    .addActionListener(this);
+		this.btnEnregistrer.addActionListener ( this );
+		this.btnAnnuler    .addActionListener ( this );
 	}
 
 	/* ActionListener */
@@ -49,12 +49,12 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			System.out.println("Enregistrer");
+			System.out.println ( "Enregistrer" );
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			System.out.println("Annuler");
+			System.out.println ( "Annuler" );
 		}
 	}
 }
