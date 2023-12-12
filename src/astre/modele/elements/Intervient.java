@@ -1,12 +1,12 @@
 package astre.modele.elements;
 
-/** Classe Enseigne
+/** Classe Intervient
   * @author : Alizéa Lebaron
   * @version : 1.0 - 12/12/2023
   * @date : 12/12/2023
   */
 
-public class Enseigne 
+public class Intervient 
 {
 	private Intervenant intervenant;
 	private Heure       heure;
@@ -25,7 +25,7 @@ public class Enseigne
 	 * @param nbHeure
 	 * @param commentaire
 	 */
-	public Enseigne ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
+	public Intervient ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
 	{
 		this.intervenant = intervenant;
 		this.heure = heure;

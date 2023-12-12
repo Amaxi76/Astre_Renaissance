@@ -9,8 +9,6 @@ package astre.modele;
 
 //TODO: Changer les types de retour en List au lieu d'ArrayList
 //TODO: Penser à fermer le rs et st
-//FIXME: Les noms de variables ne correspondent pas entre la DB et le code (ex: nbHeure avec nbHeureReparties)
-//FIXME: Changer le nom nbHeure dans la BD par nbHeureRepartie
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -461,7 +459,7 @@ public class BD
 		}
 	}
 
-	public void insert ( Enseigne e )
+	public void insert ( Intervient e )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
@@ -566,7 +564,7 @@ public class BD
 		}
 	}
 	
-	public void delete ( Enseigne e )
+	public void delete ( Intervient e )
 	{
 		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
@@ -698,7 +696,7 @@ public class BD
 		}
 	}
 
-	public void update ( Enseigne e )
+	public void update ( Intervient e )
 	{
 		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
