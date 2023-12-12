@@ -3,12 +3,11 @@ package astre.modele;
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin et Maxime Lemoine
   * @version : 1.0 - 11/12/2023
-
   * @date : 06/12/2023
   */
 
 //TODO: Penser à fermer le rs et st
-//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD
+//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -175,6 +174,8 @@ public class BD
 	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
 		//FIXME: Peut avoir une heure null 
+
+		//TODO: Fonction SQL
 		
 		HashMap<Heure, Integer> hm = new HashMap<> ( );
 		
@@ -297,6 +298,8 @@ public class BD
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
+
+	//TODO: Fonction SQL ?
 
 	public Object[][] getModulesTableau ( )
 	{
@@ -753,7 +756,7 @@ public class BD
 	{
 		BD bd = BD.getInstance ( );
 
-		ArrayList<Intervenant> test = bd.getIntervenants();
+		List<Intervenant> test = bd.getIntervenants();
 
 		for(Intervenant i : test)
 		{
