@@ -7,7 +7,6 @@ package astre.modele.elements;
   */
 
 import java.util.Map;
-import java.util.HashMap;
 
 public class ModuleIUT
 {
@@ -29,8 +28,8 @@ public class ModuleIUT
 		this.libLong           = libLong;
 		this.libCourt          = libCourt;
 		this.valide            = false;
-		this.hsHeuresPn        = hsHeuresPn;
-		this.hsHeuresRepatiees = hsHeuresRepatiees;
+		this.hmHeuresPn        = hmHeuresPn;
+		this.hmHeuresRepatiees = hmHeuresRepatiees;
 	}
 
 	/*---------------------------------------*/
@@ -43,15 +42,15 @@ public class ModuleIUT
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
 	public String              getLibCourt           ( ) { return this.libCourt;          }
-	public Map<Heure, Integer> getHsHeureRepartiees  ( ) { return this.hsHeuresRepatiees; }
-	public Map<Heure, Integer> getHsHeurePn          ( ) { return this.hsHeuresPn;        }
+	public Map<Heure, Integer> getHmHeureRepartiees  ( ) { return this.hmHeuresRepatiees; }
+	public Map<Heure, Integer> getHmHeurePn          ( ) { return this.hmHeuresPn;        }
 
 	public int getHeureRepartiees ( )
 	{
 		int somme = 0;
 		
-		for ( Heure h : this.hsHeuresRepatiees.keySet ( ) )
-			somme += this.hsHeuresRepatiees.get ( h );
+		for ( Heure h : this.hmHeuresRepatiees.keySet ( ) )
+			somme += this.hmHeuresRepatiees.get ( h );
 
 		return somme;
 	}
@@ -60,8 +59,8 @@ public class ModuleIUT
 	{
 		int somme = 0;
 		
-		for ( Heure h : this.hsHeuresPn.keySet ( ) )
-			somme += this.hsHeuresPn.get ( h );
+		for ( Heure h : this.hmHeuresPn.keySet ( ) )
+			somme += this.hmHeuresPn.get ( h );
 
 		return somme;
 	}
