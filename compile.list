@@ -28,7 +28,6 @@ src/astre/vue/outils/PopUpErreur.java
 src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
-src/astre/vue/previsionnel/PanelPrevisionnel.java
 src/astre/vue/previsionnel/PanelSemestre.java
 src/astre/vue/previsionnel/TableauModules.java
 
