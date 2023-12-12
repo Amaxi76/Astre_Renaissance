@@ -1,7 +1,7 @@
 package astre.modele;
 
 /** Classe Contrat 
-  * @author : Maximilien Lesterlin
+  * @author : Maximilien Lesterlin, Alizéa Lebaron
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
@@ -14,8 +14,6 @@ public class Contrat
 	private static List<Contrat> ensContrat = new ArrayList<> ( );
 
 	private int    id;
-
-
 	private String nom;
 	private int    heureServiceContrat;
 	private int    heureMaxContrat;
@@ -61,7 +59,6 @@ public class Contrat
 		Contrat.ensContrat.remove ( this );
 		return true;
 	}
-	
 
 	public String toString ( )
 	{
@@ -70,24 +67,6 @@ public class Contrat
 		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
 		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             );
 
-	}
-
-	private static void test ( )
-	{
-		System.out.println ( Contrat.ensContrat );
-
-		Contrat c = new Contrat (1, "test", 0, 0, 0 );
-
-		System.out.println ( Contrat.ensContrat );
-
-		c.retirerListe ( );
-
-		System.out.println ( Contrat.ensContrat );
-	}
-
-	public static void main ( String[] args )
-	{
-		Contrat.test ( );
 	}
 	
 }
