@@ -7,7 +7,6 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
-//TODO: Changer les types de retour en List au lieu d'ArrayList
 //TODO: Penser à fermer le rs et st
 
 import java.sql.*;
@@ -54,7 +53,7 @@ public class BD
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
 
-	public ArrayList<Semestre> getSemestres ( )
+	public List<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
 		
@@ -77,7 +76,7 @@ public class BD
 		return lst;
 	}
 	
-	public ArrayList<Contrat> getContrats ( )
+	public List<Contrat> getContrats ( )
 	{
 		ArrayList<Contrat> lst = new ArrayList<Contrat> ( );
 		
@@ -120,7 +119,7 @@ public class BD
 		return lst;
 	}
 	
-	// public ArrayList<TypeModule> getTypeModules()
+	// public List<TypeModule> getTypeModules()
 	// {
 		
 	// }
@@ -206,7 +205,7 @@ public class BD
 		return hm;
 	}
 	
-	public ArrayList<Intervenant> getIntervenants ( )
+	public List<Intervenant> getIntervenants ( )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		
@@ -227,12 +226,12 @@ public class BD
 		return lst;
 	}
 	
-	/*public ArrayList<Intervient> getIntervient()
+	/*public List<Intervient> getIntervient()
 	{
 		
 	}*/
 	
-	/*public ArrayList<Horaire> getHoraires()
+	/*public List<Horaire> getHoraires()
 	{
 		
 	}*/
