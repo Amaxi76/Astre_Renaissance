@@ -757,7 +757,7 @@ public class BD
 	{
 		BD bd = BD.getInstance ( );
 
-		ArrayList<Intervenant> test = bd.getIntervenants();
+		List<Intervenant> test = bd.getIntervenants();
 
 		for(Intervenant i : test)
 		{
