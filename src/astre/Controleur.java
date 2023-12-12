@@ -32,6 +32,11 @@ public class Controleur
 		return this.metier.getTableauModule ( );
 	}
 
+	public Object[][] getTableauIntervenant ( )
+	{
+		return this.metier.getTableauIntervenant ( );
+	}
+
 	public static void afficherErreur ( String titre, String message )
 	{
 		new PopUpErreur( titre, message );
