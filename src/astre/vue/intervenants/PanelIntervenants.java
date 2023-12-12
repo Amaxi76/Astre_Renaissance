@@ -1,6 +1,8 @@
 package astre.vue.intervenants;
 
 import astre.Controleur;
+import astre.modele.BD;
+import astre.modele.elements.*;
 
 /** Page de gestion des intervenants
   * @author : Matéo Sa
@@ -12,6 +14,7 @@ import astre.vue.outils.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.awt.BorderLayout;
 
 public class PanelIntervenants extends JPanel implements ActionListener
@@ -96,7 +99,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource() == this.btnEnregistrer )
 		{
-			comparerTableaux(this.ctrl.getTableauIntervenant(), this.tableau.getDonnees());
+			comparerTableaux2(this.ctrl.getTableauIntervenant(), this.tableau.getDonnees());
 		}
 		
 		if ( e.getSource() == this.btnAnnuler )
@@ -132,6 +135,38 @@ public class PanelIntervenants extends JPanel implements ActionListener
             System.out.println("Ligne " + i + " a été ajoutée.");
         }
     }
+
+	public void comparerTableaux2(Object[][] premier, Object[][] deuxieme)
+	{
+		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
+		BD bd = BD.getInstance();//a modif ptet
+		
+		for (int i = 0; i < deuxieme.length; i++)
+		{
+			Intervenant inter = new Intervenant(i, (String)deuxieme[i][1], (String)deuxieme[i][2], null, (int)deuxieme[i][3], (int)deuxieme[i][4]);
+			
+			if( bd.existe(inter) )
+			{
+				//bd.update(inter);
+				System.out.println("Ligne " + i + " doit etre modifiée.");
+			}
+			else
+			{
+				//bd.insert(inter);
+				System.out.println("Ligne " + i + " doit etre ajouter.");
+			}
+		}
+
+		for (int i = 0; i < premier.length; i++)
+		{
+			Intervenant inter = new Intervenant(i, (String)premier[i][1], (String)premier[i][2], null, (int)premier[i][3], (int)premier[i][4]);
+			if(!lst.contains(inter))
+			{
+				//bd.delete(inter);
+				System.out.println("Ligne " + i + " doit etre supprimée.");
+			}
+		}
+	}
 
     public boolean compareLignes(Object[] ligne1, Object[] ligne2)
 	{

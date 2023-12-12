@@ -18,9 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import astre.modele.*;
-//import explicite pour pas confondre avec java.lang.Module
-
 import astre.modele.elements.*;
 
 public class BD
@@ -736,6 +733,34 @@ public class BD
 		{
 			System.out.println ( "Erreur update(Horaire h) : " + e);
 		}
+	}
+
+
+	/*---------------------------------------*/
+	/*                VERIF                  */
+	/*---------------------------------------*/
+
+	public boolean existe ( Intervenant i )
+	{
+		int count = 0;
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT count(*) FROM Intervenant WHERE Id_Intervenant = " + i.getId() );
+			while ( rs.next ( ) )
+			{
+				count = rs.getInt(1);
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getSemestre() : " + e );
+		}
+
+		if(count == 0)
+			return false;
+
+		return true;
 	}
 	
 	/*---------------------------------------*/
