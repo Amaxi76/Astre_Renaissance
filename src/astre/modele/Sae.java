@@ -8,7 +8,6 @@ package astre.modele;
 
 public class Sae extends Module
 {
-
 	public Sae ( Semestre semestre, String code, String libLong, String libCourt )
 	{
 		super ( semestre, code, libLong, libCourt );

@@ -2,24 +2,26 @@ package astre.modele;
 
 /** Classe Intervenant 
   * @author : Maximilien Lesterlin, Alizéa Lebaron
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0.1 - 12/12/2023
   * @date : 06/12/2023
   */
 
 public class Intervenant
 {
+	private int 	id;
 	private String  nom;
 	private String  prenom;
-	private Contrat contrat;
-	private int     service;
+	private int     heureService;
 	private int     heureMaximum;
+	private Contrat contrat;
 
-	public Intervenant ( String nom, String prenom, Contrat contrat, int service, int heureMaximum )
+	public Intervenant (int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
 	{
+		this.id           = id;
 		this.nom          = nom;
 		this.prenom       = prenom;
 		this.contrat      = contrat;
-		this.service      = service;
+		this.heureService = heureService;
 		this.heureMaximum = heureMaximum;
 	}
 
@@ -27,20 +29,22 @@ public class Intervenant
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	public int     getId           ( ) { return this.id;           }
 	public String  getNom          ( ) { return this.nom;          }
 	public String  getPrenom       ( ) { return this.prenom;       }
-	public Contrat getContrat      ( ) { return this.contrat;       }
-	public int     getService      ( ) { return this.service;      }
+	public Contrat getContrat      ( ) { return this.contrat;      }
+	public int     getheureService ( ) { return this.heureService; }
 	public int     getHeureMaximum ( ) { return this.heureMaximum; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
+	public void setId           ( int     id           ) { this.id           = id;           }
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
-	public void setContrat      ( Contrat contrat      ) { this.contrat       = contrat;     }
-	public void setService      ( int     service      ) { this.service      = service;      }
+	public void setContrat      ( Contrat contrat      ) { this.contrat      = contrat;      }
+	public void setheureService ( int     heureService ) { this.heureService = heureService; }
 	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
 
 	/*---------------------------------------*/
@@ -56,7 +60,7 @@ public class Intervenant
 
 		sRet = String.format ( "Nom               : %20s - ",  this.nom           ) +
 			   String.format ( "Prénom            : %20s - ",  this.prenom        ) +
-			   String.format ( "Service           : %3d  - ",  this.service       ) +
+			   String.format ( "heureService           : %3d  - ",  this.heureService       ) +
 			   String.format ( "Heure Max         : %3d  - ",  this.heureMaximum  ) ;
 
 		return sRet;
