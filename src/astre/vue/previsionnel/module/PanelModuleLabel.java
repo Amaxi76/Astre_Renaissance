@@ -124,9 +124,17 @@ public class PanelModuleLabel  extends JPanel
 			this.lblType.setText("Ressource");
 		}
 
-		if (code.startsWith("S"))
+		else if (code.startsWith("S"))
 		{
 			this.lblType.setText("SAE");
+		}
+
+		else if (code.contains("ST"))
+		{
+			if (!code.startsWith("ST"))
+			{
+				this.lblType.setText("Stage");
+			}
 		}
 
 		int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
