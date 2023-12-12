@@ -1,4 +1,4 @@
-package astre.modele.bd;
+package astre.modele;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron
@@ -9,7 +9,10 @@ package astre.modele.bd;
 import java.sql.*;
 import java.util.ArrayList;
 import astre.modele.*;
-import astre.modele.Module;
+import astre.modele.elements.Contrat;
+import astre.modele.elements.Heure;
+import astre.modele.elements.Intervenant;
+import astre.modele.elements.Semestre;
 
 public class BD
 {
@@ -484,8 +487,8 @@ public class BD
 		{
 			ps = co.prepareStatement ( req );
 			ps.setInt    ( 1, i.getId   ( ) );
-			ps.setString ( 1, h.getNom  ( ) );
-			ps.setString ( 1, m.getCode ( ) );
+			ps.setString ( 2, h.getNom  ( ) );
+			ps.setString ( 3, m.getCode ( ) );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
@@ -496,7 +499,7 @@ public class BD
 
 	public void delete ( Heure h, Module m )
 	{
-		String req = "DELETE FROM Intervenant where Id_Intervenant = ?";
+		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );

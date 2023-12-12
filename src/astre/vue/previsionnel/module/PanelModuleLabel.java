@@ -3,17 +3,14 @@ package astre.vue.previsionnel.module;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
 
-public class PanelModule  extends JPanel implements ActionListener
+public class PanelModuleLabel  extends JPanel
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -27,22 +24,26 @@ public class PanelModule  extends JPanel implements ActionListener
 	private JTextField txtLibLong;
 	private JTextField txtLibCourt;
 
-	private JButton btnEnregistrer;
-	private JButton btnAnnuler;
+	private JLabel lblNbEtd;
+	private JLabel lblNbGpTD;
+	private JLabel lblNbGpTP;
+
 
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelModule ( Controleur ctrl )
+	public PanelModuleLabel ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.lblType	 = new JLabel ();
-		this.lblSemestre = new JLabel ();
+		this.setLayout ( new GridLayout( 2, 5 ) );
+
+		this.lblType	 = new JLabel ( );
+		this.lblSemestre = new JLabel ( );
 		this.txtCode	 = new JTextField ("", 5);
 		this.txtLibLong	 = new JTextField ("", 20);
 		this.txtLibCourt = new JTextField ("", 10);
@@ -62,11 +63,19 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.add ( new JLabel ( "Libellé court : " ) );
 		this.add ( this.txtLibCourt );
 
-		this.btnEnregistrer = new JButton ( "Enregistrer" );
-		this.btnAnnuler     = new JButton ( "Annuler"     );
 
-		this.add ( this.btnEnregistrer );
-		this.add ( this.btnAnnuler     );
+		this.lblNbEtd  = new JLabel( );
+		this.lblNbGpTD = new JLabel( );
+		this.lblNbGpTP = new JLabel( );
+
+		this.add ( new JLabel ( "nb Etd : " ) );
+		this.add ( this.lblNbEtd  );
+
+		this.add ( new JLabel ( "nb gp TD : " ) );
+		this.add ( this.lblNbGpTD );
+
+		this.add ( new JLabel ( "nb gp TP : " ) );
+		this.add ( this.lblNbGpTP );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -83,7 +92,7 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.txtCode.addKeyListener(new KeyListener()
 		{
 			@Override
-			public void keyTyped(KeyEvent e) { validateTextField(); }
+			public void keyTyped(KeyEvent e) { validationTextField(); }
 
 			@Override
 			public void keyPressed(KeyEvent e) {}
@@ -92,11 +101,21 @@ public class PanelModule  extends JPanel implements ActionListener
 			public void keyReleased(KeyEvent e) {}
 		} );
 
-		this.btnEnregistrer.addActionListener(this);
-		this.btnAnnuler    .addActionListener(this);
+
+		this.lblNbEtd .setBackground ( Color.LIGHT_GRAY );
+		this.lblNbEtd .setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbEtd .setOpaque ( true );
+
+		this.lblNbGpTD.setBackground ( Color.LIGHT_GRAY );
+		this.lblNbGpTD.setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbGpTD.setOpaque ( true );
+
+		this.lblNbGpTP.setBackground ( Color.LIGHT_GRAY );
+		this.lblNbGpTP.setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbGpTP.setOpaque ( true );
 	}
 
-	private void validateTextField()
+	private void validationTextField()
 	{
 		String code = this.txtCode.getText();
 
@@ -114,14 +133,5 @@ public class PanelModule  extends JPanel implements ActionListener
 
 		if (valSemestre >= 1 && valSemestre <= 6)
 			this.lblSemestre.setText("S" + valSemestre);
-	}
-
-	/* ActionListener */
-	public void actionPerformed ( ActionEvent e )
-	{
-		if ( e.getSource ( ) == this.btnEnregistrer )
-		{
-			System.out.println("Enregistrer");
-		}
 	}
 }

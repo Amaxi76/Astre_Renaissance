@@ -106,11 +106,11 @@ CREATE TABLE Enseigne
 
 CREATE TABLE Horaire
 ( 
-   nomHeure     VARCHAR(50) ,
-   Id_ModuleIUT VARCHAR(5) ,
+   nomHeure     VARCHAR(50),
+   Id_ModuleIUT VARCHAR(5),
    nbHeurePN    INTEGER,
    nbHeure      INTEGER,
-   nbSemaine    VARCHAR(50) ,
+   nbSemaine    INTEGER,
    
    PRIMARY KEY(nomHeure, Id_ModuleIUT),
    FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),

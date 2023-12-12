@@ -1,7 +1,7 @@
-package astre.modele;
+package astre.modele.elements;
 
 /** Classe Contrat 
-  * @author : Maximilien Lesterlin
+  * @author : Maximilien Lesterlin, Alizéa Lebaron
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
@@ -19,6 +19,13 @@ public class Contrat
 	private int    heureMaxContrat;
 	private double ratioTP;
 
+	/**
+	 * @param id
+	 * @param nom
+	 * @param heureServiceContrat
+	 * @param heureMaxContrat
+	 * @param ratioTP
+	 */
 	public Contrat ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
 		this.id                  = id;
@@ -32,26 +39,59 @@ public class Contrat
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	/**
+	 * @return
+	 */
 	public int    getId                  ( ) { return this.id;                  }
+	/**
+	 * @return
+	 */
 	public String getNom                 ( ) { return this.nom;                 }
+	/**
+	 * @return
+	 */
 	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
+	/**
+	 * @return
+	 */
 	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
+	/**
+	 * @return
+	 */
 	public double getRatioTP             ( ) { return this.ratioTP;             }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
+	/**
+	 * @param heureServiceContrat
+	 */
 	public void setHeureServiceContrat ( int    heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
+	/**
+	 * @param nom
+	 */
 	public void setNom                 ( String nom                 ) { this.nom                 = nom;                 }
+	/**
+	 * @param heureMaxContrat
+	 */
 	public void setHeureMaxContrat     ( int    heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
+	/**
+	 * @param ratioTP
+	 */
 	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
+	/**
+	 * @param id
+	 */
 	public void setId                  ( int    id                  ) { this.id                  = id;                  }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
 
+	/**
+	 * @return
+	 */
 	public boolean retirerListe ( )
 	{
 		if ( ! Contrat.ensContrat.contains ( this ) ) return false;
@@ -60,6 +100,9 @@ public class Contrat
 		return true;
 	}
 
+	/**
+	 * @return
+	 */
 	public String toString ( )
 	{
 		return String.format ( "Nom : %-20s - "                 , this.nom                 ) +

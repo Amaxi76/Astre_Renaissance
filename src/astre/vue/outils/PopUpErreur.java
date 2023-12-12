@@ -11,7 +11,7 @@ public class PopUpErreur extends JDialog
 {
 	private JLabel lblErreur;
 	
-	//TODO : faire en sorte que le texte fasse des retour à la ligne pour une meilleur lisibilité
+	//TODO: faire en sorte que le texte fasse des retour à la ligne pour une meilleur lisibilité
 	
 	public PopUpErreur ( String titre, String message )
 	{
@@ -19,7 +19,7 @@ public class PopUpErreur extends JDialog
 		JPanel panel = new JPanel ( );
 		this.lblErreur = new JLabel ( message );
 		panel.add ( this.lblErreur );
-		this.setContentPane​ ( panel );
+		this.setContentPane ( panel );
 
 		this.afficher ( );
 	}
