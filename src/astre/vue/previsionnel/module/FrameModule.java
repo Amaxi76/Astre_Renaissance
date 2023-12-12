@@ -7,10 +7,10 @@ import javax.swing.JFrame;
 import astre.Controleur;
 
 /** Classe FrameModule
-  * @author : Clémentin Ly
-  * @version : 1.0 - 11/12/2023
-  * @date : 11/12/2023
-  */
+ * @author : Clémentin Ly
+* @version : 1.0 - 11/12/2023
+* @date : 11/12/2023
+*/
 
 public class FrameModule extends JFrame
 {
@@ -41,8 +41,9 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.add ( new PanelModuleLabel  ( this.ctrl ), BorderLayout.NORTH );
-		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH );
+		this.add ( new PanelModuleLabel       ( this.ctrl ), BorderLayout.NORTH  );
+		this.add ( new PanelModuleAttribution ( this.ctrl ), BorderLayout.CENTER );
+		this.add ( new PanelModuleBouton      ( this.ctrl ), BorderLayout.SOUTH  );
 
 		this.setVisible ( true );
 	}
