@@ -7,10 +7,7 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
-//TODO: Changer les types de retour en List au lieu d'ArrayList
 //TODO: Penser à fermer le rs et st
-//FIXME: Les noms de variables ne correspondent pas entre la DB et le code (ex: nbHeure avec nbHeureReparties)
-//FIXME: Changer le nom nbHeure dans la BD par nbHeureRepartie
 //TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD
 
 import java.sql.*;
@@ -57,7 +54,7 @@ public class BD
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
 
-	public ArrayList<Semestre> getSemestres ( )
+	public List<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
 		
@@ -80,7 +77,7 @@ public class BD
 		return lst;
 	}
 	
-	public ArrayList<Contrat> getContrats ( )
+	public List<Contrat> getContrats ( )
 	{
 		ArrayList<Contrat> lst = new ArrayList<Contrat> ( );
 		
@@ -123,7 +120,7 @@ public class BD
 		return lst;
 	}
 	
-	// public ArrayList<TypeModule> getTypeModules()
+	// public List<TypeModule> getTypeModules()
 	// {
 		
 	// }
@@ -223,7 +220,7 @@ public class BD
 		return hm;
 	}
 	
-	public ArrayList<Intervenant> getIntervenants ( )
+	public List<Intervenant> getIntervenants ( )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		
@@ -244,12 +241,12 @@ public class BD
 		return lst;
 	}
 	
-	/*public ArrayList<Enseigne> getEnseignes()
+	/*public List<Intervient> getIntervient()
 	{
 		
 	}*/
 	
-	/*public ArrayList<Horaire> getHoraires()
+	/*public List<Horaire> getHoraires()
 	{
 		
 	}*/
@@ -476,9 +473,9 @@ public class BD
 		}
 	}
 
-	public void insert ( Enseigne e )
+	public void insert ( Intervient e )
 	{
-		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		String req = "INSERT INTO Intervient VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -493,14 +490,14 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur insert(enseigne e) : " + x );
+			System.out.println ( "Erreur insert(intervient e) : " + x );
 		}
 	}
 
 
 	public void insert ( Horaire h )
 	{
-		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		String req = "INSERT INTO Horaire VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -581,9 +578,9 @@ public class BD
 		}
 	}
 	
-	public void delete ( Enseigne e )
+	public void delete ( Intervient e )
 	{
-		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -594,7 +591,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur delete(Enseigne e) : " + x );
+			System.out.println ( "Erreur delete(Intervient e) : " + x );
 		}
 	}
 
@@ -675,7 +672,7 @@ public class BD
 		}
 	}
 
-	public void update ( Module m )
+	public void update ( ModuleIUT m )
 	{
 		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
 		try
@@ -713,9 +710,9 @@ public class BD
 		}
 	}
 
-	public void update ( Enseigne e )
+	public void update ( Intervient e )
 	{
-		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "UPDATE Intervient SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -730,7 +727,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur update(Enseigne e ) : " + x );
+			System.out.println ( "Erreur update(Intervient e ) : " + x );
 		}
 	}
 

@@ -1,16 +1,16 @@
 package astre.modele.elements;
 
-/** Classe Enseigne
+/** Classe Intervient
   * @author : Alizéa Lebaron
   * @version : 1.0 - 12/12/2023
   * @date : 12/12/2023
   */
 
-public class Enseigne 
+public class Intervient 
 {
 	private Intervenant intervenant;
 	private Heure       heure;
-	private Module      module;
+	private ModuleIUT   module;
 	private int         nbSemaine;
 	private int         nbGroupe;
 	private int         nbHeure;
@@ -25,7 +25,7 @@ public class Enseigne
 	 * @param nbHeure
 	 * @param commentaire
 	 */
-	public Enseigne ( Intervenant intervenant, Heure heure, Module module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
+	public Intervient ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
 	{
 		this.intervenant = intervenant;
 		this.heure = heure;
@@ -53,7 +53,7 @@ public class Enseigne
 	/**
 	 * @return module
 	 */
-	public Module      getModule      ( ) { return module;      }
+	public ModuleIUT      getModule      ( ) { return module;      }
 
 	/**
 	 * @return nbSemaine
@@ -92,7 +92,7 @@ public class Enseigne
 	/**
 	 * @param module the module to set
 	 */
-	public void setModule      ( Module      module      ) { this.module      = module;      }
+	public void setModule      ( ModuleIUT      module      ) { this.module      = module;      }
 
 	/**
 	 * @param nbSemaine the nbSemaine to set
