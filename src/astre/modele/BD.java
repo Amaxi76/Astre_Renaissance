@@ -559,7 +559,99 @@ public class BD
 	/*                UPDATE                 */
 	/*---------------------------------------*/
 
+	public void update ( Semestre s )
+	{
+		String req = "UPDATE Semestre SET nbGroupeTP = ?, nbGroupeTD = ?, nbEtud = ?, nbSemaine = ? WHERE Id_Semestre = ? ";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt ( 1, s.getNbGroupeTP ( ) );
+			ps.setInt ( 2, s.getNbGroupeTD ( ) );
+			ps.setInt ( 3, s.getNbEtudiant ( ) );
+			ps.setInt ( 4, s.getNbSemaine  ( ) );
+			ps.setInt ( 5, s.getIdSemestre ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
 
+	public void update ( Contrat c )
+	{
+		String req = "UPDATE Contrat SET nomContrat = ?, hServiceContrat = ?, hMaxContrat = ?, ratioTP = ? WHERE Id_Contrat = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, c.getNom                 ( ) );
+			ps.setInt    ( 2, c.getHeureServiceContrat ( ) );
+			ps.setInt    ( 3, c.getHeureMaxContrat     ( ) );
+			ps.setDouble ( 4, c.getRatioTP             ( ) );
+			ps.setInt    ( 5, c.getId                  ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void update ( Heure h )
+	{
+		String req = "UPDATE Heure SET coeffTD = ? WHERE nomHeure = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setDouble ( 1, h.getCoefTd ( ) );
+			ps.setString ( 2, h.getNom    ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void update ( Module m )
+	{
+		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, m.getLibLong    ( ) );
+			ps.setString ( 2, m.getLibCourt   ( ) );
+			ps.setInt    ( 3, m.getTypeModule ( ).getId         ( ) );
+			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
+			ps.setString ( 5, m.getCode       ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void update ( Intervenant i )
+	{
+		String req = "UPDATE Intervenant SET nomInter = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, i.getNom          ( ) );
+			ps.setString ( 2, i.getPrenom       ( ) );
+			ps.setInt    ( 3, i.getheureService ( ) );
+			ps.setInt    ( 4, i.getHeureMaximum ( ) );
+			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	//TODO update des enseigne et horaire
 
 	
 	/*---------------------------------------*/

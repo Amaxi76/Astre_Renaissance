@@ -48,18 +48,18 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibLong	 = new JTextField ("", 20);
 		this.txtLibCourt = new JTextField ("", 10);
 
-		this.add ( new JLabel ( "Type" ) );
-		this.add ( new JLabel ( "Semestre : " ) );
-		this.add ( new JLabel ( "Code : "  ) );
-		this.add ( new JLabel ( "Libellé long : " ) );
-		this.add ( new JLabel ( "Libellé court : " ) );
+		this.add ( new JLabel ( "type module" ) );
+		this.add ( new JLabel ( "semestre" ) );
+		this.add ( new JLabel ( "code"  ) );
+		this.add ( new JLabel ( "libellé long" ) );
+		this.add ( new JLabel ( "libellé court" ) );
 		
 		this.add ( this.lblType     );
 		this.add ( this.lblSemestre );
 		this.add ( this.txtCode     );
 		this.add ( this.txtLibLong  );
 		this.add ( this.txtLibCourt );
-		
+
 
 		this.lblNbEtd  = new JLabel( );
 		this.lblNbGpTD = new JLabel( );
