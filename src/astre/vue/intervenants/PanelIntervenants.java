@@ -34,74 +34,114 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	{
 		this.ctrl = ctrl;
 		
-		this.setLayout( new BorderLayout() );
+		this.setLayout ( new BorderLayout() );
 		int marginSize = 10;
-		this.setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
+		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		//création des composants
 		String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 		//this.tableau = new Tableau(noms);
 
-		this.tableau = new Tableau(noms, this.ctrl.getTableauIntervenant(), true);
+		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant(), true );
 		this.tableau.ajusterTailleColonnes();
 
-		this.btnAjouter = new JButton( "Ajouter" );
-		this.btnSupprimer = new JButton( "Supprimer" );
-		this.btnEnregistrer = new JButton( "Enregistrer" );
-		this.btnAnnuler = new JButton( "Annuler" );
+		this.btnAjouter     = new JButton ( "Ajouter" );
+		this.btnSupprimer   = new JButton ( "Supprimer" );
+		this.btnEnregistrer = new JButton ( "Enregistrer" );
+		this.btnAnnuler     = new JButton ( "Annuler" );
 		
-		JPanel panelCentre = new JPanel();
-		panelCentre.setLayout( new BorderLayout() );
-		panelCentre.setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
+		JPanel panelCentre = new JPanel( );
+		panelCentre.setLayout ( new BorderLayout() );
+		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
-		JPanel panelCentre2 = new JPanel();
-		JPanel panelSud = new JPanel();
+		JPanel panelCentre2 = new JPanel( );
+		JPanel panelSud     = new JPanel( );
 		
-		JScrollPane scrollPane = new JScrollPane(this.tableau);
+		JScrollPane scrollPane = new JScrollPane ( this.tableau );
 		
 		//Ajout des composants
-		panelCentre2.add( this.btnAjouter);
-		panelCentre2.add( this.btnSupprimer);
+		panelCentre2.add ( this.btnAjouter   );
+		panelCentre2.add ( this.btnSupprimer );
 		
-		panelCentre.add(panelCentre2, BorderLayout.SOUTH );
-		panelCentre.add(scrollPane, BorderLayout.CENTER);
+		panelCentre.add ( panelCentre2, BorderLayout.SOUTH );
+		panelCentre.add ( scrollPane, BorderLayout.CENTER  );
 		
-		panelSud.add( this.btnEnregistrer );
-		panelSud.add( this.btnAnnuler );
+		panelSud.add ( this.btnEnregistrer );
+		panelSud.add ( this.btnAnnuler     );
 		
-		this.add( new JLabel( "Liste des intervenants" ), BorderLayout.NORTH );
-		this.add( panelCentre, BorderLayout.CENTER );
-		this.add( panelSud, BorderLayout.SOUTH );
+		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH );
+		this.add ( panelCentre, BorderLayout.CENTER );
+		this.add ( panelSud   , BorderLayout.SOUTH  );
 		
 		//met les actionListener
-		this.btnAjouter.addActionListener(this);
-		this.btnSupprimer.addActionListener(this);
-		this.btnEnregistrer.addActionListener(this);
-		this.btnAnnuler.addActionListener(this);
+		this.btnAjouter    .addActionListener ( this );
+		this.btnSupprimer  .addActionListener ( this );
+		this.btnEnregistrer.addActionListener ( this );
+		this.btnAnnuler    .addActionListener ( this );
 	}
 
-	public void actionPerformed(ActionEvent e)
+	public void actionPerformed ( ActionEvent e )
 	{
-		if( e.getSource() == this.btnAjouter )
+		if ( e.getSource() == this.btnAjouter )
 		{
 			this.tableau.ajouterLigne();
 			this.repaint();
 		}
 		
-		if( e.getSource() == this.btnSupprimer )
+		if ( e.getSource() == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne();
 			this.repaint();
 		}
 		
-		if( e.getSource() == this.btnEnregistrer )
+		if ( e.getSource() == this.btnEnregistrer )
 		{
-			
+			comparerTableaux(this.ctrl.getTableauIntervenant(), this.tableau.getDonnees());
 		}
 		
-		if( e.getSource() == this.btnAnnuler )
+		if ( e.getSource() == this.btnAnnuler )
 		{
-			
+			String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+			this.tableau = new Tableau(noms, this.ctrl.getTableauIntervenant(), true);
+			this.tableau.ajusterTailleColonnes();
 		}
 	}
+
+	public void comparerTableaux(Object[][] premier, Object[][] deuxieme)
+	{
+        for (int i = 0; i < premier.length; i++)
+		{
+            if (i < deuxieme.length)
+			{
+                // Comparaison des lignes existantes dans les deux tableaux
+                if (!compareLignes(premier[i], deuxieme[i]))
+				{
+                    System.out.println("Ligne " + i + " a été modifiée.");
+                }
+            }
+			else
+			{
+                // La ligne existe dans le premier tableau mais pas dans le deuxième
+                System.out.println("Ligne " + i + " a été supprimée.");
+            }
+        }
+
+        // Vérification des lignes ajoutées dans le deuxième tableau
+        for (int i = premier.length; i < deuxieme.length; i++)
+		{
+            System.out.println("Ligne " + i + " a été ajoutée.");
+        }
+    }
+
+    public boolean compareLignes(Object[] ligne1, Object[] ligne2)
+	{
+        for (int i = 0; i < ligne1.length; i++)
+		{
+            if (!ligne1[i].equals(ligne2[i]))
+			{
+                return false; // Au moins un élément est différent
+            }
+        }
+        return true; // Tous les éléments sont identiques
+    }
 }

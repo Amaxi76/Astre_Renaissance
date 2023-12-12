@@ -2,7 +2,7 @@ package astre.modele.elements;
 
 /** Classe Module 
   * @author : Maximilien Lesterlin
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0.1 - 12/12/2023
   * @date : 06/12/2023
   */
 
@@ -10,9 +10,16 @@ import java.util.Map;
 
 public class ModuleIUT
 {
+<<<<<<< HEAD:src/astre/modele/elements/ModuleIUT.java
 	Map<Heure, Integer> hmHeuresPn;
 	Map<Heure, Integer> hmHeuresRepaties;
 	
+=======
+	HashMap<Heure, Integer> hsHeuresPn;
+	HashMap<Heure, Integer> hsHeuresRepariees;
+	
+
+>>>>>>> ced1187eefce22079ca604cebe1c9b920a5912c3:src/astre/modele/elements/Module.java
 	Semestre   semestre;
 	TypeModule typeModule;
 	String     code;

@@ -3,6 +3,7 @@ package astre.modele;
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin et Maxime Lemoine
   * @version : 1.0 - 11/12/2023
+
   * @date : 06/12/2023
   */
 
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import astre.modele.*;
 //import explicite pour pas confondre avec java.lang.Module
+
 import astre.modele.elements.*;
 
 public class BD
@@ -36,11 +38,11 @@ public class BD
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
 		}
 	}
 	
@@ -71,7 +73,7 @@ public class BD
 		catch ( SQLException e )
 		
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur getSemestre() : " + e );
 		}
 		
 		return lst;
@@ -93,7 +95,7 @@ public class BD
 		catch ( SQLException e )
 		
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur getContrats() : " + e );
 		}
 		
 		return lst;
@@ -114,7 +116,7 @@ public class BD
 		} 
 		catch ( SQLException e ) 
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur getHeure() : " + e );
 		}
 		
 		return lst;
@@ -225,7 +227,7 @@ public class BD
 		} 
 		catch ( SQLException e ) 
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur getIntervenant() : " + e );
 		}
 		
 		return lst;
@@ -260,7 +262,7 @@ public class BD
 		} 
 		catch ( SQLException e ) 
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur getSemestre(int c) : " + e );
 		}
 		
 		return semestre;
@@ -281,7 +283,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur getContrat(int c) : " + e );
 		}
 		
 		return contrat;
@@ -308,7 +310,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur 1 getModulesTableau() : " + e );
 		}
 		
 		Object[][] modules = new Object[nbModule][4];
@@ -329,7 +331,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur 2 getModulesTableau() : " + e );
 		}
 		return modules;
 	}
@@ -349,7 +351,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur 1 getIntervenantsTableau() : " + e );
 		}
 		
 		Object[][] intervenants = new Object[nbInervenants][15];
@@ -382,7 +384,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ("Erreur 2 getIntervenantsTableau() : " +  e );
 		}
 		return intervenants;
 	}
@@ -405,7 +407,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur insert(Contrat c) : " + e );
 		}
 	}
 
@@ -421,7 +423,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur insert(Heure h) : " +  e );
 		}
 	}
 
@@ -440,7 +442,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur insert(module m) : " + e );
 		}
 	}*/
 	
@@ -459,47 +461,48 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur insert(intervenant i) : " + e );
 		}
 	}
 
-	public void insert ( Intervenant i, Heure h, ModuleIUT m, int nbSemaine, int nbGroupe, int nbHeure, String commentaire )
+	public void insert ( Enseigne e )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setInt    ( 1, i.getId   ( ) );
-			ps.setString ( 2, h.getNom  ( ) );
-			ps.setString ( 3, m.getCode ( ) );
-			ps.setInt    ( 4, nbSemaine     );
-			ps.setInt    ( 5, nbGroupe      );
-			ps.setInt    ( 6, nbHeure       );
-			ps.setString ( 7, commentaire   );
+			ps.setInt    ( 1, e.getIntervenant ( ).getId   ( ) );
+			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
+			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
+			ps.setInt    ( 4, e.getNbSemaine   ( )             );
+			ps.setInt    ( 5, e.getNbGroupe    ( )             );
+			ps.setInt    ( 6, e.getNbHeure     ( )             );
+			ps.setString ( 7, e.getCommentaire ( )             );
 			ps.executeUpdate ( );
 		}
-		catch ( SQLException e )
+		catch ( SQLException x )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur insert(enseigne e) : " + x );
 		}
 	}
 
-	public void insert ( Heure h, ModuleIUT m, int nbHeurePN, int nbHeure, int nbSemaine )
+
+	public void insert ( Horaire h )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, h.getNom  ( ) );
-			ps.setString ( 2, m.getCode ( ) );
-			ps.setInt    ( 3, nbHeurePN     );
-			ps.setInt    ( 4, nbHeure       );
-			ps.setInt    ( 5, nbSemaine     );
+			ps.setString ( 1, h.getHeure     ( ).getNom  ( ) );
+			ps.setString ( 2, h.getModule    ( ).getCode ( ) );
+			ps.setInt    ( 3, h.getNbHeurePN ( )             );
+			ps.setInt    ( 4, h.getNbHeure   ( )             );
+			ps.setInt    ( 5, h.getNbSemaine ( )             );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur insert(horaire h) : " + e );
 		}
 	}
 
@@ -518,7 +521,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur delete(Contrat c) : " + e );
 		}
 	}
 
@@ -533,7 +536,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur delete(Heure h) : " + e );
 		}
 	}
 
@@ -548,7 +551,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur delete(Module m) : " +  e );
 		}
 	}
 
@@ -563,40 +566,41 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur delete(Intervenant i) : " + e );
 		}
 	}
 	
-	public void delete ( Intervenant i, Heure h, ModuleIUT m )
+	public void delete ( Enseigne e )
 	{
 		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setInt    ( 1, i.getId   ( ) );
-			ps.setString ( 2, h.getNom  ( ) );
-			ps.setString ( 3, m.getCode ( ) );
+			ps.setInt    ( 1, e.getIntervenant ( ).getId   ( ) );
+			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
+			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
 			ps.executeUpdate ( );
 		}
-		catch ( SQLException e )
+		catch ( SQLException x )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur delete(Enseigne e) : " + x );
 		}
 	}
 
-	public void delete ( Heure h, ModuleIUT m )
+
+	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, h.getNom  ( ) );
-			ps.setString ( 2, m.getCode ( ) );
+			ps.setString ( 1, h.getHeure  ( ).getNom  ( ) );
+			ps.setString ( 2, h.getModule ( ).getCode ( ) );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( "Erreur delete(horaire h) : " + e );
 		}
 	}
 
@@ -606,8 +610,137 @@ public class BD
 	/*                UPDATE                 */
 	/*---------------------------------------*/
 
+	public void update ( Semestre s )
+	{
+		String req = "UPDATE Semestre SET nbGroupeTP = ?, nbGroupeTD = ?, nbEtud = ?, nbSemaine = ? WHERE Id_Semestre = ? ";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt ( 1, s.getNbGroupeTP ( ) );
+			ps.setInt ( 2, s.getNbGroupeTD ( ) );
+			ps.setInt ( 3, s.getNbEtudiant ( ) );
+			ps.setInt ( 4, s.getNbSemaine  ( ) );
+			ps.setInt ( 5, s.getIdSemestre ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur update(Semestre s) : " + e );
+		}
+	}
 
+	public void update ( Contrat c )
+	{
+		String req = "UPDATE Contrat SET nomContrat = ?, hServiceContrat = ?, hMaxContrat = ?, ratioTP = ? WHERE Id_Contrat = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, c.getNom                 ( ) );
+			ps.setInt    ( 2, c.getHeureServiceContrat ( ) );
+			ps.setInt    ( 3, c.getHeureMaxContrat     ( ) );
+			ps.setDouble ( 4, c.getRatioTP             ( ) );
+			ps.setInt    ( 5, c.getId                  ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur update(Contrat c) : " + e );
+		}
+	}
 
+	public void update ( Heure h )
+	{
+		String req = "UPDATE Heure SET coeffTD = ? WHERE nomHeure = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setDouble ( 1, h.getCoefTd ( ) );
+			ps.setString ( 2, h.getNom    ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur update(Heure h) : " + e );
+		}
+	}
+
+	public void update ( Module m )
+	{
+		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, m.getLibLong    ( ) );
+			ps.setString ( 2, m.getLibCourt   ( ) );
+			ps.setInt    ( 3, m.getTypeModule ( ).getId         ( ) );
+			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
+			ps.setString ( 5, m.getCode       ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur update(Module m) : " + e);
+		}
+	}
+
+	public void update ( Intervenant i )
+	{
+		String req = "UPDATE Intervenant SET nomInter = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, i.getNom          ( ) );
+			ps.setString ( 2, i.getPrenom       ( ) );
+			ps.setInt    ( 3, i.getheureService ( ) );
+			ps.setInt    ( 4, i.getHeureMaximum ( ) );
+			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur update(Intervenant i) : " + e);
+		}
+	}
+	
+	public void update ( Enseigne e )
+	{
+		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt    ( 1, e.getNbSemaine   ( )             );
+			ps.setInt    ( 2, e.getNbGroupe    ( )             );
+			ps.setInt    ( 3, e.getNbHeure     ( )             );
+			ps.setString ( 4, e.getCommentaire ( )             );
+			ps.setInt    ( 5, e.getIntervenant ( ).getId   ( ) );
+			ps.setString ( 6, e.getHeure       ( ).getNom  ( ) );
+			ps.setString ( 7, e.getModule      ( ).getCode ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur update(Enseigne e ) : " + x );
+		}
+	}
+
+	public void update ( Horaire h )
+	{
+		String req = "UPDATE Horaire SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, h.getHeure     ( ).getNom  ( ) );
+			ps.setString ( 2, h.getModule    ( ).getCode ( ) );
+			ps.setInt    ( 3, h.getNbHeurePN ( )             );
+			ps.setInt    ( 4, h.getNbHeure   ( )             );
+			ps.setInt    ( 5, h.getNbSemaine ( )             );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur update(Horaire h) : " + e);
+		}
+	}
 	
 	/*---------------------------------------*/
 	/*                MAIN TEST              */

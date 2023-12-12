@@ -104,4 +104,9 @@ public class Tableau extends JTable
 		this.ajusterTailleColonnes ( );
 	}
 
+	public Object[][] getDonnees()
+    {
+        return this.modele.getDonnees();
+    }
+
 }

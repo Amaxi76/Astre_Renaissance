@@ -107,4 +107,9 @@ public class ModeleTableau extends AbstractTableModel
         tabDonnees = nouveauTableau;
         fireTableDataChanged();
     }
+
+    public Object[][] getDonnees()
+    {
+        return this.tabDonnees;
+    }
 }

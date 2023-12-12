@@ -8,7 +8,6 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import javax.swing.*;
-import java.awt.event.*;
 
 public class FrameIntervenants extends JFrame
 {
@@ -17,31 +16,17 @@ public class FrameIntervenants extends JFrame
 	
 	public FrameIntervenants ( Controleur ctrl )
 	{
-		this.ctrl = ctrl;
-		this.panel = new PanelIntervenants( this.ctrl );
+		this.ctrl  = ctrl;
+		this.panel = new PanelIntervenants ( this.ctrl );
 		
-		this.setTitle ( "Intervenants" );
-		this.setSize ( 1000,500 );
+		this.setTitle ( "Intervenants"  );
+		this.setSize  ( 1000,500 );
 		
 		this.add ( this.panel );
-		
-		this.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE ) ;
+
 		this.setVisible ( true );
 		
 		this.requestFocus ( );
 	}
 	
-	public void keyPressed​ ( KeyEvent e )
-	{
-		System.out.println ( "test" );
-	}
-	
-	public void keyReleased​ ( KeyEvent e )
-	{
-		
-	}
-	public void keyTyped ( KeyEvent e )
-	{
-		
-	}
 }
