@@ -96,12 +96,52 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if( e.getSource() == this.btnEnregistrer )
 		{
-			
+			comparerTableaux(this.ctrl.getTableauIntervenant(), this.tableau.getDonnees());
 		}
 		
 		if( e.getSource() == this.btnAnnuler )
 		{
-			
+			String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+			this.tableau = new Tableau(noms, this.ctrl.getTableauIntervenant(), true);
+			this.tableau.ajusterTailleColonnes();
 		}
 	}
+
+	public void comparerTableaux(Object[][] premier, Object[][] deuxieme)
+	{
+        for (int i = 0; i < premier.length; i++)
+		{
+            if (i < deuxieme.length)
+			{
+                // Comparaison des lignes existantes dans les deux tableaux
+                if (!compareLignes(premier[i], deuxieme[i]))
+				{
+                    System.out.println("Ligne " + i + " a été modifiée.");
+                }
+            }
+			else
+			{
+                // La ligne existe dans le premier tableau mais pas dans le deuxième
+                System.out.println("Ligne " + i + " a été supprimée.");
+            }
+        }
+
+        // Vérification des lignes ajoutées dans le deuxième tableau
+        for (int i = premier.length; i < deuxieme.length; i++)
+		{
+            System.out.println("Ligne " + i + " a été ajoutée.");
+        }
+    }
+
+    public boolean compareLignes(Object[] ligne1, Object[] ligne2)
+	{
+        for (int i = 0; i < ligne1.length; i++)
+		{
+            if (!ligne1[i].equals(ligne2[i]))
+			{
+                return false; // Au moins un élément est différent
+            }
+        }
+        return true; // Tous les éléments sont identiques
+    }
 }

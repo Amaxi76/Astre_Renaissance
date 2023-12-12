@@ -31,17 +31,4 @@ public class FrameIntervenants extends JFrame
 		this.requestFocus ( );
 	}
 	
-	public void keyPressed​ ( KeyEvent e )
-	{
-		System.out.println ( "test" );
-	}
-	
-	public void keyReleased​ ( KeyEvent e )
-	{
-		
-	}
-	public void keyTyped ( KeyEvent e )
-	{
-		
-	}
 }
