@@ -597,7 +597,7 @@ public class BD
 
 	public void delete ( Horaire h )
 	{
-		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
