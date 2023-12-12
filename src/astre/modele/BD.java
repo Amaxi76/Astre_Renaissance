@@ -174,6 +174,8 @@ public class BD
 	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
 		//FIXME: Peut avoir une heure null 
+
+		//TODO: Fonction SQL
 		
 		HashMap<Heure, Integer> hm = new HashMap<> ( );
 		
@@ -300,6 +302,8 @@ public class BD
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
+
+	//TODO: Fonction SQL ?
 
 	public Object[][] getModulesTableau ( )
 	{
