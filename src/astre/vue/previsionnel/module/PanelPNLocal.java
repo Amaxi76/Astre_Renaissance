@@ -12,113 +12,133 @@ import astre.Controleur;
 
 public class PanelPNLocal extends JPanel
 {
-	/*-------------*/
-	/*--Attributs--*/
-	/*-------------*/
-
 	private Controleur ctrl;
 
 	private JTextField txtCM;
 	private JTextField txtTD;
 	private JTextField txtTP;
-	private JLabel     lblSomme;
+	private JLabel lblSomme;
 
-	private JLabel     totalCM;
-	private JLabel     totalTD;
-	private JLabel     totalTP;
-	private JLabel     totalSomme;
+	private JLabel totalCM;
+	private JLabel totalTD;
+	private JLabel totalTP;
+	private JLabel totalSomme;
 
-	/*----------------*/
-	/*--Constructeur--*/
-	/*----------------*/
-	
-	public PanelPNLocal ( Controleur ctrl )
+	public PanelPNLocal(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
-		/* ------------------------- */
-		/* Création des composants   */
-		/* ------------------------- */
 
-		this.setLayout ( new GridLayout( 2, 4 ) );
+		this.setLayout(new GridBagLayout());
 
-		this.txtCM    = new JTextField ("", 2);
-		this.txtTD    = new JTextField ("", 2);
-		this.txtTP    = new JTextField ("", 2);
-		this.lblSomme = new JLabel ( );
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
 
-		this.totalCM    = new JLabel ( );
-		this.totalTD    = new JLabel ( );
-		this.totalTP    = new JLabel ( );
-		this.totalSomme = new JLabel ( );
+		// Labels
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		this.add(new JLabel("CM"), gbc);
 
-		this.add ( new JLabel ( "CM" ) );
-		this.add ( new JLabel ( "TD" ) );
-		this.add ( new JLabel ( "TP" ) );
-		this.add ( new JLabel ( "Σ"  ) );
+		gbc.gridx = 1;
+		this.add(new JLabel("TD"), gbc);
 
-		this.add ( this.txtCM    );
-		this.add ( this.txtTD    );
-		this.add ( this.txtTP    );
-		this.add ( this.lblSomme );
+		gbc.gridx = 2;
+		this.add(new JLabel("TP"), gbc);
 
-		this.add ( this.totalCM    );
-		this.add ( this.totalTD    );
-		this.add ( this.totalTP    );
-		this.add ( this.totalSomme );
+		gbc.gridx = 3;
+		this.add(new JLabel("Σ"), gbc);
 
-		/* ------------------------- */
-		/* Activation des composants */
-		/* ------------------------- */
+		// TextFields
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		this.txtCM = new JTextField("", 2);
+		this.add(this.txtCM, gbc);
 
-		this.txtCM.addKeyListener ( new KeyListener()
-		{
-			public void keyTyped    ( KeyEvent e ) { majSomme(); }
-			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
-		});
+		gbc.gridx = 1;
+		this.txtTD = new JTextField("", 2);
+		this.add(this.txtTD, gbc);
 
-		this.txtTD.addKeyListener ( new KeyListener()
-		{
-			public void keyTyped    ( KeyEvent e ) { majSomme(); }
-			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
-		});
+		gbc.gridx = 2;
+		this.txtTP = new JTextField("", 2);
+		this.add(this.txtTP, gbc);
 
-		this.txtTP.addKeyListener ( new KeyListener()
-		{
-			public void keyTyped    ( KeyEvent e ) { majSomme(); }
-			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
-		});
+		gbc.gridx = 3;
+		this.lblSomme = new JLabel();
+		this.add(this.lblSomme, gbc);
 
-		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
-		this.lblSomme.setPreferredSize ( new Dimension ( 25, 15) );
-		this.lblSomme.setOpaque ( true );
+		// Total Labels
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		this.totalCM = new JLabel();
+		this.add(this.totalCM, gbc);
 
-		this.totalCM.setBackground ( Color.LIGHT_GRAY );
-		this.totalCM.setPreferredSize ( new Dimension ( 25, 15) );
-		this.totalCM.setOpaque ( true );
+		gbc.gridx = 1;
+		this.totalTD = new JLabel();
+		this.add(this.totalTD, gbc);
 
-		this.totalTD.setBackground ( Color.LIGHT_GRAY );
-		this.totalTD.setPreferredSize ( new Dimension ( 25, 15) );
-		this.totalTD.setOpaque ( true );
+		gbc.gridx = 2;
+		this.totalTP = new JLabel();
+		this.add(this.totalTP, gbc);
 
-		this.totalTP.setBackground ( Color.LIGHT_GRAY );
-		this.totalTP.setPreferredSize ( new Dimension ( 25, 15) );
-		this.totalTP.setOpaque ( true );
+		gbc.gridx = 3;
+		this.totalSomme = new JLabel();
+		this.add(this.totalSomme, gbc);
 
-		this.totalSomme.setBackground ( Color.LIGHT_GRAY );
-		this.totalSomme.setPreferredSize ( new Dimension ( 25, 15) );
-		this.totalSomme.setOpaque ( true );
+		// Ajout du KeyListener pour chaque champ de texte
+		this.txtCM.addKeyListener(new CustomKeyListener());
+		this.txtTD.addKeyListener(new CustomKeyListener());
+		this.txtTP.addKeyListener(new CustomKeyListener());
+
+		// Initialisation des couleurs et préférences
+		this.lblSomme.setBackground(Color.LIGHT_GRAY);
+		this.lblSomme.setPreferredSize(new Dimension(25, 15));
+		this.lblSomme.setOpaque(true);
+
+		this.totalCM.setBackground(Color.LIGHT_GRAY);
+		this.totalCM.setPreferredSize(new Dimension(25, 15));
+		this.totalCM.setOpaque(true);
+
+		this.totalTD.setBackground(Color.LIGHT_GRAY);
+		this.totalTD.setPreferredSize(new Dimension(25, 15));
+		this.totalTD.setOpaque(true);
+
+		this.totalTP.setBackground(Color.LIGHT_GRAY);
+		this.totalTP.setPreferredSize(new Dimension(25, 15));
+		this.totalTP.setOpaque(true);
+
+		this.totalSomme.setBackground(Color.LIGHT_GRAY);
+		this.totalSomme.setPreferredSize(new Dimension(25, 15));
+		this.totalSomme.setOpaque(true);
+	}
+
+	private class CustomKeyListener implements KeyListener {
+		@Override
+		public void keyTyped(KeyEvent e) {
+			majSomme();
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
 	}
 
 	private void majSomme()
 	{
-		int CM = Integer.parseInt ( txtCM.getText () );
-		int TD = Integer.parseInt ( txtTD.getText() );
-		int TP = Integer.parseInt ( txtTP.getText() );
+		try
+		{
+			int CM = Integer.parseInt(txtCM.getText());
+			int TD = Integer.parseInt(txtTD.getText());
+			int TP = Integer.parseInt(txtTP.getText());
 
-		int somme = CM + TD + TP;
-		lblSomme.setText ( String.valueOf ( somme ) );
+			int somme = CM + TD + TP;
+			lblSomme.setText(String.valueOf(somme));
+		}
+		catch (NumberFormatException ex)
+		{
+			lblSomme.setText("Erreur");
+		}
 	}
 }
