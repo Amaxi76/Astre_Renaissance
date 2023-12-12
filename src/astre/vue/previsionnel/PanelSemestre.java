@@ -62,7 +62,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.nbSemaine.setColumns ( 2 );
 
 
-		this.tableauEnsembleModule = new Tableau ( this.ctrl.getTableauModule ( ), false );
+		this.tableauEnsembleModule = new Tableau ( this.ctrl.getTableauModule ( numSemestre ), false );
 		this.tableauEnsembleModule.setShowGrid(false);
 		this.tableauEnsembleModule.setIntercellSpacing(new Dimension(0, 0));
 		
