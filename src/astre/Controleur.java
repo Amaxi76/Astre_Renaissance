@@ -8,6 +8,7 @@ package astre;
 
 import astre.modele.*;
 import astre.modele.bd.*;
+import astre.modele.elements.Semestre;
 import astre.vue.*;
 import astre.vue.previsionnel.module.FrameModule;
 import astre.vue.outils.PopUpErreur;

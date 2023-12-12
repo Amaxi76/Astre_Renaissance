@@ -1,4 +1,4 @@
-package astre.modele;
+package astre.modele.elements;
 
 /** Classe Contrat 
   * @author : Maximilien Lesterlin, Alizéa Lebaron

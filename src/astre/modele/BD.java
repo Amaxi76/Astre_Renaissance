@@ -1,4 +1,4 @@
-package astre.modele.bd;
+package astre.modele;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron
@@ -9,6 +9,10 @@ package astre.modele.bd;
 import java.sql.*;
 import java.util.ArrayList;
 import astre.modele.*;
+import astre.modele.elements.Contrat;
+import astre.modele.elements.Heure;
+import astre.modele.elements.Intervenant;
+import astre.modele.elements.Semestre;
 
 public class BD
 {

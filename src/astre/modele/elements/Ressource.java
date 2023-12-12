@@ -1,4 +1,4 @@
-package astre.modele;
+package astre.modele.elements;
 
 /** Classe Ressource 
   * @author : Maximilien Lesterlin
