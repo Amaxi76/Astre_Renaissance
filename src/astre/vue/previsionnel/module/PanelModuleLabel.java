@@ -3,17 +3,14 @@ package astre.vue.previsionnel.module;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
 
-public class PanelModule  extends JPanel implements ActionListener
+public class PanelModuleLabel  extends JPanel
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -31,14 +28,12 @@ public class PanelModule  extends JPanel implements ActionListener
 	private JLabel lblNbGpTD;
 	private JLabel lblNbGpTP;
 
-	private JButton btnEnregistrer;
-	private JButton btnAnnuler;
 
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelModule ( Controleur ctrl )
+	public PanelModuleLabel ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
 		/* ------------------------- */
@@ -82,12 +77,6 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.add ( new JLabel ( "nb gp TP : " ) );
 		this.add ( this.lblNbGpTP );
 
-		this.btnEnregistrer = new JButton ( "Enregistrer" );
-		this.btnAnnuler     = new JButton ( "Annuler"     );
-
-		this.add ( this.btnEnregistrer );
-		this.add ( this.btnAnnuler     );
-
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
@@ -124,9 +113,6 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.lblNbGpTP.setBackground ( Color.LIGHT_GRAY );
 		this.lblNbGpTP.setPreferredSize ( new Dimension ( 25, 15) );
 		this.lblNbGpTP.setOpaque ( true );
-
-		this.btnEnregistrer.addActionListener(this);
-		this.btnAnnuler    .addActionListener(this);
 	}
 
 	private void validationTextField()
@@ -147,14 +133,5 @@ public class PanelModule  extends JPanel implements ActionListener
 
 		if (valSemestre >= 1 && valSemestre <= 6)
 			this.lblSemestre.setText("S" + valSemestre);
-	}
-
-	/* ActionListener */
-	public void actionPerformed ( ActionEvent e )
-	{
-		if ( e.getSource ( ) == this.btnEnregistrer )
-		{
-			System.out.println("Enregistrer");
-		}
 	}
 }

@@ -20,7 +20,7 @@ public class Controleur
 		this.ihm    = new FrameAccueil ( this );
 		this.metier = new Astre        (      );
 	}
-	
+
 	public static void afficherErreur ( String titre, String message )
 	{
 		new PopUpErreur( titre, message );
