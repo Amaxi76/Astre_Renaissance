@@ -6,8 +6,6 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
-	//TODO: : Il n'y a pas les heures du PN pour TD / TP / CM
-
 import java.util.Map;
 import java.util.HashMap;
 
@@ -20,6 +18,7 @@ public class Module
 	String   code;
 	String   libLong;
 	String   libCourt;
+	boolean  valide;
 
 	public Module ( Semestre semestre, String code, String libLong, String libCourt )
 	{
@@ -29,12 +28,14 @@ public class Module
 		this.code               = code;
 		this.libLong            = libLong;
 		this.libCourt           = libCourt;
+		this.valide             = false;
 	}
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	public boolean             estValide             ( ) { return this.valide;            }
 	public Semestre            getSemestre           ( ) { return this.semestre;          }
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
@@ -71,5 +72,5 @@ public class Module
 	public void setCode     ( String   code     ) { this.code     = code;     }
 	public void setLibLong  ( String   libLong  ) { this.libLong  = libLong;  }
 	public void setLibCourt ( String   libCourt ) { this.libCourt = libCourt; }
-
+	public void setValide   ( boolean  choix    ) { this.valide   = choix;    }
 }
