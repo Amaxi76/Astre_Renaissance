@@ -102,10 +102,10 @@ public class Intervenant
 	{
 		String sRet = "";
 
-		sRet = String.format ( "Nom               : %20s - ",  this.nom           ) +
-			   String.format ( "Prénom            : %20s - ",  this.prenom        ) +
-			   String.format ( "heureService           : %3d  - ",  this.heureService       ) +
-			   String.format ( "Heure Max         : %3d  - ",  this.heureMaximum  ) ;
+		sRet = String.format ( "Nom               : %20s - ",  this.nom          ) +
+			   String.format ( "Prénom            : %20s - ",  this.prenom       ) +
+			   String.format ( "heureService      : %3d  - ",  this.heureService ) +
+			   String.format ( "Heure Max         : %3d  - ",  this.heureMaximum ) ;
 
 		return sRet;
 	}

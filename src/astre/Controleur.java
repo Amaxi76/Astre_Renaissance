@@ -16,11 +16,9 @@ public class Controleur
 {
 	private FrameAccueil ihm;
 	private FrameModule  frmModule;
-	private BD           bd;
 	
 	public Controleur ( )
 	{
-		this.bd = BD.getInstance ( );
 		this.ihm = new FrameAccueil ( this );
 	}
 
