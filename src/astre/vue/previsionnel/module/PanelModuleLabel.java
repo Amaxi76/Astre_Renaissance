@@ -40,7 +40,7 @@ public class PanelModuleLabel  extends JPanel
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.setLayout ( new GridLayout( 2, 5 ) );
+		this.setLayout ( new GridLayout( 3, 5 ) );
 
 		this.lblType	 = new JLabel ( );
 		this.lblSemestre = new JLabel ( );
@@ -48,21 +48,18 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibLong	 = new JTextField ("", 20);
 		this.txtLibCourt = new JTextField ("", 10);
 
-		this.add ( new JLabel ( "Type : " ) );
-		this.add ( this.lblType     );
-
+		this.add ( new JLabel ( "Type" ) );
 		this.add ( new JLabel ( "Semestre : " ) );
-		this.add ( this.lblSemestre );
-
 		this.add ( new JLabel ( "Code : "  ) );
-		this.add ( this.txtCode     );
-
 		this.add ( new JLabel ( "Libellé long : " ) );
-		this.add ( this.txtLibLong  );
-
 		this.add ( new JLabel ( "Libellé court : " ) );
+		
+		this.add ( this.lblType     );
+		this.add ( this.lblSemestre );
+		this.add ( this.txtCode     );
+		this.add ( this.txtLibLong  );
 		this.add ( this.txtLibCourt );
-
+		
 
 		this.lblNbEtd  = new JLabel( );
 		this.lblNbGpTD = new JLabel( );
