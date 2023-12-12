@@ -9,7 +9,7 @@ package astre.modele.elements;
 public class Horaire 
 {
 	private Heure     heure;
-	private Module    module;
+	private ModuleIUT module;
 	private int       nbHeurePN;
 	private int       nbSemaine;
 	private int       nbHeure;
@@ -21,7 +21,7 @@ public class Horaire
 	 * @param nbSemaine
 	 * @param nbHeure
 	 */
-	public Horaire ( Heure heure, Module module, int nbHeurePN, int nbSemaine, int nbHeure ) 
+	public Horaire ( Heure heure, ModuleIUT module, int nbHeurePN, int nbSemaine, int nbHeure ) 
 	{
 		this.heure     = heure;
 		this.module    = module;
@@ -42,7 +42,7 @@ public class Horaire
 	/**
 	 * @return the module
 	 */
-	public Module getModule    ( ) { return module;    }
+	public ModuleIUT getModule    ( ) { return module;    }
 
 	/**
 	 * @return the nbHeurePN
@@ -71,7 +71,7 @@ public class Horaire
 	/**
 	 * @param module the module to set
 	 */
-	public void setModule    ( Module module    ) { this.module    = module;    }
+	public void setModule    ( ModuleIUT module    ) { this.module    = module;    }
 
 	/**
 	 * @param nbHeurePN the nbHeurePN to set
