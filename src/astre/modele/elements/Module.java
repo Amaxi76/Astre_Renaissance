@@ -14,6 +14,7 @@ public class Module
 	HashMap<Heure, Integer> hsHeuresPn;
 	HashMap<Heure, Integer> hsHeuresRepariees;
 	
+	
 	Semestre   semestre;
 	TypeModule typeModule;
 	String     code;
