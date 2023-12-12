@@ -7,48 +7,20 @@ package astre;
   */
 
 import astre.modele.*;
-import astre.modele.bd.*;
-import astre.modele.elements.Semestre;
 import astre.vue.*;
-import astre.vue.previsionnel.module.FrameModule;
 import astre.vue.outils.PopUpErreur;
 
 public class Controleur
 {
 	private FrameAccueil ihm;
-	private FrameModule  frmModule;
+	private Astre        metier;
 	
 	public Controleur ( )
 	{
-		this.ihm = new FrameAccueil ( this );
+		this.ihm    = new FrameAccueil ( this );
+		this.metier = new Astre        (      );
 	}
 
-	public void ouvrirFrameModule ( )
-	{
-		this.frmModule = new FrameModule ( this );
-	}
-
-	public Semestre getSemestre ( int numSemestre )
-	{
-		return this.bd.getSemestre ( numSemestre );
-	}
-	
-	public Object[][] getTableauModule ( )
-	{
-		//à remplacer par une commande de BD
-		/*Object[][] tableau = { {"R1.01", "Initia", "437/465", "V"}, {"R2.02", "Dev", "374/374", "V"} };
-		return tableau;*/
-		
-		this.get
-		
-		return this.bd.getModulesTableau();
-	}
-
-	public Object[][] getTableauIntervenant ( )
-	{
-		return this.bd.getIntervenantsTableau();
-	}
-	
 	public static void afficherErreur ( String titre, String message )
 	{
 		new PopUpErreur( titre, message );
