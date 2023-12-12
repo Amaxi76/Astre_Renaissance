@@ -14,17 +14,19 @@ public class Module
 	HashMap<Heure, Integer> hsHeuresPn;
 	HashMap<Heure, Integer> hsHeuresRepariees;
 	
-	Semestre semestre;
-	String   code;
-	String   libLong;
-	String   libCourt;
-	boolean  valide;
+	Semestre   semestre;
+	TypeModule typeModule;
+	String     code;
+	String     libLong;
+	String     libCourt;
+	boolean    valide;
 
-	public Module ( Semestre semestre, String code, String libLong, String libCourt )
+	public Module ( Semestre semestre, TypeModule typeModule, String code, String libLong, String libCourt )
 	{
 		this.hsHeuresPn         = new HashMap<> ( );
 		this.hsHeuresRepariees  = new HashMap<> ( );
 		this.semestre           = semestre;
+		this.typeModule         = typeModule;
 		this.code               = code;
 		this.libLong            = libLong;
 		this.libCourt           = libCourt;
@@ -37,6 +39,7 @@ public class Module
 
 	public boolean             estValide             ( ) { return this.valide;            }
 	public Semestre            getSemestre           ( ) { return this.semestre;          }
+	public TypeModule          getTypeModule         ( ) { return this.typeModule;        }
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
 	public String              getLibCourt           ( ) { return this.libCourt;          }
@@ -68,9 +71,10 @@ public class Module
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	public void setSemestre ( Semestre semestre ) { this.semestre = semestre; }
-	public void setCode     ( String   code     ) { this.code     = code;     }
-	public void setLibLong  ( String   libLong  ) { this.libLong  = libLong;  }
-	public void setLibCourt ( String   libCourt ) { this.libCourt = libCourt; }
-	public void setValide   ( boolean  choix    ) { this.valide   = choix;    }
+	public void setSemestre   ( Semestre   semestre   ) { this.semestre   = semestre;   }
+	public void setTypeModule ( TypeModule typeModule ) { this.typeModule = typeModule; }
+	public void setCode       ( String     code       ) { this.code       = code;       }
+	public void setLibLong    ( String     libLong    ) { this.libLong    = libLong;    }
+	public void setLibCourt   ( String     libCourt   ) { this.libCourt   = libCourt;   }
+	public void setValide     ( boolean    choix      ) { this.valide     = choix;      }
 }
