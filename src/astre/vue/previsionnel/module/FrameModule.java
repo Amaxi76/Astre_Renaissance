@@ -1,11 +1,10 @@
 package astre.vue.previsionnel.module;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import astre.Controleur;
-import astre.vue.previsionnel.PanelBouton;
-import astre.vue.previsionnel.PanelEnsSemestre;
 
 /** Classe FrameModule
   * @author : Clémentin Ly
@@ -20,8 +19,6 @@ public class FrameModule extends JFrame
 	/*-------------*/
 
 	private Controleur ctrl;
-	
-	private JPanel panelModule;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -36,14 +33,16 @@ public class FrameModule extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setSize     ( 1000, 700 );
-		this.setTitle    ( "Prévisionnel : Module" );
+		this.setLayout ( new BorderLayout ( ) );
+		this.setSize   ( 1000, 700 );
+		this.setTitle  ( "Prévisionnel : Module" );
 
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.add ( new PanelModule  ( this.ctrl ) );
+		this.add ( new PanelModuleLabel  ( this.ctrl ), BorderLayout.NORTH );
+		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH );
 
 		this.setVisible ( true );
 	}
