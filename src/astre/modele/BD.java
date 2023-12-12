@@ -2,13 +2,12 @@ package astre.modele;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0 - 12/12/2023
   * @date : 06/12/2023
   */
 
 import java.sql.*;
 import java.util.ArrayList;
-import astre.modele.*;
 import astre.modele.elements.*;
 import astre.modele.elements.Module;//import explicite pour pas confondre avec java.lang.Module
 
