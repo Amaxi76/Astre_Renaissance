@@ -15,6 +15,14 @@ public class Intervenant
 	private int     heureMaximum;
 	private Contrat contrat;
 
+	/**
+	 * @param id
+	 * @param nom
+	 * @param prenom
+	 * @param contrat
+	 * @param heureService
+	 * @param heureMaximum
+	 */
 	public Intervenant (int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
 	{
 		this.id           = id;
@@ -29,22 +37,58 @@ public class Intervenant
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	/**
+	 * @return
+	 */
 	public int     getId           ( ) { return this.id;           }
+	/**
+	 * @return
+	 */
 	public String  getNom          ( ) { return this.nom;          }
+	/**
+	 * @return
+	 */
 	public String  getPrenom       ( ) { return this.prenom;       }
+	/**
+	 * @return
+	 */
 	public Contrat getContrat      ( ) { return this.contrat;      }
+	/**
+	 * @return
+	 */
 	public int     getheureService ( ) { return this.heureService; }
+	/**
+	 * @return
+	 */
 	public int     getHeureMaximum ( ) { return this.heureMaximum; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
+	/**
+	 * @param id
+	 */
 	public void setId           ( int     id           ) { this.id           = id;           }
+	/**
+	 * @param nom
+	 */
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
+	/**
+	 * @param prenom
+	 */
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
+	/**
+	 * @param contrat
+	 */
 	public void setContrat      ( Contrat contrat      ) { this.contrat      = contrat;      }
+	/**
+	 * @param heureService
+	 */
 	public void setheureService ( int     heureService ) { this.heureService = heureService; }
+	/**
+	 * @param heureMaximum
+	 */
 	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
 
 	/*---------------------------------------*/
@@ -52,7 +96,7 @@ public class Intervenant
 	/*---------------------------------------*/
 
 	/**
-	 * @return descriptif des attributs de semestre
+	 * @return descriptif des attributs d'intervenants
 	 */
 	public String toString ( )
 	{
