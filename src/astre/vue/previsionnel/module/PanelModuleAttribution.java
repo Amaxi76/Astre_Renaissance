@@ -21,6 +21,11 @@ public class PanelModuleAttribution extends JPanel
 	private JTextField txtTP;
 	private JLabel     lblSomme;
 
+	private JLabel     totalCM;
+	private JLabel     totalTD;
+	private JLabel     totalTP;
+	private JLabel     totalSomme;
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -39,6 +44,11 @@ public class PanelModuleAttribution extends JPanel
 		this.txtTP    = new JTextField ("", 2);
 		this.lblSomme = new JLabel ( );
 
+		this.totalCM    = new JLabel ( );
+		this.totalTD    = new JLabel ( );
+		this.totalTP    = new JLabel ( );
+		this.totalSomme = new JLabel ( );
+
 		this.add ( new JLabel ( "CM" ) );
 		this.add ( new JLabel ( "TD" ) );
 		this.add ( new JLabel ( "TP" ) );
@@ -48,6 +58,11 @@ public class PanelModuleAttribution extends JPanel
 		this.add ( this.txtTD    );
 		this.add ( this.txtTP    );
 		this.add ( this.lblSomme );
+
+		this.add ( this.totalCM    );
+		this.add ( this.totalTD    );
+		this.add ( this.totalTP    );
+		this.add ( this.totalSomme );
 
 		/* ------------------------- */
 		/* Activation des composants */
