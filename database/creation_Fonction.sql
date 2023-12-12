@@ -121,7 +121,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Insérer dans horaire
 
+DROP              FUNCTION insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
+CREATE OR REPLACE FUNCTION insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50)) RETURNS VOID AS
+$$
+BEGIN
+
+    INSERT INTO Horaire  (   nomHeure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
+	VALUES               ( i_nomHeure , i_Code_ModuleIUT, i_nbHeurePN , i_nbHeureRepartie , i_nbSemaine );
+
+END;
+$$ LANGUAGE plpgsql;
 
 /* ------------------------------------------ */
 /*                   UPDATE                   */
