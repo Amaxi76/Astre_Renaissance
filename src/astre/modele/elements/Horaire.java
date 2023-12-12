@@ -8,11 +8,11 @@ package astre.modele.elements;
 
 public class Horaire 
 {
-	private Heure     heure;
-	private Module    module;
-	private int       nbHeurePN;
-	private int       nbSemaine;
-	private int       nbHeure;
+	private Heure        heure;
+	private ModuleIUT    module;
+	private int          nbHeurePN;
+	private int          nbSemaine;
+	private int          nbHeure;
 
 	/**
 	 * @param heure
@@ -21,7 +21,7 @@ public class Horaire
 	 * @param nbSemaine
 	 * @param nbHeure
 	 */
-	public Horaire ( Heure heure, Module module, int nbHeurePN, int nbSemaine, int nbHeure ) 
+	public Horaire ( Heure heure, ModuleIUT module, int nbHeurePN, int nbSemaine, int nbHeure ) 
 	{
 		this.heure     = heure;
 		this.module    = module;
@@ -42,7 +42,7 @@ public class Horaire
 	/**
 	 * @return the module
 	 */
-	public Module getModule    ( ) { return module;    }
+	public ModuleIUT getModule ( ) { return module;    }
 
 	/**
 	 * @return the nbHeurePN
@@ -66,22 +66,22 @@ public class Horaire
 	/**
 	 * @param heure the heure to set
 	 */
-	public void setHeure     ( Heure  heure     ) { this.heure     = heure;     }
+	public void setHeure     ( Heure  heure        ) { this.heure     = heure;     }
 
 	/**
 	 * @param module the module to set
 	 */
-	public void setModule    ( Module module    ) { this.module    = module;    }
+	public void setModule    ( ModuleIUT module    ) { this.module    = module;    }
 
 	/**
 	 * @param nbHeurePN the nbHeurePN to set
 	 */
-	public void setNbHeurePN ( int    nbHeurePN ) { this.nbHeurePN = nbHeurePN; }
+	public void setNbHeurePN ( int    nbHeurePN    ) { this.nbHeurePN = nbHeurePN; }
 
 	/**
 	 * @param nbSemaine the nbSemaine to set
 	 */
-	public void setNbSemaine ( int    nbSemaine ) { this.nbSemaine = nbSemaine; }
+	public void setNbSemaine ( int    nbSemaine    ) { this.nbSemaine = nbSemaine; }
 
 	/**
 	 * @param nbHeure the nbHeure to set
