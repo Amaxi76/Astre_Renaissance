@@ -227,7 +227,7 @@ public class BD
 		return lst;
 	}
 	
-	/*public ArrayList<Enseigne> getEnseignes()
+	/*public ArrayList<Intervient> getIntervient()
 	{
 		
 	}*/
@@ -461,7 +461,7 @@ public class BD
 
 	public void insert ( Intervient e )
 	{
-		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		String req = "INSERT INTO Intervient VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -476,14 +476,14 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur insert(enseigne e) : " + x );
+			System.out.println ( "Erreur insert(intervient e) : " + x );
 		}
 	}
 
 
 	public void insert ( Horaire h )
 	{
-		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		String req = "INSERT INTO Horaire VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -566,7 +566,7 @@ public class BD
 	
 	public void delete ( Intervient e )
 	{
-		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -577,7 +577,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur delete(Enseigne e) : " + x );
+			System.out.println ( "Erreur delete(Intervient e) : " + x );
 		}
 	}
 
@@ -698,7 +698,7 @@ public class BD
 
 	public void update ( Intervient e )
 	{
-		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "UPDATE Intervient SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -713,7 +713,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur update(Enseigne e ) : " + x );
+			System.out.println ( "Erreur update(Intervient e ) : " + x );
 		}
 	}
 
