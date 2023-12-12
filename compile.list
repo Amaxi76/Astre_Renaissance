@@ -6,10 +6,10 @@ src/astre/modele/BD.java
 src/astre/modele/Astre.java
 
 src/astre/modele/elements/Contrat.java
-src/astre/modele/elements/Enseigne.java
 src/astre/modele/elements/Heure.java
 src/astre/modele/elements/Horaire.java
 src/astre/modele/elements/Intervenant.java
+src/astre/modele/elements/Intervient.java
 src/astre/modele/elements/ModuleIUT.java
 src/astre/modele/elements/Semestre.java
 src/astre/modele/elements/TypeModule.java
@@ -34,7 +34,8 @@ src/astre/vue/previsionnel/TableauModules.java
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModuleLabel.java
 src/astre/vue/previsionnel/module/PanelModuleBouton.java
-src/astre/vue/previsionnel/module/PanelModuleAttribution.java
+src/astre/vue/previsionnel/module/PanelPNLocal.java
+src/astre/vue/previsionnel/module/PanelRepartition.java
 
 src/astre/vue/FrameAccueil.java
 

@@ -48,10 +48,10 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant(), true );
 		this.tableau.ajusterTailleColonnes();
 
-		this.btnAjouter     = new JButton ( "Ajouter" );
-		this.btnSupprimer   = new JButton ( "Supprimer" );
+		this.btnAjouter     = new JButton ( "Ajouter"     );
+		this.btnSupprimer   = new JButton ( "Supprimer"   );
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
-		this.btnAnnuler     = new JButton ( "Annuler" );
+		this.btnAnnuler     = new JButton ( "Annuler"     );
 		
 		JPanel panelCentre = new JPanel( );
 		panelCentre.setLayout ( new BorderLayout() );
@@ -140,32 +140,90 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
 		BD bd = BD.getInstance();//a modif ptet
+
+		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) bd.getIntervenants();
 		
 		for (int i = 0; i < deuxieme.length; i++)
 		{
-			Intervenant inter = new Intervenant(i, (String)deuxieme[i][1], (String)deuxieme[i][2], null, (int)deuxieme[i][3], (int)deuxieme[i][4]);
-			
-			if( bd.existe(inter) )
+			Intervenant inter = new Intervenant(i+1, deuxieme[i][1].toString(), deuxieme[i][2].toString(), bd.getContrat(deuxieme[i][0].toString()), Integer.parseInt(deuxieme[i][3].toString()), Integer.parseInt(deuxieme[i][4].toString()) );
+			lst.add(new Intervenant(0, deuxieme[i][1].toString(), deuxieme[i][2].toString(), bd.getContrat(deuxieme[i][0].toString()), Integer.parseInt(deuxieme[i][3].toString()), Integer.parseInt(deuxieme[i][4].toString()) ));
+
+			boolean up = false;
+			for(Intervenant venant : lstBD)
 			{
-				//bd.update(inter);
+				if(inter.equals(venant))
+				{
+					up = true;
+				}
+			}
+
+			if(up)
+			{
+				bd.update(inter);
 				System.out.println("Ligne " + i + " doit etre modifiée.");
 			}
 			else
 			{
-				//bd.insert(inter);
+				bd.insert(inter);
 				System.out.println("Ligne " + i + " doit etre ajouter.");
+			}
+			
+			/*if( bd.existe(inter) )
+			{
+				bd.update(inter);
+				System.out.println("Ligne " + i + " doit etre modifiée.");
+			}
+			else
+			{
+				bd.insert(inter);
+				System.out.println("Ligne " + i + " doit etre ajouter.");
+			}*/
+		}
+
+		for(Intervenant venant : lstBD)
+		{
+			boolean del = true;
+			for(Intervenant inter : lst)
+			{
+				if(inter.equals(venant))
+				{
+					del = false;
+				}
+			}
+
+			if(del)
+			{
+				bd.deleteIntervenantNomPrenom(venant);
+				System.out.println("Ligne ? doit etre supprimée.");
 			}
 		}
 
-		for (int i = 0; i < premier.length; i++)
+		/*for (int i = 0; i < premier.length; i++)
 		{
-			Intervenant inter = new Intervenant(i, (String)premier[i][1], (String)premier[i][2], null, (int)premier[i][3], (int)premier[i][4]);
-			if(!lst.contains(inter))
+			Intervenant inter = new Intervenant(0, premier[i][1].toString(), premier[i][2].toString(), bd.getContrat(premier[i][0].toString()), Integer.parseInt(premier[i][3].toString()), Integer.parseInt(premier[i][4].toString()) );
+			
+			boolean del = true;
+			for(Intervenant venant : lst)
 			{
-				//bd.delete(inter);
+				if(inter.equals(venant))
+				{
+					del = false;
+				}
+			}
+
+			if(del)
+			{
+				bd.deleteIntervenantNomPrenom(inter);
 				System.out.println("Ligne " + i + " doit etre supprimée.");
 			}
-		}
+			
+			/*if(!lst.contains(inter))
+			{
+				//bd.delete(inter);
+				System.out.println(inter.equals(lst.get(0)));
+				System.out.println("Ligne " + i + " doit etre supprimée.");
+			}
+		}*/
 	}
 
     public boolean compareLignes(Object[] ligne1, Object[] ligne2)

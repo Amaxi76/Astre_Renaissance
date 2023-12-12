@@ -3,14 +3,11 @@ package astre.modele;
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin et Maxime Lemoine
   * @version : 1.0 - 11/12/2023
-
   * @date : 06/12/2023
   */
 
-//TODO: Changer les types de retour en List au lieu d'ArrayList
 //TODO: Penser à fermer le rs et st
-//FIXME: Les noms de variables ne correspondent pas entre la DB et le code (ex: nbHeure avec nbHeureReparties)
-//FIXME: Changer le nom nbHeure dans la BD par nbHeureRepartie
+//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,7 +50,7 @@ public class BD
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
 
-	public ArrayList<Semestre> getSemestres ( )
+	public List<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
 		
@@ -76,7 +73,7 @@ public class BD
 		return lst;
 	}
 	
-	public ArrayList<Contrat> getContrats ( )
+	public List<Contrat> getContrats ( )
 	{
 		ArrayList<Contrat> lst = new ArrayList<Contrat> ( );
 		
@@ -119,21 +116,30 @@ public class BD
 		return lst;
 	}
 	
-	// public ArrayList<TypeModule> getTypeModules()
+	// public List<TypeModule> getTypeModules()
 	// {
 		
 	// }
 	
-	public List<ModuleIUT> getModules ( )
+	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
 		//FIXME: mettre le numéro du semestre
+
+		String REQUETE = "SELECT *"
+		               + "FROM   ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule "
+		               + "WHERE  m.id_semestre = ?";
 		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
 		try 
 		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule" );
+			Statement         st = co.createStatement (         );
+			PreparedStatement ps = co.prepareStatement( REQUETE );
+
+			ps.setInt ( 1, numeroSemestre );
+
+			ResultSet rs = ps.executeQuery ( );
+
 			while ( rs.next ( ) ) 
 			{
 				int iS = 6;
@@ -143,8 +149,8 @@ public class BD
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
 				TypeModule typeModule = new TypeModule ( rs.getInt ( iT++ ), rs.getString ( iT ) );
 
-				Map<Heure, Integer> hmHeuresPn         = this.getHeuresPn ( rs.getString ( 1 ), 'P' );
-				Map<Heure, Integer> hmHeuresRepartiees = this.getHeuresPn ( rs.getString ( 1 ), 'R' );
+				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
+				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
 				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
 
@@ -162,7 +168,7 @@ public class BD
 		return ensModules;
 	}
 
-	private Map<Heure, Integer> getHeuresPn ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
+	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
 		//FIXME: Peut avoir une heure null 
 		
@@ -170,30 +176,35 @@ public class BD
 		
 		Heure heure = null;
 		
-		final String requete = "SELECT he.nomHeure, ? "
-		                     + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
-		                     + "JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT "
-		                     + "WHERE ho.Code_ModuleIUT = ?";
+		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeure";
+		
+		String REQUETE = "SELECT he.nomHeure, " + heureS + " "
+		               + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
+		               + "JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT "
+		               + "WHERE ho.Code_ModuleIUT = ?";
 
 		try
 		{
 			Statement         st = co.createStatement (         );
-			PreparedStatement ps = co.prepareStatement( requete );
+			PreparedStatement ps = co.prepareStatement( REQUETE );
 
-			String heureS = ( typeHeure == 'P' ) ? "nbHeurePn" : "nbHeure";
-
-			ps.setString ( 1, heureS   );
-			ps.setString ( 2, code );
+			ps.setString ( 1, code   );
 
 			ResultSet rs = ps.executeQuery ( );
 
-			for ( Heure h : this.getHeures ( ) )
-				if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
-					heure = h;
+			while ( rs.next ( ) )
+			{
+				System.out.println(rs.getString(1));
+				System.out.println(rs.getInt(2));
+				
+				for ( Heure h : this.getHeures ( ) )
+					if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
+						heure = h;
 
-			while ( rs.next ( ) ) 
 				hm.put ( heure, rs.getInt ( 2 ) );
 
+			}
+				
 			rs.close ( );
 			st.close ( );
 		}
@@ -205,7 +216,7 @@ public class BD
 		return hm;
 	}
 	
-	public ArrayList<Intervenant> getIntervenants ( )
+	public List<Intervenant> getIntervenants ( )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		
@@ -226,12 +237,12 @@ public class BD
 		return lst;
 	}
 	
-	/*public ArrayList<Enseigne> getEnseignes()
+	/*public List<Intervient> getIntervient()
 	{
 		
 	}*/
 	
-	/*public ArrayList<Horaire> getHoraires()
+	/*public List<Horaire> getHoraires()
 	{
 		
 	}*/
@@ -269,6 +280,27 @@ public class BD
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "select * from Contrat where Id_Contrat = " + c );
+			while ( rs.next( ) )
+			{
+				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+		
+		return contrat;
+	}
+
+	public Contrat getContrat ( String c )
+	{
+		Contrat contrat = null;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Contrat where nomContrat = '" + c  +"'");
 			while ( rs.next( ) )
 			{
 				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
@@ -346,7 +378,7 @@ public class BD
 		{
 			System.out.println ( "Erreur 1 getIntervenantsTableau() : " + e );
 		}
-		
+
 		Object[][] intervenants = new Object[nbInervenants][15];
 
 		try
@@ -379,6 +411,17 @@ public class BD
 		{
 			System.out.println ("Erreur 2 getIntervenantsTableau() : " +  e );
 		}
+
+		if(nbInervenants == 0)
+		{
+			Object[][] inter = new Object[1][15];
+			for(int cpt=0; cpt < 15; cpt++)
+			{
+				inter[0][cpt] = "";
+			}
+			return inter;
+		}
+
 		return intervenants;
 	}
 
@@ -458,9 +501,9 @@ public class BD
 		}
 	}
 
-	public void insert ( Enseigne e )
+	public void insert ( Intervient e )
 	{
-		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		String req = "INSERT INTO Intervient VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -475,14 +518,14 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur insert(enseigne e) : " + x );
+			System.out.println ( "Erreur insert(intervient e) : " + x );
 		}
 	}
 
 
 	public void insert ( Horaire h )
 	{
-		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		String req = "INSERT INTO Horaire VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -563,9 +606,9 @@ public class BD
 		}
 	}
 	
-	public void delete ( Enseigne e )
+	public void delete ( Intervient e )
 	{
-		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -576,7 +619,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur delete(Enseigne e) : " + x );
+			System.out.println ( "Erreur delete(Intervient e) : " + x );
 		}
 	}
 
@@ -687,6 +730,7 @@ public class BD
 			ps.setInt    ( 3, i.getheureService ( ) );
 			ps.setInt    ( 4, i.getHeureMaximum ( ) );
 			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
+			ps.setInt    ( 6, i.getheureService ( ) );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
@@ -695,9 +739,9 @@ public class BD
 		}
 	}
 
-	public void update ( Enseigne e )
+	public void update ( Intervient e )
 	{
-		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "UPDATE Intervient SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -712,7 +756,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur update(Enseigne e ) : " + x );
+			System.out.println ( "Erreur update(Intervient e ) : " + x );
 		}
 	}
 
@@ -737,7 +781,7 @@ public class BD
 
 
 	/*---------------------------------------*/
-	/*                VERIF                  */
+	/*                VERIF ET AUTRE         */
 	/*---------------------------------------*/
 
 	public boolean existe ( Intervenant i )
@@ -762,6 +806,22 @@ public class BD
 
 		return true;
 	}
+
+	public void deleteIntervenantNomPrenom ( Intervenant i )
+	{
+		String req = "DELETE FROM Intervenant where nomInter = ? AND prenom = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, i.getNom    ( ) );
+			ps.setString ( 2, i.getPrenom ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur delete(Intervenant i) : " + e );
+		}
+	}
 	
 	/*---------------------------------------*/
 	/*                MAIN TEST              */
@@ -770,7 +830,7 @@ public class BD
 	{
 		BD bd = BD.getInstance ( );
 
-		ArrayList<Intervenant> test = bd.getIntervenants();
+		List<Intervenant> test = bd.getIntervenants();
 
 		for(Intervenant i : test)
 		{

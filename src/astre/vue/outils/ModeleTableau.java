@@ -66,22 +66,31 @@ public class ModeleTableau extends AbstractTableModel
 	*/
     public void ajouterLigne()
     {
-        Object[][] nouveauTableau = new Object[tabDonnees.length + 1][tabDonnees[0].length];
-
-        for (int i = 0; i < tabDonnees.length; i++)
+        
+        
+        if(tabDonnees.length != 0)
         {
+            Object[][] nouveauTableau = new Object[tabDonnees.length + 1][tabDonnees[0].length];
+
+            for (int i = 0; i < tabDonnees.length; i++)
+            {
+                for (int j = 0; j < tabDonnees[0].length; j++)
+                {
+                    nouveauTableau[i][j] = tabDonnees[i][j];
+                }
+            }
+
             for (int j = 0; j < tabDonnees[0].length; j++)
             {
-                nouveauTableau[i][j] = tabDonnees[i][j];
+                nouveauTableau[tabDonnees.length][j] = "";
             }
-        }
 
-        for (int j = 0; j < tabDonnees[0].length; j++)
+            tabDonnees = nouveauTableau;
+        }
+        else
         {
-            nouveauTableau[tabDonnees.length][j] = "";
+            tabDonnees = new Object[1][tabEntetes.length];
         }
-
-        tabDonnees = nouveauTableau;
         fireTableDataChanged();
     }
 
