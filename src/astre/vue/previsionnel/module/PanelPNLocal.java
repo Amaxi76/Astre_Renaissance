@@ -21,7 +21,7 @@ public class PanelPNLocal extends JPanel
 	private JTextField txtCM;
 	private JTextField txtTD;
 	private JTextField txtTP;
-	private JLabel lblSomme;
+	private JLabel     lblSomme;
 
 	private JLabel lblTotalCM;
 	private JLabel lblTotalTD;
@@ -72,10 +72,10 @@ public class PanelPNLocal extends JPanel
 
 		gbc.gridy = 1;
 		gbc.gridx = 1;
-		this.add(this.txtCM, gbc      );
+		this.add ( this.txtCM, gbc     );
 
 		gbc.gridx = 2;
-		this.add(this.txtTD, gbc      );
+		this.add ( this.txtTD, gbc     );
 
 		gbc.gridx = 3;
 		this.add ( this.txtTP, gbc    );
@@ -141,9 +141,16 @@ public class PanelPNLocal extends JPanel
 	{
 		try
 		{
-			int CM = Integer.parseInt ( txtCM.getText() );
-			int TD = Integer.parseInt ( txtTD.getText() );
-			int TP = Integer.parseInt ( txtTP.getText() );
+			int CM    = 0;
+			int TD    = 0;
+			int TP    = 0;
+			
+			if (!txtCM.getText().equals(null) || !txtTD.equals(null) || !txtTP.equals(null) )
+			{
+				CM = Integer.parseInt ( txtCM.getText() );
+				TD = Integer.parseInt ( txtTD.getText() );
+				TP = Integer.parseInt ( txtTP.getText() );
+			}
 
 			int somme = CM + TD + TP;
 			lblSomme.setText ( String.valueOf ( somme ) );
