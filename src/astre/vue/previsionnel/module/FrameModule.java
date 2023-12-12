@@ -41,9 +41,10 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.add ( new PanelModuleLabel       ( this.ctrl ), BorderLayout.NORTH  );
-		this.add ( new PanelModuleAttribution ( this.ctrl ), BorderLayout.CENTER );
-		this.add ( new PanelModuleBouton      ( this.ctrl ), BorderLayout.SOUTH  );
+		this.add ( new PanelModuleLabel  ( this.ctrl ), BorderLayout.NORTH  );
+		this.add ( new PanelPNLocal      ( this.ctrl ), BorderLayout.WEST   );
+		this.add ( new PanelRepartition  ( this.ctrl ), BorderLayout.EAST   );
+		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH  );
 
 		this.setVisible ( true );
 	}
