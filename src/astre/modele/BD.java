@@ -374,38 +374,38 @@ public class BD
 		}
 	}
 
-	public void insert ( Intervenant i, Heure h, Module m, int nbSemaine, int nbGroupe, int nbHeure, String commentaire )
+	public void insert ( Enseigne e )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setInt    ( 1, i.getId   ( ) );
-			ps.setString ( 2, h.getNom  ( ) );
-			ps.setString ( 3, m.getCode ( ) );
-			ps.setInt    ( 4, nbSemaine     );
-			ps.setInt    ( 5, nbGroupe      );
-			ps.setInt    ( 6, nbHeure       );
-			ps.setString ( 7, commentaire   );
+			ps.setInt    ( 1, e.getIntervenant ( ).getId   ( ) );
+			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
+			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
+			ps.setInt    ( 4, e.getNbSemaine   ( )             );
+			ps.setInt    ( 5, e.getNbGroupe    ( )             );
+			ps.setInt    ( 6, e.getNbHeure     ( )             );
+			ps.setString ( 7, e.getCommentaire ( )             );
 			ps.executeUpdate ( );
 		}
-		catch ( SQLException e )
+		catch ( SQLException x )
 		{
-			System.out.println ( e );
+			System.out.println ( x );
 		}
 	}
 
-	public void insert ( Heure h, Module m, int nbHeurePN, int nbHeure, int nbSemaine )
+	public void insert ( Horaire h )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, h.getNom  ( ) );
-			ps.setString ( 2, m.getCode ( ) );
-			ps.setInt    ( 3, nbHeurePN     );
-			ps.setInt    ( 4, nbHeure       );
-			ps.setInt    ( 5, nbSemaine     );
+			ps.setString ( 1, h.getHeure     ( ).getNom  ( ) );
+			ps.setString ( 2, h.getModule    ( ).getCode ( ) );
+			ps.setInt    ( 3, h.getNbHeurePN ( )             );
+			ps.setInt    ( 4, h.getNbHeure   ( )             );
+			ps.setInt    ( 5, h.getNbSemaine ( )             );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
@@ -478,31 +478,31 @@ public class BD
 		}
 	}
 	
-	public void delete ( Intervenant i, Heure h, Module m )
+	public void delete ( Enseigne e )
 	{
 		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setInt    ( 1, i.getId   ( ) );
-			ps.setString ( 2, h.getNom  ( ) );
-			ps.setString ( 3, m.getCode ( ) );
+			ps.setInt    ( 1, e.getIntervenant ( ).getId   ( ) );
+			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
+			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
 			ps.executeUpdate ( );
 		}
-		catch ( SQLException e )
+		catch ( SQLException x )
 		{
-			System.out.println ( e );
+			System.out.println ( x );
 		}
 	}
 
-	public void delete ( Heure h, Module m )
+	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, h.getNom  ( ) );
-			ps.setString ( 2, m.getCode ( ) );
+			ps.setString ( 1, h.getHeure  ( ).getNom  ( ) );
+			ps.setString ( 2, h.getModule ( ).getCode ( ) );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
@@ -609,8 +609,45 @@ public class BD
 		}
 	}
 
-	//TODO update des enseigne et horaire
+	public void update ( Enseigne e )
+	{
+		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt    ( 1, e.getNbSemaine   ( )             );
+			ps.setInt    ( 2, e.getNbGroupe    ( )             );
+			ps.setInt    ( 3, e.getNbHeure     ( )             );
+			ps.setString ( 4, e.getCommentaire ( )             );
+			ps.setInt    ( 5, e.getIntervenant ( ).getId   ( ) );
+			ps.setString ( 6, e.getHeure       ( ).getNom  ( ) );
+			ps.setString ( 7, e.getModule      ( ).getCode ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( x );
+		}
+	}
 
+	public void update ( Horaire h )
+	{
+		String req = "UPDATE Horaire SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, h.getHeure     ( ).getNom  ( ) );
+			ps.setString ( 2, h.getModule    ( ).getCode ( ) );
+			ps.setInt    ( 3, h.getNbHeurePN ( )             );
+			ps.setInt    ( 4, h.getNbHeure   ( )             );
+			ps.setInt    ( 5, h.getNbSemaine ( )             );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
 	
 	/*---------------------------------------*/
 	/*                MAIN TEST              */
