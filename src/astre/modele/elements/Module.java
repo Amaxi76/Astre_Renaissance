@@ -2,7 +2,7 @@ package astre.modele.elements;
 
 /** Classe Module 
   * @author : Maximilien Lesterlin
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0.1 - 12/12/2023
   * @date : 06/12/2023
   */
 
@@ -14,7 +14,7 @@ public class Module
 	HashMap<Heure, Integer> hsHeuresPn;
 	HashMap<Heure, Integer> hsHeuresRepariees;
 	
-	
+
 	Semestre   semestre;
 	TypeModule typeModule;
 	String     code;

@@ -2,7 +2,7 @@ package astre.modele.elements;
 
 /** Classe Contrat 
   * @author : Maximilien Lesterlin, Alizéa Lebaron
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0 - 12/12/2023
   * @date : 06/12/2023
   */
 
