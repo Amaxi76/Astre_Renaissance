@@ -63,11 +63,11 @@ CREATE TABLE TypeModule
 
 CREATE TABLE ModuleIUT
 (
-   Id_ModuleIUT  VARCHAR(5) ,
-   libLong       VARCHAR(60) ,
-   libCourt      VARCHAR(15) ,
-   Id_TypeModule INTEGER NOT NULL,
-   Id_Semestre   INTEGER NOT NULL,
+   Code_ModuleIUT  VARCHAR(5) ,
+   libLong         VARCHAR(60) ,
+   libCourt        VARCHAR(15) ,
+   Id_TypeModule   INTEGER NOT NULL,
+   Id_Semestre     INTEGER NOT NULL,
 
    PRIMARY KEY(Id_ModuleIUT),
    FOREIGN KEY(Id_TypeModule) REFERENCES TypeModule(Id_TypeModule),

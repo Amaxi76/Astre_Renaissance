@@ -12,10 +12,8 @@ package astre.modele;
 import java.sql.*;
 import java.util.ArrayList;
 import astre.modele.*;
-import astre.modele.elements.Contrat;
-import astre.modele.elements.Heure;
-import astre.modele.elements.Intervenant;
-import astre.modele.elements.Semestre;
+import astre.modele.elements.*;
+import astre.modele.elements.Module;//import explicite pour pas confondre avec java.lang.Module
 
 public class BD
 {
@@ -156,7 +154,7 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Intervenant" );
 			while ( rs.next( ) ) 
 			{
-				lst.add ( new Intervenant( rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
+				lst.add ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
 		} 
 		catch ( SQLException e ) 
@@ -327,17 +325,110 @@ public class BD
 	/*                INSERT                 */
 	/*---------------------------------------*/
 
+	public void insert ( Contrat c )
+	{
+		String req = "INSERT INTO Contrat ( nomContrat, hServiceContrat, hMaxContrat, ratioTP ) VALUES(?,?,?,?)";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, c.getNom                 ( ) );
+			ps.setInt    ( 2, c.getHeureServiceContrat ( ) );
+			ps.setInt    ( 3, c.getHeureMaxContrat     ( ) );
+			ps.setDouble ( 4, c.getRatioTP             ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void insert ( Heure h )
+	{
+		String req = "INSERT INTO Heure VALUES(?,?)";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, h.getNom    ( ) );
+			ps.setDouble ( 2, h.getCoefTd ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	/*public void insert ( Module m )
+	{
+		String req = "INSERT INTO Module VALUES(?,?,?,?,?)";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, m.getCode() );
+			ps.setString ( 2, m.getLibLong  ( ) );
+			ps.setString ( 3, m.getLibCourt ( ) );
+			ps.setInt    ( 4, m.getT );
+			ps.setInt    ( 5, m.getSemestre ( ).getIdSemestre ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}*/
+	
 	public void insert ( Intervenant i )
 	{
-		String req = "INSERT INTO Intervenant VALUES(?,?,?,?,?)";
+		String req = "INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES(?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, i.getNom          ( ) );
 			ps.setString ( 2, i.getPrenom       ( ) );
-			ps.setInt    ( 3, i.getService      ( ) );
+			ps.setInt    ( 3, i.getheureService ( ) );
 			ps.setInt    ( 4, i.getHeureMaximum ( ) );
-			ps.setInt    ( 4, i.getContrat ( ).getId ( ) );
+			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void insert ( Intervenant i, Heure h, Module m, int nbSemaine, int nbGroupe, int nbHeure, String commentaire )
+	{
+		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt    ( 1, i.getId   ( ) );
+			ps.setString ( 2, h.getNom  ( ) );
+			ps.setString ( 3, m.getCode ( ) );
+			ps.setInt    ( 4, nbSemaine     );
+			ps.setInt    ( 5, nbGroupe      );
+			ps.setInt    ( 6, nbHeure       );
+			ps.setString ( 7, commentaire   );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void insert ( Heure h, Module m, int nbHeurePN, int nbHeure, int nbSemaine )
+	{
+		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, h.getNom  ( ) );
+			ps.setString ( 2, m.getCode ( ) );
+			ps.setInt    ( 3, nbHeurePN     );
+			ps.setInt    ( 4, nbHeure       );
+			ps.setInt    ( 5, nbSemaine     );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )
@@ -350,10 +441,111 @@ public class BD
 	/*                DELETE                 */
 	/*---------------------------------------*/
 
+	public void delete ( Contrat c )
+	{
+		String req = "DELETE FROM Contrat where Id_Contrat = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt ( 1, c.getId ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void delete ( Heure h )
+	{
+		String req = "DELETE FROM Heure where nomHeure = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, h.getNom ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void delete ( Module m )
+	{
+		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, m.getCode ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void delete ( Intervenant i )
+	{
+		String req = "DELETE FROM Intervenant where Id_Intervenant = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt ( 1, i.getId ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+	
+	public void delete ( Intervenant i, Heure h, Module m )
+	{
+		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setInt    ( 1, i.getId   ( ) );
+			ps.setString ( 2, h.getNom  ( ) );
+			ps.setString ( 3, m.getCode ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	public void delete ( Heure h, Module m )
+	{
+		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, h.getNom  ( ) );
+			ps.setString ( 2, m.getCode ( ) );
+			ps.executeUpdate ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+	}
+
+	
+
 	/*---------------------------------------*/
 	/*                UPDATE                 */
 	/*---------------------------------------*/
 
+
+
+	
+	/*---------------------------------------*/
+	/*                MAIN TEST              */
+	/*---------------------------------------*/
 	public static void main ( String[] args ) 
 	{
 		BD bd = BD.getInstance ( );
