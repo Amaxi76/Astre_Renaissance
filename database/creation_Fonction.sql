@@ -126,7 +126,7 @@ $$ LANGUAGE plpgsql;
 DROP              FUNCTION insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
 CREATE OR REPLACE FUNCTION insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50)) RETURNS VOID AS
 $$
-BEGIN
+BEGINi_
 
     INSERT INTO Horaire  (   nomHeure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
 	VALUES               ( i_nomHeure , i_Code_ModuleIUT, i_nbHeurePN , i_nbHeureRepartie , i_nbSemaine );
@@ -140,5 +140,77 @@ $$ LANGUAGE plpgsql;
 
 
 /* ------------------------------------------ */
-/*                   DELETE                   */
+/*                   DELETE                   */p_
 /* ------------------------------------------ */
+
+-- Supprimer un contrat
+
+DROP              FUNCTION f_deleteContrat ( d_id_contrat INTEGER );
+CREATE OR REPLACE FUNCTION f_deleteContrat ( d_id_contrat INTEGER ) RETURNS VOID ASid_Heure
+$$
+BEGIN
+
+    DELETE FROM Contrat WHERE Id_Contrat = d_id_contrat;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Supprimer une heure
+
+DROP              FUNCTION f_deleteHeure ( d_nomHeure VARCHAR(50) );
+CREATE OR REPLACE FUNCTION f_deleteHeure ( d_nomHeure VARCHAR(50) ) RETURNS VOID AS
+$$
+BEGIN
+
+    DELETE FROM Heure WHERE nomHeure = d_nomHeure;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Supprimer un ModuleIUT
+
+DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER );
+CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER ) RETURNS VOID AS
+$$
+BEGIN
+
+    DELETE FROM ModuleIUT WHERE Code_ModuleIUT = d_Code_ModuleIUT;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Supprimer un intervenant
+
+DROP              FUNCTION f_deleteIntervenant ( d_Id_Intervenant INTEGER );
+CREATE OR REPLACE FUNCTION f_deleteIntervenant ( d_Id_Intervenant INTEGER ) RETURNS VOID AS
+$$
+BEGIN
+
+    DELETE FROM Intervenant WHERE Id_Intervenant = d_Id_Intervenant;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Supprimer dans intervient
+
+DROP              FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
+$$
+BEGIN
+
+    DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Supprimer dans horaire
+
+DROP              FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
+$$
+BEGIN
+
+    DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+
+END;
+$$ LANGUAGE plpgsql;
