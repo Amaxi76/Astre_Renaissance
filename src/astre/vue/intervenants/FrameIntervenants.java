@@ -20,7 +20,7 @@ public class FrameIntervenants extends JFrame
 		this.ctrl  = ctrl;
 		this.panel = new PanelIntervenants ( this.ctrl );
 		
-		this.setTitle ( "Intervenants" );
+		this.setTitle ( "Intervenants"  );
 		this.setSize  ( 1000,500 );
 		
 		this.add ( this.panel );
@@ -29,8 +29,4 @@ public class FrameIntervenants extends JFrame
 		
 		this.requestFocus ( );
 	}
-	
-	public void keyPressed​  ( KeyEvent e ) { System.out.println ( "test" ); }
-	public void keyReleased​ ( KeyEvent e ) {}
-	public void keyTyped    ( KeyEvent e ) {}
 }
