@@ -6,6 +6,9 @@ package astre.modele;
   * @date : 06/12/2023
   */
 
+//TODO: Changer les types de retour en List au lieu d'ArrayList
+//TODO: Penser à fermer le rs et st
+
 import java.sql.*;
 import java.util.ArrayList;
 import astre.modele.*;
@@ -118,10 +121,30 @@ public class BD
 		
 	// }
 	
-	/*public ArrayList<Module> getModule()
+	public ArrayList<Module> getModules()
 	{
+		ArrayList<Module> ensModules = new ArrayList<Module> ( );
 		
-	}*/
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre" );
+			while ( rs.next ( ) ) 
+			{
+				Semestre semestre = new Semestre ( rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7) );
+				ensModules.add ( new Module( semestre, rs.getString(0), rs.getString(1), rs.getString(2) ) );
+			}
+
+			rs.close ( );
+			st.close ( );
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( e );
+		}
+		
+		return ensModules;
+	}
 	
 	public ArrayList<Intervenant> getIntervenants ( )
 	{
