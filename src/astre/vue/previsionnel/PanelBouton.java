@@ -22,6 +22,8 @@ public class PanelBouton extends JPanel implements ActionListener
 	/*-------------*/
 
 	private Controleur ctrl;
+	
+	private FrameModule frameModule;
 
 	private JButton btncreerRessource;
 	private JButton btncreerSAE;
@@ -37,6 +39,8 @@ public class PanelBouton extends JPanel implements ActionListener
 	public PanelBouton ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
+		this.frameModule = null;
+		
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
@@ -76,18 +80,17 @@ public class PanelBouton extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
-			//((JFrame) (this.getParent())).dispose();
-			this.ctrl.ouvrirFrameModule ( );
+			this.frameModule = new FrameModule ( this.ctrl );
 		}
 
 		if ( e.getSource ( ) == this.btncreerSAE )
 		{
-			this.ctrl.ouvrirFrameModule( );
+			this.frameModule = new FrameModule ( this.ctrl );
 		}
 
 		if ( e.getSource ( ) == this.btncreerStage )
 		{
-			this.ctrl.ouvrirFrameModule( );
+			this.frameModule = new FrameModule ( this.ctrl );
 		}
 	}
 }
