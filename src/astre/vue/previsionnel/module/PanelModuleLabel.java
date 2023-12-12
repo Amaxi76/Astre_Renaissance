@@ -119,21 +119,21 @@ public class PanelModuleLabel  extends JPanel
 	{
 		String code = this.txtCode.getText();
 
-		if (code.startsWith("R"))
+		if ( code.startsWith ( "R" ) )
 		{
-			this.lblType.setText("Ressource");
+			this.lblType.setText ( "Ressource" );
 		}
 
-		else if (code.startsWith("S"))
+		else if ( code.startsWith ( "S" ) )
 		{
-			this.lblType.setText("SAE");
+			this.lblType.setText ( "SAE" );
 		}
 
-		else if (code.contains("ST"))
+		else if ( code.contains ( "ST" ) )
 		{
-			if (!code.startsWith("ST"))
+			if ( !code.startsWith ( "ST" ) )
 			{
-				this.lblType.setText("Stage");
+				this.lblType.setText ( "Stage" );
 			}
 		}
 
