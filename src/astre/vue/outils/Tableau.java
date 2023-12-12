@@ -9,13 +9,18 @@ import javax.swing.table.*;
  *  @version : 1.0 - 11/12/2023
  *  @date : 06/12/2023
 */
+
+//TODO: simplifier les constructeurs, en les appelant les uns les autres
+//TODO: ajouter un booleen pour le constructeur sans titre de colonnes
+//TODO: nettoyer les constructeurs qui semblent inutiles (utilisés avant pour les tests avec tableaux vides)
+
 public class Tableau extends JTable
 {
 	private String[] nomColonnes;
 	//private DefaultTableModel modele;
 	private ModeleTableau modele;
 	
-	public Tableau ( String[] nomColonnes, boolean estModifiable )  //répétition de code ici, peut être possible à simplifier
+	/*public Tableau ( String[] nomColonnes, boolean estModifiable )  //répétition de code ici, peut être possible à simplifier
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
@@ -29,15 +34,16 @@ public class Tableau extends JTable
 		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
 		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
 		this.setDragEnabled ( false );
-	}
+	}*/
 	
 	/**
 	 * Tableau sans titres de colonnes
 	 */
-	public Tableau ( boolean estModifiable )
+	/*public Tableau ( boolean estModifiable )
 	{
 		this ( new String[] { "","","","" }, estModifiable );
-	}
+		this.setTableHeader(null);
+	}*/
 	
 	public Tableau ( String[] nomColonnes, Object[][] tabDonnees, boolean estModifiable )
 	{
@@ -58,6 +64,7 @@ public class Tableau extends JTable
 	public Tableau ( Object[][] tabDonnees, boolean estModifiable )
 	{
 		this ( new String[] { "","","","" }, tabDonnees, estModifiable );
+		this.setTableHeader(null);
 	}
 	
 	/**

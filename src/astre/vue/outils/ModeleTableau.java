@@ -12,7 +12,8 @@ public class ModeleTableau extends AbstractTableModel
 	private Object[][] tabDonnees;
 	private boolean    estModifiable=true;
 
-    public ModeleTableau ( String[] tabEntetes, boolean estModifiable )
+    //Constructeur présent que pour les test
+    /*public ModeleTableau ( String[] tabEntetes, boolean estModifiable )
     {
     	this.estModifiable = estModifiable;
         this.tabEntetes = tabEntetes;
@@ -21,9 +22,9 @@ public class ModeleTableau extends AbstractTableModel
         this.tabDonnees = new Object[1][this.tabEntetes.length];
         for(int cpt=0; cpt < tabDonnees[0].length; cpt++)
         {
-            tabDonnees[0][cpt] = "aa";//mettre les trucs de la bd
+            tabDonnees[0][cpt] = "test";//mettre les trucs de la bd
         }
-    }
+    }*/
     
     public ModeleTableau ( String[] tabEntetes, Object[][] tabDonnees, boolean estModifiable )
     {
@@ -38,7 +39,7 @@ public class ModeleTableau extends AbstractTableModel
 	public Object getValueAt    (int row, int col) { return this.tabDonnees[row][col];   }
 	public String getNomColonne (int col)          { return this.tabEntetes[col];        }
 	public Class  getColumnClass(int c)            { return getValueAt(0, c).getClass(); }
-	public String getColumnName(int c)             { return this.tabEntetes[c];           }
+	public String getColumnName (int c)             { return this.tabEntetes[c];           }
 
     /**
 	* Donne la liste des cellules éditables.

@@ -198,15 +198,11 @@ public class BD
 
 			while ( rs.next ( ) )
 			{
-				System.out.println(rs.getString(1));
-				System.out.println(rs.getInt(2));
-				
 				for ( Heure h : this.getHeures ( ) )
 					if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
 						heure = h;
 
 				hm.put ( heure, rs.getInt ( 2 ) );
-
 			}
 				
 			rs.close ( );

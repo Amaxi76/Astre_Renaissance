@@ -1,6 +1,5 @@
 package astre.modele;
 
-import java.util.List;
 import java.util.ArrayList;
 
 import astre.modele.elements.*;
@@ -45,6 +44,11 @@ public class Astre
 		public Semestre getSemestre ( int numSemestre )
 	{
 		return this.bd.getSemestre ( numSemestre );
+	}
+
+	public void majSemestre ( Semestre s )
+	{
+		this.bd.update ( s );
 	}
 	
 
