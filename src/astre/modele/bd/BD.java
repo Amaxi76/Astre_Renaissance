@@ -1,6 +1,6 @@
 package astre.modele.bd;
 
-/** Page d'insertion de la base de données
+/** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
@@ -45,8 +45,9 @@ public class BD
 	
 	
 	/*---------------------------------------*/
-	/*                RECUP GENERALE         */
+	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
+
 	public ArrayList<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
@@ -59,7 +60,9 @@ public class BD
 			{
 				lst.add ( new Semestre ( rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5) ) );
 			}
-		} catch ( SQLException e ) {
+		} 
+		catch ( SQLException e ) 
+		{
 			System.out.println ( e );
 		}
 		
@@ -78,7 +81,9 @@ public class BD
 			{
 				lst.add( new Contrat(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) ) );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -89,13 +94,17 @@ public class BD
 	{
 		ArrayList<Heure> lst = new ArrayList<Heure>();
 		
-		try {
+		try 
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Heure");
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 				lst.add( new Heure( rs.getString(1), rs.getDouble(2) ) );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -116,13 +125,17 @@ public class BD
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
 		
-		try {
+		try 
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Intervenant");
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 				lst.add(new Intervenant(rs.getString(2), rs.getString(3), getContrat(rs.getInt(6)), rs.getInt(4), rs.getInt(5) ) );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -140,19 +153,24 @@ public class BD
 	}*/
 	
 	/*---------------------------------------*/
-	/*                RECUP UNITAIRE         */
+	/*             RECUP UNITAIRE            */
 	/*---------------------------------------*/
+
 	public Semestre getSemestre ( int c )
 	{
 		Semestre semestre = null;
 		
-		try {
+		try 
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Semestre where Id_Semestre = " + c );
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 				semestre = new Semestre(  rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5)  );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -182,7 +200,7 @@ public class BD
 
 
 	/*---------------------------------------*/
-	/*                RECUP TABLO            */
+	/*              RECUP TABLO              */
 	/*---------------------------------------*/
 
 	public Object[][] getModulesTableau()
@@ -283,6 +301,7 @@ public class BD
 	/*---------------------------------------*/
 	/*                INSERT                 */
 	/*---------------------------------------*/
+
 	public void insert(Intervenant i)
 	{
 		String req = "INSERT INTO Intervenant VALUES(?,?,?,?,?)";
