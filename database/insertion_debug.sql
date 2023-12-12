@@ -1,6 +1,6 @@
 /*
 	@author Alizéa LEBARON
-	@version 1.0 - 11/12/2023 
+	@version 1.0 - 12/12/2023 
 	@date 11/12/2023 
 	@description Script d'insertion pour tester notre base'
 */
