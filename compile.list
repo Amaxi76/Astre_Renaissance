@@ -33,7 +33,8 @@ src/astre/vue/previsionnel/PanelSemestre.java
 src/astre/vue/previsionnel/TableauModules.java
 
 src/astre/vue/previsionnel/module/FrameModule.java
-src/astre/vue/previsionnel/module/PanelModule.java
+src/astre/vue/previsionnel/module/PanelModuleLabel.java
+src/astre/vue/previsionnel/module/PanelModuleBouton.java
 
 src/astre/vue/FrameAccueil.java
 
