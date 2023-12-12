@@ -148,26 +148,20 @@ public class PanelPNLocal extends JPanel
 			if (!txtCM.getText().isEmpty() )
 			{
 				CM = Integer.parseInt ( txtCM.getText() );
-
-				int somme = CM + TD + TP;
-				lblSomme.setText ( String.valueOf ( somme ) );
 			}
 
 			if ( !txtTD.getText().isEmpty() )
 			{
 				TD = Integer.parseInt ( txtTD.getText() );
-				
-				int somme = CM + TD + TP;
-				lblSomme.setText ( String.valueOf ( somme ) );
 			}
 
 			if (!txtTP.getText().isEmpty() )
 			{
 				TP = Integer.parseInt ( txtTP.getText() );
-
-				int somme = CM + TD + TP;
-				lblSomme.setText ( String.valueOf ( somme ) );
 			}
+
+			int somme = CM + TD + TP;
+			lblSomme.setText ( String.valueOf ( somme ) );
 		}
 		catch ( NumberFormatException ex )
 		{
