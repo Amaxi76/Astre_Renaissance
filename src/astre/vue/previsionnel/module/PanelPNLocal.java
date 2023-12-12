@@ -45,8 +45,19 @@ public class PanelPNLocal extends JPanel
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
-		gbc.gridx = 1;
+		this.txtCM      = new JTextField ( "", 2 );
+		this.txtTD      = new JTextField ( "", 2 );
+		this.txtTP      = new JTextField ( "", 2 );
+		this.lblSomme   = new JLabel();
+
+		this.totalCM    = new JLabel();
+		this.totalTD    = new JLabel();
+		this.totalTP    = new JLabel();
+		this.totalSomme = new JLabel();
+
+
 		gbc.gridy = 0;
+		gbc.gridx = 1;
 		this.add ( new JLabel ( "CM" ), gbc );
 
 		gbc.gridx = 2;
@@ -56,45 +67,37 @@ public class PanelPNLocal extends JPanel
 		this.add ( new JLabel ( "TP" ), gbc );
 
 		gbc.gridx = 4;
-		this.add ( new JLabel ( "Σ" ), gbc );
+		this.add ( new JLabel ( "Σ" ), gbc  );
 
 
-		gbc.gridy  = 1;
-		gbc.gridx  = 1;
-		this.txtCM = new JTextField ( "", 2 );
-		this.add(this.txtCM, gbc);
+		gbc.gridy = 1;
+		gbc.gridx = 1;
+		this.add(this.txtCM, gbc      );
 
-		gbc.gridx  = 2;
-		this.txtTD = new JTextField ( "", 2 );
-		this.add(this.txtTD, gbc);
+		gbc.gridx = 2;
+		this.add(this.txtTD, gbc      );
 
-		gbc.gridx  = 3;
-		this.txtTP = new JTextField ( "", 2 );
-		this.add ( this.txtTP, gbc );
+		gbc.gridx = 3;
+		this.add ( this.txtTP, gbc    );
 
-		gbc.gridx     = 4;
-		this.lblSomme = new JLabel();
+		gbc.gridx = 4;
 		this.add ( this.lblSomme, gbc );
 
 
-		gbc.gridy    = 2;
-		gbc.gridx    = 0;
+		gbc.gridy = 2;
+		gbc.gridx = 0;
 		this.add ( new JLabel ( "Total (eqtd) promo" ), gbc );
 
-		gbc.gridx    = 1;
-		this.totalCM = new JLabel();
-		this.add ( this.totalCM, gbc );
+		gbc.gridx = 1;
+		this.add ( this.totalCM, gbc    );
 
-		gbc.gridx    = 2;
-		this.totalTD = new JLabel();
-		this.add ( this.totalTD, gbc );
+		gbc.gridx = 2;
+		this.add ( this.totalTD, gbc    );
 
-		gbc.gridx    = 3;
-		this.totalTP = new JLabel();
-		this.add ( this.totalTP, gbc );
+		gbc.gridx = 3;
+		this.add ( this.totalTP, gbc    );
 
-		gbc.gridx       = 4;
-		this.totalSomme = new JLabel();
+		gbc.gridx = 4;
 		this.add ( this.totalSomme, gbc );
 
 		/* ------------------------- */

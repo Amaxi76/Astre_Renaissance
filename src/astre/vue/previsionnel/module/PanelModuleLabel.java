@@ -40,7 +40,10 @@ public class PanelModuleLabel  extends JPanel
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.setLayout ( new GridLayout( 3, 5 ) );
+		this.setLayout ( new GridBagLayout() );
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.lblType	 = new JLabel ( );
 		this.lblSemestre = new JLabel ( );
@@ -48,31 +51,65 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibLong	 = new JTextField ("", 20);
 		this.txtLibCourt = new JTextField ("", 10);
 
-		this.add ( new JLabel ( "type module" ) );
-		this.add ( new JLabel ( "semestre" ) );
-		this.add ( new JLabel ( "code"  ) );
-		this.add ( new JLabel ( "libellé long" ) );
-		this.add ( new JLabel ( "libellé court" ) );
-		
-		this.add ( this.lblType     );
-		this.add ( this.lblSemestre );
-		this.add ( this.txtCode     );
-		this.add ( this.txtLibLong  );
-		this.add ( this.txtLibCourt );
-
-
 		this.lblNbEtd  = new JLabel( );
 		this.lblNbGpTD = new JLabel( );
 		this.lblNbGpTP = new JLabel( );
 
-		this.add ( new JLabel ( "nb Etd : " ) );
-		this.add ( this.lblNbEtd  );
 
-		this.add ( new JLabel ( "nb gp TD : " ) );
-		this.add ( this.lblNbGpTD );
+		gbc.gridy = 0;
+		gbc.gridx = 0;
+		this.add ( new JLabel ( "type module" ), gbc );
 
-		this.add ( new JLabel ( "nb gp TP : " ) );
-		this.add ( this.lblNbGpTP );
+		gbc.gridx = 1;
+		this.add ( new JLabel ( "semestre" ), gbc );
+
+		gbc.gridx = 2;
+		this.add ( new JLabel ( "code"  ), gbc );
+
+		gbc.gridx = 3;
+		this.add ( new JLabel ( "libellé long" ), gbc );
+
+		gbc.gridx = 4;
+		this.add ( new JLabel ( "libellé court" ), gbc );
+
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		this.add ( this.lblType, gbc     );
+
+		gbc.gridx = 1;
+		this.add ( this.lblSemestre, gbc );
+
+		gbc.gridx = 2;
+		this.add ( this.txtCode, gbc     );
+
+		gbc.gridx = 3;
+		this.add ( this.txtLibLong, gbc  );
+
+		gbc.gridx = 4;
+		this.add ( this.txtLibCourt, gbc );
+
+
+		gbc.gridy = 2;
+		gbc.gridx = 1;
+		this.add ( new JLabel ( "nb Etd : " ), gbc );
+
+		gbc.gridx = 2;
+		this.add ( new JLabel ( "nb gp TD : " ), gbc );
+
+		gbc.gridx = 3;
+		this.add ( new JLabel ( "nb gp TP : " ), gbc );
+
+
+		gbc.gridy = 3;
+		gbc.gridx = 1;
+		this.add ( this.lblNbEtd, gbc  );
+
+		gbc.gridx = 2;
+		this.add ( this.lblNbGpTD, gbc );
+
+		gbc.gridx = 3;
+		this.add ( this.lblNbGpTP, gbc );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -111,7 +148,15 @@ public class PanelModuleLabel  extends JPanel
 	{
 		String code = this.txtCode.getText();
 
-		if ( code.startsWith ( "R" ) )
+		if ( code.contains ( "ST" ) )
+		{
+			if ( !code.startsWith ( "ST" ) )
+			{
+				this.lblType.setText ( "Stage" );
+			}
+		}
+
+		else if ( code.startsWith ( "R" ) )
 		{
 			this.lblType.setText ( "Ressource" );
 		}
@@ -119,14 +164,6 @@ public class PanelModuleLabel  extends JPanel
 		else if ( code.startsWith ( "S" ) )
 		{
 			this.lblType.setText ( "SAE" );
-		}
-
-		else if ( code.contains ( "ST" ) )
-		{
-			if ( !code.startsWith ( "ST" ) )
-			{
-				this.lblType.setText ( "Stage" );
-			}
 		}
 
 		int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
