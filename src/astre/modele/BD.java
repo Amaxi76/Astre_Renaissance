@@ -3,12 +3,11 @@ package astre.modele;
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin et Maxime Lemoine
   * @version : 1.0 - 11/12/2023
-
   * @date : 06/12/2023
   */
 
 //TODO: Penser à fermer le rs et st
-//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD
+//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
 
 import java.sql.*;
 import java.util.ArrayList;
