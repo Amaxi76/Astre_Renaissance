@@ -65,7 +65,7 @@ INSERT INTO Heure VALUES
 ('SAE', 1   ),
 ('Tut', 1   );
 
-INSERT INTO Enseigne (Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
+INSERT INTO Intervient (Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
 (1,  'TD', 'R5.03',    6,    2, NULL, NULL         ),
 (1,  'TP', 'R1.01',    8,    1, NULL, NULL         ),
 (2,  'TP', 'R1.01',    8,    1, NULL, 'commentaire'),

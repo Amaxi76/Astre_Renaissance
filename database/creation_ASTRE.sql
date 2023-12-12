@@ -88,7 +88,7 @@ CREATE TABLE Intervenant
    FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat)
 );
 
-CREATE TABLE Enseigne
+CREATE TABLE Intervient
 (
    Id_Intervenant INTEGER,
    nomHeure       VARCHAR(50) ,
@@ -106,11 +106,11 @@ CREATE TABLE Enseigne
 
 CREATE TABLE Horaire
 ( 
-   nomHeure     VARCHAR(50),
-   Code_ModuleIUT VARCHAR(5),
-   nbHeurePN    INTEGER,
-   nbHeure      INTEGER,
-   nbSemaine    INTEGER,
+   nomHeure             VARCHAR(50),
+   Code_ModuleIUT       VARCHAR(5),
+   nbHeurePN            INTEGER,
+   nbHeureRepartie      INTEGER,
+   nbSemaine            INTEGER,
    
    PRIMARY KEY(nomHeure, Code_ModuleIUT),
    FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),
