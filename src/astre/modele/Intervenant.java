@@ -2,7 +2,7 @@ package astre.modele;
 
 /** Classe Intervenant 
   * @author : Maximilien Lesterlin, Alizéa Lebaron
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0.1 - 12/12/2023
   * @date : 06/12/2023
   */
 
