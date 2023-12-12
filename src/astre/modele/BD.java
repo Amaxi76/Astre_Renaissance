@@ -174,14 +174,12 @@ public class BD
 	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
 		//FIXME: Peut avoir une heure null 
-
-		//TODO: Fonction SQL
 		
 		HashMap<Heure, Integer> hm = new HashMap<> ( );
 		
 		Heure heure = null;
 		
-		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeure";
+		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeureRepartie";
 		
 		String REQUETE = "SELECT he.nomHeure, " + heureS + " "
 		               + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
@@ -616,6 +614,8 @@ public class BD
 	/*---------------------------------------*/
 	/*                UPDATE                 */
 	/*---------------------------------------*/
+
+	//TODO: Faire tous les updates
 
 	public void update ( Semestre s )
 	{
