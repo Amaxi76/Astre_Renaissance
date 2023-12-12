@@ -94,6 +94,22 @@ public class PanelModuleAttribution extends JPanel
 		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
 		this.lblSomme.setPreferredSize ( new Dimension ( 25, 15) );
 		this.lblSomme.setOpaque ( true );
+
+		this.totalCM.setBackground ( Color.LIGHT_GRAY );
+		this.totalCM.setPreferredSize ( new Dimension ( 25, 15) );
+		this.totalCM.setOpaque ( true );
+
+		this.totalTD.setBackground ( Color.LIGHT_GRAY );
+		this.totalTD.setPreferredSize ( new Dimension ( 25, 15) );
+		this.totalTD.setOpaque ( true );
+
+		this.totalTP.setBackground ( Color.LIGHT_GRAY );
+		this.totalTP.setPreferredSize ( new Dimension ( 25, 15) );
+		this.totalTP.setOpaque ( true );
+
+		this.totalSomme.setBackground ( Color.LIGHT_GRAY );
+		this.totalSomme.setPreferredSize ( new Dimension ( 25, 15) );
+		this.totalSomme.setOpaque ( true );
 	}
 
 	private void majSomme()
