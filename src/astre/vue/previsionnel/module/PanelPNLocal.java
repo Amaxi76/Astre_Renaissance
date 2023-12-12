@@ -23,10 +23,10 @@ public class PanelPNLocal extends JPanel
 	private JTextField txtTP;
 	private JLabel lblSomme;
 
-	private JLabel totalCM;
-	private JLabel totalTD;
-	private JLabel totalTP;
-	private JLabel totalSomme;
+	private JLabel lblTotalCM;
+	private JLabel lblTotalTD;
+	private JLabel lblTotalTP;
+	private JLabel lblTotalSomme;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -50,10 +50,10 @@ public class PanelPNLocal extends JPanel
 		this.txtTP      = new JTextField ( "", 2 );
 		this.lblSomme   = new JLabel();
 
-		this.totalCM    = new JLabel();
-		this.totalTD    = new JLabel();
-		this.totalTP    = new JLabel();
-		this.totalSomme = new JLabel();
+		this.lblTotalCM    = new JLabel();
+		this.lblTotalTD    = new JLabel();
+		this.lblTotalTP    = new JLabel();
+		this.lblTotalSomme = new JLabel();
 
 
 		gbc.gridy = 0;
@@ -89,16 +89,16 @@ public class PanelPNLocal extends JPanel
 		this.add ( new JLabel ( "Total (eqtd) promo" ), gbc );
 
 		gbc.gridx = 1;
-		this.add ( this.totalCM, gbc    );
+		this.add ( this.lblTotalCM, gbc    );
 
 		gbc.gridx = 2;
-		this.add ( this.totalTD, gbc    );
+		this.add ( this.lblTotalTD, gbc    );
 
 		gbc.gridx = 3;
-		this.add ( this.totalTP, gbc    );
+		this.add ( this.lblTotalTP, gbc    );
 
 		gbc.gridx = 4;
-		this.add ( this.totalSomme, gbc );
+		this.add ( this.lblTotalSomme, gbc );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -113,21 +113,21 @@ public class PanelPNLocal extends JPanel
 		this.lblSomme.setPreferredSize ( new Dimension ( 25, 15 ) );
 		this.lblSomme.setOpaque( true );
 
-		this.totalCM.setBackground ( Color.LIGHT_GRAY );
-		this.totalCM.setPreferredSize ( new Dimension ( 25, 15 ) );
-		this.totalCM.setOpaque( true );
+		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
+		this.lblTotalCM.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCM.setOpaque( true );
 
-		this.totalTD.setBackground( Color.LIGHT_GRAY );
-		this.totalTD.setPreferredSize( new Dimension ( 25, 15 ) );
-		this.totalTD.setOpaque( true );
+		this.lblTotalTD.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalTD.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTD.setOpaque( true );
 
-		this.totalTP.setBackground( Color.LIGHT_GRAY );
-		this.totalTP.setPreferredSize( new Dimension ( 25, 15 ) );
-		this.totalTP.setOpaque( true );
+		this.lblTotalTP.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalTP.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTP.setOpaque( true );
 
-		this.totalSomme.setBackground( Color.LIGHT_GRAY );
-		this.totalSomme.setPreferredSize( new Dimension ( 25, 15 ) );
-		this.totalSomme.setOpaque( true );
+		this.lblTotalSomme.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalSomme.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSomme.setOpaque( true );
 	}
 
 	private class AjoutKeyListenerSomme implements KeyListener
