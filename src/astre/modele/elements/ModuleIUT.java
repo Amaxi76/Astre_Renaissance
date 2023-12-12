@@ -10,16 +10,9 @@ import java.util.Map;
 
 public class ModuleIUT
 {
-<<<<<<< HEAD:src/astre/modele/elements/ModuleIUT.java
 	Map<Heure, Integer> hmHeuresPn;
 	Map<Heure, Integer> hmHeuresRepaties;
 	
-=======
-	HashMap<Heure, Integer> hsHeuresPn;
-	HashMap<Heure, Integer> hsHeuresRepariees;
-	
-
->>>>>>> ced1187eefce22079ca604cebe1c9b920a5912c3:src/astre/modele/elements/Module.java
 	Semestre   semestre;
 	TypeModule typeModule;
 	String     code;

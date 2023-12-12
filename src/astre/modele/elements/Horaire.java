@@ -66,7 +66,7 @@ public class Horaire
 	/**
 	 * @param heure the heure to set
 	 */
-	public void setHeure     ( Heure  heure     ) { this.heure     = heure;     }
+	public void setHeure     ( Heure  heure        ) { this.heure     = heure;     }
 
 	/**
 	 * @param module the module to set
@@ -76,12 +76,12 @@ public class Horaire
 	/**
 	 * @param nbHeurePN the nbHeurePN to set
 	 */
-	public void setNbHeurePN ( int    nbHeurePN ) { this.nbHeurePN = nbHeurePN; }
+	public void setNbHeurePN ( int    nbHeurePN    ) { this.nbHeurePN = nbHeurePN; }
 
 	/**
 	 * @param nbSemaine the nbSemaine to set
 	 */
-	public void setNbSemaine ( int    nbSemaine ) { this.nbSemaine = nbSemaine; }
+	public void setNbSemaine ( int    nbSemaine    ) { this.nbSemaine = nbSemaine; }
 
 	/**
 	 * @param nbHeure the nbHeure to set
