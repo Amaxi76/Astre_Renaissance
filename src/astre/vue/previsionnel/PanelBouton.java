@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import astre.vue.previsionnel.module.*;
 import astre.Controleur;
 
 public class PanelBouton extends JPanel implements ActionListener
