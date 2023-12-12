@@ -8,6 +8,7 @@ package astre.modele;
   */
 
 //TODO: Penser à fermer le rs et st
+//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -124,16 +125,25 @@ public class BD
 		
 	// }
 	
-	public List<ModuleIUT> getModules ( )
+	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
 		//FIXME: mettre le numéro du semestre
+
+		String REQUETE = "SELECT *"
+		               + "FROM   ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule "
+		               + "WHERE  m.id_semestre = ?";
 		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
 		try 
 		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule" );
+			Statement         st = co.createStatement (         );
+			PreparedStatement ps = co.prepareStatement( REQUETE );
+
+			ps.setInt ( 1, numeroSemestre );
+
+			ResultSet rs = ps.executeQuery ( );
+
 			while ( rs.next ( ) ) 
 			{
 				int iS = 6;
@@ -143,8 +153,8 @@ public class BD
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
 				TypeModule typeModule = new TypeModule ( rs.getInt ( iT++ ), rs.getString ( iT ) );
 
-				Map<Heure, Integer> hmHeuresPn         = this.getHeuresPn ( rs.getString ( 1 ), 'P' );
-				Map<Heure, Integer> hmHeuresRepartiees = this.getHeuresPn ( rs.getString ( 1 ), 'R' );
+				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
+				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
 				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
 
@@ -162,7 +172,7 @@ public class BD
 		return ensModules;
 	}
 
-	private Map<Heure, Integer> getHeuresPn ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
+	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
 		//FIXME: Peut avoir une heure null 
 		
@@ -170,30 +180,35 @@ public class BD
 		
 		Heure heure = null;
 		
-		final String requete = "SELECT he.nomHeure, ? "
-		                     + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
-		                     + "JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT "
-		                     + "WHERE ho.Code_ModuleIUT = ?";
+		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeure";
+		
+		String REQUETE = "SELECT he.nomHeure, " + heureS + " "
+		               + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
+		               + "JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT "
+		               + "WHERE ho.Code_ModuleIUT = ?";
 
 		try
 		{
 			Statement         st = co.createStatement (         );
-			PreparedStatement ps = co.prepareStatement( requete );
+			PreparedStatement ps = co.prepareStatement( REQUETE );
 
-			String heureS = ( typeHeure == 'P' ) ? "nbHeurePn" : "nbHeure";
-
-			ps.setString ( 1, heureS   );
-			ps.setString ( 2, code );
+			ps.setString ( 1, code   );
 
 			ResultSet rs = ps.executeQuery ( );
 
-			for ( Heure h : this.getHeures ( ) )
-				if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
-					heure = h;
+			while ( rs.next ( ) )
+			{
+				System.out.println(rs.getString(1));
+				System.out.println(rs.getInt(2));
+				
+				for ( Heure h : this.getHeures ( ) )
+					if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
+						heure = h;
 
-			while ( rs.next ( ) ) 
 				hm.put ( heure, rs.getInt ( 2 ) );
 
+			}
+				
 			rs.close ( );
 			st.close ( );
 		}
