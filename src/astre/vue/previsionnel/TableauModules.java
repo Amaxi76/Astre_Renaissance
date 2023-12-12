@@ -1,25 +1,27 @@
-package astre.vue.outils;
+package astre.vue.previsionnel;
 
 import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
+
+import astre.vue.outils.*;
 
 /** Classe représentant un tableau personnalisable.
  *  @author Maxime
  *  @version : 1.0 - 11/12/2023
  *  @date : 11/12/2023
 */
-public class Tableau extends JTable
+public class TableauModules extends JTable
 {
 	private String[] nomColonnes;
 	//private DefaultTableModel modele;
 	private ModeleTableau modele;
 	
-	public Tableau ( String[] nomColonnes )
+	public TableauModules ( String[] nomColonnes )
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableau(this.nomColonnes);
+		this.modele = new ModeleTableau(this.nomColonnes, true);
 		
 		this.setModel ( this.modele );
 		//this.modele.addTableModelListener(this);
