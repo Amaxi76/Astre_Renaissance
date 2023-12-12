@@ -143,8 +143,6 @@ public class BD
 				int iT = 11;
 				int iM = 1;
 
-				System.out.println ( rs.getString ( 1 ));
-
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
 				TypeModule typeModule = new TypeModule ( rs.getInt ( iT++ ), rs.getString ( iT ) );
 
@@ -152,8 +150,6 @@ public class BD
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeuresPn ( rs.getString ( 1 ), 'R' );
 				
 				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
-
-				System.out.println(moduleIUT);
 
 				ensModules.add ( moduleIUT );
 			}
@@ -701,7 +697,7 @@ public class BD
 			System.out.println ( "Erreur update(Intervenant i) : " + e);
 		}
 	}
-	
+
 	public void update ( Enseigne e )
 	{
 		String req = "UPDATE Enseigne SET nbSemaine = ?, nbGroupe = ?, nbHeure = ?, commentaire = ? WHERE Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
