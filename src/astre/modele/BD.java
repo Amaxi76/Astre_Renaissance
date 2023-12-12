@@ -660,7 +660,7 @@ public class BD
 		}
 	}
 
-	public void update ( Module m )
+	public void update ( ModuleIUT m )
 	{
 		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
 		try
