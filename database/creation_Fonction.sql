@@ -205,12 +205,12 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer dans horaire
 
-DROP              FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
+DROP              FUNCTION f_deleteHoraire ( d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteHoraire ( d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
 
-    DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+    DELETE FROM Horaire WHERE nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;
