@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 
-public class PanelModuleAttribution extends JPanel
+public class PanelPNLocal extends JPanel
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -32,7 +32,7 @@ public class PanelModuleAttribution extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelModuleAttribution ( Controleur ctrl )
+	public PanelPNLocal ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
 		/* ------------------------- */
