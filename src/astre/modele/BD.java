@@ -9,10 +9,8 @@ package astre.modele;
 import java.sql.*;
 import java.util.ArrayList;
 import astre.modele.*;
-import astre.modele.elements.Contrat;
-import astre.modele.elements.Heure;
-import astre.modele.elements.Intervenant;
-import astre.modele.elements.Semestre;
+import astre.modele.elements.*;
+import astre.modele.elements.Module;//import explicite pour pas confondre avec java.lang.Module
 
 public class BD
 {
@@ -133,7 +131,7 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Intervenant" );
 			while ( rs.next( ) ) 
 			{
-				lst.add ( new Intervenant( rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
+				lst.add ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
 		} 
 		catch ( SQLException e ) 
