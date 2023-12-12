@@ -1,8 +1,8 @@
 package astre;
 
 /** Classe Controleur 
-  * @author : Maximilien Lesterlin et Maxime
-  * @version : 1.0 - 11/12/2023
+  * @author : Maximilien Lesterlin et Maxime Lemoine
+  * @version : 2.0 - 12/12/2023
   * @date : 06/12/2023
   */
 
@@ -22,20 +22,11 @@ public class Controleur
 		this.metier = new Astre        (      );
 	}
 
-	public Semestre getSemestre ( int numSemestre )
-	{
-		return this.metier.getSemestre ( numSemestre );
-	}
+	public Semestre   getSemestre           ( int numSemestre ) { return this.metier.getSemestre           ( numSemestre ); }
+	public Object[][] getTableauModule      ( int numSemestre ) { return this.metier.getTableauModule      ( numSemestre ); }
+	public Object[][] getTableauIntervenant (                 ) { return this.metier.getTableauIntervenant (             ); }
 
-	public Object[][] getTableauModule ( int numeroSemestre )
-	{
-		return this.metier.getTableauModule ( numeroSemestre );
-	}
-
-	public Object[][] getTableauIntervenant ( )
-	{
-		return this.metier.getTableauIntervenant ( );
-	}
+	public void majSemestre ( Semestre s ) { this.metier.majSemestre ( s ); }
 
 	public static void afficherErreur ( String titre, String message )
 	{
@@ -44,7 +35,7 @@ public class Controleur
 
 	public static void main ( String[] args )
 	{
-		afficherErreur ( "Erreur java", "petite fenetre de test pour afficher les erreurs" );
+		//afficherErreur ( "Erreur java", "petite fenetre de test pour afficher les erreurs" );
 		new Controleur ( );
 	}
 }

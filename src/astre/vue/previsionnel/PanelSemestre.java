@@ -1,18 +1,25 @@
 package astre.vue.previsionnel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
+import astre.modele.elements.Semestre;
+import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
-import java.awt.Dimension;
-
 
 /** Classe PanelEnsSemestre
   * @author : Maximeuuu et Amaxi76
@@ -24,75 +31,91 @@ public class PanelSemestre extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 	private int        numSemestre;
-	private JPanel     pnlOptionSemestre;
 
-	private JTextField txtNbGrTD;
-	private JTextField txtNbGrTP;
-	private JTextField nbEtud;
-	private JTextField nbSemaine;
+	private JTextField txtNbGpTD;
+	private JTextField txtNbGpTP;
+	private JTextField txtNbEtud;
+	private JTextField txtNbSemaine;
 	
 	private Tableau tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
-		this.ctrl = ctrl;
+		this.ctrl        = ctrl;
 		this.numSemestre = numSemestre;
 
 		this.setLayout ( new BorderLayout ( ) );
 
-		this.pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
+		JPanel pnlOptionSemestre = new JPanel ( new FlowLayout ( ) );
 
 		/* ----------------------------- */
 		/*    Création des composants    */
 		/* -----------------------    -- */
 
-		this.txtNbGrTD = new JTextField ( );
-		this.txtNbGrTP = new JTextField ( );
-		this.nbEtud    = new JTextField ( );
-		this.nbSemaine = new JTextField ( );
+		this.txtNbGpTD    = new JTextField ( );
+		this.txtNbGpTP    = new JTextField ( );
+		this.txtNbEtud    = new JTextField ( );
+		this.txtNbSemaine = new JTextField ( );
 
-		this.txtNbGrTD.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( ) );
-		this.txtNbGrTP.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTP ( ) );
-		this.nbEtud   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
-		this.nbSemaine.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbSemaine  ( ) );
+		this.txtNbGpTD   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( ) );
+		this.txtNbGpTP   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTP ( ) );
+		this.txtNbEtud   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbEtudiant ( ) );
+		this.txtNbSemaine.setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbSemaine  ( ) );
 	
-		this.txtNbGrTD.setColumns ( 2 );
-		this.txtNbGrTP.setColumns ( 2 );
-		this.nbEtud   .setColumns ( 2 );
-		this.nbSemaine.setColumns ( 2 );
+		this.txtNbGpTD   .setColumns ( ConstantesVue.LARGEUR_COLONNE_NOMBRE );
+		this.txtNbGpTP   .setColumns ( ConstantesVue.LARGEUR_COLONNE_NOMBRE );
+		this.txtNbEtud   .setColumns ( ConstantesVue.LARGEUR_COLONNE_NOMBRE );
+		this.txtNbSemaine.setColumns ( ConstantesVue.LARGEUR_COLONNE_NOMBRE );
 
+		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
+		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
 		this.tableauEnsembleModule = new Tableau ( this.ctrl.getTableauModule ( numSemestre ), false );
-		this.tableauEnsembleModule.setShowGrid(false);
-		this.tableauEnsembleModule.setIntercellSpacing(new Dimension(0, 0));
+		this.tableauEnsembleModule.setShowGrid ( false );
+		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
+
+		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );
+		spTab.setBorder                  ( new TitledBorder ( "Liste des modules" )      );
+		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 
-		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TD"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTD );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb gr TP"    ) );
-		this.pnlOptionSemestre.add ( this.txtNbGrTP               );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
-		this.pnlOptionSemestre.add ( this.nbEtud                  );
-		this.pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
-		this.pnlOptionSemestre.add ( this.nbSemaine               );
+		pnlOptionSemestre.add ( new JLabel ( "nb gp TD"    ) );
+		pnlOptionSemestre.add ( this.txtNbGpTD );
+		pnlOptionSemestre.add ( new JLabel ( "nb gp TP"    ) );
+		pnlOptionSemestre.add ( this.txtNbGpTP               );
+		pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
+		pnlOptionSemestre.add ( this.txtNbEtud               );
+		pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
+		pnlOptionSemestre.add ( this.txtNbSemaine            );
 
-		this.add ( this.pnlOptionSemestre     , BorderLayout.NORTH  );
-		this.add ( this.tableauEnsembleModule , BorderLayout.CENTER );
+		pnlListeModule.add ( spTab                             , BorderLayout.CENTER );
+
+		this.add ( pnlOptionSemestre, BorderLayout.NORTH );
+		this.add ( pnlListeModule   , BorderLayout.CENTER );
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
 		/* -----------------------    -- */
 
-		this.txtNbGrTD.addActionListener ( this );
-		this.txtNbGrTP.addActionListener ( this );
-		this.nbEtud   .addActionListener ( this );
-		this.nbSemaine.addActionListener ( this );
+		this.txtNbGpTD   .addActionListener ( this );
+		this.txtNbGpTP   .addActionListener ( this );
+		this.txtNbEtud   .addActionListener ( this );
+		this.txtNbSemaine.addActionListener ( this );
 	}
 
 	public void actionPerformed ( ActionEvent e )
 	{
+		if ( e.getSource ( ) == this.txtNbGpTD || e.getSource ( ) == this.txtNbGpTP || e.getSource ( ) == this.txtNbEtud || e.getSource ( ) == this.txtNbSemaine )
+		{
+			int nbGpTD = Integer.parseInt ( this.txtNbGpTD   .getText ( ) );
+			int nbGpTP = Integer.parseInt ( this.txtNbGpTP   .getText ( ) );
+			int nbEtud = Integer.parseInt ( this.txtNbEtud   .getText ( ) );
+			int nbSem  = Integer.parseInt ( this.txtNbSemaine.getText ( ) );
+			
+			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTD, nbGpTP, nbEtud, nbSem ) );
+		}
 	}
 }
