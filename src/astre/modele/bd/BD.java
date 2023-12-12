@@ -20,13 +20,13 @@ public class BD
 	{
 		try 
 		{
-			Class.forName("org.postgresql.Driver");
+			Class.forName ( "org.postgresql.Driver" );
 			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
 			
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		catch ( SQLException e )
 		{
@@ -34,13 +34,9 @@ public class BD
 		}
 	}
 	
-	public static BD getInstance( )
+	public static BD getInstance ( )
 	{
-		if ( dbInstance == null ) 
-		{
-			dbInstance = new BD( );
-		}
-		return dbInstance;
+		return dbInstance != null ? dbInstance : new BD ( );
 	}
 	
 	
@@ -57,16 +53,18 @@ public class BD
 			ResultSet rs = st.executeQuery ( "SELECT * FROM Semestre" );
 			while ( rs.next ( ) )
 			{
-				lst.add ( new Semestre ( rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5) ) );
+				lst.add ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
-		} catch ( SQLException e ) {
+		}
+		catch ( SQLException e )
+		{
 			System.out.println ( e );
 		}
 		
 		return lst;
 	}
 	
-	public ArrayList<Contrat> getContrats( )
+	public ArrayList<Contrat> getContrats ( )
 	{
 		ArrayList<Contrat> lst = new ArrayList<Contrat>( );
 		
@@ -76,10 +74,12 @@ public class BD
 			ResultSet rs = st.executeQuery ( "SELECT * FROM Contrat" );
 			while ( rs.next( ) )
 			{
-				lst.add( new Contrat(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) ) );
+				lst.add ( new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
 			}
-		} catch (SQLException e) {
-			System.out.println(e);
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
 		}
 		
 		return lst;
