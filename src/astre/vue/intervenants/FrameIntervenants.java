@@ -18,7 +18,7 @@ public class FrameIntervenants extends JFrame
 	public FrameIntervenants ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
-		this.panel = new PanelIntervenants();
+		this.panel = new PanelIntervenants( this.ctrl );
 		
 		this.setTitle ( "Intervenants" );
 		this.setSize ( 1000,500 );

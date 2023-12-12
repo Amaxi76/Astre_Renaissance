@@ -63,7 +63,7 @@ public class Tableau extends JTable
 	/**
 	* Ajuste la taille des colonnes.
 	*/
-	private void ajusterTailleColonnes ( )
+	public void ajusterTailleColonnes ( )
 	{
 		TableColumnModel columnModel = this.getColumnModel ( );
 		for ( int i = 0; i < columnModel.getColumnCount ( ); i++ )

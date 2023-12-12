@@ -90,7 +90,7 @@ public class PanelModule  extends JPanel implements ActionListener
 
 			@Override
 			public void keyReleased(KeyEvent e) {}
-		});
+		} );
 
 		this.btnEnregistrer.addActionListener(this);
 		this.btnAnnuler    .addActionListener(this);

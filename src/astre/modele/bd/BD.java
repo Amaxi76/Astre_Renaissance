@@ -1,6 +1,6 @@
 package astre.modele.bd;
 
-/** Page d'insertion de la base de données
+/** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
@@ -41,8 +41,9 @@ public class BD
 	
 	
 	/*---------------------------------------*/
-	/*                RECUP GENERALE         */
+	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
+
 	public ArrayList<Semestre> getSemestres ( )
 	{
 		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
@@ -56,7 +57,9 @@ public class BD
 				lst.add ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
 		}
+		
 		catch ( SQLException e )
+		
 		{
 			System.out.println ( e );
 		}
@@ -78,6 +81,7 @@ public class BD
 			}
 		}
 		catch ( SQLException e )
+		
 		{
 			System.out.println ( e );
 		}
@@ -89,13 +93,17 @@ public class BD
 	{
 		ArrayList<Heure> lst = new ArrayList<Heure>();
 		
-		try {
+		try 
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Heure");
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 				lst.add( new Heure( rs.getString(1), rs.getDouble(2) ) );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -116,13 +124,17 @@ public class BD
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
 		
-		try {
+		try 
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Intervenant");
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 				lst.add(new Intervenant(rs.getString(2), rs.getString(3), getContrat(rs.getInt(6)), rs.getInt(4), rs.getInt(5) ) );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -140,19 +152,24 @@ public class BD
 	}*/
 	
 	/*---------------------------------------*/
-	/*                RECUP UNITAIRE         */
+	/*             RECUP UNITAIRE            */
 	/*---------------------------------------*/
+
 	public Semestre getSemestre ( int c )
 	{
 		Semestre semestre = null;
 		
-		try {
+		try 
+		{
 			Statement st = co.createStatement();
 			ResultSet rs = st.executeQuery("select * from Semestre where Id_Semestre = " + c );
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 				semestre = new Semestre(  rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5)  );
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			System.out.println(e);
 		}
 		
@@ -182,7 +199,7 @@ public class BD
 
 
 	/*---------------------------------------*/
-	/*                RECUP TABLO            */
+	/*              RECUP TABLO              */
 	/*---------------------------------------*/
 
 	public Object[][] getModulesTableau()
@@ -227,7 +244,7 @@ public class BD
 		return modules;
 	}
 
-	/*public Object[][] getIntervenantsTableau()
+	public Object[][] getIntervenantsTableau()
 	{
 		int nbInervenants = 0;
 		
@@ -245,19 +262,31 @@ public class BD
 			System.out.println(e);
 		}
 		
-		Object[][] modules = new Object[nbInervenants][14];
+		Object[][] intervenants = new Object[nbInervenants][15];
 
 		try
 		{
 			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select Id_ModuleIUT, libLong from ModuleIUT" );
+			ResultSet rs = st.executeQuery("select nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
 			int cpt = 0;
 			while (rs.next())
 			{
-				modules[cpt][0] = rs.getString(1);
-				modules[cpt][1] = rs.getString(2);
-				modules[cpt][2] = null;
-				modules[cpt][3] = null;
+				intervenants[cpt][0] = rs.getString(1);//contrat
+				intervenants[cpt][1] = rs.getString(2);//nom
+				intervenants[cpt][2] = rs.getString(3);//prenom
+				intervenants[cpt][3] = rs.getString(4);//hservice
+				intervenants[cpt][4] = rs.getInt(4);//hmax
+				intervenants[cpt][5] = rs.getInt(4);//hservice
+				intervenants[cpt][6] = "";
+				intervenants[cpt][7] = "";
+				intervenants[cpt][8] = "";
+				intervenants[cpt][9] = "";
+				intervenants[cpt][10] = "";
+				intervenants[cpt][11] = "";
+				intervenants[cpt][12] = "";
+				intervenants[cpt][13] = "";
+				intervenants[cpt][14] = "";
+
 				cpt++;
 			}
 		}
@@ -265,12 +294,13 @@ public class BD
 		{
 			System.out.println(e);
 		}
-		return modules;
-	}*/
+		return intervenants;
+	}
 
 	/*---------------------------------------*/
 	/*                INSERT                 */
 	/*---------------------------------------*/
+
 	public void insert(Intervenant i)
 	{
 		String req = "INSERT INTO Intervenant VALUES(?,?,?,?,?)";
