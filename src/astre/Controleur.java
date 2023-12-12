@@ -6,6 +6,7 @@ package astre;
   * @date : 06/12/2023
   */
 
+import astre.modele.elements.*;
 import astre.modele.*;
 import astre.vue.*;
 import astre.vue.outils.PopUpErreur;
@@ -19,6 +20,16 @@ public class Controleur
 	{
 		this.ihm    = new FrameAccueil ( this );
 		this.metier = new Astre        (      );
+	}
+
+	public Semestre getSemestre ( int numSemestre )
+	{
+		return this.metier.getSemestre ( numSemestre );
+	}
+
+	public Object[][] getTableauModule ( )
+	{
+		return this.metier.getTableauModule ( );
 	}
 
 	public static void afficherErreur ( String titre, String message )

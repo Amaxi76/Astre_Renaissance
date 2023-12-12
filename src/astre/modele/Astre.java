@@ -1,6 +1,9 @@
 package astre.modele;
 
-import astre.modele.elements.Semestre;
+import java.util.List;
+import java.util.ArrayList;
+
+import astre.modele.elements.*;
 
 public class Astre
 {
@@ -17,7 +20,8 @@ public class Astre
 		/*Object[][] tableau = { {"R1.01", "Initia", "437/465", "V"}, {"R2.02", "Dev", "374/374", "V"} };
 		return tableau;*/
 		
-		return this.bd.getModulesTableau();
+		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( this.bd.getModules ( ) ) ;
+		
 	}
 
 	public Object[][] getTableauIntervenant ( )

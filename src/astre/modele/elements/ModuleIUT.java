@@ -9,11 +9,10 @@ package astre.modele.elements;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Module
+public class ModuleIUT
 {
-	HashMap<Heure, Integer> hsHeuresPn;
-	HashMap<Heure, Integer> hsHeuresRepariees;
-	
+	Map<Heure, Integer> hmHeuresPn;
+	Map<Heure, Integer> hmHeuresRepatiees;
 	
 	Semestre   semestre;
 	TypeModule typeModule;
@@ -22,16 +21,16 @@ public class Module
 	String     libCourt;
 	boolean    valide;
 
-	public Module ( Semestre semestre, TypeModule typeModule, String code, String libLong, String libCourt )
+	public ModuleIUT ( Semestre semestre, TypeModule typeModule, String code, String libLong, String libCourt, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepatiees )
 	{
-		this.hsHeuresPn         = new HashMap<> ( );
-		this.hsHeuresRepariees  = new HashMap<> ( );
-		this.semestre           = semestre;
-		this.typeModule         = typeModule;
-		this.code               = code;
-		this.libLong            = libLong;
-		this.libCourt           = libCourt;
-		this.valide             = false;
+		this.semestre          = semestre;
+		this.typeModule        = typeModule;
+		this.code              = code;
+		this.libLong           = libLong;
+		this.libCourt          = libCourt;
+		this.valide            = false;
+		this.hsHeuresPn        = hsHeuresPn;
+		this.hsHeuresRepatiees = hsHeuresRepatiees;
 	}
 
 	/*---------------------------------------*/
@@ -44,15 +43,15 @@ public class Module
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
 	public String              getLibCourt           ( ) { return this.libCourt;          }
-	public Map<Heure, Integer> getHsHeureRepartiees  ( ) { return this.hsHeuresRepariees; }
+	public Map<Heure, Integer> getHsHeureRepartiees  ( ) { return this.hsHeuresRepatiees; }
 	public Map<Heure, Integer> getHsHeurePn          ( ) { return this.hsHeuresPn;        }
 
 	public int getHeureRepartiees ( )
 	{
 		int somme = 0;
 		
-		for ( Heure h : this.hsHeuresRepariees.keySet ( ) )
-			somme += this.hsHeuresRepariees.get ( h );
+		for ( Heure h : this.hsHeuresRepatiees.keySet ( ) )
+			somme += this.hsHeuresRepatiees.get ( h );
 
 		return somme;
 	}

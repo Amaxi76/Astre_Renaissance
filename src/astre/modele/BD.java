@@ -11,9 +11,12 @@ package astre.modele;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import astre.modele.*;
+//import explicite pour pas confondre avec java.lang.Module
 import astre.modele.elements.*;
-import astre.modele.elements.Module;//import explicite pour pas confondre avec java.lang.Module
 
 public class BD
 {
@@ -119,18 +122,34 @@ public class BD
 		
 	// }
 	
-	public ArrayList<Module> getModules()
+	public List<ModuleIUT> getModules ( )
 	{
-		ArrayList<Module> ensModules = new ArrayList<Module> ( );
+		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
 		try 
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre" );
+			ResultSet rs = st.executeQuery ( "select * from ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule" );
 			while ( rs.next ( ) ) 
 			{
-				Semestre semestre = new Semestre ( rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7) );
-				ensModules.add ( new Module( semestre, rs.getString(0), rs.getString(1), rs.getString(2) ) );
+				int iS = 5;
+				int iT = 10;
+				int iM = 0;
+
+				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
+				TypeModule typeModule = new TypeModule ( rs.getInt ( iT++ ), rs.getString ( iT ) );
+
+				
+				
+				
+				Map<Heure, Integer> hsHeuresPn = this.getHeuresPn();
+				hsHeuresPn.put();
+				
+				Map<Heure, Integer> hsHeuresRepartiees = this.getHeuresRepartiies();
+				
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hsHeuresPn, hsHeuresRepatiees );
+
+				ensModules.add ( moduleIUT );
 			}
 
 			rs.close ( );
@@ -397,7 +416,7 @@ public class BD
 		}
 	}
 
-	public void insert ( Intervenant i, Heure h, Module m, int nbSemaine, int nbGroupe, int nbHeure, String commentaire )
+	public void insert ( Intervenant i, Heure h, ModuleIUT m, int nbSemaine, int nbGroupe, int nbHeure, String commentaire )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
@@ -418,7 +437,7 @@ public class BD
 		}
 	}
 
-	public void insert ( Heure h, Module m, int nbHeurePN, int nbHeure, int nbSemaine )
+	public void insert ( Heure h, ModuleIUT m, int nbHeurePN, int nbHeure, int nbSemaine )
 	{
 		String req = "INSERT INTO Enseigne VALUES(?,?,?,?,?,?,?)";
 		try
@@ -471,7 +490,7 @@ public class BD
 		}
 	}
 
-	public void delete ( Module m )
+	public void delete ( ModuleIUT m )
 	{
 		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
 		try
@@ -501,7 +520,7 @@ public class BD
 		}
 	}
 	
-	public void delete ( Intervenant i, Heure h, Module m )
+	public void delete ( Intervenant i, Heure h, ModuleIUT m )
 	{
 		String req = "DELETE FROM Enseigne where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
@@ -518,7 +537,7 @@ public class BD
 		}
 	}
 
-	public void delete ( Heure h, Module m )
+	public void delete ( Heure h, ModuleIUT m )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
 		try
