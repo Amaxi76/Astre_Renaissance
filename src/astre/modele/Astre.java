@@ -21,7 +21,20 @@ public class Astre
 		return tableau;*/
 		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( this.bd.getModules ( ) ) ;
+
+		Object[][] tabObjet = new Object[ensModules.size ( ) ][4];
+
+		for ( int cpt = 0; cpt < ensModules.size ( ); cpt++ )
+		{
+			ModuleIUT module = ensModules.get ( cpt );
+			
+			tabObjet[cpt][0] = module.getCode ( );
+			tabObjet[cpt][1] = module.getLibLong  ( );
+			tabObjet[cpt][2] = "" + module.getHeureReparties ( ) + "/" + module.getHeurePn ( );
+			tabObjet[cpt][3] = module.estValide ( );
+		}
 		
+		return tabObjet;
 	}
 
 	public Object[][] getTableauIntervenant ( )

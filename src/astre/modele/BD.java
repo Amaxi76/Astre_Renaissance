@@ -1,16 +1,19 @@
 package astre.modele;
 
 /** Page de gestion de la base de données
-  * @author : Matéo Sa, Alizéa Lebaron
+  * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin et Maxime Lemoine
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
 
 //TODO: Changer les types de retour en List au lieu d'ArrayList
 //TODO: Penser à fermer le rs et st
+//FIXME: Les noms de variables ne correspondent pas entre la DB et le code (ex: nbHeure avec nbHeureReparties)
+//FIXME: Changer le nom nbHeure dans la BD par nbHeureRepartie
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,7 +99,7 @@ public class BD
 		return lst;
 	}
 	
-	public ArrayList<Heure> getHeures ( )
+	public List<Heure> getHeures ( )
 	{
 		ArrayList<Heure> lst = new ArrayList<Heure> ( );
 		
@@ -124,6 +127,8 @@ public class BD
 	
 	public List<ModuleIUT> getModules ( )
 	{
+		//FIXME: mettre le numéro du semestre
+		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
 		try 
@@ -132,22 +137,21 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule" );
 			while ( rs.next ( ) ) 
 			{
-				int iS = 5;
-				int iT = 10;
-				int iM = 0;
+				int iS = 6;
+				int iT = 11;
+				int iM = 1;
+
+				System.out.println ( rs.getString ( 1 ));
 
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
 				TypeModule typeModule = new TypeModule ( rs.getInt ( iT++ ), rs.getString ( iT ) );
 
+				Map<Heure, Integer> hmHeuresPn         = this.getHeuresPn ( rs.getString ( 1 ), 'P' );
+				Map<Heure, Integer> hmHeuresRepartiees = this.getHeuresPn ( rs.getString ( 1 ), 'R' );
 				
-				
-				
-				Map<Heure, Integer> hsHeuresPn = this.getHeuresPn();
-				hsHeuresPn.put();
-				
-				Map<Heure, Integer> hsHeuresRepartiees = this.getHeuresRepartiies();
-				
-				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hsHeuresPn, hsHeuresRepatiees );
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
+
+				System.out.println(moduleIUT);
 
 				ensModules.add ( moduleIUT );
 			}
@@ -157,15 +161,58 @@ public class BD
 		} 
 		catch ( SQLException e ) 
 		{
-			System.out.println ( e );
+			System.out.println ( "getModules ( )" +  e );
 		}
 		
 		return ensModules;
 	}
+
+	private Map<Heure, Integer> getHeuresPn ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
+	{
+		//FIXME: Peut avoir une heure null 
+		
+		HashMap<Heure, Integer> hm = new HashMap<> ( );
+		
+		Heure heure = null;
+		
+		final String requete = "SELECT he.nomHeure, ? "
+		                     + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
+		                     + "JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT "
+		                     + "WHERE ho.Code_ModuleIUT = ?";
+
+		try
+		{
+			Statement         st = co.createStatement (         );
+			PreparedStatement ps = co.prepareStatement( requete );
+
+			String heureS = ( typeHeure == 'P' ) ? "nbHeurePn" : "nbHeure";
+
+			ps.setString ( 1, heureS   );
+			ps.setString ( 2, code );
+
+			ResultSet rs = ps.executeQuery ( );
+
+			for ( Heure h : this.getHeures ( ) )
+				if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
+					heure = h;
+
+			while ( rs.next ( ) ) 
+				hm.put ( heure, rs.getInt ( 2 ) );
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e ) 
+		{
+			System.out.println ( e );
+		}
+
+		return hm;
+	}
 	
 	public ArrayList<Intervenant> getIntervenants ( )
 	{
-		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
+		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		
 		try 
 		{
@@ -559,99 +606,7 @@ public class BD
 	/*                UPDATE                 */
 	/*---------------------------------------*/
 
-	public void update ( Semestre s )
-	{
-		String req = "UPDATE Semestre SET nbGroupeTP = ?, nbGroupeTD = ?, nbEtud = ?, nbSemaine = ? WHERE Id_Semestre = ? ";
-		try
-		{
-			ps = co.prepareStatement ( req );
-			ps.setInt ( 1, s.getNbGroupeTP ( ) );
-			ps.setInt ( 2, s.getNbGroupeTD ( ) );
-			ps.setInt ( 3, s.getNbEtudiant ( ) );
-			ps.setInt ( 4, s.getNbSemaine  ( ) );
-			ps.setInt ( 5, s.getIdSemestre ( ) );
-			ps.executeUpdate ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-	}
 
-	public void update ( Contrat c )
-	{
-		String req = "UPDATE Contrat SET nomContrat = ?, hServiceContrat = ?, hMaxContrat = ?, ratioTP = ? WHERE Id_Contrat = ?";
-		try
-		{
-			ps = co.prepareStatement ( req );
-			ps.setString ( 1, c.getNom                 ( ) );
-			ps.setInt    ( 2, c.getHeureServiceContrat ( ) );
-			ps.setInt    ( 3, c.getHeureMaxContrat     ( ) );
-			ps.setDouble ( 4, c.getRatioTP             ( ) );
-			ps.setInt    ( 5, c.getId                  ( ) );
-			ps.executeUpdate ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-	}
-
-	public void update ( Heure h )
-	{
-		String req = "UPDATE Heure SET coeffTD = ? WHERE nomHeure = ?";
-		try
-		{
-			ps = co.prepareStatement ( req );
-			ps.setDouble ( 1, h.getCoefTd ( ) );
-			ps.setString ( 2, h.getNom    ( ) );
-			ps.executeUpdate ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-	}
-
-	public void update ( Module m )
-	{
-		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
-		try
-		{
-			ps = co.prepareStatement ( req );
-			ps.setString ( 1, m.getLibLong    ( ) );
-			ps.setString ( 2, m.getLibCourt   ( ) );
-			ps.setInt    ( 3, m.getTypeModule ( ).getId         ( ) );
-			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
-			ps.setString ( 5, m.getCode       ( ) );
-			ps.executeUpdate ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-	}
-
-	public void update ( Intervenant i )
-	{
-		String req = "UPDATE Intervenant SET nomInter = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
-		try
-		{
-			ps = co.prepareStatement ( req );
-			ps.setString ( 1, i.getNom          ( ) );
-			ps.setString ( 2, i.getPrenom       ( ) );
-			ps.setInt    ( 3, i.getheureService ( ) );
-			ps.setInt    ( 4, i.getHeureMaximum ( ) );
-			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
-			ps.executeUpdate ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-	}
-
-	//TODO update des enseigne et horaire
 
 	
 	/*---------------------------------------*/
