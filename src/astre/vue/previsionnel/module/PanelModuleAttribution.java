@@ -1,7 +1,9 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
-import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -68,8 +70,39 @@ public class PanelModuleAttribution extends JPanel
 		/* Activation des composants */
 		/* ------------------------- */
 
+		this.txtCM.addKeyListener ( new KeyListener()
+		{
+			public void keyTyped    ( KeyEvent e ) { majSomme(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
+		});
+
+		this.txtTD.addKeyListener ( new KeyListener()
+		{
+			public void keyTyped    ( KeyEvent e ) { majSomme(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
+		});
+
+		this.txtTP.addKeyListener ( new KeyListener()
+		{
+			public void keyTyped    ( KeyEvent e ) { majSomme(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
+		});
+
 		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
 		this.lblSomme.setPreferredSize ( new Dimension ( 25, 15) );
 		this.lblSomme.setOpaque ( true );
+	}
+
+	private void majSomme()
+	{
+		int CM = Integer.parseInt ( txtCM.getText () );
+		int TD = Integer.parseInt ( txtTD.getText() );
+		int TP = Integer.parseInt ( txtTP.getText() );
+
+		int somme = CM + TD + TP;
+		lblSomme.setText ( String.valueOf ( somme ) );
 	}
 }

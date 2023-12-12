@@ -88,14 +88,9 @@ public class PanelModuleLabel  extends JPanel
 
 		this.txtCode.addKeyListener(new KeyListener()
 		{
-			@Override
-			public void keyTyped(KeyEvent e) { validationTextField(); }
-
-			@Override
-			public void keyPressed(KeyEvent e) {}
-
-			@Override
-			public void keyReleased(KeyEvent e) {}
+			public void keyTyped    ( KeyEvent e ) { majLabels(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
 		} );
 
 
@@ -112,7 +107,7 @@ public class PanelModuleLabel  extends JPanel
 		this.lblNbGpTP.setOpaque ( true );
 	}
 
-	private void validationTextField()
+	private void majLabels()
 	{
 		String code = this.txtCode.getText();
 

@@ -69,7 +69,7 @@ CREATE TABLE ModuleIUT
    Id_TypeModule   INTEGER NOT NULL,
    Id_Semestre     INTEGER NOT NULL,
 
-   PRIMARY KEY(Id_ModuleIUT),
+   PRIMARY KEY(Code_ModuleIUT),
    FOREIGN KEY(Id_TypeModule) REFERENCES TypeModule(Id_TypeModule),
    FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
 );
@@ -92,28 +92,28 @@ CREATE TABLE Enseigne
 (
    Id_Intervenant INTEGER,
    nomHeure       VARCHAR(50) ,
-   Id_ModuleIUT   VARCHAR(5) ,
+   Code_ModuleIUT   VARCHAR(5) ,
    nbSemaine      INTEGER,
    nbGroupe       INTEGER,
    nbHeure        INTEGER,
    commentaire    VARCHAR(50) ,
-   PRIMARY KEY(Id_Intervenant, nomHeure, Id_ModuleIUT),
+   PRIMARY KEY(Id_Intervenant, nomHeure, Code_ModuleIUT),
    FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
    FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),
-   FOREIGN KEY(Id_ModuleIUT) REFERENCES ModuleIUT(Id_ModuleIUT)
+   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)
 );
 
 
 CREATE TABLE Horaire
 ( 
    nomHeure     VARCHAR(50),
-   Id_ModuleIUT VARCHAR(5),
+   Code_ModuleIUT VARCHAR(5),
    nbHeurePN    INTEGER,
    nbHeure      INTEGER,
    nbSemaine    INTEGER,
    
-   PRIMARY KEY(nomHeure, Id_ModuleIUT),
+   PRIMARY KEY(nomHeure, Code_ModuleIUT),
    FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),
-   FOREIGN KEY(Id_ModuleIUT) REFERENCES ModuleIUT(Id_ModuleIUT)
+   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)
 );
 
