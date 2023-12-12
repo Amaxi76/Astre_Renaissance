@@ -20,13 +20,12 @@ public class BD
 	{
 		try 
 		{
-			Class.forName("org.postgresql.Driver");
+			Class.forName ( "org.postgresql.Driver" );
 			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
-			
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		catch ( SQLException e )
 		{
@@ -38,7 +37,7 @@ public class BD
 	{
 		if ( dbInstance == null ) 
 		{
-			dbInstance = new BD( );
+			dbInstance = new BD ( );
 		}
 		return dbInstance;
 	}
@@ -71,41 +70,41 @@ public class BD
 	
 	public ArrayList<Contrat> getContrats( )
 	{
-		ArrayList<Contrat> lst = new ArrayList<Contrat>( );
+		ArrayList<Contrat> lst = new ArrayList<Contrat> ( );
 		
 		try
 		{
-			Statement st = co.createStatement( );
+			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "SELECT * FROM Contrat" );
 			while ( rs.next( ) )
 			{
-				lst.add( new Contrat(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) ) );
+				lst.add ( new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
 			}
 		} 
-		catch (SQLException e) 
+		catch ( SQLException e ) 
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		return lst;
 	}
 	
-	public ArrayList<Heure> getHeures()
+	public ArrayList<Heure> getHeures ( )
 	{
-		ArrayList<Heure> lst = new ArrayList<Heure>();
+		ArrayList<Heure> lst = new ArrayList<Heure> ( );
 		
 		try 
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select * from Heure");
-			while (rs.next()) 
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Heure" );
+			while ( rs.next ( ) ) 
 			{
-				lst.add( new Heure( rs.getString(1), rs.getDouble(2) ) );
+				lst.add ( new Heure( rs.getString(1), rs.getDouble(2) ) );
 			}
 		} 
-		catch (SQLException e) 
+		catch ( SQLException e ) 
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		return lst;
@@ -121,22 +120,22 @@ public class BD
 		
 	}*/
 	
-	public ArrayList<Intervenant> getIntervenants()
+	public ArrayList<Intervenant> getIntervenants ( )
 	{
-		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
+		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
 		
 		try 
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select * from Intervenant");
-			while (rs.next()) 
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Intervenant" );
+			while ( rs.next( ) ) 
 			{
-				lst.add(new Intervenant(rs.getString(2), rs.getString(3), getContrat(rs.getInt(6)), rs.getInt(4), rs.getInt(5) ) );
+				lst.add ( new Intervenant( rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
 		} 
-		catch (SQLException e) 
+		catch ( SQLException e ) 
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		return lst;
@@ -162,37 +161,37 @@ public class BD
 		
 		try 
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select * from Semestre where Id_Semestre = " + c );
-			while (rs.next()) 
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Semestre where Id_Semestre = " + c );
+			while ( rs.next ( ) ) 
 			{
-				semestre = new Semestre(  rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getInt(5)  );
+				semestre = new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 )  );
 			}
 		} 
-		catch (SQLException e) 
+		catch ( SQLException e ) 
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		return semestre;
 	}
 
-	public Contrat getContrat(int c)
+	public Contrat getContrat ( int c )
 	{
 		Contrat contrat = null;
 		
 		try
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select * from Contrat where Id_Contrat = " + c );
-			while (rs.next())
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Contrat where Id_Contrat = " + c );
+			while ( rs.next( ) )
 			{
-				contrat = new Contrat(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5) );
+				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
 			}
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		return contrat;
@@ -203,74 +202,74 @@ public class BD
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
 
-	public Object[][] getModulesTableau()
+	public Object[][] getModulesTableau ( )
 	{
 		int nbModule = 0;
 		
 		try
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select count(*) from ModuleIUT" );
-			while (rs.next())
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from ModuleIUT" );
+			while ( rs.next ( ) )
 			{
-				nbModule = rs.getInt(1);
-				System.out.println(nbModule);
+				nbModule = rs.getInt ( 1 );
+				System.out.println ( nbModule );
 			}
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		Object[][] modules = new Object[nbModule][4];
 
 		try
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select Id_ModuleIUT, libLong from ModuleIUT" );
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_ModuleIUT, libLong from ModuleIUT" );
 			int cpt = 0;
-			while (rs.next())
+			while ( rs.next ( ) )
 			{
-				modules[cpt][0] = rs.getString(1);
-				modules[cpt][1] = rs.getString(2);
+				modules[cpt][0] = rs.getString ( 1 );
+				modules[cpt][1] = rs.getString ( 2 );
 				modules[cpt][2] = "";
 				modules[cpt][3] = "";
 				cpt++;
 			}
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		return modules;
 	}
 
-	public Object[][] getIntervenantsTableau()
+	public Object[][] getIntervenantsTableau ( )
 	{
 		int nbInervenants = 0;
 		
 		try
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select count(*) from Intervenant" );
-			while (rs.next())
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery( "select count(*) from Intervenant" );
+			while ( rs.next ( ) )
 			{
-				nbInervenants = rs.getInt(1);
+				nbInervenants = rs.getInt ( 1 );
 			}
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		
 		Object[][] intervenants = new Object[nbInervenants][15];
 
 		try
 		{
-			Statement st = co.createStatement();
-			ResultSet rs = st.executeQuery("select nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
 			int cpt = 0;
-			while (rs.next())
+			while ( rs.next ( ) )
 			{
 				intervenants[cpt][0] = rs.getString(1);//contrat
 				intervenants[cpt][1] = rs.getString(2);//nom
@@ -291,9 +290,9 @@ public class BD
 				cpt++;
 			}
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 		return intervenants;
 	}
@@ -302,22 +301,22 @@ public class BD
 	/*                INSERT                 */
 	/*---------------------------------------*/
 
-	public void insert(Intervenant i)
+	public void insert ( Intervenant i )
 	{
 		String req = "INSERT INTO Intervenant VALUES(?,?,?,?,?)";
 		try
 		{
-			ps = co.prepareStatement(req);
-			ps.setString(1, i.getNom());
-			ps.setString(2, i.getPrenom());
-			ps.setInt(3, i.getService());
-			ps.setInt(4, i.getHeureMaximum());
-			ps.setInt(4, i.getContrat().getId());
-			ps.executeUpdate();
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, i.getNom          ( ) );
+			ps.setString ( 2, i.getPrenom       ( ) );
+			ps.setInt    ( 3, i.getService      ( ) );
+			ps.setInt    ( 4, i.getHeureMaximum ( ) );
+			ps.setInt    ( 4, i.getContrat ( ).getId ( ) );
+			ps.executeUpdate ( );
 		}
-		catch (SQLException e)
+		catch ( SQLException e )
 		{
-			System.out.println(e);
+			System.out.println ( e );
 		}
 	}
 
