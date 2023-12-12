@@ -39,7 +39,7 @@ public class Intervenant
 
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
-	public void setContrat      ( Contrat contrat      ) { this.contrat       = contrat;     }
+	public void setContrat      ( Contrat contrat      ) { this.contrat      = contrat;      }
 	public void setService      ( int     service      ) { this.service      = service;      }
 	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
 
