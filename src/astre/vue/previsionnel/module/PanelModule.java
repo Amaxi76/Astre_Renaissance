@@ -27,6 +27,10 @@ public class PanelModule  extends JPanel implements ActionListener
 	private JTextField txtLibLong;
 	private JTextField txtLibCourt;
 
+	private JLabel lblNbEtd;
+	private JLabel lblNbGpTD;
+	private JLabel lblNbGpTP;
+
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
 
@@ -41,8 +45,10 @@ public class PanelModule  extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.lblType	 = new JLabel ();
-		this.lblSemestre = new JLabel ();
+		this.setLayout ( new GridLayout( 2, 5 ) );
+
+		this.lblType	 = new JLabel ( );
+		this.lblSemestre = new JLabel ( );
 		this.txtCode	 = new JTextField ("", 5);
 		this.txtLibLong	 = new JTextField ("", 20);
 		this.txtLibCourt = new JTextField ("", 10);
@@ -61,6 +67,20 @@ public class PanelModule  extends JPanel implements ActionListener
 
 		this.add ( new JLabel ( "Libellé court : " ) );
 		this.add ( this.txtLibCourt );
+
+
+		this.lblNbEtd  = new JLabel( );
+		this.lblNbGpTD = new JLabel( );
+		this.lblNbGpTP = new JLabel( );
+
+		this.add ( new JLabel ( "nb Etd : " ) );
+		this.add ( this.lblNbEtd  );
+
+		this.add ( new JLabel ( "nb gp TD : " ) );
+		this.add ( this.lblNbGpTD );
+
+		this.add ( new JLabel ( "nb gp TP : " ) );
+		this.add ( this.lblNbGpTP );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
@@ -83,7 +103,7 @@ public class PanelModule  extends JPanel implements ActionListener
 		this.txtCode.addKeyListener(new KeyListener()
 		{
 			@Override
-			public void keyTyped(KeyEvent e) { validateTextField(); }
+			public void keyTyped(KeyEvent e) { validationTextField(); }
 
 			@Override
 			public void keyPressed(KeyEvent e) {}
@@ -92,11 +112,24 @@ public class PanelModule  extends JPanel implements ActionListener
 			public void keyReleased(KeyEvent e) {}
 		} );
 
+
+		this.lblNbEtd .setBackground ( Color.LIGHT_GRAY );
+		this.lblNbEtd .setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbEtd .setOpaque ( true );
+
+		this.lblNbGpTD.setBackground ( Color.LIGHT_GRAY );
+		this.lblNbGpTD.setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbGpTD.setOpaque ( true );
+
+		this.lblNbGpTP.setBackground ( Color.LIGHT_GRAY );
+		this.lblNbGpTP.setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbGpTP.setOpaque ( true );
+
 		this.btnEnregistrer.addActionListener(this);
 		this.btnAnnuler    .addActionListener(this);
 	}
 
-	private void validateTextField()
+	private void validationTextField()
 	{
 		String code = this.txtCode.getText();
 
