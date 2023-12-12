@@ -10,6 +10,7 @@ import astre.modele.*;
 import astre.modele.bd.*;
 import astre.vue.*;
 import astre.vue.previsionnel.module.FrameModule;
+import astre.vue.outils.PopUpErreur;
 
 public class Controleur
 {
@@ -50,9 +51,15 @@ public class Controleur
 		
 		return this.bd.getIntervenantsTableau();
 	}
+	
+	public static void afficherErreur ( String titre, String message )
+	{
+		new PopUpErreur( titre, message );
+	}
 
 	public static void main ( String[] args )
 	{
+		afficherErreur ( "Erreur java", "petite fenetre de test pour afficher les erreurs" );
 		new Controleur ( );
 	}
 }

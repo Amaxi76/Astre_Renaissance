@@ -71,5 +71,15 @@ INSERT INTO Enseigne (Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroup
 (2,  'TP', 'R1.01',    8,    1, NULL, 'commentaire'),
 (3, 'Tut', 'S1.05', NULL, NULL,    9, NULL         ),
 (3, 'REH', 'S6.ST', NULL, NULL,   12, NULL         );
+  
+INSERT INTO Horaire VALUES
+('TP' , 'R1.01', 85, 0, 12),
+('TD' , 'R1.01', 30, 0, 11),
+('CM' , 'R1.01',  5, 0,  5),
+('SAE', 'S5.01', 60, 0,  3),
+('REH', 'S2.05',  2, 0,  1),
+('Tut', 'S6.ST',  6, 0,  3);
+
+
 
 

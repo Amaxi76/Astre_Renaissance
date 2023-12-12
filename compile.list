@@ -14,6 +14,7 @@ src/astre/vue/outils/MenuBarAstre.java
 src/astre/vue/outils/PanelDiagramme.java
 src/astre/vue/outils/ModeleTableau.java
 src/astre/vue/outils/Tableau.java
+src/astre/vue/outils/PopUpErreur.java
 
 src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
