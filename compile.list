@@ -25,6 +25,9 @@ src/astre/vue/outils/ModeleTableau.java
 src/astre/vue/outils/Tableau.java
 src/astre/vue/outils/PopUpErreur.java
 
+src/astre/vue/parametrage/FrameParametrage.java
+src/astre/vue/parametrage/PanelParametrage.java
+
 src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
