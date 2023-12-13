@@ -513,10 +513,10 @@ public class BD
 				intervenants[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
 				intervenants[cpt][1] = rs.getString ( 2 );//heure
 				intervenants[cpt][2] = rs.getString ( 3 );//module
-				intervenants[cpt][3] = rs.getInt    ( 4 );//nbsemaine
-				intervenants[cpt][4] = rs.getInt    ( 5 );//nbgroupe
-				intervenants[cpt][5] = rs.getInt    ( 6 );//nbheure
-				intervenants[cpt][6] = rs.getString ( 7 );//commentaire
+				intervenants[cpt][2] = rs.getInt    ( 4 );//nbsemaine
+				intervenants[cpt][3] = rs.getInt    ( 5 );//nbgroupe
+				intervenants[cpt][4] = rs.getInt    ( 6 );//nbheure
+				intervenants[cpt][5] = rs.getString ( 7 );//commentaire
 
 				cpt++;
 			}
