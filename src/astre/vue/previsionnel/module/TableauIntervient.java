@@ -14,7 +14,7 @@ public class TableauIntervient extends JTable
 	public TableauIntervient ( String[] nomColonnes, Object[][] tabDonnees )
 	{
 		this.nomColonnes = nomColonnes;
-		this.modele      = new ModeleTableauIntervient(this.nomColonnes, tabDonnees);
+		this.modele      = new ModeleTableau(this.nomColonnes, tabDonnees);
 
 		
 		this.setModel ( this.modele );

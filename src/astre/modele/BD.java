@@ -31,8 +31,8 @@ public class BD
 		{
 			Class.forName ( "org.postgresql.Driver" );
 			
-			co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+			//co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
@@ -475,16 +475,6 @@ public class BD
 			System.out.println ( "Erreur 2 getIntervenantsTableau ( ) : " +  e );
 		}
 
-		if(nbInervenants == 0)
-		{
-			Object[][] inter = new Object[1][15];
-			for(int cpt=0; cpt < 15; cpt++)
-			{
-				inter[0][cpt] = "";
-			}
-			return inter;
-		}
-
 		return intervenants;
 	}
 
@@ -520,22 +510,15 @@ public class BD
 				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
 				intervients[cpt][5] = rs.getString ( 6 );//commentaire
 
+				if( intervients[cpt][5] == null )
+					intervients[cpt][5] = "";
+
 				cpt++;
 			}
 		}
 		catch ( SQLException e )
 		{
 			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
-		}
-
-		if(nbIntervients == 0)
-		{
-			Object[][] inter = new Object[1][6];
-			for(int cpt=0; cpt < 6; cpt++)
-			{
-				inter[0][cpt] = "";
-			}
-			return inter;
 		}
 
 		return intervients;
