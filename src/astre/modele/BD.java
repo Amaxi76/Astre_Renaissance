@@ -31,8 +31,8 @@ public class BD
 		{
 			Class.forName ( "org.postgresql.Driver" );
 			
-			co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+			//co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
@@ -838,11 +838,16 @@ public class BD
 		}
 	}
 
-	public boolean deleteAllIntervient (  )
+	public boolean nouvelleAnnee (  )
 	{
-		String req = "SELECT f_deleteIntervient ( )";
+		
 		try
 		{
+			String req = "SELECT f_deleteIntervient ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
 			ps = co.prepareStatement ( req );
 			ps.execute ( );
 
@@ -852,7 +857,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur deleteAllIntervient ( ) : " + x );
+			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
 			return false;
 		}
 	}
