@@ -443,9 +443,10 @@ public class BD
 				int s6 = getInterventionIntervenant ( rs.getInt(1), 6 );
 				int ttimp = s1 + s3 + s5;
 				int ttpair = s2 + s4 + s6;
-				
+
 				intervenants[cpt][0]  = rs.getInt    (1);//Id
 				intervenants[cpt][1]  = rs.getString (2);//contrat
+				//intervenants[cpt][1]  = box;//contrat
 				intervenants[cpt][2]  = rs.getString (3);//nom
 				intervenants[cpt][3]  = rs.getString (4);//prenom
 				intervenants[cpt][4]  = rs.getInt    (5);//hservice
