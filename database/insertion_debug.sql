@@ -1,22 +1,22 @@
 /*
 	@author Alizéa LEBARON
-	@version 1.0 - 12/12/2023 
+	@version 1.0 - 13/12/2023 
 	@date 11/12/2023 
-	@description Script d'insertion pour tester notre base'
+	@description Script d'insertion pour tester notre base
 */
 
 /* ---------------------------------------------------- */
 /*          Suppression des tuples existantes           */
 /* ---------------------------------------------------- */ 
 
+DELETE FROM Intervient  CASCADE; 
+DELETE FROM Horaire     CASCADE;
+DELETE FROM ModuleIUT   CASCADE;
 DELETE FROM Semestre    CASCADE;
+DELETE FROM Intervenant CASCADE;
 DELETE FROM Contrat     CASCADE;
 DELETE FROM Heure       CASCADE;
-DELETE FROM TypeModule  CASCADE;
-DELETE FROM ModuleIUT   CASCADE;
-DELETE FROM Intervenant CASCADE;
-DELETE FROM Enseigne    CASCADE; 
-DELETE FROM Horaire     CASCADE;
+
 
 /* ---------------------------------------------------- */
 /*                  Création des tuples                 */
@@ -35,22 +35,17 @@ INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Enseignant chercheur' , 25 , 389, 0.66 ),
 ('Contractuel'          , 85 , 125, 0.66 );
 
-INSERT INTO TypeModule (nom) VALUES
-('Ressource'),
-('SAE'      ),
-('Stage'    );
-
 INSERT INTO ModuleIUT VALUES
-('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 1, 1),
-('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 1, 1),
-('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 2, 2),
-('R3.05', 'Programmation Système'       , 'prog_sys'     , 1, 3),
-('S4.ST', 'Stages'                      , 'stages'       , 3, 4),
-('R5.03', 'Politique de communication'  , 'comm'         , 1, 5),
-('R5.06', 'Programmation multimédia'    , 'prog_media'   , 1, 5),
-('S5.01', 'Développement avancé'        , 'dev_avancé'   , 2, 5),
-('S6.01', 'évolution dune application'  , 'ev_appli'     , 2, 6),
-('S6.ST', 'Stages'                      , 'stages'       , 3, 6);
+('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 'Ressource', 1),
+('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 'Ressource', 1),
+('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 'SAE'      , 2),
+('R3.05', 'Programmation Système'       , 'prog_sys'     , 'Ressource', 3),
+('S4.ST', 'Stages'                      , 'stages'       , 'Stage'    , 4),
+('R5.03', 'Politique de communication'  , 'comm'         , 'Ressource', 5),
+('R5.06', 'Programmation multimédia'    , 'prog_media'   , 'Ressource', 5),
+('S5.01', 'Développement avancé'        , 'dev_avancé'   , 'SAE'      , 5),
+('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , 6),
+('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , 6);
 
 INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
