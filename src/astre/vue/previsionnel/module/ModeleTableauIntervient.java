@@ -51,7 +51,7 @@ public class ModeleTableauIntervient extends AbstractTableModel
 
 			for ( int j = 0; j < tabDonnees[0].length; j++) 
 			{
-				if ( tabEntetes[j].startsWith ( "Intervenant" ) || tabEntetes[j].startsWith ( "type" ) || tabEntetes[j].startsWith ( "nb sem" ) )
+				if ( tabEntetes[j].startsWith ( "Intervenant" ) || tabEntetes[j].startsWith ( "type" ) || tabEntetes[j].startsWith ( "commentaire" ) )
 					nouveauTableau[tabDonnees.length][j] = "";
 				else
 					nouveauTableau[tabDonnees.length][j] = 0;
