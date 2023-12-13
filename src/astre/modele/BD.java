@@ -272,10 +272,29 @@ public class BD
 		return lst;
 	}
 	
-	/*public List<Intervient> getIntervient()
+	public List<Intervient> getIntervients()
 	{
-		
-	}*/
+		ArrayList<Intervient> lst = new ArrayList<Intervient>();
+
+		try
+		{
+			Statement st = co.createStatement( );
+			ResultSet rs = st.executeQuery( "select * from Intervient" );
+			while ( rs.next( ) )
+			{
+				lst.add( new Intervient( getIntervenant( rs.getInt( 1 ) ), getHeure( rs.getString( 2 ) ), getModule( rs.getString( 3 ) ), rs.getInt( 4 ), rs.getInt( 5 ), rs.getInt( 6 ), rs.getString( 7 ) ) );
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getIntervient() : " + e );
+		}
+
+		return lst;
+	}
 	
 	/*public List<Horaire> getHoraires()
 	{
