@@ -16,7 +16,6 @@ src/astre/modele/elements/Semestre.java
 src/astre/vue/intervenants/PanelIntervenants.java
 src/astre/vue/intervenants/FrameIntervenants.java
 src/astre/vue/intervenants/TableauIntervenant.java
-src/astre/vue/intervenants/ModeleTableauIntervenant.java
 
 src/astre/vue/outils/ConstantesVue.java
 src/astre/vue/outils/MenuBarAstre.java
@@ -26,7 +25,10 @@ src/astre/vue/outils/Tableau.java
 src/astre/vue/outils/PopUpErreur.java
 
 src/astre/vue/parametrage/FrameParametrage.java
-src/astre/vue/parametrage/PanelParametrage.java
+src/astre/vue/parametrage/PanelBouton.java
+src/astre/vue/parametrage/PanelContrat.java
+src/astre/vue/parametrage/PanelEnsParametre.java
+src/astre/vue/parametrage/PanelTypeHeure.java
 
 src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelBouton.java
