@@ -7,7 +7,6 @@ package astre.modele;
   */
 
 //TODO: Penser à fermer le rs et st
-//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
 //TODO: Refactoriser la métode UPDATE
 
 import java.sql.*;
