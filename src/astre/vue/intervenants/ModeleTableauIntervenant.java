@@ -1,5 +1,6 @@
 package astre.vue.intervenants;
 
+import javax.swing.JComboBox;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -18,12 +19,12 @@ public class ModeleTableauIntervenant extends AbstractTableModel
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
-    public int    getColumnCount()                 { return this.tabEntetes.length - 1;      }//permet de cacher la 1ere colonne
-	public int    getRowCount   ()                 { return this.tabDonnees.length;      }
-	public Object getValueAt    (int row, int col) { return this.tabDonnees[row][col + 1];   } //TODO certaine colonne veulent des Numeric pas des String??
-	public String getNomColonne (int col)          { return this.tabEntetes[col];        }
-	//public Class  getColumnClass(int c)            { return getValueAt(0, c).getClass(); }
-	public String getColumnName (int c)             { return this.tabEntetes[c + 1];           }//permet de cacher la 1ere colonne
+    public int      getColumnCount()                 { return this.tabEntetes.length - 1;      }//permet de cacher la 1ere colonne
+	public int      getRowCount   ()                 { return this.tabDonnees.length;      }
+	public Object   getValueAt    (int row, int col) { return this.tabDonnees[row][col + 1];   } //TODO certaine colonne veulent des Numeric pas des String??
+	public String   getNomColonne (int col)          { return this.tabEntetes[col];        }
+	public Class<?> getColumnClass(int c)            { return getValueAt(0, c).getClass(); }
+	public String   getColumnName (int c)            { return this.tabEntetes[c + 1];           }//permet de cacher la 1ere colonne
 
     /**
 	* Donne la liste des cellules éditables.
@@ -42,6 +43,7 @@ public class ModeleTableauIntervenant extends AbstractTableModel
 	public void setValueAt(Object value, int row, int col)
 	{
 		this.tabDonnees[row][col + 1] = value;
+        fireTableCellUpdated(row, col);
 	}
 
     /**

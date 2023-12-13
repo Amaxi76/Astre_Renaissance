@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -41,6 +42,7 @@ public class PanelPNLocal extends JPanel
 		/* ------------------------- */
 
 		this.setLayout ( new GridBagLayout() );
+		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
