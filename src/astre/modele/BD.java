@@ -340,7 +340,7 @@ public class BD
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				module = new ModuleIUT ( getSemestre ( rs.getInt ( 1 ) ), rs.getString(2), rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ), hmHeuresPn, hmHeuresRepartiees );
+				module = new ModuleIUT ( getSemestre ( rs.getInt ( 1 ) ), rs.getString ( 2 ), rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ),rs.getBoolean ( 6 ), hmHeuresPn, hmHeuresRepartiees );
 			}
 		} 
 		catch ( SQLException e ) 
