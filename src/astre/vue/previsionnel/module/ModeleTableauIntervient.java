@@ -15,7 +15,7 @@ public class ModeleTableauIntervient extends AbstractTableModel
 	
 	public int    getColumnCount()                   { return this.tabEntetes.length;        }
 	public int    getRowCount   ()                   { return this.tabDonnees.length;        }
-	public Object getValueAt    ( int row, int col ) { return this.tabDonnees[row][col + 1]; }
+	public Object getValueAt    ( int row, int col ) { return this.tabDonnees[row][col]; }
 	public String getNomColonne ( int col )          { return this.tabEntetes[col];          }
 	public String getColumnName ( int c )            { return this.tabEntetes[c];            }
 
@@ -31,7 +31,7 @@ public class ModeleTableauIntervient extends AbstractTableModel
 
 	public void setValueAt ( Object value, int row, int col )
 	{
-		this.tabDonnees[row][col + 1] = value;
+		this.tabDonnees[row][col] = value;
 	}
 
 
