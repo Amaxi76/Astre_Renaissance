@@ -54,7 +54,7 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 INSERT INTO Heure VALUES
 ('TP' , 1   ),
 ('TD' , 1   ),
-('CM' , 1.33),
+('CM' , 1.5 ),
 ('REH', 1   ),
 ('SAE', 1   ),
 ('Tut', 1   );

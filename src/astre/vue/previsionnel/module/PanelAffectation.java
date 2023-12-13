@@ -7,10 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
 import astre.Controleur;
-import astre.vue.outils.Tableau;
 
 public class PanelAffectation extends JPanel implements ActionListener
 {
@@ -45,10 +43,10 @@ public class PanelAffectation extends JPanel implements ActionListener
 		this.tableau = new TableauIntervient ( noms, this.ctrl.getTableauIntervient());
 		this.tableau.ajusterTailleColonnes( );
 
-		this.scrollPane   = new JScrollPane ( this.tableau );
+		this.scrollPane = new JScrollPane ( this.tableau );
 
 
-		JPanel panelSud     = new JPanel( );
+		JPanel panelSud = new JPanel( );
 
 		this.btnAjouter   = new JButton ( "Ajouter"   );
 		this.btnSupprimer = new JButton ( "Supprimer" );

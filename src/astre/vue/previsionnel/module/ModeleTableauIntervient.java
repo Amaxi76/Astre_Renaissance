@@ -22,10 +22,7 @@ public class ModeleTableauIntervient extends AbstractTableModel
 
 	public boolean isCellEditable ( int row, int col )
 	{
-		if( col == 0 || col == 1 || col == 2 || col == 3 || col == 4 )
-			return true;
-		
-		return false;
+		return true;
 	}
 
 

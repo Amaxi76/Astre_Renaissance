@@ -4,9 +4,13 @@ import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
 
-/** Classe représentant un tableau personnalisable.
- *  @author Matéo et Maxime
- *  @version : 1.0 - 11/12/2023
+import astre.Controleur;
+import astre.modele.elements.Contrat;
+import astre.vue.outils.ModeleTableau;
+
+/** Classe représentant un tableau pour Intervenant.
+ *  @author Matéo
+ *  @version : 1.1 - 13/12/2023
  *  @date : 06/12/2023
 */
 
@@ -17,54 +21,36 @@ import javax.swing.table.*;
 public class TableauIntervenant extends JTable
 {
 	private String[] nomColonnes;
-	//private DefaultTableModel modele;
-	private ModeleTableauIntervenant modele;
+	private ModeleTableau modele;
+
+	Controleur ctrl;
 	
-	/*public Tableau ( String[] nomColonnes, boolean estModifiable )  //répétition de code ici, peut être possible à simplifier
+	public TableauIntervenant ( String[] nomColonnes, Object[][] tabDonnees, Controleur ctrl )
 	{
+		this.ctrl = ctrl;
+		
 		this.nomColonnes = nomColonnes;
-		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableau(this.nomColonnes, estModifiable);
+		//this.modele = new ModeleTableauIntervenant(this.nomColonnes, tabDonnees);
+		this.modele = new ModeleTableau(nomColonnes, tabDonnees);
+		this.modele.setEditable( new int[] {0, 1, 2, 3, 4} );
+		this.modele.setDecalage(1);
 		
 		this.setModel ( this.modele );
-		//this.modele.addTableModelListener(this);
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
 		
 		//Permet au tableau de prendre toute la frame
 		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
+
 		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
 		this.setDragEnabled ( false );
-	}*/
-	
-	/**
-	 * Tableau sans titres de colonnes
-	 */
-	/*public Tableau ( boolean estModifiable )
-	{
-		this ( new String[] { "","","","" }, estModifiable );
-		this.setTableHeader(null);
-	}*/
-	
-	public TableauIntervenant ( String[] nomColonnes, Object[][] tabDonnees )
-	{
-		this.nomColonnes = nomColonnes;
-		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableauIntervenant(this.nomColonnes, tabDonnees);
-		
-		this.setModel ( this.modele );
-		//this.modele.addTableModelListener(this);
-		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
-		
-		//Permet au tableau de prendre toute la frame
-		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
-		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
-		this.setDragEnabled ( false );
-	}
-	
-	public TableauIntervenant ( Object[][] tabDonnees )
-	{
-		this ( new String[] { "","","","" }, tabDonnees );
-		this.setTableHeader(null);
+
+		//Permet la création de la comboBox
+		JComboBox<String> cbEdit = new JComboBox<>();
+		for ( Contrat c : this.ctrl.getContrats ( ) )
+		{
+			cbEdit.addItem ( c.getNom ( ) );
+		}
+		this.getColumnModel ( ).getColumn (0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 	}
 	
 	/**
@@ -92,9 +78,7 @@ public class TableauIntervenant extends JTable
 	*/
 	public void ajouterLigne ( )
 	{
-		//this.modele.addRow ( new Object[ this.nomColonnes.length ] );
-		this.modele.ajouterLigne();
-		//this.ajusterTailleColonnes ( );
+		this.modele.ajouterLigne ( );
 	}
 	
 	/**
@@ -105,20 +89,24 @@ public class TableauIntervenant extends JTable
 		int selection = this.getSelectedRow ( );
 		if ( selection != -1 )
 		{
-			//this.modele.removeRow ( selection );
-			this.modele.supprimerLigne(selection);
+			this.modele.supprimerLigne ( selection );
 		}
 		this.ajusterTailleColonnes ( );
 	}
 
-	public Object[][] getDonnees()
+	/**
+	* Permet de récupérer les données du modele
+	*/
+	public Object[][] getDonnees ( )
     {
-        return this.modele.getDonnees();
+        return this.modele.getDonnees ( );
     }
 
-	public void modifDonnees(Object[][] donnee)
+	/**
+	* Permet de modifier les données du modele
+	*/
+	public void modifDonnees ( Object[][] donnee )
 	{
-		this.modele.modifDonnees(donnee);
+		this.modele.modifDonnees ( donnee );
 	}
-
 }

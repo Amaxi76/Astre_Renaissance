@@ -4,15 +4,17 @@ import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
 
+import astre.vue.outils.ModeleTableau;
+
 public class TableauIntervient extends JTable
 {
-	private String[]                nomColonnes;
-	private ModeleTableauIntervient modele;
+	private String[]      nomColonnes;
+	private ModeleTableau modele;
 
 	public TableauIntervient ( String[] nomColonnes, Object[][] tabDonnees )
 	{
 		this.nomColonnes = nomColonnes;
-		this.modele      = new ModeleTableauIntervient(this.nomColonnes, tabDonnees);
+		this.modele      = new ModeleTableau(this.nomColonnes, tabDonnees);
 
 		
 		this.setModel ( this.modele );

@@ -1,5 +1,7 @@
 package astre.vue.outils;
 
+import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -10,94 +12,140 @@ public class ModeleTableau extends AbstractTableModel
 {
     private String[]   tabEntetes;
 	private Object[][] tabDonnees;
-	private boolean    estModifiable=true;
 
-    //Constructeur présent que pour les test
-    /*public ModeleTableau ( String[] tabEntetes, boolean estModifiable )
+    private int        decalage;
+    private ArrayList<Integer> modifiable;
+
+    public ModeleTableau ( String[] tabEntetes, Object[][] tabDonnees )
     {
-    	this.estModifiable = estModifiable;
-        this.tabEntetes = tabEntetes;
-		//this.tabEntetes = new String[] { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-        
-        this.tabDonnees = new Object[1][this.tabEntetes.length];
-        for(int cpt=0; cpt < tabDonnees[0].length; cpt++)
-        {
-            tabDonnees[0][cpt] = "test";//mettre les trucs de la bd
-        }
-    }*/
-    
-    public ModeleTableau ( String[] tabEntetes, Object[][] tabDonnees, boolean estModifiable )
-    {
-    	this.estModifiable = estModifiable;
         this.tabEntetes = tabEntetes;
         this.tabDonnees = tabDonnees;
+
+        this.decalage = 0;
+        this.modifiable = new ArrayList<Integer>();
+
+        if(tabDonnees.length == 0)
+            ajouterLigne();
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
-    public int    getColumnCount()                 { return this.tabEntetes.length;      }
-	public int    getRowCount   ()                 { return this.tabDonnees.length;      }
-	public Object getValueAt    (int row, int col) { return this.tabDonnees[row][col];   }
-	public String getNomColonne (int col)          { return this.tabEntetes[col];        }
-	public Class  getColumnClass(int c)            { return getValueAt(0, c).getClass(); }
-	public String getColumnName (int c)             { return this.tabEntetes[c];           }
+    public int    getColumnCount ( )                  { return this.tabEntetes.length - decalage;      }
+	public int    getRowCount    ( )                  { return this.tabDonnees.length;                 }
+	public Object getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage];   }
+	public String getNomColonne  ( int col )          { return this.tabEntetes[col];                   }
+	public Class  getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );   }
+	public String getColumnName  ( int c )            { return this.tabEntetes[c + decalage];          }
 
     /**
 	* Donne la liste des cellules éditables.
 	*/
-	public boolean isCellEditable(int row, int col)
+	public boolean isCellEditable ( int row, int col )
 	{
-		return this.estModifiable;
+		if ( modifiable.contains(col) )
+            return true;
+        
+        return false;
 	}
 	
-	public void setEditable( boolean editable )
+    /**
+	* Permet d'éditer ou non toutes les colonnes.
+	*/
+	public void setEditable ( boolean editable )
 	{
-		this.estModifiable = editable;
+		modifiable.clear ( );
+        if ( editable )
+        {
+            for ( int cpt=0; cpt < tabEntetes.length; cpt++ )
+            {
+                modifiable.add ( cpt );
+            }
+        }
 	}
+
+    /**
+	* Permet de modifier la liste des cellules éditables avec les numéros de colonne choisi.
+	*/
+    public void setEditable ( int[] lst )
+    {
+        modifiable.clear ( );
+        for ( int i : lst )
+        {
+            if ( !modifiable.contains ( i ) )
+            {
+                modifiable.add ( i );
+            }
+        }
+    }
 
     /**
 	* Ajoute une valeur dans une case.
 	*/
-	public void setValueAt(Object value, int row, int col)
+	public void setValueAt ( Object value, int row, int col )
 	{
-		this.tabDonnees[row][col] = value;
+		this.tabDonnees[row][col + decalage] = value;
+	}
+
+    /**
+	* Permet de cacher une colonne
+	*/
+	public void setDecalage ( int d )
+	{
+		this.decalage = d;
 	}
 
     /**
 	* Ajoute une ligne vide au tableau.
 	*/
-    public void ajouterLigne()
+    public void ajouterLigne ( )
     {
-        Object[][] nouveauTableau = new Object[tabDonnees.length + 1][tabDonnees[0].length];
-
-        for (int i = 0; i < tabDonnees.length; i++)
+        if( tabDonnees.length < 1 )
         {
-            for (int j = 0; j < tabDonnees[0].length; j++)
+            tabDonnees = new Object[1][tabEntetes.length];
+            for ( int j = 0; j < tabDonnees[0].length; j++ )
             {
-                nouveauTableau[i][j] = tabDonnees[i][j];
+                tabDonnees[0][j] = ""; //TODO comment faire pour savoir la classe de la case ?
             }
         }
-
-        for (int j = 0; j < tabDonnees[0].length; j++)
+        else
         {
-            nouveauTableau[tabDonnees.length][j] = "";
-        }
+            Object[][] nouveauTableau = new Object[tabDonnees.length + 1][tabDonnees[0].length];
+            for ( int i = 0; i < tabDonnees.length; i++ )
+            {
+                for ( int j = 0; j < tabDonnees[0].length; j++ )
+                {
+                    nouveauTableau[i][j] = tabDonnees[i][j];
+                }
+            }
 
-        tabDonnees = nouveauTableau;
-        fireTableDataChanged();
+            for ( int j = 0; j < tabDonnees[0].length; j++ )
+            {
+                if ( tabDonnees[0][j].getClass ( ) == String.class )
+                {
+                    nouveauTableau[tabDonnees.length][j] = "";
+                }
+
+                if ( tabDonnees[0][j].getClass ( ) == Integer.class || tabDonnees[0][j].getClass ( ) == Double.class )
+                {
+                    nouveauTableau[tabDonnees.length][j] = 0;
+                }
+            }
+            tabDonnees = nouveauTableau;
+        }
+        fireTableDataChanged ( );
     }
 
     /**
 	* Supprime la ligne sélectionnée.
 	*/
-    public void supprimerLigne(int index)
+    public void supprimerLigne ( int index )
     {
         Object[][] nouveauTableau = new Object[tabDonnees.length - 1][tabDonnees[0].length];
 
-        for (int i = 0, k = 0; i < tabDonnees.length; i++)
+        for ( int i = 0, k = 0; i < tabDonnees.length; i++ )
         {
-            if (i != index)
+            if ( i != index )
             {
-                for (int j = 0; j < tabDonnees[0].length; j++)
+                for ( int j = 0; j < tabDonnees[0].length; j++ )
                 {
                     nouveauTableau[k][j] = tabDonnees[i][j];
                 }
@@ -106,11 +154,23 @@ public class ModeleTableau extends AbstractTableModel
         }
 
         tabDonnees = nouveauTableau;
-        fireTableDataChanged();
+        fireTableDataChanged ( );
     }
 
-    public Object[][] getDonnees()
+    /**
+	* Permet de récupérer les données du modele
+	*/
+    public Object[][] getDonnees ( )
     {
         return this.tabDonnees;
+    }
+
+    /**
+	* Permet de modifier les données du modele
+	*/
+    public void modifDonnees ( Object[][] donnee )
+    {
+        this.tabDonnees = donnee;
+        fireTableDataChanged ( );
     }
 }
