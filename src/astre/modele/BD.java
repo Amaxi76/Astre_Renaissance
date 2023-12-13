@@ -62,6 +62,9 @@ public class BD
 			{
 				lst.add ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		
 		catch ( SQLException e )
@@ -85,6 +88,9 @@ public class BD
 			{
 				lst.add ( new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		
@@ -105,6 +111,9 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure" );
 			while ( rs.next ( ) ) 
 				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble(2) ) );
+
+			rs.close ( );
+			st.close ( );
 		} 
 		catch ( SQLException e ) 
 		{
@@ -113,26 +122,17 @@ public class BD
 		
 		return lst;
 	}
-	
-	// public List<TypeModule> getTypeModules()
-	// {
-		
-	// }
-	
+
 	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
-		//FIXME: mettre le numéro du semestre
-
-		String REQUETE = "SELECT *"
-		               + "FROM   ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre join typemodule t on t.id_typemodule = m.id_typemodule "
-		               + "WHERE  m.id_semestre = ?";
-		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
+		String REQUETE = "SELECT * FROM f_selectModulesIUTParSemestre(?)";
+
 		try 
 		{
-			Statement         st = co.createStatement (         );
-			PreparedStatement ps = co.prepareStatement( REQUETE );
+			Statement         st = co.createStatement  (         );
+			PreparedStatement ps = co.prepareStatement ( REQUETE );
 
 			ps.setInt ( 1, numeroSemestre );
 
@@ -140,22 +140,21 @@ public class BD
 
 			while ( rs.next ( ) ) 
 			{
-				int iS = 6;
-				int iT = 11;
+				int iS = 5;
 				int iM = 1;
 
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
-				TypeModule typeModule = new TypeModule ( rs.getInt ( iT++ ), rs.getString ( iT ) );
 
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, typeModule, rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
 
 				ensModules.add ( moduleIUT );
 			}
 
 			rs.close ( );
+			ps.close ( );
 			st.close ( );
 		} 
 		catch ( SQLException e ) 
@@ -170,21 +169,15 @@ public class BD
 	{
 		HashMap<Heure, Integer> hm = new HashMap<> ( );
 		
-		Heure heure = null;
-		
-		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeureRepartie";
-		
-		String REQUETE = "SELECT he.nomHeure, " + heureS + " "
-		               + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
-		               + "JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT "
-		               + "WHERE ho.Code_ModuleIUT = ?";
+		Heure heure    = null;
+		String REQUETE = "SELECT * FROM f_selectHoraireParModule(?)";
 
 		try
 		{
 			Statement         st = co.createStatement (         );
 			PreparedStatement ps = co.prepareStatement( REQUETE );
 
-			ps.setString ( 1, code   );
+			ps.setString ( 1, code );
 
 			ResultSet rs = ps.executeQuery ( );
 
@@ -194,10 +187,13 @@ public class BD
 					if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
 						heure = h;
 
-				hm.put ( heure, rs.getInt ( 2 ) );
+				int heureS = ( typeHeure == 'P' ) ? 2 : 3;
+	
+				hm.put ( heure, rs.getInt ( heureS ) );
 			}
 				
 			rs.close ( );
+			ps.close ( );
 			st.close ( );
 		}
 		catch ( SQLException e ) 
@@ -220,6 +216,9 @@ public class BD
 			{
 				lst.add ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
+
+			rs.close ( );
+			st.close ( );
 		} 
 		catch ( SQLException e ) 
 		{
@@ -270,6 +269,9 @@ public class BD
 			{
 				semestre = new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 )  );
 			}
+
+			rs.close ( );
+			st.close ( );
 		} 
 		catch ( SQLException e ) 
 		{
@@ -287,6 +289,30 @@ public class BD
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "select * from Contrat where Id_Contrat = " + c );
+			while ( rs.next( ) )
+			{
+				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+			}
+
+			rs.close();
+			st.close();
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+		
+		return contrat;
+	}
+
+	public Contrat getContrat ( String c )
+	{
+		Contrat contrat = null;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Contrat where nomContrat = '" + c  +"'");
 			while ( rs.next( ) )
 			{
 				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
@@ -432,6 +458,9 @@ public class BD
 				nbModule = rs.getInt ( 1 );
 				System.out.println ( nbModule );
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -453,6 +482,9 @@ public class BD
 				modules[cpt][3] = "";
 				cpt++;
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -472,6 +504,9 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select count(*) from Intervenant" );
 			while ( rs.next ( ) )
 				nbInervenants = rs.getInt ( 1 );
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -515,6 +550,9 @@ public class BD
 
 				cpt++;
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -549,6 +587,8 @@ public class BD
 			ps.setInt    ( 3, c.getHeureMaxContrat     ( ) );
 			ps.setDouble ( 4, c.getRatioTP             ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -565,6 +605,8 @@ public class BD
 			ps.setString ( 1, h.getNom    ( ) );
 			ps.setDouble ( 2, h.getCoefTd ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -584,6 +626,8 @@ public class BD
 			ps.setInt    ( 4, m.getT );
 			ps.setInt    ( 5, m.getSemestre ( ).getIdSemestre ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -603,6 +647,8 @@ public class BD
 			ps.setInt    ( 4, i.getHeureMaximum ( ) );
 			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -624,6 +670,8 @@ public class BD
 			ps.setInt    ( 6, e.getNbHeure     ( )             );
 			ps.setString ( 7, e.getCommentaire ( )             );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException x )
 		{
@@ -644,6 +692,8 @@ public class BD
 			ps.setInt    ( 4, h.getNbHeure   ( )             );
 			ps.setInt    ( 5, h.getNbSemaine ( )             );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -663,6 +713,8 @@ public class BD
 			ps = co.prepareStatement ( req );
 			ps.setInt ( 1, c.getId ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -678,6 +730,8 @@ public class BD
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, h.getNom ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -693,6 +747,8 @@ public class BD
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, m.getCode ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -708,6 +764,8 @@ public class BD
 			ps = co.prepareStatement ( req );
 			ps.setInt ( 1, i.getId ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -725,6 +783,8 @@ public class BD
 			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
 			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException x )
 		{
@@ -742,6 +802,8 @@ public class BD
 			ps.setString ( 1, h.getHeure  ( ).getNom  ( ) );
 			ps.setString ( 2, h.getModule ( ).getCode ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -768,6 +830,8 @@ public class BD
 			ps.setInt ( 4, s.getNbSemaine  ( ) );
 			ps.setInt ( 5, s.getIdSemestre ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -787,6 +851,8 @@ public class BD
 			ps.setDouble ( 4, c.getRatioTP             ( ) );
 			ps.setInt    ( 5, c.getId                  ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -803,6 +869,8 @@ public class BD
 			ps.setDouble ( 1, h.getCoefTd ( ) );
 			ps.setString ( 2, h.getNom    ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -822,6 +890,8 @@ public class BD
 			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
 			ps.setString ( 5, m.getCode       ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -842,6 +912,8 @@ public class BD
 			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
 			ps.setInt    ( 6, i.getId           ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
@@ -863,6 +935,8 @@ public class BD
 			ps.setString ( 6, e.getHeure       ( ).getNom  ( ) );
 			ps.setString ( 7, e.getModule      ( ).getCode ( ) );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException x )
 		{
@@ -882,6 +956,8 @@ public class BD
 			ps.setInt    ( 4, h.getNbHeure   ( )             );
 			ps.setInt    ( 5, h.getNbSemaine ( )             );
 			ps.executeUpdate ( );
+
+			ps.close ( );
 		}
 		catch ( SQLException e )
 		{

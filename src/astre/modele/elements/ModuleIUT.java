@@ -13,12 +13,12 @@ public class ModuleIUT
 	Map<Heure, Integer> hmHeuresPn;
 	Map<Heure, Integer> hmHeuresRepaties;
 	
-	Semestre   semestre;
-	String     typeModule;
-	String     code;
-	String     libLong;
-	String     libCourt;
-	boolean    valide;
+	Semestre semestre;
+	String   typeModule;
+	String   code;
+	String   libLong;
+	String   libCourt;
+	boolean  valide;
 
 	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepaties )
 	{
@@ -78,7 +78,7 @@ public class ModuleIUT
 	public void setValide     ( boolean    choix      ) { this.valide     = choix;      }
 
 	@Override
-	public String toString()
+	public String toString ( )
 	{
 		return "ModuleIUT [hmHeuresPn=" + hmHeuresPn + ", hmHeuresRepaties=" + hmHeuresRepaties + ", semestre="
 				+ semestre + ", typeModule=" + typeModule + ", code=" + code + ", libLong=" + libLong + ", libCourt="
