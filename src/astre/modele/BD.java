@@ -310,6 +310,72 @@ public class BD
 		return contrat;
 	}
 
+	public Intervenant getIntervenant ( int i )
+	{
+		Intervenant intervenant = null;
+		
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Intervenant where Id_Intervenant = " + i );
+			while ( rs.next ( ) ) 
+			{
+				intervenant = new Intervenant ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 4 ) ), rs.getInt ( 5 ), rs.getInt ( 6 ) );
+			}
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( "Erreur getIntervenant(int c) : " + e );
+		}
+		
+		return intervenant;
+	}
+
+	public Heure getHeure ( String h )
+	{
+		Heure heure = null;
+		
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Heure where nomHeure = '" + h + "'" );
+			while ( rs.next ( ) ) 
+			{
+				heure = new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) );
+			}
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( "Erreur getHeure(int h) : " + e );
+		}
+		
+		return heure;
+	}
+
+	public ModuleIUT getModule ( String m )
+	{
+		ModuleIUT module = null;
+		
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Module where Id_Module = '" + m + "'" );
+			while ( rs.next ( ) ) 
+			{
+				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
+				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
+				
+				module = new ModuleIUT ( getSemestre ( rs.getInt ( 1 ) ), rs.getString(2), rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ), hmHeuresPn, hmHeuresRepartiees );
+			}
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( "Erreur getModule(int m) : " + e );
+		}
+		
+		return module;
+	}
+
 
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
@@ -426,6 +492,60 @@ public class BD
 		{
 			Object[][] inter = new Object[1][15];
 			for(int cpt=0; cpt < 15; cpt++)
+			{
+				inter[0][cpt] = "";
+			}
+			return inter;
+		}
+
+		return intervenants;
+	}
+
+	public Object[][] getIntervientsTableau()
+	{
+		int nbIntervients = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient" );
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		Object[][] intervenants = new Object[nbIntervients][7];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervenants[cpt][0] = rs.getString ( 1 );//Id
+				intervenants[cpt][1] = rs.getString ( 2 );//heure
+				intervenants[cpt][2] = rs.getString ( 3 );//module
+				intervenants[cpt][3] = rs.getInt    ( 4 );//nbsemaine
+				intervenants[cpt][4] = rs.getInt    ( 5 );//nbgroupe
+				intervenants[cpt][5] = rs.getInt    ( 6 );//nbheure
+				intervenants[cpt][6] = rs.getString ( 7 );//commentaire
+
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
+
+		if(nbIntervients == 0)
+		{
+			Object[][] inter = new Object[1][7];
+			for(int cpt=0; cpt < 7; cpt++)
 			{
 				inter[0][cpt] = "";
 			}
