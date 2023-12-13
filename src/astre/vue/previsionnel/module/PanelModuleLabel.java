@@ -188,16 +188,4 @@ public class PanelModuleLabel  extends JPanel
 			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP() ) );
 		}
 	}
-
-	private void coefficients ( String nomHeure )
-	{
-		Heure heure = this.ctrl.getHeure ( nomHeure );
-
-		if ( heure != null )
-		{
-			double coeffCM = heure.getCoefTd();
-			double coeffTD = heure.getCoefTd();
-			double coeffTP = heure.getCoefTd();
-		}
-	}
 }

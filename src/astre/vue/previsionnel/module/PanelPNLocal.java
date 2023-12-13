@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.elements.Heure;
 
 public class PanelPNLocal extends JPanel
 {
@@ -134,7 +135,8 @@ public class PanelPNLocal extends JPanel
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme(); }
+		public void keyTyped   ( KeyEvent e ) { majSomme(); 
+												majTotalHeure();}
 		public void keyPressed ( KeyEvent e ) {}
 		public void keyReleased( KeyEvent e ) {}
 	}
@@ -169,5 +171,70 @@ public class PanelPNLocal extends JPanel
 		{
 			lblSomme.setText ( "Erreur" );
 		}
+	}
+
+	private void majTotalHeure()
+	{
+		try
+		{
+			int CM = 0;
+			int TD = 0;
+			int TP = 0;
+	
+			if ( !txtCM.getText().isEmpty() )
+			{
+				CM = Integer.parseInt ( txtCM.getText() );
+				double coeffCM = coeffHeure ( "CM" );
+				double totalCM = CM * coeffCM;
+	
+				lblTotalCM.setText ( String.valueOf ( totalCM ) );
+			}
+			if ( !txtTD.getText().isEmpty() )
+			{
+				TD = Integer.parseInt ( txtTD.getText() );
+				double coeffTD = coeffHeure ( "TD" );
+				double totalTD = TD * coeffTD;
+	
+				lblTotalTD.setText ( String.valueOf ( totalTD ) );
+			}
+			if ( !txtTP.getText().isEmpty() )
+			{
+				TP = Integer.parseInt ( txtTP.getText() );
+				double coeffTP = coeffHeure ( "TP" );
+				double totalTP = TP * coeffTP;
+	
+				lblTotalTP.setText ( String.valueOf ( totalTP ) );
+			}
+		}
+		catch ( NumberFormatException ex )
+		{
+			lblTotalCM.setText( "Erreur" );
+		}
+	}
+	
+
+	private double coeffHeure ( String nomHeure )
+	{
+		Heure heure = this.ctrl.getHeure ( nomHeure );
+
+		double coefficient = 0.0;
+
+		switch (nomHeure)
+		{
+			case "CM":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TD":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TP":
+				coefficient = heure.getCoefTd();
+				break;
+		
+			default:
+				break;
+		}
+
+		return coefficient;
 	}
 }
