@@ -15,5 +15,15 @@ permettant de gérer les heures attribuées aux intervenants selon les cours et 
 	- Maximilien Lesterlin
 	- Clémentin  Ly
 	- Matéo      Sa
-	
-	
+
+
+## Utilisation
+Linux :
+1. chmod u+x astre.sh
+2. ./astre.sh
+
+Windows / Linux :
+1. javac '@option.list' '@compile.list'
+2. cd class
+3. java astre.Controleur
+
