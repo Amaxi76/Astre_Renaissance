@@ -1,6 +1,8 @@
 package astre.vue.intervenants;
 
 import astre.Controleur;
+import astre.modele.BD;
+import astre.modele.elements.*;
 
 /** Page de gestion des intervenants
   * @author : Matéo Sa
@@ -12,17 +14,21 @@ import astre.vue.outils.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.awt.BorderLayout;
 
 public class PanelIntervenants extends JPanel implements ActionListener
 {
-	private Tableau tableau;
+	private TableauIntervenant tableau;
+	private JScrollPane scrollPane;
 	
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
 	
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
+
+	private JPanel panelCentre;
 
 	private Controleur ctrl;
 	
@@ -33,16 +39,16 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	public PanelIntervenants ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
-		
+
 		this.setLayout ( new BorderLayout() );
 		int marginSize = 10;
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		//création des composants
-		String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 		//this.tableau = new Tableau(noms);
 
-		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant(), true );
+		this.tableau = new TableauIntervenant ( noms, this.ctrl.getTableauIntervenant(), true );
 		this.tableau.ajusterTailleColonnes();
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );
@@ -50,14 +56,14 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 		
-		JPanel panelCentre = new JPanel( );
+		this.panelCentre = new JPanel( );
 		panelCentre.setLayout ( new BorderLayout() );
 		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		JPanel panelCentre2 = new JPanel( );
 		JPanel panelSud     = new JPanel( );
 		
-		JScrollPane scrollPane = new JScrollPane ( this.tableau );
+		this.scrollPane = new JScrollPane ( this.tableau );
 		
 		//Ajout des composants
 		panelCentre2.add ( this.btnAjouter   );
@@ -96,52 +102,92 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource() == this.btnEnregistrer )
 		{
-			comparerTableaux(this.ctrl.getTableauIntervenant(), this.tableau.getDonnees());
+			comparerTableaux2( this.tableau.getDonnees() );
 		}
 		
 		if ( e.getSource() == this.btnAnnuler )
 		{
-			String[] noms = { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+			/*this.panelCentre.remove(scrollPane);
+			repaint();
+
+			String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 			this.tableau = new Tableau(noms, this.ctrl.getTableauIntervenant(), true);
 			this.tableau.ajusterTailleColonnes();
+
+			scrollPane = new JScrollPane ( this.tableau );
+			
+			this.panelCentre.add(scrollPane, BorderLayout.CENTER);
+			repaint();*/
+
+			this.tableau.modifDonnees(this.ctrl.getTableauIntervenant());
 		}
 	}
 
-	public void comparerTableaux(Object[][] premier, Object[][] deuxieme)
+	public void comparerTableaux2(Object[][] deuxieme)
 	{
-        for (int i = 0; i < premier.length; i++)
+		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
+		BD bd = BD.getInstance();//a modif ptet
+
+		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) bd.getIntervenants();
+
+		for (int u = 0; u < deuxieme.length; u++)
 		{
-            if (i < deuxieme.length)
+			for (int i = 0; i < deuxieme[u].length; i++)
 			{
-                // Comparaison des lignes existantes dans les deux tableaux
-                if (!compareLignes(premier[i], deuxieme[i]))
+				System.out.println(i + " " +deuxieme[u][i] + "|");
+			}
+		}
+		
+		Intervenant inter = null;
+		for (int i = 0; i < deuxieme.length; i++)
+		{
+			if(deuxieme[i][0].toString().equals(""))
+				inter = new Intervenant(0, deuxieme[i][2].toString(), deuxieme[i][3].toString(), bd.getContrat(deuxieme[i][1].toString()), Integer.parseInt(deuxieme[i][4].toString()), Integer.parseInt(deuxieme[i][5].toString()) );
+			else
+				inter = new Intervenant(Integer.parseInt(deuxieme[i][0].toString()), deuxieme[i][2].toString(), deuxieme[i][3].toString(), bd.getContrat(deuxieme[i][1].toString()), Integer.parseInt(deuxieme[i][4].toString()), Integer.parseInt(deuxieme[i][5].toString()) );
+			
+			lst.add(inter);
+
+			boolean up = false;
+			for(Intervenant venant : lstBD)
+			{
+				if(inter.getId() == venant.getId())
 				{
-                    System.out.println("Ligne " + i + " a été modifiée.");
-                }
-            }
+					up = true;
+				}
+			}
+
+			if(up)
+			{
+				bd.update(inter);
+				System.out.println("Ligne " + i + " doit etre modifiée.");
+			}
 			else
 			{
-                // La ligne existe dans le premier tableau mais pas dans le deuxième
-                System.out.println("Ligne " + i + " a été supprimée.");
-            }
-        }
+				bd.insert(inter);
+				System.out.println("Ligne " + i + " doit etre ajouter.");
+			}
+		}
 
-        // Vérification des lignes ajoutées dans le deuxième tableau
-        for (int i = premier.length; i < deuxieme.length; i++)
+		for(Intervenant venant : lstBD)
 		{
-            System.out.println("Ligne " + i + " a été ajoutée.");
-        }
-    }
-
-    public boolean compareLignes(Object[] ligne1, Object[] ligne2)
-	{
-        for (int i = 0; i < ligne1.length; i++)
-		{
-            if (!ligne1[i].equals(ligne2[i]))
+			boolean del = true;
+			for(Intervenant venant2 : lst)
 			{
-                return false; // Au moins un élément est différent
-            }
-        }
-        return true; // Tous les éléments sont identiques
-    }
+				if(venant2.getId() == venant.getId())
+				{
+					del = false;
+					break;
+				}
+				System.out.println(venant2.getId() +" "+venant.getId());
+			}
+
+			if(del)
+			{
+				//bd.deleteIntervenantNomPrenom(venant);
+				bd.delete(venant);
+				System.out.println("Ligne ? doit etre supprimée.");
+			}
+		}
+	}
 }

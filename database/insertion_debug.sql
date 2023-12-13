@@ -46,7 +46,7 @@ INSERT INTO ModuleIUT VALUES
 ('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , 6),
 ('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , 6);
 
-INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
+INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
 ('Orwell'        , 'Georges',  25, 389, 2 ),
 ('Lovecraft'     , 'Howard' ,  85, 125, 2 );
@@ -60,9 +60,9 @@ INSERT INTO Heure VALUES
 ('Tut', 1   );
 
 INSERT INTO Intervient (Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
-(1,  'TD', 'R5.03',    6,    2, NULL, NULL         ),
-(1,  'TP', 'R1.01',    8,    1, NULL, NULL         ),
-(2,  'TP', 'R1.01',    8,    1, NULL, 'commentaire'),
+(1,  'TD', 'R5.03',    6,    2,    5, NULL         ),
+(1,  'TP', 'R1.01',    8,    1,    6, NULL         ),
+(2,  'TP', 'R1.01',    8,    1,    9, 'commentaire'),
 (3, 'Tut', 'S2.05', NULL, NULL,    9, NULL         ),
 (3, 'REH', 'S6.ST', NULL, NULL,   12, NULL         );
   

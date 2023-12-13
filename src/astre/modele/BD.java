@@ -15,9 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import astre.modele.*;
-//import explicite pour pas confondre avec java.lang.Module
-
 import astre.modele.elements.*;
 
 public class BD
@@ -65,6 +62,9 @@ public class BD
 			{
 				lst.add ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		
 		catch ( SQLException e )
@@ -88,6 +88,9 @@ public class BD
 			{
 				lst.add ( new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		
@@ -108,6 +111,9 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure" );
 			while ( rs.next ( ) ) 
 				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble(2) ) );
+
+			rs.close ( );
+			st.close ( );
 		} 
 		catch ( SQLException e ) 
 		{
@@ -284,6 +290,48 @@ public class BD
 		return contrat;
 	}
 
+	public Contrat getContrat ( String c )
+	{
+		Contrat contrat = null;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Contrat where nomContrat = '" + c  +"'");
+			while ( rs.next( ) )
+			{
+				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+		
+		return contrat;
+	}
+
+	public Contrat getContrat ( String c )
+	{
+		Contrat contrat = null;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Contrat where nomContrat = '" + c  +"'");
+			while ( rs.next( ) )
+			{
+				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+		
+		return contrat;
+	}
+
 
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
@@ -358,31 +406,32 @@ public class BD
 		{
 			System.out.println ( "Erreur 1 getIntervenantsTableau() : " + e );
 		}
-		
-		Object[][] intervenants = new Object[nbInervenants][15];
+
+		Object[][] intervenants = new Object[nbInervenants][16];
 
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomContrat, nom, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0]  = rs.getString ( 1 ); // contrat
-				intervenants[cpt][1]  = rs.getString ( 2 ); // nom
-				intervenants[cpt][2]  = rs.getString ( 3 ); // prenom
-				intervenants[cpt][3]  = rs.getString ( 4 ); // hservice
-				intervenants[cpt][4]  = rs.getInt    ( 4 ); // hmax
-				intervenants[cpt][5]  = rs.getInt    ( 4 ); // hservice
-				intervenants[cpt][6]  = "";
-				intervenants[cpt][7]  = "";
-				intervenants[cpt][8]  = "";
-				intervenants[cpt][9]  = "";
+				intervenants[cpt][0] = rs.getString(1);//Id
+				intervenants[cpt][1] = rs.getString(2);//contrat
+				intervenants[cpt][2] = rs.getString(3);//nom
+				intervenants[cpt][3] = rs.getString(4);//prenom
+				intervenants[cpt][4] = rs.getString(5);//hservice
+				intervenants[cpt][5] = rs.getInt(6);//hmax
+				intervenants[cpt][6] = getContrat(rs.getString(2)).getRatioTP();//coeff
+				intervenants[cpt][7] = "";
+				intervenants[cpt][8] = "";
+				intervenants[cpt][9] = "";
 				intervenants[cpt][10] = "";
 				intervenants[cpt][11] = "";
 				intervenants[cpt][12] = "";
 				intervenants[cpt][13] = "";
 				intervenants[cpt][14] = "";
+				intervenants[cpt][15] = "";
 
 				cpt++;
 			}
@@ -393,6 +442,16 @@ public class BD
 		catch ( SQLException e )
 		{
 			System.out.println ( "Erreur 2 getIntervenantsTableau ( ) : " +  e );
+		}
+
+		if(nbInervenants == 0)
+		{
+			Object[][] inter = new Object[1][15];
+			for(int cpt=0; cpt < 15; cpt++)
+			{
+				inter[0][cpt] = "";
+			}
+			return inter;
 		}
 
 		return intervenants;
@@ -463,7 +522,7 @@ public class BD
 	
 	public void insert ( Intervenant i )
 	{
-		String req = "INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES(?,?,?,?,?)";
+		String req = "INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES(?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -727,7 +786,7 @@ public class BD
 
 	public void update ( Intervenant i )
 	{
-		String req = "UPDATE Intervenant SET nomInter = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
+		String req = "UPDATE Intervenant SET nom = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -736,6 +795,7 @@ public class BD
 			ps.setInt    ( 3, i.getheureService ( ) );
 			ps.setInt    ( 4, i.getHeureMaximum ( ) );
 			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
+			ps.setInt    ( 6, i.getId           ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
@@ -789,6 +849,8 @@ public class BD
 			System.out.println ( "Erreur update ( Horaire h ) : " + e );
 		}
 	}
+
+
 	
 	/*---------------------------------------*/
 	/*                MAIN TEST              */

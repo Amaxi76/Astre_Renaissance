@@ -109,5 +109,13 @@ public class Intervenant
 
 		return sRet;
 	}
+
+	public boolean equals( Intervenant i )
+	{
+		if( this.id == i.getId() && this.nom.equals( i.getNom() ) && this.prenom.equals( i.getPrenom() ) && this.heureService == i.getheureService() && this.heureMaximum == i.getHeureMaximum() )
+			return true;
+		
+		return false;
+	}
 	
 }
