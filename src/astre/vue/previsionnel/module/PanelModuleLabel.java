@@ -1,6 +1,7 @@
 package astre.vue.previsionnel.module;
 
 import astre.modele.elements.Semestre;
+import astre.modele.elements.Heure;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -185,6 +186,18 @@ public class PanelModuleLabel  extends JPanel
 			this.lblNbEtd .setText ( String.valueOf ( sem.getNbEtudiant() ) );
 			this.lblNbGpTD.setText ( String.valueOf ( sem.getNbGroupeTD() ) );
 			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP() ) );
+		}
+	}
+
+	private void coefficients ( String nomHeure )
+	{
+		Heure heure = this.ctrl.getHeure ( nomHeure );
+
+		if ( heure != null )
+		{
+			double coeffCM = heure.getCoefTd();
+			double coeffTD = heure.getCoefTd();
+			double coeffTP = heure.getCoefTd();
 		}
 	}
 }
