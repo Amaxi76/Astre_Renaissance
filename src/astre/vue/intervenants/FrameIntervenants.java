@@ -7,6 +7,7 @@ package astre.vue.intervenants;
   */
 
 import astre.Controleur;
+import astre.vue.outils.MenuBarAstre;
 import javax.swing.*;
 
 public class FrameIntervenants extends JFrame
@@ -22,6 +23,8 @@ public class FrameIntervenants extends JFrame
 		this.setTitle              ( "Intervenants" );
 		this.setSize               ( 1000,500       );
 		this.setLocationRelativeTo ( null           );
+		
+		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 		
 		this.add ( this.panel );
 

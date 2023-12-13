@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 import astre.Controleur;
+import astre.vue.outils.MenuBarAstre;
 import astre.vue.outils.ConstantesVue;
 
 /** Page de gestion des intervenants
@@ -25,6 +26,8 @@ public class FrameParametrage extends JFrame
 		this.setTitle              ( "Paramètrage" );
 		this.setSize               ( 800, 700      );
 		this.setLocationRelativeTo ( null          );
+		
+		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 		
 		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
 		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
