@@ -36,6 +36,7 @@ src/astre/vue/previsionnel/module/PanelModuleLabel.java
 src/astre/vue/previsionnel/module/PanelModuleBouton.java
 src/astre/vue/previsionnel/module/PanelPNLocal.java
 src/astre/vue/previsionnel/module/PanelRepartition.java
+src/astre/vue/previsionnel/module/PanelAffectation.java
 
 src/astre/vue/FrameAccueil.java
 
