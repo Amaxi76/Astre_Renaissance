@@ -22,7 +22,6 @@ public class PanelTypeHeure extends JPanel
 {
 	private Controleur ctrl;
 	private Tableau    tabContrat;
-
 	
 	public PanelTypeHeure ( Controleur ctrl )
 	{
