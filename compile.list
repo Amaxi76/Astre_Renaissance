@@ -19,6 +19,7 @@ src/astre/modele/elements/TypeModule.java
 src/astre/vue/intervenants/PanelIntervenants.java
 src/astre/vue/intervenants/FrameIntervenants.java
 
+src/astre/vue/outils/ConstantesVue.java
 src/astre/vue/outils/MenuBarAstre.java
 src/astre/vue/outils/PanelDiagramme.java
 src/astre/vue/outils/ModeleTableau.java
@@ -29,7 +30,6 @@ src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
 src/astre/vue/previsionnel/PanelSemestre.java
-src/astre/vue/previsionnel/TableauModules.java
 
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModuleLabel.java
