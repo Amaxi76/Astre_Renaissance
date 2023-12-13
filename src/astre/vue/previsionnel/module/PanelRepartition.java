@@ -89,10 +89,10 @@ public class PanelRepartition extends JPanel
 		gbc.gridx = 0;
 		this.add ( new JLabel ( "CM" ), gbc );
 
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
 
-		gbc.gridx = 2;
+		gbc.gridx = 4;
 		this.add ( new JLabel ( "TP" ), gbc );
 
 
@@ -212,42 +212,49 @@ public class PanelRepartition extends JPanel
 
 		this.txtNbSemCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) {}
+			public void keyTyped    ( KeyEvent e ) { majTotalCM(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbHCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) {}
+			public void keyTyped    ( KeyEvent e ) { majTotalCM(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbSemTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) {}
+			public void keyTyped    ( KeyEvent e ) { majTotalTD(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbHTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) {}
+			public void keyTyped    ( KeyEvent e ) { majTotalTD(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbSemTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) {}
+			public void keyTyped    ( KeyEvent e ) { majTotalTP(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbHTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) {}
+			public void keyTyped    ( KeyEvent e ) { majTotalTP(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
+		});
+
+		this.txtHeureP.addKeyListener ( new KeyListener()
+		{
+			public void keyTyped    ( KeyEvent e ) { majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
@@ -310,5 +317,93 @@ public class PanelRepartition extends JPanel
 		this.lblTotalSommeAff.setBackground( Color.LIGHT_GRAY );
 		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 25, 15 ) );
 		this.lblTotalSommeAff.setOpaque( true );
+	}
+
+	private void majTotalCM()
+	{
+		int nbSemCM = 0;
+		int nbHCM   = 0;
+
+		if (!txtNbSemCM.getText().isEmpty() )
+		{
+			nbSemCM = Integer.parseInt ( txtNbSemCM.getText() );
+		}
+
+		if (!txtNbHCM.getText().isEmpty() )
+		{
+			nbHCM = Integer.parseInt ( txtNbHCM.getText() );
+		}
+
+		int totalCM = nbSemCM * nbHCM;
+		lblTotalCM.setText ( String.valueOf ( totalCM ) );
+	}
+
+	private void majTotalTD()
+	{
+		int nbSemTD = 0;
+		int nbHTD   = 0;
+
+		if (!txtNbSemTD.getText().isEmpty() )
+		{
+			nbSemTD = Integer.parseInt ( txtNbSemTD.getText() );
+		}
+
+		if (!txtNbHTD.getText().isEmpty() )
+		{
+			nbHTD = Integer.parseInt ( txtNbHTD.getText() );
+		}
+
+		int totalTD = nbSemTD * nbHTD;
+		lblTotalTD.setText ( String.valueOf ( totalTD ) );
+	}
+
+	private void majTotalTP()
+	{
+		int nbSemTP = 0;
+		int nbHTP   = 0;
+
+		if (!txtNbSemTP.getText().isEmpty() )
+		{
+			nbSemTP = Integer.parseInt ( txtNbSemTP.getText() );
+		}
+
+		if (!txtNbHTP.getText().isEmpty() )
+		{
+			nbHTP = Integer.parseInt ( txtNbHTP.getText() );
+		}
+
+		int totalTP = nbSemTP * nbHTP;
+		lblTotalTP.setText ( String.valueOf ( totalTP ) );
+	}
+
+	private void majTotalHeure()
+	{
+		int totalCM = 0;
+		int totalTD = 0;
+		int totalTP = 0;
+		int heureP  = 0;
+
+		if (!lblTotalCM.getText().isEmpty() )
+		{
+			totalCM = Integer.parseInt ( lblTotalCM.getText() );
+		}
+
+		if (!lblTotalTD.getText().isEmpty() )
+		{
+			totalTD = Integer.parseInt ( lblTotalTD.getText() );
+		}
+
+		if (!lblTotalTP.getText().isEmpty() )
+		{
+			totalTP = Integer.parseInt ( lblTotalTP.getText() );
+		}
+
+		if (!txtHeureP.getText().isEmpty() )
+		{
+			heureP = Integer.parseInt ( txtHeureP.getText() );
+		}
+
+		int somme = totalCM + totalTD + totalTP + heureP;
+		lblTotalSomme.setText ( String.valueOf ( somme ) );
 	}
 }
