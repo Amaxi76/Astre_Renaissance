@@ -15,7 +15,7 @@ DELETE FROM Heure       CASCADE;
 DELETE FROM TypeModule  CASCADE;
 DELETE FROM ModuleIUT   CASCADE;
 DELETE FROM Intervenant CASCADE;
-DELETE FROM Enseigne    CASCADE; 
+DELETE FROM Intervient  CASCADE; 
 DELETE FROM Horaire     CASCADE;
 
 /* ---------------------------------------------------- */
