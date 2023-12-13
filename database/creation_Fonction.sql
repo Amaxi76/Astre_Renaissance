@@ -1,5 +1,5 @@
 /*
-	@author Alizéa LEBARON
+	@author Alizéa LEBARON / Maxime LEMOINE / Maximilien LESTERLIN
 	@version 1.0.0 - 13/12/2023 
 	@date 12/12/2023 
 	@description Script de création des fonctions
@@ -15,7 +15,7 @@ CREATE OR REPLACE FUNCTION f_selectAll ( table_name VARCHAR ) RETURNS TABLE ( re
 $$
 BEGIN
 
-    RETURN QUERY EXECUTE 'SELECT * FROM ' || table_name;
+	RETURN QUERY EXECUTE 'SELECT * FROM ' || table_name;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -26,7 +26,7 @@ CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RET
 $$
 BEGIN
 
-    RETURN QUERY EXECUTE 'SELECT * FROM ModuleIUT WHERE Id_Semestre = ' || numSemestre;
+	RETURN QUERY EXECUTE 'SELECT * FROM ModuleIUT WHERE Id_Semestre = ' || numSemestre;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -37,7 +37,7 @@ CREATE OR REPLACE FUNCTION f_selectUnSemestre ( numSemestre INTEGER ) RETURNS TA
 $$
 BEGIN
 
-    RETURN QUERY EXECUTE 'SELECT * FROM Semestre WHERE Id_Semestre = ' || numSemestre;
+	RETURN QUERY EXECUTE 'SELECT * FROM Semestre WHERE Id_Semestre = ' || numSemestre;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -49,7 +49,36 @@ CREATE OR REPLACE FUNCTION f_selectUnContrat ( numContrat INTEGER ) RETURNS TABL
 $$
 BEGIN
 
-    RETURN QUERY EXECUTE 'SELECT * FROM Contrat WHERE Id_Semestre = ' || numContrat;
+	RETURN QUERY EXECUTE 'SELECT * FROM Contrat WHERE Id_Semestre = ' || numContrat;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Selecion des ModulesIUT par semestres
+DROP              FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER );
+CREATE OR REPLACE FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( code_moduleiut VARCHAR, liblong VARCHAR, libcourt VARCHAR, typemodule VARCHAR, id_semestre INTEGER, nbgroupetp INTEGER, nbgroupetd INTEGER, nbetud INTEGER, nbsemaine INTEGER ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+		SELECT m.code_moduleiut, m.liblong, m.libcourt, m.typemodule, s.id_semestre, s.nbgroupetp, s.nbgroupetd, s.nbetud, s.nbsemaine
+		FROM   ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre
+		WHERE  m.id_semestre = $1;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- Selecion des heures par rapport à un module
+DROP              FUNCTION f_selectHoraireParModule ( code VARCHAR );
+CREATE OR REPLACE FUNCTION f_selectHoraireParModule ( code VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeurePn INTEGER, nbHeureRepartie INTEGER ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+		SELECT he.nomHeure, ho.nbHeurePn, ho.nbHeureRepartie
+		FROM   Horaire ho JOIN Heure he    ON ho.nomHeure       = he.nomHeure 
+		                  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT 
+		WHERE ho.Code_ModuleIUT = $1;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -61,11 +90,11 @@ CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE (
 $$
 BEGIN
 
-    RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
-                          FROM Horaire ho JOIN Heure he ON ho.nomHeure = he.nomHeure
-                                          JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-                          WHERE ho.Code_ModuleIUT = $1'
-    USING p_code;
+	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
+						  FROM Horaire ho JOIN Heure he ON ho.nomHeure = he.nomHeure
+										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+						  WHERE ho.Code_ModuleIUT = $1'
+	USING p_code;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -77,11 +106,11 @@ CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS T
 $$
 BEGIN
 
-    RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
-                          FROM Horaire ho JOIN Heure he ON ho.nomHeure = he.nomHeure
-                                          JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-                          WHERE ho.Code_ModuleIUT = $1'
-    USING p_code;
+	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
+						  FROM Horaire ho JOIN Heure he ON ho.nomHeure = he.nomHeure
+										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+						  WHERE ho.Code_ModuleIUT = $1'
+	USING p_code;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -98,7 +127,7 @@ CREATE OR REPLACE FUNCTION f_insertContrat ( i_nomContrat VARCHAR(50), i_hServic
 $$
 BEGIN
 
-    INSERT INTO Contrat ( nomContrat, hServiceContrat, hMaxContrat, ratioTP ) VALUES ( i_nomContrat, i_hServiceContrat, i_hMaxContrat, i_ratioTP );
+	INSERT INTO Contrat ( nomContrat, hServiceContrat, hMaxContrat, ratioTP ) VALUES ( i_nomContrat, i_hServiceContrat, i_hMaxContrat, i_ratioTP );
 
 END;
 $$ LANGUAGE plpgsql;
@@ -110,7 +139,7 @@ CREATE OR REPLACE FUNCTION f_insertHeure ( i_nomHeure VARCHAR(50), i_coeffTD DOU
 $$
 BEGIN
 
-    INSERT INTO Heure ( nomHeure, coeffTD ) VALUES ( i_nomHeure, i_coeffTD );
+	INSERT INTO Heure ( nomHeure, coeffTD ) VALUES ( i_nomHeure, i_coeffTD );
 
 END;
 $$ LANGUAGE plpgsql;
@@ -135,7 +164,7 @@ CREATE OR REPLACE FUNCTION f_insertIntervenant ( i_nom VARCHAR(50), i_prenom VAR
 $$
 BEGIN
 
-    INSERT INTO Intervenant (   nom ,   prenom,   hService,   hMax,   Id_Contrat ) 
+	INSERT INTO Intervenant (   nom ,   prenom,   hService,   hMax,   Id_Contrat ) 
 	VALUES                  ( i_nom , i_prenom, i_hService, i_hMax, i_Id_Contrat );
 
 END;
@@ -149,7 +178,7 @@ CREATE OR REPLACE FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_nomH
 $$
 BEGIN
 
-    INSERT INTO Intervient  (   Id_Intervenant,   nomHeure,   Code_ModuleIUT,   nbSemaine,   nbGroupe,   nbHeure,   commentaire,   nbHeure,   commentaire ) 
+	INSERT INTO Intervient  (   Id_Intervenant,   nomHeure,   Code_ModuleIUT,   nbSemaine,   nbGroupe,   nbHeure,   commentaire,   nbHeure,   commentaire ) 
 	VALUES                  ( i_Id_Intervenant, i_nomHeure, i_Code_ModuleIUT, i_nbSemaine, i_nbGroupe, i_nbHeure, i_commentaire, i_nbHeure, i_commentaire );
 
 END;
@@ -162,7 +191,7 @@ CREATE OR REPLACE FUNCTION f_insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIU
 $$
 BEGIN
 
-    INSERT INTO Horaire  (   nomHeure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
+	INSERT INTO Horaire  (   nomHeure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
 	VALUES               ( i_nomHeure , i_Code_ModuleIUT, i_nbHeurePN , i_nbHeureRepartie , i_nbSemaine );
 
 END;
@@ -303,7 +332,7 @@ CREATE OR REPLACE FUNCTION f_deleteContrat ( d_id_contrat INTEGER ) RETURNS VOID
 $$
 BEGIN
 
-    DELETE FROM Contrat WHERE Id_Contrat = d_id_contrat;
+	DELETE FROM Contrat WHERE Id_Contrat = d_id_contrat;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -315,7 +344,7 @@ CREATE OR REPLACE FUNCTION f_deleteHeure ( d_nomHeure VARCHAR(50) ) RETURNS VOID
 $$
 BEGIN
 
-    DELETE FROM Heure WHERE nomHeure = d_nomHeure;
+	DELETE FROM Heure WHERE nomHeure = d_nomHeure;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -327,7 +356,7 @@ CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER ) RETURN
 $$
 BEGIN
 
-    DELETE FROM ModuleIUT WHERE Code_ModuleIUT = d_Code_ModuleIUT;
+	DELETE FROM ModuleIUT WHERE Code_ModuleIUT = d_Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -339,7 +368,7 @@ CREATE OR REPLACE FUNCTION f_deleteIntervenant ( d_Id_Intervenant INTEGER ) RETU
 $$
 BEGIN
 
-    DELETE FROM Intervenant WHERE Id_Intervenant = d_Id_Intervenant;
+	DELETE FROM Intervenant WHERE Id_Intervenant = d_Id_Intervenant;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -351,7 +380,7 @@ CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomH
 $$
 BEGIN
 
-    DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+	DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -363,7 +392,7 @@ CREATE OR REPLACE FUNCTION f_deleteHoraire ( d_nomHeure VARCHAR(50), d_Code_Modu
 $$
 BEGIN
 
-    DELETE FROM Horaire WHERE nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+	DELETE FROM Horaire WHERE nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;

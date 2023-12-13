@@ -63,8 +63,8 @@ INSERT INTO Intervient (Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbG
 (1,  'TD', 'R5.03',    6,    2,    5, NULL         ),
 (1,  'TP', 'R1.01',    8,    1,    6, NULL         ),
 (2,  'TP', 'R1.01',    8,    1,    9, 'commentaire'),
-(3, 'Tut', 'S2.05', NULL, NULL,    9, NULL         ),
-(3, 'REH', 'S6.ST', NULL, NULL,   12, NULL         );
+(3, 'Tut', 'S2.05',    1,    1,    9, NULL         ),
+(3, 'REH', 'S6.ST',    1,    1,   12, NULL         );
   
 INSERT INTO Horaire VALUES
 ('TP' , 'R1.01', 85, 0, 12),
