@@ -47,21 +47,18 @@ public class FrameModule extends JFrame
 		gbc.insets = new Insets ( 5, 10, 15, 10 );
 
 		this.add ( new PanelModuleLabel  ( this.ctrl ), BorderLayout.NORTH  );
+		this.add ( new PanelPNLocal      ( this.ctrl ), BorderLayout.WEST   );
+		
 		this.add ( panelCentre, BorderLayout.CENTER                         );
 
 		gbc.gridy = 0;
 		gbc.gridx = 0;
-		panelCentre.add ( new PanelPNLocal      ( this.ctrl ) );
-
-		gbc.gridx = 1;
-		panelCentre.add ( new PanelRepartition  ( this.ctrl ) );
+		panelCentre.add ( new PanelRepartition  ( this.ctrl ), gbc );
 
 		gbc.gridy = 1;
-		gbc.gridx = 1;
-		panelCentre.add ( new PanelAffectation ( this.ctrl ) );
+		gbc.gridx = 0;
+		panelCentre.add ( new PanelAffectation ( this.ctrl ), gbc );
 
-		/*this.add ( new PanelPNLocal      ( this.ctrl ), BorderLayout.WEST   );
-		this.add ( new PanelRepartition  ( this.ctrl ), BorderLayout.EAST   );*/
 		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH  );
 
 		this.setVisible ( true );
