@@ -8,6 +8,7 @@ package astre.modele;
 
 //TODO: Penser à fermer le rs et st
 //TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
+//TODO: Refactoriser la métode UPDATE
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,8 +52,10 @@ public class BD
 	/*---------------------------------------*/
 	
 	/** Méthode générique pour la récupération de table
+	 * Exemple d'utilisation : ArrayList<Semestre> ensS= new ArrayList<> (getTable ( "Semestre", Semestre.class ) ) ;
 	 */
-	public <T> List<T> getTable ( String tableName, Class<T> clazz )
+
+	private <T> List<T> getTable ( String tableName, Class<T> clazz )
 	{
 		ArrayList<T> lst = new ArrayList<>();
 
@@ -63,25 +66,17 @@ public class BD
 
 			while ( rs.next ( ) )
 			{
-				if (clazz == Semestre.class)
-				{
-					lst.add ( (T) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-				}
+				if ( clazz == Semestre.class      )
+					lst.add ( ( T ) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 				
-				if (clazz == Contrat.class)
-				{
-					lst.add ( (T) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
-				}
+				if ( clazz == Contrat.class      )
+					lst.add ( ( T ) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
 				
-				if (clazz == Heure.class)
-				{
-					lst.add ( (T) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
-				}
+				if ( clazz == Heure.class        )
+					lst.add ( ( T ) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
 				
-				if (clazz == Intervenant.class)
-				{
-					lst.add ( (T) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-				}
+				if ( clazz == Intervenant.class )
+					lst.add ( ( T ) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 				
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
 			}
@@ -95,77 +90,12 @@ public class BD
 		return lst;
 	}
 
-	public List<Semestre> getSemestres ( )
-	{
-		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
-		
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT * FROM Semestre" );
-			while ( rs.next ( ) )
-			{
-				lst.add ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-			}
+	public List<Semestre>    getSemestres    ( ) { return this.getTable ( "Semestre"   , Semestre   .class ); }
+	public List<Intervenant> getIntervenants ( ) { return this.getTable ( "Intervenant", Intervenant.class ); }
+	public List<Contrat>     getContrats     ( ) { return this.getTable ( "Contrat"    , Contrat    .class ); }
+	public List<Heure>       getHeures       ( ) { return this.getTable ( "Heure"      , Heure      .class ); }
+	public List<Intervient>  getIntervients  ( ) { return this.getTable ( "Intervients", Intervient .class ); }
 
-			rs.close ( );
-			st.close ( );
-		}
-		
-		catch ( SQLException e )
-		
-		{
-			System.out.println ( "Erreur getSemestre() : " + e );
-		}
-		
-		return lst;
-	}
-	
-	public List<Contrat> getContrats ( )
-	{
-		ArrayList<Contrat> lst = new ArrayList<Contrat> ( );
-		
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT * FROM Contrat" );
-			while ( rs.next( ) )
-			{
-				lst.add ( new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
-			}
-
-			rs.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		
-		{
-			System.out.println ( "Erreur getContrats() : " + e );
-		}
-		
-		return lst;
-	}
-	
-	public List<Heure> getHeures ( )
-	{
-		ArrayList<Heure> lst = new ArrayList<Heure> ( );
-		
-		try 
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Heure" );
-			while ( rs.next ( ) ) 
-				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
-
-			
-		} 
-		catch ( SQLException e ) 
-		{
-			System.out.println ( "Erreur getHeure ( ) : " + e );
-		}
-		
-		return lst;
-	}
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
@@ -247,54 +177,7 @@ public class BD
 
 		return hm;
 	}
-	
-	public List<Intervenant> getIntervenants ( )
-	{
-		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		
-		try 
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Intervenant" );
-			while ( rs.next( ) ) 
-			{
-				lst.add ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-			}
-
-			rs.close ( );
-			st.close ( );
-		} 
-		catch ( SQLException e ) 
-		{
-			System.out.println ( "Erreur getIntervenant() : " + e );
-		}
-		
-		return lst;
-	}
-	
-	public List<Intervient> getIntervients()
-	{
-		ArrayList<Intervient> lst = new ArrayList<Intervient>();
-
-		try
-		{
-			Statement st = co.createStatement( );
-			ResultSet rs = st.executeQuery( "select * from Intervient" );
-			while ( rs.next( ) )
-			{
-				lst.add( new Intervient( getIntervenant( rs.getInt( 1 ) ), getHeure( rs.getString( 2 ) ), getModule( rs.getString( 3 ) ), rs.getInt( 4 ), rs.getInt( 5 ), rs.getInt( 6 ), rs.getString( 7 ) ) );
-			}
-
-			rs.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur getIntervient() : " + e );
-		}
-
-		return lst;
-	}
 	
 	/*public List<Horaire> getHoraires()
 	{
@@ -873,7 +756,6 @@ public class BD
 		}
 	}
 
-
 	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
@@ -1046,22 +928,4 @@ public class BD
 		}
 	}
 
-
-	
-	/*---------------------------------------*/
-	/*                MAIN TEST              */
-	/*---------------------------------------*/
-	public static void main ( String[] args ) 
-	{
-		BD bd = BD.getInstance ( );
-
-		List<Intervenant> test = bd.getIntervenants ( );
-
-		for ( Intervenant i : test )
-		{
-			System.out.println ( i.toString   ( ) );
-			System.out.println ( i.getContrat ( ) );
-		}
-
-	}
 }
