@@ -102,45 +102,37 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource() == this.btnEnregistrer )
 		{
-			comparerTableaux2( this.tableau.getDonnees() );
+			if(!enregistrer( this.tableau.getDonnees() ))
+			{
+				Controleur.afficherErreur("Enregistrement impossible", "Une ligne vide ne peut pas être enregistrer");
+			}
+			
 		}
 		
 		if ( e.getSource() == this.btnAnnuler )
 		{
-			/*this.panelCentre.remove(scrollPane);
-			repaint();
-
-			String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-			this.tableau = new Tableau(noms, this.ctrl.getTableauIntervenant(), true);
-			this.tableau.ajusterTailleColonnes();
-
-			scrollPane = new JScrollPane ( this.tableau );
-			
-			this.panelCentre.add(scrollPane, BorderLayout.CENTER);
-			repaint();*/
-
 			this.tableau.modifDonnees(this.ctrl.getTableauIntervenant());
 		}
 	}
 
-	public void comparerTableaux2(Object[][] deuxieme)
+	public boolean enregistrer(Object[][] deuxieme)
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
 		BD bd = BD.getInstance();//a modif ptet
 
 		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) bd.getIntervenants();
-
-		for (int u = 0; u < deuxieme.length; u++)
-		{
-			for (int i = 0; i < deuxieme[u].length; i++)
-			{
-				System.out.println(i + " " +deuxieme[u][i] + "|");
-			}
-		}
 		
 		Intervenant inter = null;
 		for (int i = 0; i < deuxieme.length; i++)
 		{
+			for(int cpt=1; cpt < deuxieme[0].length; cpt++)
+			{
+				System.out.println(deuxieme[i][cpt].toString());
+				
+				if(deuxieme[i][cpt].toString().equals(""))
+					return false; //faire une popup ? ou bien continuer en ignorant la ligne ?
+			}
+
 			if(deuxieme[i][0].toString().equals(""))
 				inter = new Intervenant(0, deuxieme[i][2].toString(), deuxieme[i][3].toString(), bd.getContrat(deuxieme[i][1].toString()), Integer.parseInt(deuxieme[i][4].toString()), Integer.parseInt(deuxieme[i][5].toString()) );
 			else
@@ -160,12 +152,10 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			if(up)
 			{
 				bd.update(inter);
-				System.out.println("Ligne " + i + " doit etre modifiée.");
 			}
 			else
 			{
 				bd.insert(inter);
-				System.out.println("Ligne " + i + " doit etre ajouter.");
 			}
 		}
 
@@ -184,10 +174,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 			if(del)
 			{
-				//bd.deleteIntervenantNomPrenom(venant);
 				bd.delete(venant);
-				System.out.println("Ligne ? doit etre supprimée.");
 			}
 		}
+		return true;
 	}
 }

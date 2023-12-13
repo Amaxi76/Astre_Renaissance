@@ -7,13 +7,15 @@ package astre.modele;
   */
 
 //TODO: Penser à fermer le rs et st
-//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
+//TODO: Refactoriser la métode UPDATE
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JComboBox;
 
 import astre.modele.elements.*;
 
@@ -51,8 +53,10 @@ public class BD
 	/*---------------------------------------*/
 	
 	/** Méthode générique pour la récupération de table
+	 * Exemple d'utilisation : ArrayList<Semestre> ensS= new ArrayList<> (getTable ( "Semestre", Semestre.class ) ) ;
 	 */
-	public <T> List<T> getTable ( String tableName, Class<T> clazz )
+
+	private <T> List<T> getTable ( String tableName, Class<T> clazz )
 	{
 		ArrayList<T> lst = new ArrayList<>();
 
@@ -63,25 +67,17 @@ public class BD
 
 			while ( rs.next ( ) )
 			{
-				if (clazz == Semestre.class)
-				{
-					lst.add ( (T) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-				}
+				if ( clazz == Semestre.class      )
+					lst.add ( ( T ) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 				
-				if (clazz == Contrat.class)
-				{
-					lst.add ( (T) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
-				}
+				if ( clazz == Contrat.class      )
+					lst.add ( ( T ) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
 				
-				if (clazz == Heure.class)
-				{
-					lst.add ( (T) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
-				}
+				if ( clazz == Heure.class        )
+					lst.add ( ( T ) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
 				
-				if (clazz == Intervenant.class)
-				{
-					lst.add ( (T) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-				}
+				if ( clazz == Intervenant.class )
+					lst.add ( ( T ) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 				
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
 			}
@@ -95,80 +91,17 @@ public class BD
 		return lst;
 	}
 
-	public List<Semestre> getSemestres ( )
-	{
-		ArrayList<Semestre> lst = new ArrayList<Semestre> ( );
-		
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT * FROM Semestre" );
-			while ( rs.next ( ) )
-			{
-				lst.add ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-			}
+	public List<Semestre>    getSemestres    ( ) { return this.getTable ( "Semestre"   , Semestre   .class ); }
+	public List<Intervenant> getIntervenants ( ) { return this.getTable ( "Intervenant", Intervenant.class ); }
+	public List<Contrat>     getContrats     ( ) { return this.getTable ( "Contrat"    , Contrat    .class ); }
+	public List<Heure>       getHeures       ( ) { return this.getTable ( "Heure"      , Heure      .class ); }
+	public List<Intervient>  getIntervients  ( ) { return this.getTable ( "Intervients", Intervient .class ); }
 
-			rs.close ( );
-			st.close ( );
-		}
-		
-		catch ( SQLException e )
-		
-		{
-			System.out.println ( "Erreur getSemestre() : " + e );
-		}
-		
-		return lst;
-	}
-	
-	public List<Contrat> getContrats ( )
-	{
-		ArrayList<Contrat> lst = new ArrayList<Contrat> ( );
-		
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT * FROM Contrat" );
-			while ( rs.next( ) )
-			{
-				lst.add ( new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
-			}
-
-			rs.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		
-		{
-			System.out.println ( "Erreur getContrats() : " + e );
-		}
-		
-		return lst;
-	}
-	
-	public List<Heure> getHeures ( )
-	{
-		ArrayList<Heure> lst = new ArrayList<Heure> ( );
-		
-		try 
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Heure" );
-			while ( rs.next ( ) ) 
-				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
-
-			
-		} 
-		catch ( SQLException e ) 
-		{
-			System.out.println ( "Erreur getHeure ( ) : " + e );
-		}
-		
-		return lst;
-	}
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
+		//TODO: refaire le compteur
+		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
 		String REQUETE = "SELECT * FROM f_selectModulesIUTParSemestre(?)";
@@ -184,7 +117,7 @@ public class BD
 
 			while ( rs.next ( ) ) 
 			{
-				int iS = 5;
+				int iS = 6;
 				int iM = 1;
 
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
@@ -192,7 +125,7 @@ public class BD
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );;
 
 				ensModules.add ( moduleIUT );
 			}
@@ -201,7 +134,7 @@ public class BD
 			ps.close ( );
 			st.close ( );
 		} 
-		catch ( SQLException e ) 
+		catch ( SQLException e )
 		{
 			System.out.println ( "getModules ( )" +  e );
 		}
@@ -247,54 +180,7 @@ public class BD
 
 		return hm;
 	}
-	
-	public List<Intervenant> getIntervenants ( )
-	{
-		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		
-		try 
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Intervenant" );
-			while ( rs.next( ) ) 
-			{
-				lst.add ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-			}
-
-			rs.close ( );
-			st.close ( );
-		} 
-		catch ( SQLException e ) 
-		{
-			System.out.println ( "Erreur getIntervenant() : " + e );
-		}
-		
-		return lst;
-	}
-	
-	public List<Intervient> getIntervients()
-	{
-		ArrayList<Intervient> lst = new ArrayList<Intervient>();
-
-		try
-		{
-			Statement st = co.createStatement( );
-			ResultSet rs = st.executeQuery( "select * from Intervient" );
-			while ( rs.next( ) )
-			{
-				lst.add( new Intervient( getIntervenant( rs.getInt( 1 ) ), getHeure( rs.getString( 2 ) ), getModule( rs.getString( 3 ) ), rs.getInt( 4 ), rs.getInt( 5 ), rs.getInt( 6 ), rs.getString( 7 ) ) );
-			}
-
-			rs.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur getIntervient() : " + e );
-		}
-
-		return lst;
-	}
 	
 	/*public List<Horaire> getHoraires()
 	{
@@ -454,7 +340,7 @@ public class BD
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				module = new ModuleIUT ( getSemestre ( rs.getInt ( 1 ) ), rs.getString(2), rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ), hmHeuresPn, hmHeuresRepartiees );
+				module = new ModuleIUT ( getSemestre ( rs.getInt ( 1 ) ), rs.getString ( 2 ), rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ),rs.getBoolean ( 6 ), hmHeuresPn, hmHeuresRepartiees );
 			}
 		} 
 		catch ( SQLException e ) 
@@ -620,17 +506,17 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0] = rs.getString ( 1 );//Id
+				intervenants[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
 				intervenants[cpt][1] = rs.getString ( 2 );//heure
 				intervenants[cpt][2] = rs.getString ( 3 );//module
-				intervenants[cpt][3] = rs.getInt    ( 4 );//nbsemaine
-				intervenants[cpt][4] = rs.getInt    ( 5 );//nbgroupe
-				intervenants[cpt][5] = rs.getInt    ( 6 );//nbheure
-				intervenants[cpt][6] = rs.getString ( 7 );//commentaire
+				intervenants[cpt][2] = rs.getInt    ( 4 );//nbsemaine
+				intervenants[cpt][3] = rs.getInt    ( 5 );//nbgroupe
+				intervenants[cpt][4] = rs.getInt    ( 6 );//nbheure
+				intervenants[cpt][5] = rs.getString ( 7 );//commentaire
 
 				cpt++;
 			}
@@ -873,7 +759,6 @@ public class BD
 		}
 	}
 
-
 	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
@@ -1046,22 +931,4 @@ public class BD
 		}
 	}
 
-
-	
-	/*---------------------------------------*/
-	/*                MAIN TEST              */
-	/*---------------------------------------*/
-	public static void main ( String[] args ) 
-	{
-		BD bd = BD.getInstance ( );
-
-		List<Intervenant> test = bd.getIntervenants ( );
-
-		for ( Intervenant i : test )
-		{
-			System.out.println ( i.toString   ( ) );
-			System.out.println ( i.getContrat ( ) );
-		}
-
-	}
 }

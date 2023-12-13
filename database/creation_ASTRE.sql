@@ -57,6 +57,7 @@ CREATE TABLE ModuleIUT
    libLong         VARCHAR(60),
    libCourt        VARCHAR(15),
    typeModule      VARCHAR(20),
+   valide          BOOLEAN,
    Id_Semestre     INTEGER NOT NULL,
 
    PRIMARY KEY(Code_ModuleIUT),

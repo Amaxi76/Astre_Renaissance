@@ -20,14 +20,14 @@ public class ModuleIUT
 	String   libCourt;
 	boolean  valide;
 
-	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepaties )
+	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepaties )
 	{
 		this.semestre          = semestre;
 		this.typeModule        = typeModule;
 		this.code              = code;
 		this.libLong           = libLong;
 		this.libCourt          = libCourt;
-		this.valide            = false;
+		this.valide            = valide;
 		this.hmHeuresPn        = hmHeuresPn;
 		this.hmHeuresRepaties  = hmHeuresRepaties;
 	}
