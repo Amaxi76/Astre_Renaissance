@@ -82,7 +82,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnCreer )
 		{
 			if ( this.pnl.getSelectedIndex ( ) == 0 )
-				System.out.println( " oui ");
+				this.pnl.getPnlContrat ( ).getTabContrat ( ).ajouterLigne ( );
 			else
 				System.out.println ( "non" );
 		}
