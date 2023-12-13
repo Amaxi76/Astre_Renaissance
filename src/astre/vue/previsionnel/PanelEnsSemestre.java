@@ -1,9 +1,9 @@
 package astre.vue.previsionnel;
 
 import astre.Controleur;
+import astre.vue.outils.ConstantesVue;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
-import java.awt.*;
 
 /** Classe PanelEnsSemestre
   * @author : Maximeuuu
@@ -15,26 +15,18 @@ public class PanelEnsSemestre extends JTabbedPane
 {
 	private Controleur ctrl;
 
-	public static final Dimension DIMENSION_TAB = new Dimension ( 350,400 );
-	private static final int NB_SEMESTRE = 6;
-
 	public PanelEnsSemestre ( Controleur ctrl )
 	{
 		// Configuration
 		this.ctrl = ctrl;
-		this.setPreferredSize ( PanelEnsSemestre.DIMENSION_TAB );
-		this.setUI ( new CustomTabbedPaneUI ( ) );
+		this.setPreferredSize   ( ConstantesVue.DIMENSION_TAB );
+		//this.setUI              ( new BasicTabbedPaneUI ( ) );
 		this.setTabLayoutPolicy ( JTabbedPane.SCROLL_TAB_LAYOUT );
 
 		// Creation et positionnement des composants
-		for ( int cptSemestre = 1; cptSemestre < NB_SEMESTRE + 1; cptSemestre++ )
-		{
+		for ( int cptSemestre = 1; cptSemestre < ConstantesVue.NB_SEMESTRE + 1; cptSemestre++ )
 			this.add ( "S" + cptSemestre, new PanelSemestre ( cptSemestre, this.ctrl ) );
-		}
+
 	}
 	
-	class CustomTabbedPaneUI extends BasicTabbedPaneUI
-	{
-		//pour changer l'aspect par la suite
-	}
 }
