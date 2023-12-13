@@ -189,15 +189,26 @@ public class PanelModuleLabel  extends JPanel
 		}
 	}
 
-	private void coefficients ( String nomHeure )
+	private void coeffHeure ( String nomHeure )
 	{
 		Heure heure = this.ctrl.getHeure ( nomHeure );
 
-		if ( heure != null )
+		double coefficient = 0.0;
+
+		switch (nomHeure)
 		{
-			double coeffCM = heure.getCoefTd();
-			double coeffTD = heure.getCoefTd();
-			double coeffTP = heure.getCoefTd();
+			case "CM":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TD":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TP":
+				coefficient = heure.getCoefTd();
+				break;
+		
+			default:
+				break;
 		}
 	}
 }
