@@ -160,7 +160,7 @@ $$ LANGUAGE plpgsql;
 DROP              FUNCTION f_insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
 CREATE OR REPLACE FUNCTION f_insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50)) RETURNS VOID AS
 $$
-BEGINi_
+BEGIN
 
     INSERT INTO Horaire  (   nomHeure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
 	VALUES               ( i_nomHeure , i_Code_ModuleIUT, i_nbHeurePN , i_nbHeureRepartie , i_nbSemaine );
@@ -174,13 +174,13 @@ $$ LANGUAGE plpgsql;
 
 
 /* ------------------------------------------ */
-/*                   DELETE                   */p_
+/*                   DELETE                   */
 /* ------------------------------------------ */
 
 -- Supprimer un contrat
 
 DROP              FUNCTION f_deleteContrat ( d_id_contrat INTEGER );
-CREATE OR REPLACE FUNCTION f_deleteContrat ( d_id_contrat INTEGER ) RETURNS VOID ASid_Heure
+CREATE OR REPLACE FUNCTION f_deleteContrat ( d_id_contrat INTEGER ) RETURNS VOID AS 
 $$
 BEGIN
 
