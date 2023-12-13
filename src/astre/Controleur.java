@@ -30,7 +30,7 @@ public class Controleur
 
 	public static void afficherErreur ( String titre, String message )
 	{
-		new PopUpErreur( titre, message );
+		new PopUpErreur ( titre, message );
 	}
 
 	public static void main ( String[] args )

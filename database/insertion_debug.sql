@@ -17,7 +17,6 @@ DELETE FROM Intervenant CASCADE;
 DELETE FROM Contrat     CASCADE;
 DELETE FROM Heure       CASCADE;
 
-
 /* ---------------------------------------------------- */
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */

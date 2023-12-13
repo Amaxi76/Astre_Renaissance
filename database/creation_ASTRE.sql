@@ -14,7 +14,7 @@ DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
 DROP TABLE ModuleIUT   CASCADE;
 DROP TABLE Intervenant CASCADE;
-DROP TABLE Intervient  CASCADE; 
+DROP TABLE Intervient  CASCADE;
 DROP TABLE Horaire     CASCADE;
 
 /* ---------------------------------------------------- */
