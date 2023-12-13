@@ -326,27 +326,6 @@ public class BD
 		return contrat;
 	}
 
-	public Contrat getContrat ( String c )
-	{
-		Contrat contrat = null;
-		
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Contrat where nomContrat = '" + c  +"'");
-			while ( rs.next( ) )
-			{
-				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
-			}
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur getContrat(int c) : " + e );
-		}
-		
-		return contrat;
-	}
-
 	public int getInterventionIntervenant(int inter, int semes)
 	{
 		int result = 0;
@@ -563,6 +542,60 @@ public class BD
 		{
 			Object[][] inter = new Object[1][15];
 			for(int cpt=0; cpt < 15; cpt++)
+			{
+				inter[0][cpt] = "";
+			}
+			return inter;
+		}
+
+		return intervenants;
+	}
+
+	public Object[][] getIntervientsTableau()
+	{
+		int nbIntervients = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient" );
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		Object[][] intervenants = new Object[nbIntervients][7];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervenants[cpt][0] = rs.getString ( 1 );//Id
+				intervenants[cpt][1] = rs.getString ( 2 );//heure
+				intervenants[cpt][2] = rs.getString ( 3 );//module
+				intervenants[cpt][3] = rs.getInt    ( 4 );//nbsemaine
+				intervenants[cpt][4] = rs.getInt    ( 5 );//nbgroupe
+				intervenants[cpt][5] = rs.getInt    ( 6 );//nbheure
+				intervenants[cpt][6] = rs.getString ( 7 );//commentaire
+
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
+
+		if(nbIntervients == 0)
+		{
+			Object[][] inter = new Object[1][7];
+			for(int cpt=0; cpt < 7; cpt++)
 			{
 				inter[0][cpt] = "";
 			}
