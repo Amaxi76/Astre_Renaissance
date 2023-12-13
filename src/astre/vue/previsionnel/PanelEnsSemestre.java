@@ -27,9 +27,9 @@ public class PanelEnsSemestre extends JTabbedPane
 		this.setTabLayoutPolicy ( JTabbedPane.SCROLL_TAB_LAYOUT );
 
 		// Creation et positionnement des composants
-		for ( int cptSemestre=1; cptSemestre<NB_SEMESTRE+1; cptSemestre++ )
+		for ( int cptSemestre = 1; cptSemestre < NB_SEMESTRE + 1; cptSemestre++ )
 		{
-			this.add ( "S"+cptSemestre, new PanelSemestre ( cptSemestre, this.ctrl ) );
+			this.add ( "S" + cptSemestre, new PanelSemestre ( cptSemestre, this.ctrl ) );
 		}
 	}
 	

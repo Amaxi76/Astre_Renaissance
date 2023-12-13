@@ -15,7 +15,7 @@ DELETE FROM Heure       CASCADE;
 DELETE FROM TypeModule  CASCADE;
 DELETE FROM ModuleIUT   CASCADE;
 DELETE FROM Intervenant CASCADE;
-DELETE FROM Enseigne    CASCADE; 
+DELETE FROM Intervient  CASCADE; 
 DELETE FROM Horaire     CASCADE;
 
 /* ---------------------------------------------------- */
@@ -69,7 +69,7 @@ INSERT INTO Intervient (Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbG
 (1,  'TD', 'R5.03',    6,    2, NULL, NULL         ),
 (1,  'TP', 'R1.01',    8,    1, NULL, NULL         ),
 (2,  'TP', 'R1.01',    8,    1, NULL, 'commentaire'),
-(3, 'Tut', 'S1.05', NULL, NULL,    9, NULL         ),
+(3, 'Tut', 'S2.05', NULL, NULL,    9, NULL         ),
 (3, 'REH', 'S6.ST', NULL, NULL,   12, NULL         );
   
 INSERT INTO Horaire VALUES

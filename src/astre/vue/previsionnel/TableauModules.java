@@ -60,7 +60,7 @@ public class TableauModules extends JTable
 	public void ajouterLigne ( )
 	{
 		//this.modele.addRow ( new Object[ this.nomColonnes.length ] );
-		this.modele.ajouterLigne();
+		this.modele.ajouterLigne ( );
 		this.ajusterTailleColonnes ( );
 	}
 	
@@ -73,7 +73,7 @@ public class TableauModules extends JTable
 		if ( selection != -1 )
 		{
 			//this.modele.removeRow ( selection );
-			this.modele.supprimerLigne(selection);
+			this.modele.supprimerLigne ( selection );
 		}
 		this.ajusterTailleColonnes ( );
 	}

@@ -6,7 +6,7 @@ import astre.modele.elements.*;
 
 public class Astre
 {
-	private BD           bd;
+	private BD bd;
 
 	public Astre ( )
 	{
@@ -27,29 +27,25 @@ public class Astre
 		{
 			ModuleIUT module = ensModules.get ( cpt );
 			
-			tabObjet[cpt][0] = module.getCode ( );
-			tabObjet[cpt][1] = module.getLibLong  ( );
+			tabObjet[cpt][0] = module.getCode    ( );
+			tabObjet[cpt][1] = module.getLibLong ( );
 			tabObjet[cpt][2] = "" + module.getHeureReparties ( ) + "/" + module.getHeurePn ( );
-			tabObjet[cpt][3] = module.estValide ( );
+			tabObjet[cpt][3] = module.estValide  ( );
 		}
 		
 		return tabObjet;
 	}
 
-	public Object[][] getTableauIntervenant ( )
-	{
-		return this.bd.getIntervenantsTableau();
-	}
+	/*---------------------------------------*/
+	/*                GETTEUR                */
+	/*---------------------------------------*/
 
-		public Semestre getSemestre ( int numSemestre )
-	{
-		return this.bd.getSemestre ( numSemestre );
-	}
+	public Object[][] getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau ( );  }
+	public Semestre   getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
 
-	public void majSemestre ( Semestre s )
-	{
-		this.bd.update ( s );
-	}
-	
+	/*---------------------------------------*/
+	/*                SETTEUR                */
+	/*---------------------------------------*/
 
+	public void majSemestre ( Semestre s ) { this.bd.update ( s ); }
 }
