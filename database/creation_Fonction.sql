@@ -117,13 +117,13 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer un Module
 
-DROP              FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_Id_TypeModule INTEGER, i_Id_Semestre INTEGER);
-CREATE OR REPLACE FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_Id_TypeModule INTEGER, i_Id_Semestre INTEGER ) RETURNS VOID AS
+DROP              FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_typeModule VARCHAR(20), i_Id_Semestre INTEGER);
+CREATE OR REPLACE FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_typeModule VARCHAR(20), i_Id_Semestre INTEGER ) RETURNS VOID AS
 $$
 BEGIN
 
-    INSERT INTO Module (   Code_ModuleIUT,   libLong,   libCourt,   Id_TypeModule,   Id_Semestre ) 
-	VALUES             ( i_Code_ModuleIUT, i_libLong, i_libCourt, i_Id_TypeModule, i_Id_Semestre );
+    INSERT INTO Module (   Code_ModuleIUT,   libLong,   libCourt,   typeModule,   Id_Semestre ) 
+	VALUES             ( i_Code_ModuleIUT, i_libLong, i_libCourt, i_typeModule, i_Id_Semestre );
 
 END;
 $$ LANGUAGE plpgsql;
@@ -173,37 +173,123 @@ $$ LANGUAGE plpgsql;
 /* ------------------------------------------ */
 
 -- Update de semestre
+DROP              FUNCTION f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeTP INTEGER, u_nbGroupeTD INTEGER, u_nbEtud INTEGER, u_nbSemaine INTEGER );
 CREATE OR REPLACE FUNCTION f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeTP INTEGER, u_nbGroupeTD INTEGER, u_nbEtud INTEGER, u_nbSemaine INTEGER )
 RETURNS VOID AS
 $$
 BEGIN
     UPDATE Semestre
-    SET 
-        nbGroupeTP  = u_nbGroupeTP,
-        nbGroupeTD  = u_nbGroupeTD,
-        nbEtud      = u_nbEtud,
-        nbSemaine   = u_nbSemaine
 
-    WHERE Id_Semestre = u_Id_Semestre;
+    SET    nbGroupeTP  = u_nbGroupeTP,
+           nbGroupeTD  = u_nbGroupeTD,
+           nbEtud      = u_nbEtud,
+           nbSemaine   = u_nbSemaine
+
+    WHERE  Id_Semestre = u_Id_Semestre;
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de contrat
+DROP              FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION );
 CREATE OR REPLACE FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION )
 RETURNS VOID AS
 $$
 BEGIN
     UPDATE Contrat
-    SET 
-        nomContrat      = u_nomContrat,
-        hServiceContrat = u_hServiceContrat,
-        hMaxContrat     = u_hMaxContrat,
-        ratioTP         = u_ratioTP
 
-    WHERE Id_Contrat = u_id_contrat;
+    SET    nomContrat      = u_nomContrat,
+           hServiceContrat = u_hServiceContrat,
+           hMaxContrat     = u_hMaxContrat,
+           ratioTP         = u_ratioTP
+
+    WHERE  Id_Contrat = u_id_contrat;
 END;
 $$ LANGUAGE plpgsql;
 
+-- Update de Heure
+
+DROP              FUNCTION f_updateHeure ( u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION );
+CREATE OR REPLACE FUNCTION f_updateHeure ( u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Heure
+    SET    coeffTD  = u_coeffTD
+    WHERE  nomHeure = u_nomHeure;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update des modules
+
+DROP              FUNCTION f_updateModuleIUT ( u_Code_ModuleIUT VARCHAR(50), u_libLong VARCHAR(60), u_libCourtModuleIUT VARCHAR(15), u_typeModule VARCHAR(20), u_Id_Semestre INTEGER );
+CREATE OR REPLACE FUNCTION f_updateModuleIUT ( u_Code_ModuleIUT VARCHAR(50), u_libLong VARCHAR(60), u_libCourtModuleIUT VARCHAR(15), u_typeModule VARCHAR(20), u_Id_Semestre INTEGER )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE ModuleIUT
+
+    SET    libLong     = u_libLong,  
+           libCourt    = u_libCourt, 
+           typeModule  = u_typeModule,    
+           Id_Semestre = u_Id_Semestre  
+
+    WHERE  Code_ModuleIUT = u_Code_ModuleIUT;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update d'intervenant
+
+DROP              FUNCTION f_updateIntervenant ( u_Id_Intervenant INTEGER, u_nom VARCHAR(50), u_prenom VARCHAR(50), u_hService INTEGER, u_hMax INTEGER, u_Id_Contrat INTEGER );
+CREATE OR REPLACE FUNCTION f_updateIntervenant ( u_Id_Intervenant INTEGER, u_nom VARCHAR(50), u_prenom VARCHAR(50), u_hService INTEGER, u_hMax INTEGER, u_Id_Contrat INTEGER )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Intervenant
+
+    SET    nom        = u_nom,
+           prenom     = u_prenom,
+           hService   = u_hService,
+           hMax       = u_hMax,
+           Id_Contrat = u_Id_Contrat
+
+    WHERE  Id_Intervenant = u_Id_Intervenant;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update d'intervient
+
+DROP              FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) );
+CREATE OR REPLACE FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Intervient
+
+    SET    nbSemaine   = u_nbSemaine,  
+           nbGroupe    = u_nbGroupe,
+           nbHeure     = u_nbHeure,
+           commentaire = u_commentaire
+
+    WHERE  Id_Intervenant = u_Id_Intervenant AND nomHeure = u_nomHeure AND Code_ModuleIUT = u_Code_ModuleIUT;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update d'horaire
+
+DROP              FUNCTION f_updateHoraire ( u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER );
+CREATE OR REPLACE FUNCTION f_updateHoraire ( u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Horaire
+
+    SET    nbSemaine         = u_nbSemaine,
+           nbHeureRepartie   = u_nbHeureRepartie,
+           nbHeurePN         = u_nbHeurePN
+
+    WHERE  nomHeure = u_nomHeure AND Code_ModuleIUT = u_Code_ModuleIUT;
+END;
+$$ LANGUAGE plpgsql;
 
 
 /* ------------------------------------------ */
