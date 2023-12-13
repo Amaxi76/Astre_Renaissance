@@ -81,7 +81,7 @@ CREATE TABLE Intervient
 (
    Id_Intervenant INTEGER,
    nomHeure       VARCHAR(50) ,
-   Code_ModuleIUT   VARCHAR(5) ,
+   Code_ModuleIUT VARCHAR(5) ,
    nbSemaine      INTEGER,
    nbGroupe       INTEGER,
    nbHeure        INTEGER,
