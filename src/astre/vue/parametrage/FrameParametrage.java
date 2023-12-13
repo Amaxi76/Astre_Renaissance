@@ -11,13 +11,13 @@ import javax.swing.*;
 
 public class FrameParametrage extends JFrame
 {
-	//private PanelIntervenants panel;
-	private Controleur        ctrl;
+	private PanelParametrage panel;
+	private Controleur       ctrl;
 	
 	public FrameParametrage ( Controleur ctrl )
 	{
 		this.ctrl  = ctrl;
-		//this.panel = new PanelIntervenants ( this.ctrl );
+		this.panel = new PanelParametrage ( this.ctrl );
 		
 		this.setTitle              ( "Paramètrage" );
 		this.setSize               ( 1000,500      );
