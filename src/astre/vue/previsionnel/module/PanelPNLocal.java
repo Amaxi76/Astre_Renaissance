@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.elements.Heure;
 
 public class PanelPNLocal extends JPanel
 {
@@ -169,5 +170,30 @@ public class PanelPNLocal extends JPanel
 		{
 			lblSomme.setText ( "Erreur" );
 		}
+	}
+
+	private double coeffHeure ( String nomHeure )
+	{
+		Heure heure = this.ctrl.getHeure ( nomHeure );
+
+		double coefficient = 0.0;
+
+		switch (nomHeure)
+		{
+			case "CM":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TD":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TP":
+				coefficient = heure.getCoefTd();
+				break;
+		
+			default:
+				break;
+		}
+
+		return coefficient;
 	}
 }
