@@ -539,6 +539,100 @@ public class BD
 		return intervenants;
 	}
 
+	public Object[][] getContratsTableau ( )
+	{
+		int nbContrat = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Contrat" );
+			while ( rs.next ( ) )
+			{
+				nbContrat = rs.getInt ( 1 );
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getModulesTableau() : " + e );
+		}
+		
+		Object[][] contrats = new Object[nbContrat][5];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Contrat" );
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				contrats[cpt][0] = rs.getInt    ( 1 );
+				contrats[cpt][1] = rs.getString ( 2 );
+				contrats[cpt][2] = rs.getInt    ( 3 );
+				contrats[cpt][3] = rs.getInt    ( 4 );
+				contrats[cpt][4] = rs.getDouble ( 5 );
+				cpt++;
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getContratsTableau ( ) : " + e );
+		}
+		return contrats;
+	}
+
+	public Object[][] getHeureTableau ( )
+	{
+		int nbHeure = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Heure" );
+			while ( rs.next ( ) )
+			{
+				nbHeure = rs.getInt ( 1 );
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getModulesTableau() : " + e );
+		}
+		
+		Object[][] heures = new Object[nbHeure][2];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Heure" );
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				heures[cpt][0] = rs.getString ( 1 );
+				heures[cpt][1] = rs.getDouble ( 2 );
+
+				cpt++;
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getContratsTableau ( ) : " + e );
+		}
+		return heures;
+	}
+
 	/*---------------------------------------*/
 	/*                INSERT                 */
 	/*---------------------------------------*/

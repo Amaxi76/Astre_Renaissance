@@ -1,29 +1,40 @@
 package astre.vue.parametrage;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+
+import astre.Controleur;
+import astre.vue.outils.ConstantesVue;
+
 /** Page de gestion des intervenants
   * @author : Maximilien LESTERLIN
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
 
-import astre.Controleur;
-import javax.swing.*;
-
 public class FrameParametrage extends JFrame
 {
-	private PanelParametrage panel;
-	private Controleur       ctrl;
+	private PanelEnsParametre pnlEnsParametre;
+	private Controleur        ctrl;
 	
 	public FrameParametrage ( Controleur ctrl )
 	{
 		this.ctrl  = ctrl;
-		this.panel = new PanelParametrage ( this.ctrl );
 		
 		this.setTitle              ( "Paramètrage" );
-		this.setSize               ( 1000,500      );
+		this.setSize               ( 800, 700      );
 		this.setLocationRelativeTo ( null          );
 		
-		//this.add ( this.panel );
+		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
+		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
+
+		this.pnlEnsParametre = new PanelEnsParametre ( this.ctrl );
+
+		panelBordure.add ( this.pnlEnsParametre , BorderLayout.CENTER );
+		panelBordure.add ( new PanelBouton       ( this.ctrl, this.pnlEnsParametre ), BorderLayout.SOUTH );
+
+		this.add ( panelBordure );
 
 		this.setVisible   ( true );
 		this.requestFocus (      );
