@@ -39,6 +39,8 @@ public class Controleur
 		new PopUpErreur ( titre, message );
 	}
 
+	public boolean nouvelleAnnee ( ) { return this.metier.nouvelleAnnee(); }
+
 	public static void main ( String[] args )
 	{
 		//afficherErreur ( "Erreur java", "petite fenetre de test pour afficher les erreurs" );

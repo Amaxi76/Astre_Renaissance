@@ -385,6 +385,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Supprimer une année 
+
+DROP              FUNCTION f_deleteIntervient ( );
+CREATE OR REPLACE FUNCTION f_deleteIntervient ( ) RETURNS VOID AS
+$$
+BEGIN
+
+	DELETE FROM Intervient;
+
+END;
+$$ LANGUAGE plpgsql;
+
 -- Supprimer dans horaire
 
 DROP              FUNCTION f_deleteHoraire ( d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );

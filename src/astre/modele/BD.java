@@ -761,6 +761,25 @@ public class BD
 		}
 	}
 
+	public boolean deleteAllIntervient (  )
+	{
+		String req = "SELECT f_deleteIntervient ( )";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.executeUpdate ( );
+
+			ps.close ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur deleteAllIntervient ( ) : " + x );
+			return false;
+		}
+	}
+
 	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
