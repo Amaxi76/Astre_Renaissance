@@ -20,7 +20,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 
-	private Tableau tableau;
+	private TableauIntervient tableau;
 	private JScrollPane scrollPane;
 
 	private JButton btnAjouter;
@@ -42,7 +42,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 		String[] noms = {"Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 
-		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervient(), true );
+		this.tableau = new TableauIntervient ( noms, this.ctrl.getTableauIntervient());
 		this.tableau.ajusterTailleColonnes( );
 
 		this.scrollPane   = new JScrollPane ( this.tableau );
@@ -71,14 +71,16 @@ public class PanelAffectation extends JPanel implements ActionListener
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.btnAjouter )
+		if ( e.getSource() == this.btnAjouter )
 		{
-			System.out.println ( "Ajouter" );
+			this.tableau.ajouterLigne();
+			this.repaint();
 		}
-
-		if ( e.getSource ( ) == this.btnSupprimer )
+		
+		if ( e.getSource() == this.btnSupprimer )
 		{
-			System.out.println ( "Supprimer" );
+			this.tableau.supprimerLigne();
+			this.repaint();
 		}
 	}
 }
