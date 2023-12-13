@@ -1,6 +1,7 @@
 package astre.modele;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import astre.modele.elements.*;
 
@@ -40,9 +41,10 @@ public class Astre
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Object[][] getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau ( );  }
-	public Object[][] getTableauIntervient  (                 ) { return this.bd.getIntervientsTableau  ( );  }
-	public Semestre   getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
+	public Object[][]    getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau ( );  }
+	public Object[][]    getTableauIntervient  (                 ) { return this.bd.getIntervientsTableau  ( );  }
+	public Semestre      getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
+	public List<Contrat> getContrats           (                 ) { return this.bd.getContrats ( );             }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
