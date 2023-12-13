@@ -42,7 +42,7 @@ public class ModuleIUT
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
 	public String              getLibCourt           ( ) { return this.libCourt;          }
-	public Map<Heure, Integer> getHmHeureReparties   ( ) { return this.hmHeuresRepaties; }
+	public Map<Heure, Integer> getHmHeureReparties   ( ) { return this.hmHeuresRepaties;  }
 	public Map<Heure, Integer> getHmHeurePn          ( ) { return this.hmHeuresPn;        }
 
 	public int getHeureReparties ( )
