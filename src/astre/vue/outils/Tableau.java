@@ -22,7 +22,7 @@ public class Tableau extends JTable
 	public Tableau ( String[] nomColonnes, Object[][] tabDonnees, boolean estModifiable )
 	{
 		this.nomColonnes = nomColonnes;
-		this.modele = new ModeleTableau(this.nomColonnes, tabDonnees );
+		this.modele = new ModeleTableau ( this.nomColonnes, tabDonnees );
 		
 		this.setModel ( this.modele );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );

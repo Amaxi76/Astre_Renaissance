@@ -52,4 +52,10 @@ public class Astre
 	/*---------------------------------------*/
 
 	public void majSemestre ( Semestre s ) { this.bd.update ( s ); }
+
+	/*---------------------------------------*/
+	/*                METHODES               */
+	/*---------------------------------------*/ 
+
+	public boolean nouvelleAnnee ( ) { return this.bd.deleteAllIntervient(); }
 }
