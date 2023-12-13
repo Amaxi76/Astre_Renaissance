@@ -1,5 +1,7 @@
 package astre.vue.previsionnel.module;
 
+import astre.modele.elements.Semestre;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -170,5 +172,19 @@ public class PanelModuleLabel  extends JPanel
 
 		if (valSemestre >= 1 && valSemestre <= 6)
 			this.lblSemestre.setText("S" + valSemestre);
+
+		attributsSemestre(valSemestre);
+	}
+
+	private void attributsSemestre( int valSemestre )
+	{
+		Semestre sem = this.ctrl.getSemestre ( valSemestre );
+
+		if ( sem != null )
+		{
+			this.lblNbEtd .setText ( String.valueOf ( sem.getNbEtudiant() ) );
+			this.lblNbGpTD.setText ( String.valueOf ( sem.getNbGroupeTD() ) );
+			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP() ) );
+		}
 	}
 }

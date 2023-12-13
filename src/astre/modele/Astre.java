@@ -44,6 +44,7 @@ public class Astre
 	public Object[][]    getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau ( );  }
 	public Object[][]    getTableauIntervient  (                 ) { return this.bd.getIntervientsTableau  ( );  }
 	public Semestre      getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
+	public Heure 	     getHeure              ( String nom      ) { return this.bd.getHeure    ( nom );         }
 	public List<Contrat> getContrats           (                 ) { return this.bd.getContrats ( );             }
 
 	/*---------------------------------------*/

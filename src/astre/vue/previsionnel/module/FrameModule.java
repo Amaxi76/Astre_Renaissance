@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import astre.Controleur;
 
@@ -54,7 +55,6 @@ public class FrameModule extends JFrame
 		gbcC.insets = new Insets ( 5, 10, 15, 10 );
 
 		this.add ( new PanelModuleLabel  ( this.ctrl ), BorderLayout.NORTH  );
-		this.add ( new PanelPNLocal      ( this.ctrl ), BorderLayout.WEST   );
 		
 		this.add ( panelCentre, BorderLayout.CENTER                         );
 
@@ -67,18 +67,23 @@ public class FrameModule extends JFrame
 		panelCentre.add ( new PanelAffectation ( this.ctrl ), gbcC );
 		
 
-		JPanel panelSud = new JPanel ( new GridBagLayout() );
+		JPanel panelOuest = new JPanel ( new GridBagLayout() );
 
-		GridBagConstraints gbcS = new GridBagConstraints();
-		gbcS.insets = new Insets ( 5, 10, 15, 10 );
+		GridBagConstraints gbcO = new GridBagConstraints();
+		gbcO.insets = new Insets ( 5, 10, 15, 10 );
 
-		gbcS.gridy = 0;
-		gbcS.gridx = 0;
-		panelSud.add ( new PanelModuleBouton ( this.ctrl ), gbcS  );
+		this.add ( panelOuest, BorderLayout.WEST );
 
-		gbcS.gridy = 1;
-		gbcS.gridx = 0;
-		panelSud.add ( this.cbValidation, gbcS );
+		gbcO.gridy = 0;
+		gbcO.gridx = 0;
+		panelOuest.add ( new PanelPNLocal ( this.ctrl ), gbcO  );
+
+		gbcO.gridy = 1;
+		gbcO.gridx = 0;
+		panelOuest.add ( this.cbValidation, gbcO );
+
+
+		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
 
 		this.setVisible ( true );
 	}
