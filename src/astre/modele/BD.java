@@ -377,7 +377,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomContrat, nom, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
@@ -478,7 +478,7 @@ public class BD
 	
 	public void insert ( Intervenant i )
 	{
-		String req = "INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES(?,?,?,?,?)";
+		String req = "INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES(?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -542,7 +542,7 @@ public class BD
 
 	public void delete ( Contrat c )
 	{
-		String req = "DELETE FROM Contrat where Id_Contrat = ? CASCADE";
+		String req = "DELETE FROM Contrat where Id_Contrat = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -557,7 +557,7 @@ public class BD
 
 	public void delete ( Heure h )
 	{
-		String req = "DELETE FROM Heure where nomHeure = ? CASCADE";
+		String req = "DELETE FROM Heure where nomHeure = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -572,7 +572,7 @@ public class BD
 
 	public void delete ( ModuleIUT m )
 	{
-		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ? CASCADE";
+		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -587,7 +587,7 @@ public class BD
 
 	public void delete ( Intervenant i )
 	{
-		String req = "DELETE FROM Intervenant where Id_Intervenant = ? CASCADE";
+		String req = "DELETE FROM Intervenant where Id_Intervenant = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -602,7 +602,7 @@ public class BD
 	
 	public void delete ( Intervient e )
 	{
-		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ? CASCADE";
+		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -620,7 +620,7 @@ public class BD
 
 	public void delete ( Horaire h )
 	{
-		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ? CASCADE";
+		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -716,7 +716,7 @@ public class BD
 
 	public void update ( Intervenant i )
 	{
-		String req = "UPDATE Intervenant SET nomInter = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
+		String req = "UPDATE Intervenant SET nom = ?, prenom = ?, hService = ?, hMax = ?, Id_Contrat = ? WHERE Id_Intervenant = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
