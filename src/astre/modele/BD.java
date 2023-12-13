@@ -622,11 +622,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0] = rs.getString ( 1 );//Id
+				intervenants[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
 				intervenants[cpt][1] = rs.getString ( 2 );//heure
 				intervenants[cpt][2] = rs.getString ( 3 );//module
 				intervenants[cpt][3] = rs.getInt    ( 4 );//nbsemaine
