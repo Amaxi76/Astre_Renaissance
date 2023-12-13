@@ -12,10 +12,11 @@ import astre.Controleur;
 
 public class PanelParametrage extends JPanel
 {
-	private PanelParametrage 
+	private PanelParametrage panel;
+	private Controleur       ctrl;
 	
 	public PanelParametrage ( Controleur ctrl )
 	{
-		
+		this.ctrl = ctrl;
 	}
 }

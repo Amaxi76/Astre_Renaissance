@@ -125,7 +125,7 @@ public class BD
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );;
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );;
 
 				ensModules.add ( moduleIUT );
 			}
@@ -134,7 +134,7 @@ public class BD
 			ps.close ( );
 			st.close ( );
 		} 
-		catch ( SQLException e ) 
+		catch ( SQLException e )
 		{
 			System.out.println ( "getModules ( )" +  e );
 		}
@@ -512,10 +512,11 @@ public class BD
 			{
 				intervenants[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
 				intervenants[cpt][1] = rs.getString ( 2 );//heure
-				intervenants[cpt][3] = rs.getInt    ( 3 );//nbsemaine
-				intervenants[cpt][4] = rs.getInt    ( 4 );//nbgroupe
-				intervenants[cpt][5] = rs.getInt    ( 5 );//nbheure
-				intervenants[cpt][6] = rs.getString ( 6 );//commentaire
+				intervenants[cpt][2] = rs.getString ( 3 );//module
+				intervenants[cpt][3] = rs.getInt    ( 4 );//nbsemaine
+				intervenants[cpt][4] = rs.getInt    ( 5 );//nbgroupe
+				intervenants[cpt][5] = rs.getInt    ( 6 );//nbheure
+				intervenants[cpt][6] = rs.getString ( 7 );//commentaire
 
 				cpt++;
 			}
