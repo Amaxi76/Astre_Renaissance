@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import astre.Controleur;
-import astre.vue.outils.TableauIntervenant;
+import astre.vue.outils.Tableau;
 
 public class PanelAffectation extends JPanel implements ActionListener
 {
@@ -17,7 +17,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 
-	private TableauIntervenant tableau;
+	private Tableau tableau;
 
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
@@ -36,7 +36,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 		String[] noms = {"Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 
-		this.tableau = new TableauIntervenant ( noms, this.ctrl.getTableauIntervient(), true );
+		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervient(), true );
 		this.tableau.ajusterTailleColonnes( );
 
 		this.btnAjouter   = new JButton ( "Ajouter"   );
