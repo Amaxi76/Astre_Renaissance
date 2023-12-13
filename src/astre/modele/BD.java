@@ -49,6 +49,51 @@ public class BD
 	/*---------------------------------------*/
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
+	
+	/** Méthode générique pour la récupération de table
+	 */
+	public <T> List<T> getTable ( String tableName, Class<T> clazz )
+	{
+		ArrayList<T> lst = new ArrayList<>();
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM " + tableName );
+
+			while ( rs.next ( ) )
+			{
+				if (clazz == Semestre.class)
+				{
+					lst.add ( (T) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
+				}
+				
+				if (clazz == Contrat.class)
+				{
+					lst.add ( (T) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
+				}
+				
+				if (clazz == Heure.class)
+				{
+					lst.add ( (T) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
+				}
+				
+				if (clazz == Intervenant.class)
+				{
+					lst.add ( (T) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
+				}
+				
+				// Ajouter d'autres conditions pour d'autres classes si nécessaire
+			}
+
+		}
+		catch ( SQLException e )
+		{
+			System.out.println("Erreur getTable : " + e);
+		}
+
+		return lst;
+	}
 
 	public List<Semestre> getSemestres ( )
 	{
@@ -110,7 +155,7 @@ public class BD
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "select * from Heure" );
 			while ( rs.next ( ) ) 
-				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble(2) ) );
+				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
 
 			
 		} 
@@ -227,10 +272,29 @@ public class BD
 		return lst;
 	}
 	
-	/*public List<Intervient> getIntervient()
+	public List<Intervient> getIntervients()
 	{
-		
-	}*/
+		ArrayList<Intervient> lst = new ArrayList<Intervient>();
+
+		try
+		{
+			Statement st = co.createStatement( );
+			ResultSet rs = st.executeQuery( "select * from Intervient" );
+			while ( rs.next( ) )
+			{
+				lst.add( new Intervient( getIntervenant( rs.getInt( 1 ) ), getHeure( rs.getString( 2 ) ), getModule( rs.getString( 3 ) ), rs.getInt( 4 ), rs.getInt( 5 ), rs.getInt( 6 ), rs.getString( 7 ) ) );
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getIntervient() : " + e );
+		}
+
+		return lst;
+	}
 	
 	/*public List<Horaire> getHoraires()
 	{
@@ -310,6 +374,31 @@ public class BD
 		return contrat;
 	}
 
+	public int getInterventionIntervenant(int inter, int semes)
+	{
+		int result = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure " + 
+					                         "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " + 
+					                         "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " + 
+				                             "Where  Id_Semestre      = "+ semes +" AND " + 
+					                         "       i.Id_intervenant = " + inter);
+			while ( rs.next( ) )
+			{
+				result = rs.getInt(1) * rs.getInt(2) * rs.getInt(3);
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+		
+		return result;
+	}
+	
 	public Intervenant getIntervenant ( int i )
 	{
 		Intervenant intervenant = null;
@@ -460,22 +549,31 @@ public class BD
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0] = rs.getString(1);//Id
-				intervenants[cpt][1] = rs.getString(2);//contrat
-				intervenants[cpt][2] = rs.getString(3);//nom
-				intervenants[cpt][3] = rs.getString(4);//prenom
-				intervenants[cpt][4] = rs.getString(5);//hservice
-				intervenants[cpt][5] = rs.getInt(6);//hmax
-				intervenants[cpt][6] = getContrat(rs.getString(2)).getRatioTP();//coeff
-				intervenants[cpt][7] = "";
-				intervenants[cpt][8] = "";
-				intervenants[cpt][9] = "";
-				intervenants[cpt][10] = "";
-				intervenants[cpt][11] = "";
-				intervenants[cpt][12] = "";
-				intervenants[cpt][13] = "";
-				intervenants[cpt][14] = "";
-				intervenants[cpt][15] = "";
+				int s1 = getInterventionIntervenant ( rs.getInt(1), 1 );
+				int s2 = getInterventionIntervenant ( rs.getInt(1), 2 );
+				int s3 = getInterventionIntervenant ( rs.getInt(1), 3 );
+				int s4 = getInterventionIntervenant ( rs.getInt(1), 4 );
+				int s5 = getInterventionIntervenant ( rs.getInt(1), 5 );
+				int s6 = getInterventionIntervenant ( rs.getInt(1), 6 );
+				int ttimp = s1 + s3 + s5;
+				int ttpair = s2 + s4 + s6;
+				
+				intervenants[cpt][0]  = rs.getInt    (1);//Id
+				intervenants[cpt][1]  = rs.getString (2);//contrat
+				intervenants[cpt][2]  = rs.getString (3);//nom
+				intervenants[cpt][3]  = rs.getString (4);//prenom
+				intervenants[cpt][4]  = rs.getInt    (5);//hservice
+				intervenants[cpt][5]  = rs.getInt    (6);//hmax
+				intervenants[cpt][6]  = getContrat   (rs.getString(2)).getRatioTP();//coeff
+				intervenants[cpt][7]  = s1;
+				intervenants[cpt][8]  = s3;
+				intervenants[cpt][9]  = s5;
+				intervenants[cpt][10] = ttimp;
+				intervenants[cpt][11] = s2;
+				intervenants[cpt][12] = s4;
+				intervenants[cpt][13] = s6;
+				intervenants[cpt][14] = ttpair;
+				intervenants[cpt][15] = ttimp + ttpair;
 
 				cpt++;
 			}
@@ -869,7 +967,7 @@ public class BD
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, m.getLibLong    ( ) );
 			ps.setString ( 2, m.getLibCourt   ( ) );
-			ps.setInt    ( 3, m.getTypeModule ( ).getId         ( ) );
+			ps.setString ( 3, m.getTypeModule ( ) );
 			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
 			ps.setString ( 5, m.getCode       ( ) );
 			ps.executeUpdate ( );

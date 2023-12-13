@@ -1,4 +1,4 @@
-package astre.vue.outils;
+package astre.vue.intervenants;
 
 import javax.swing.*;
 import java.awt.Component;
@@ -45,11 +45,11 @@ public class TableauIntervenant extends JTable
 		this.setTableHeader(null);
 	}*/
 	
-	public TableauIntervenant ( String[] nomColonnes, Object[][] tabDonnees, boolean estModifiable )
+	public TableauIntervenant ( String[] nomColonnes, Object[][] tabDonnees )
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableauIntervenant(this.nomColonnes, tabDonnees, estModifiable);
+		this.modele = new ModeleTableauIntervenant(this.nomColonnes, tabDonnees);
 		
 		this.setModel ( this.modele );
 		//this.modele.addTableModelListener(this);
@@ -61,9 +61,9 @@ public class TableauIntervenant extends JTable
 		this.setDragEnabled ( false );
 	}
 	
-	public TableauIntervenant ( Object[][] tabDonnees, boolean estModifiable )
+	public TableauIntervenant ( Object[][] tabDonnees )
 	{
-		this ( new String[] { "","","","" }, tabDonnees, estModifiable );
+		this ( new String[] { "","","","" }, tabDonnees );
 		this.setTableHeader(null);
 	}
 	

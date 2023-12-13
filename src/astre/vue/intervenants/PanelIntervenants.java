@@ -48,7 +48,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 		//this.tableau = new Tableau(noms);
 
-		this.tableau = new TableauIntervenant ( noms, this.ctrl.getTableauIntervenant(), true );
+		this.tableau = new TableauIntervenant ( noms, this.ctrl.getTableauIntervenant() );
 		this.tableau.ajusterTailleColonnes();
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );

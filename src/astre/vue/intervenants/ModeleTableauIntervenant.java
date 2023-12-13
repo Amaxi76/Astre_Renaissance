@@ -1,4 +1,4 @@
-package astre.vue.outils;
+package astre.vue.intervenants;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -10,11 +10,9 @@ public class ModeleTableauIntervenant extends AbstractTableModel
 {
     private String[]   tabEntetes;
 	private Object[][] tabDonnees;
-	private boolean    estModifiable=true;
     
-    public ModeleTableauIntervenant ( String[] tabEntetes, Object[][] tabDonnees, boolean estModifiable )
+    public ModeleTableauIntervenant ( String[] tabEntetes, Object[][] tabDonnees )
     {
-    	this.estModifiable = estModifiable;
         this.tabEntetes = tabEntetes;
         this.tabDonnees = tabDonnees;
     }
@@ -32,12 +30,10 @@ public class ModeleTableauIntervenant extends AbstractTableModel
 	*/
 	public boolean isCellEditable(int row, int col)
 	{
-		return this.estModifiable;
-	}
-	
-	public void setEditable( boolean editable )
-	{
-		this.estModifiable = editable;
+		if( col == 0 || col == 1 || col == 2 || col == 3 || col == 4 )
+            return true;
+        
+        return false;
 	}
 
     /**
@@ -69,10 +65,10 @@ public class ModeleTableauIntervenant extends AbstractTableModel
 
             for (int j = 0; j < tabDonnees[0].length; j++)
             {
-                //if(tabEntetes[j].startsWith("h") || tabEntetes[j].startsWith("Coef"))
-                //    nouveauTableau[tabDonnees.length][j] = 0;
-                //else
+                if(tabEntetes[j].startsWith("Catégorie") || tabEntetes[j].startsWith("Nom") || tabEntetes[j].startsWith("Prénom"))
                     nouveauTableau[tabDonnees.length][j] = "";
+                else
+                    nouveauTableau[tabDonnees.length][j] = 0;
             }
 
             tabDonnees = nouveauTableau;

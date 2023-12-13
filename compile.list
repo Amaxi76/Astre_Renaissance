@@ -12,12 +12,10 @@ src/astre/modele/elements/Intervenant.java
 src/astre/modele/elements/Intervient.java
 src/astre/modele/elements/ModuleIUT.java
 src/astre/modele/elements/Semestre.java
-src/astre/modele/elements/TypeModule.java
-
-
 
 src/astre/vue/intervenants/PanelIntervenants.java
 src/astre/vue/intervenants/FrameIntervenants.java
+src/astre/vue/intervenants/TableauIntervenant.java
 
 src/astre/vue/outils/ConstantesVue.java
 src/astre/vue/outils/MenuBarAstre.java
