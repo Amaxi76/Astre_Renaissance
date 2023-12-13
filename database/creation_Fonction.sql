@@ -229,9 +229,7 @@ BEGIN
     SET    nbGroupeTP  = 0,
            nbGroupeTD  = 0,
            nbEtud      = 0,
-           nbSemaine   = 0
-
-    WHERE  Id_Semestre = u_Id_Semestre;
+           nbSemaine   = 0;
 END;
 $$ LANGUAGE plpgsql;
 
