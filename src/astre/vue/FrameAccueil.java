@@ -157,7 +157,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 			new FrameParametrage ( this.ctrl );
 		}
 
-		if ( e.getSource() == this.btnEtat )
+		if ( e.getSource ( ) == this.btnEtat )
 		{
 			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.OK_CANCEL_OPTION );
 			new FrameAccueil ( this.ctrl );

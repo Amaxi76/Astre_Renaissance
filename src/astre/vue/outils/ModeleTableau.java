@@ -23,6 +23,9 @@ public class ModeleTableau extends AbstractTableModel
 
         this.decalage = 0;
         this.modifiable = new ArrayList<Integer>();
+
+        if(tabDonnees.length == 0)
+            ajouterLigne();
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
@@ -95,10 +98,17 @@ public class ModeleTableau extends AbstractTableModel
 	*/
     public void ajouterLigne ( )
     {
-        if( tabDonnees != null && tabDonnees.length != 0 )
+        if( tabDonnees.length < 1 )
+        {
+            tabDonnees = new Object[1][tabEntetes.length];
+            for ( int j = 0; j < tabDonnees[0].length; j++ )
+            {
+                tabDonnees[0][j] = ""; //TODO comment faire pour savoir la classe de la case ?
+            }
+        }
+        else
         {
             Object[][] nouveauTableau = new Object[tabDonnees.length + 1][tabDonnees[0].length];
-
             for ( int i = 0; i < tabDonnees.length; i++ )
             {
                 for ( int j = 0; j < tabDonnees[0].length; j++ )
@@ -120,10 +130,6 @@ public class ModeleTableau extends AbstractTableModel
                 }
             }
             tabDonnees = nouveauTableau;
-        }
-        else
-        {
-            tabDonnees = new Object[1][tabEntetes.length];
         }
         fireTableDataChanged ( );
     }
