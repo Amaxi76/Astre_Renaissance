@@ -113,23 +113,23 @@ public class PanelPNLocal extends JPanel
 
 
 		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
-		this.lblSomme.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblSomme.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblSomme.setOpaque( true );
 
 		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCM.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCM.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCM.setOpaque( true );
 
 		this.lblTotalTD.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTD.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTD.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTD.setOpaque( true );
 
 		this.lblTotalTP.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTP.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTP.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTP.setOpaque( true );
 
 		this.lblTotalSomme.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSomme.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSomme.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSomme.setOpaque( true );
 	}
 
@@ -166,6 +166,29 @@ public class PanelPNLocal extends JPanel
 
 			int somme = CM + TD + TP;
 			lblSomme.setText ( String.valueOf ( somme ) );
+
+
+			double totalCM = 0;
+			double totalTD = 0;
+			double totalTP = 0;
+
+			if ( !lblTotalCM.getText().isEmpty() )
+			{
+				totalCM = Double.parseDouble ( lblTotalCM.getText() );
+			}
+
+			if ( !lblTotalTD.getText().isEmpty() )
+			{
+				totalTD = Double.parseDouble ( lblTotalTD.getText() );
+			}
+			
+			if ( !lblTotalTP.getText().isEmpty() )
+			{
+				totalTP = Double.parseDouble ( lblTotalTP.getText() );
+			}
+
+			double totalSomme = totalCM + totalTD + totalTP;
+			lblTotalSomme.setText ( String.valueOf ( totalSomme ) );
 		}
 		catch ( NumberFormatException ex )
 		{
@@ -175,11 +198,19 @@ public class PanelPNLocal extends JPanel
 
 	private void majTotalHeure()
 	{
+		PanelModuleLabel panelModuleLabel = new PanelModuleLabel(ctrl);
+
 		try
 		{
 			int CM = 0;
 			int TD = 0;
 			int TP = 0;
+
+			int nbGpTD = 1;
+			String nbGpTDText = panelModuleLabel.lblNbGpTD.getText();
+			if (!nbGpTDText.isEmpty()) {
+				nbGpTD = Integer.parseInt(nbGpTDText);
+			}
 	
 			if ( !txtCM.getText().isEmpty() )
 			{
@@ -189,14 +220,17 @@ public class PanelPNLocal extends JPanel
 	
 				lblTotalCM.setText ( String.valueOf ( totalCM ) );
 			}
-			if ( !txtTD.getText().isEmpty() )
+
+			if (!txtTD.getText().isEmpty())
 			{
-				TD = Integer.parseInt ( txtTD.getText() );
-				double coeffTD = coeffHeure ( "TD" );
-				double totalTD = TD * coeffTD;
-	
-				lblTotalTD.setText ( String.valueOf ( totalTD ) );
+				TD = Integer.parseInt(txtTD.getText());
+				//nbGpTD = Integer.parseInt(panelModuleLabel.lblNbGpTD.getText());
+				double coeffTD = coeffHeure("TD");
+				double totalTD = TD * coeffTD * nbGpTD;
+
+				lblTotalTD.setText(String.valueOf(totalTD));
 			}
+
 			if ( !txtTP.getText().isEmpty() )
 			{
 				TP = Integer.parseInt ( txtTP.getText() );
@@ -209,6 +243,7 @@ public class PanelPNLocal extends JPanel
 		catch ( NumberFormatException ex )
 		{
 			lblTotalCM.setText( "Erreur" );
+			ex.printStackTrace();
 		}
 	}
 	

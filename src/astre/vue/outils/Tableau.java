@@ -90,4 +90,9 @@ public class Tableau extends JTable
         return this.modele.getDonnees();
     }
 
+	public ModeleTableau getModeleTableau ( )
+	{
+		return this.modele;
+	}
+
 }

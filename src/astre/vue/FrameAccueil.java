@@ -8,6 +8,7 @@ package astre.vue;
 
 import astre.vue.previsionnel.FramePrevisionnel;
 import astre.vue.intervenants.FrameIntervenants;
+import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
 import astre.vue.parametrage.FrameParametrage;
 
 import java.awt.*;
@@ -168,23 +169,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 
 		if ( e.getSource() == this.btnAnnee )
 		{
-			System.out.println("Hello");
-			int retour1 = JOptionPane.showConfirmDialog(this, "ATTENTION \n Cela effacera les attributions des intervenants aux modules",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION);
-			
-			if (retour1 == 0)
-			{
-				int retour2 = JOptionPane.showConfirmDialog(this, "ATTENTION \n Vous êtes vraiment sûr de vouloir tout effacer ?",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION);
-			
-				if (retour2 == 0)
-				{
-					if ( this.ctrl.nouvelleAnnee() )
-						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
-					else
-						JOptionPane.showMessageDialog ( this, "Erreur, contactez l'équipe de développeurs D:", "Échec !", JOptionPane.OK_CANCEL_OPTION );
-				}
-				
-			}
-			
+			new FrameNouvelleAnnee ( this.ctrl );
 			return;
 		}
 

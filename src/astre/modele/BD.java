@@ -838,11 +838,16 @@ public class BD
 		}
 	}
 
-	public boolean deleteAllIntervient (  )
+	public boolean nouvelleAnnee (  )
 	{
-		String req = "SELECT f_deleteIntervient ( )";
+		
 		try
 		{
+			String req = "SELECT f_deleteIntervient ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
 			ps = co.prepareStatement ( req );
 			ps.execute ( );
 
@@ -852,7 +857,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur deleteAllIntervient ( ) : " + x );
+			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
 			return false;
 		}
 	}
