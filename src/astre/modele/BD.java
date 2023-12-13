@@ -125,9 +125,7 @@ public class BD
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );
-
-				System.out.println(moduleIUT.estValide());
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );;
 
 				ensModules.add ( moduleIUT );
 			}
