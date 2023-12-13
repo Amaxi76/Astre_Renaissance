@@ -189,7 +189,7 @@ public class PanelModuleLabel  extends JPanel
 		}
 	}
 
-	private void coeffHeure ( String nomHeure )
+	private double coeffHeure ( String nomHeure )
 	{
 		Heure heure = this.ctrl.getHeure ( nomHeure );
 
@@ -210,5 +210,7 @@ public class PanelModuleLabel  extends JPanel
 			default:
 				break;
 		}
+
+		return coefficient;
 	}
 }
