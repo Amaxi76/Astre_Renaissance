@@ -7,6 +7,9 @@ package astre;
   */
 
 import astre.modele.elements.*;
+
+import java.util.List;
+
 import astre.modele.*;
 import astre.vue.*;
 import astre.vue.outils.PopUpErreur;
@@ -22,11 +25,19 @@ public class Controleur
 		this.metier = new Astre        (      );
 	}
 
+<<<<<<< HEAD
 	public Semestre   getSemestre           ( int numSemestre ) { return this.metier.getSemestre           ( numSemestre ); }
 	public Heure      getHeure              ( String nom      ) { return this.metier.getHeure              ( nom         ); }
 	public Object[][] getTableauModule      ( int numSemestre ) { return this.metier.getTableauModule      ( numSemestre ); }
 	public Object[][] getTableauIntervenant (                 ) { return this.metier.getTableauIntervenant (             ); }
 	public Object[][] getTableauIntervient  (                 ) { return this.metier.getTableauIntervient  (             ); }
+=======
+	public Semestre      getSemestre           ( int numSemestre ) { return this.metier.getSemestre           ( numSemestre ); }
+	public Object[][]    getTableauModule      ( int numSemestre ) { return this.metier.getTableauModule      ( numSemestre ); }
+	public Object[][]    getTableauIntervenant (                 ) { return this.metier.getTableauIntervenant (             ); }
+	public Object[][]    getTableauIntervient  (                 ) { return this.metier.getTableauIntervient  (             ); }
+	public List<Contrat> getContrats           (                 ) { return this.metier.getContrats           (             ); }
+>>>>>>> 276e20d49a521b07ad728ae2eb6c88e4896f2eaf
 
 	public void majSemestre ( Semestre s ) { this.metier.majSemestre ( s ); }
 
