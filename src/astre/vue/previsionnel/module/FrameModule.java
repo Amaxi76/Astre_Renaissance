@@ -34,8 +34,9 @@ public class FrameModule extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setSize   ( 1000, 700               );
+		this.setSize   ( 1300, 1000       );
 		this.setTitle  ( "Prévisionnel : Module" );
+		this.setLocationRelativeTo ( null           );
 
 		/* ------------------------- */
 		/* Création des composants   */
