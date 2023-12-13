@@ -14,11 +14,11 @@ import javax.swing.table.*;
 //TODO: ajouter un booleen pour le constructeur sans titre de colonnes
 //TODO: nettoyer les constructeurs qui semblent inutiles (utilisés avant pour les tests avec tableaux vides)
 
-public class Tableau extends JTable
+public class TableauIntervenant extends JTable
 {
 	private String[] nomColonnes;
 	//private DefaultTableModel modele;
-	private ModeleTableau modele;
+	private ModeleTableauIntervenant modele;
 	
 	/*public Tableau ( String[] nomColonnes, boolean estModifiable )  //répétition de code ici, peut être possible à simplifier
 	{
@@ -45,11 +45,11 @@ public class Tableau extends JTable
 		this.setTableHeader(null);
 	}*/
 	
-	public Tableau ( String[] nomColonnes, Object[][] tabDonnees, boolean estModifiable )
+	public TableauIntervenant ( String[] nomColonnes, Object[][] tabDonnees, boolean estModifiable )
 	{
 		this.nomColonnes = nomColonnes;
 		//this.modele = new DefaultTableModel ( this.nomColonnes, 1 );
-		this.modele = new ModeleTableau(this.nomColonnes, tabDonnees, estModifiable);
+		this.modele = new ModeleTableauIntervenant(this.nomColonnes, tabDonnees, estModifiable);
 		
 		this.setModel ( this.modele );
 		//this.modele.addTableModelListener(this);
@@ -61,7 +61,7 @@ public class Tableau extends JTable
 		this.setDragEnabled ( false );
 	}
 	
-	public Tableau ( Object[][] tabDonnees, boolean estModifiable )
+	public TableauIntervenant ( Object[][] tabDonnees, boolean estModifiable )
 	{
 		this ( new String[] { "","","","" }, tabDonnees, estModifiable );
 		this.setTableHeader(null);
@@ -94,7 +94,7 @@ public class Tableau extends JTable
 	{
 		//this.modele.addRow ( new Object[ this.nomColonnes.length ] );
 		this.modele.ajouterLigne();
-		this.ajusterTailleColonnes ( );
+		//this.ajusterTailleColonnes ( );
 	}
 	
 	/**
@@ -115,5 +115,10 @@ public class Tableau extends JTable
     {
         return this.modele.getDonnees();
     }
+
+	public void modifDonnees(Object[][] donnee)
+	{
+		this.modele.modifDonnees(donnee);
+	}
 
 }

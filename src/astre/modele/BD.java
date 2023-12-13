@@ -171,6 +171,8 @@ public class BD
 	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
 		//FIXME: Peut avoir une heure null 
+
+		//TODO: Fonction SQL
 		
 		HashMap<Heure, Integer> hm = new HashMap<> ( );
 		
@@ -194,15 +196,11 @@ public class BD
 
 			while ( rs.next ( ) )
 			{
-				System.out.println(rs.getString(1));
-				System.out.println(rs.getInt(2));
-				
 				for ( Heure h : this.getHeures ( ) )
 					if ( h.getNom ( ).equals ( rs.getString ( 1 ) )  )
 						heure = h;
 
 				hm.put ( heure, rs.getInt ( 2 ) );
-
 			}
 				
 			rs.close ( );
@@ -319,6 +317,8 @@ public class BD
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
 
+	//TODO: Fonction SQL ?
+
 	public Object[][] getModulesTableau ( )
 	{
 		int nbModule = 0;
@@ -379,22 +379,22 @@ public class BD
 			System.out.println ( "Erreur 1 getIntervenantsTableau() : " + e );
 		}
 
-		Object[][] intervenants = new Object[nbInervenants][15];
+		Object[][] intervenants = new Object[nbInervenants][16];
 
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomContrat, nomInter, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0] = rs.getString(1);//contrat
-				intervenants[cpt][1] = rs.getString(2);//nom
-				intervenants[cpt][2] = rs.getString(3);//prenom
-				intervenants[cpt][3] = rs.getString(4);//hservice
-				intervenants[cpt][4] = rs.getInt(4);//hmax
-				intervenants[cpt][5] = rs.getInt(4);//hservice
-				intervenants[cpt][6] = "";
+				intervenants[cpt][0] = rs.getString(1);//Id
+				intervenants[cpt][1] = rs.getString(2);//contrat
+				intervenants[cpt][2] = rs.getString(3);//nom
+				intervenants[cpt][3] = rs.getString(4);//prenom
+				intervenants[cpt][4] = rs.getString(5);//hservice
+				intervenants[cpt][5] = rs.getInt(6);//hmax
+				intervenants[cpt][6] = getContrat(rs.getString(2)).getRatioTP();//coeff
 				intervenants[cpt][7] = "";
 				intervenants[cpt][8] = "";
 				intervenants[cpt][9] = "";
@@ -403,6 +403,7 @@ public class BD
 				intervenants[cpt][12] = "";
 				intervenants[cpt][13] = "";
 				intervenants[cpt][14] = "";
+				intervenants[cpt][15] = "";
 
 				cpt++;
 			}
@@ -548,7 +549,7 @@ public class BD
 
 	public void delete ( Contrat c )
 	{
-		String req = "DELETE FROM Contrat where Id_Contrat = ?";
+		String req = "DELETE FROM Contrat where Id_Contrat = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -563,7 +564,7 @@ public class BD
 
 	public void delete ( Heure h )
 	{
-		String req = "DELETE FROM Heure where nomHeure = ?";
+		String req = "DELETE FROM Heure where nomHeure = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -578,7 +579,7 @@ public class BD
 
 	public void delete ( ModuleIUT m )
 	{
-		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
+		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -593,7 +594,7 @@ public class BD
 
 	public void delete ( Intervenant i )
 	{
-		String req = "DELETE FROM Intervenant where Id_Intervenant = ?";
+		String req = "DELETE FROM Intervenant where Id_Intervenant = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -608,7 +609,7 @@ public class BD
 	
 	public void delete ( Intervient e )
 	{
-		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -626,7 +627,7 @@ public class BD
 
 	public void delete ( Horaire h )
 	{
-		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -730,7 +731,7 @@ public class BD
 			ps.setInt    ( 3, i.getheureService ( ) );
 			ps.setInt    ( 4, i.getHeureMaximum ( ) );
 			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
-			ps.setInt    ( 6, i.getheureService ( ) );
+			ps.setInt    ( 6, i.getId           ( ) );
 			ps.executeUpdate ( );
 		}
 		catch ( SQLException e )

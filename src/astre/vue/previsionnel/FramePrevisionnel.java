@@ -6,10 +6,12 @@ package astre.vue.previsionnel;
   * @date : 06/12/2023
   */
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.BorderLayout;
+import javax.swing.border.EmptyBorder;
 
 import astre.Controleur;
+import astre.vue.outils.ConstantesVue;
 
 public class FramePrevisionnel extends JFrame
 {
@@ -32,17 +34,21 @@ public class FramePrevisionnel extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setSize     ( 1000, 700 );
-		this.setTitle    ( "Prévisionnel"   );
+		this.setSize               ( 1000, 700      );
+		this.setTitle              ( "Prévisionnel" );
+		this.setLocationRelativeTo ( null           );
 
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.setLayout( new BorderLayout ( ) );
+		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
+		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		this.add ( new PanelEnsSemestre  ( this.ctrl ), BorderLayout.CENTER );
-		this.add ( new PanelBouton ( this.ctrl ), BorderLayout.SOUTH );
+		panelBordure.add ( new PanelEnsSemestre  ( this.ctrl ), BorderLayout.CENTER );
+		panelBordure.add ( new PanelBouton       ( this.ctrl ), BorderLayout.SOUTH );
+
+		this.add( panelBordure );
 
 		this.setVisible ( true );
 	}
