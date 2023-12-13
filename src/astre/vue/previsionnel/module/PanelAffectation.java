@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import astre.Controleur;
 
-public class PanelModuleBouton  extends JPanel implements ActionListener
+public class PanelAffectation extends JPanel implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -16,45 +16,46 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 
-	private JButton btnEnregistrer;
-	private JButton btnAnnuler;
+	private JButton btnAjouter;
+	private JButton btnSupprimer;
 
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
-	
-	public PanelModuleBouton ( Controleur ctrl )
+
+	public PanelAffectation( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
+
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.btnEnregistrer = new JButton ( "Enregistrer" );
-		this.btnAnnuler     = new JButton ( "Annuler"     );
+		this.btnAjouter   = new JButton ( "Ajouter"   );
+		this.btnSupprimer = new JButton ( "Supprimer" );
 
-		this.add ( this.btnEnregistrer );
-		this.add ( this.btnAnnuler     );
+		this.add ( this.btnAjouter   );
+		this.add ( this.btnSupprimer );
 
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.btnEnregistrer.addActionListener ( this );
-		this.btnAnnuler    .addActionListener ( this );
+		this.btnAjouter  .addActionListener ( this );
+		this.btnSupprimer.addActionListener ( this );
 	}
 
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.btnEnregistrer )
+		if ( e.getSource ( ) == this.btnAjouter )
 		{
-			System.out.println ( "Enregistrer" );
+			System.out.println ( "Ajouter" );
 		}
 
-		if ( e.getSource ( ) == this.btnAnnuler )
+		if ( e.getSource ( ) == this.btnSupprimer )
 		{
-			System.out.println ( "Annuler" );
+			System.out.println ( "Supprimer" );
 		}
 	}
 }

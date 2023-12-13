@@ -104,13 +104,11 @@ public class BD
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "select * from Heure" );
 			while ( rs.next ( ) ) 
-			{
-				lst.add ( new Heure( rs.getString(1), rs.getDouble(2) ) );
-			}
+				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble(2) ) );
 		} 
 		catch ( SQLException e ) 
 		{
-			System.out.println ( "Erreur getHeure() : " + e );
+			System.out.println ( "Erreur getHeure ( ) : " + e );
 		}
 		
 		return lst;
@@ -170,15 +168,11 @@ public class BD
 
 	private Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
 	{
-		//FIXME: Peut avoir une heure null 
-
-		//TODO: Fonction SQL
-		
 		HashMap<Heure, Integer> hm = new HashMap<> ( );
 		
 		Heure heure = null;
 		
-		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeure";
+		String heureS = ( typeHeure == 'P' ) ? "ho.nbHeurePn" : "ho.nbHeureRepartie";
 		
 		String REQUETE = "SELECT he.nomHeure, " + heureS + " "
 		               + "FROM   Horaire ho JOIN Heure he    ON ho.nomHeure     = he.nomHeure "
@@ -363,16 +357,15 @@ public class BD
 
 	public Object[][] getIntervenantsTableau ( )
 	{
+		//TODO: première partie de la requete inutile ? faire la taille du resultSet ? 
 		int nbInervenants = 0;
 		
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery( "select count(*) from Intervenant" );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervenant" );
 			while ( rs.next ( ) )
-			{
 				nbInervenants = rs.getInt ( 1 );
-			}
 		}
 		catch ( SQLException e )
 		{
@@ -410,7 +403,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ("Erreur 2 getIntervenantsTableau() : " +  e );
+			System.out.println ( "Erreur 2 getIntervenantsTableau ( ) : " +  e );
 		}
 
 		if(nbInervenants == 0)
@@ -444,7 +437,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(Contrat c) : " + e );
+			System.out.println ( "Erreur insert ( Contrat c ) : " + e );
 		}
 	}
 
@@ -460,7 +453,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(Heure h) : " +  e );
+			System.out.println ( "Erreur insert ( Heure h ) : " +  e );
 		}
 	}
 
@@ -498,7 +491,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(intervenant i) : " + e );
+			System.out.println ( "Erreur insert ( Intervenant i ) : " + e );
 		}
 	}
 
@@ -519,7 +512,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur insert(intervient e) : " + x );
+			System.out.println ( "Erreur insert ( Intervient e ) : " + x );
 		}
 	}
 
@@ -539,7 +532,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(horaire h) : " + e );
+			System.out.println ( "Erreur insert ( Horaire h ) : " + e );
 		}
 	}
 
@@ -558,7 +551,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Contrat c) : " + e );
+			System.out.println ( "Erreur delete ( Contrat c ) : " + e );
 		}
 	}
 
@@ -573,7 +566,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Heure h) : " + e );
+			System.out.println ( "Erreur delete ( Heure h ) : " + e );
 		}
 	}
 
@@ -588,7 +581,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Module m) : " +  e );
+			System.out.println ( "Erreur delete ( Module m ) : " +  e );
 		}
 	}
 
@@ -603,7 +596,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(Intervenant i) : " + e );
+			System.out.println ( "Erreur delete ( Intervenant i ) : " + e );
 		}
 	}
 	
@@ -620,14 +613,14 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur delete(Intervient e) : " + x );
+			System.out.println ( "Erreur delete ( Intervient e ) : " + x );
 		}
 	}
 
 
 	public void delete ( Horaire h )
 	{
-		String req = "DELETE FROM Horaire where nomHeure = ? AND Id_ModuleIUT = ? CASCADE";
+		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ? CASCADE";
 		try
 		{
 			ps = co.prepareStatement ( req );
@@ -637,15 +630,16 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete(horaire h) : " + e );
+			System.out.println ( "Erreur delete ( horaire h ) : " + e );
 		}
 	}
 
-	
 
 	/*---------------------------------------*/
 	/*                UPDATE                 */
 	/*---------------------------------------*/
+
+	//TODO: Faire tous les updates
 
 	public void update ( Semestre s )
 	{
@@ -662,7 +656,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Semestre s) : " + e );
+			System.out.println ( "Erreur update ( Semestre s ) : " + e );
 		}
 	}
 
@@ -681,7 +675,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Contrat c) : " + e );
+			System.out.println ( "Erreur update ( Contrat c ) : " + e );
 		}
 	}
 
@@ -697,7 +691,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Heure h) : " + e );
+			System.out.println ( "Erreur update ( Heure h ) : " + e );
 		}
 	}
 
@@ -716,7 +710,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Module m) : " + e);
+			System.out.println ( "Erreur update ( Module m ) : " + e);
 		}
 	}
 
@@ -736,7 +730,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Intervenant i) : " + e);
+			System.out.println ( "Erreur update ( Intervenant i ) : " + e);
 		}
 	}
 
@@ -757,7 +751,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur update(Intervient e ) : " + x );
+			System.out.println ( "Erreur update ( Intervient e ) : " + x );
 		}
 	}
 
@@ -776,53 +770,11 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update(Horaire h) : " + e);
+			System.out.println ( "Erreur update ( Horaire h ) : " + e );
 		}
 	}
 
 
-	/*---------------------------------------*/
-	/*                VERIF ET AUTRE         */
-	/*---------------------------------------*/
-
-	public boolean existe ( Intervenant i )
-	{
-		int count = 0;
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT count(*) FROM Intervenant WHERE Id_Intervenant = " + i.getId() );
-			while ( rs.next ( ) )
-			{
-				count = rs.getInt(1);
-			}
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur getSemestre() : " + e );
-		}
-
-		if(count == 0)
-			return false;
-
-		return true;
-	}
-
-	public void deleteIntervenantNomPrenom ( Intervenant i )
-	{
-		String req = "DELETE FROM Intervenant where nomInter = ? AND prenom = ?";
-		try
-		{
-			ps = co.prepareStatement ( req );
-			ps.setString ( 1, i.getNom    ( ) );
-			ps.setString ( 2, i.getPrenom ( ) );
-			ps.executeUpdate ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur delete(Intervenant i) : " + e );
-		}
-	}
 	
 	/*---------------------------------------*/
 	/*                MAIN TEST              */
@@ -831,12 +783,12 @@ public class BD
 	{
 		BD bd = BD.getInstance ( );
 
-		List<Intervenant> test = bd.getIntervenants();
+		List<Intervenant> test = bd.getIntervenants ( );
 
-		for(Intervenant i : test)
+		for ( Intervenant i : test )
 		{
-			System.out.println(i.toString() );
-			System.out.println( i.getContrat().toString() );
+			System.out.println ( i.toString   ( ) );
+			System.out.println ( i.getContrat ( ) );
 		}
 
 	}

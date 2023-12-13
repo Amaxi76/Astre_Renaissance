@@ -145,10 +145,18 @@ public class PanelPNLocal extends JPanel
 			int TD    = 0;
 			int TP    = 0;
 			
-			if (!txtCM.getText().equals(null) || !txtTD.equals(null) || !txtTP.equals(null) )
+			if (!txtCM.getText().isEmpty() )
 			{
 				CM = Integer.parseInt ( txtCM.getText() );
+			}
+
+			if ( !txtTD.getText().isEmpty() )
+			{
 				TD = Integer.parseInt ( txtTD.getText() );
+			}
+
+			if (!txtTP.getText().isEmpty() )
+			{
 				TP = Integer.parseInt ( txtTP.getText() );
 			}
 

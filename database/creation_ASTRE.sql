@@ -12,10 +12,9 @@
 DROP TABLE Semestre    CASCADE;
 DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
-DROP TABLE TypeModule  CASCADE;
 DROP TABLE ModuleIUT   CASCADE;
 DROP TABLE Intervenant CASCADE;
-DROP TABLE Enseigne    CASCADE; 
+DROP TABLE Intervient  CASCADE;
 DROP TABLE Horaire     CASCADE;
 
 /* ---------------------------------------------------- */
@@ -52,25 +51,15 @@ CREATE TABLE Heure
    PRIMARY KEY(nomHeure)
 );
 
-
-CREATE TABLE TypeModule
-(
-   Id_TypeModule SERIAL,
-   nom           VARCHAR(60),
-
-   PRIMARY KEY(Id_TypeModule)
-);
-
 CREATE TABLE ModuleIUT
 (
-   Code_ModuleIUT  VARCHAR(5) ,
-   libLong         VARCHAR(60) ,
-   libCourt        VARCHAR(15) ,
-   Id_TypeModule   INTEGER NOT NULL,
+   Code_ModuleIUT  VARCHAR(5),
+   libLong         VARCHAR(60),
+   libCourt        VARCHAR(15),
+   typeModule      VARCHAR(20),
    Id_Semestre     INTEGER NOT NULL,
 
    PRIMARY KEY(Code_ModuleIUT),
-   FOREIGN KEY(Id_TypeModule) REFERENCES TypeModule(Id_TypeModule),
    FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
 );
 

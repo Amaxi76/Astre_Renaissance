@@ -54,8 +54,8 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.btncreerRessource = new JButton ( "<html>créer<br>Ressource</html>"   );
 		this.btncreerSAE       = new JButton ( "<html>créer<br>SAÉ</html>"         );
 		this.btncreerStage     = new JButton ( "<html>créer<br>Stage/Suivi</html>" );
-		this.btnModifier       = new JButton ( "modifier"          );
-		this.btnSupprimer      = new JButton ( "supprimer"         );
+		this.btnModifier       = new JButton ( "modifier"                          );
+		this.btnSupprimer      = new JButton ( "supprimer"                         );
 
 		/* ----------------------------- */
 		/* Positionnement des composants */
@@ -104,7 +104,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		}
 	}
 
-	private void centrerTexte( JButton btn )
+	private void centrerTexte ( JButton btn )
 	{
 		btn.setHorizontalAlignment ( JButton.CENTER );
 		btn.setVerticalAlignment   ( JButton.CENTER );
