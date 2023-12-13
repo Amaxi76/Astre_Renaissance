@@ -49,6 +49,51 @@ public class BD
 	/*---------------------------------------*/
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
+	
+	/** Méthode générique pour la récupération de table
+	 */
+	public <T> List<T> getTable ( String tableName, Class<T> clazz )
+	{
+		ArrayList<T> lst = new ArrayList<>();
+
+		try
+		{
+			Statement st = connection.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM " + tableName );
+
+			while ( rs.next ( ) )
+			{
+				if (clazz == Semestre.class)
+				{
+					lst.add ( (T) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
+				}
+				
+				if (clazz == Contrat.class)
+				{
+					lst.add ( (T) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
+				}
+				
+				if (clazz == Heure.class)
+				{
+					lst.add ( (T) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
+				}
+				
+				if (clazz == Intervenant.class)
+				{
+					lst.add ( (T) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
+				}
+				
+				// Ajouter d'autres conditions pour d'autres classes si nécessaire
+			}
+
+		}
+		catch ( SQLException e )
+		{
+			System.out.println("Erreur getTable : " + e);
+		}
+
+		return lst;
+	}
 
 	public List<Semestre> getSemestres ( )
 	{
@@ -110,7 +155,7 @@ public class BD
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "select * from Heure" );
 			while ( rs.next ( ) ) 
-				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble(2) ) );
+				lst.add ( new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
 
 			
 		} 
@@ -227,10 +272,29 @@ public class BD
 		return lst;
 	}
 	
-	/*public List<Intervient> getIntervient()
+	public List<Intervient> getIntervients()
 	{
-		
-	}*/
+		ArrayList<Intervient> lst = new ArrayList<Intervient>();
+
+		try
+		{
+			Statement st = co.createStatement( );
+			ResultSet rs = st.executeQuery( "select * from Intervient" );
+			while ( rs.next( ) )
+			{
+				lst.add( new Intervient( getIntervenant( rs.getInt( 1 ) ), getHeure( rs.getString( 2 ) ), getModule( rs.getString( 3 ) ), rs.getInt( 4 ), rs.getInt( 5 ), rs.getInt( 6 ), rs.getString( 7 ) ) );
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getIntervient() : " + e );
+		}
+
+		return lst;
+	}
 	
 	/*public List<Horaire> getHoraires()
 	{
