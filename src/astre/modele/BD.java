@@ -919,7 +919,7 @@ public class BD
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, m.getLibLong    ( ) );
 			ps.setString ( 2, m.getLibCourt   ( ) );
-			ps.setInt    ( 3, m.getTypeModule ( ).getId         ( ) );
+			ps.setString ( 3, m.getTypeModule ( ) );
 			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
 			ps.setString ( 5, m.getCode       ( ) );
 			ps.executeUpdate ( );
