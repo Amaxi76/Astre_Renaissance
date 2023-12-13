@@ -1,4 +1,4 @@
-package astre.vue.outils;
+package astre.vue.intervenants;
 
 import javax.swing.*;
 import java.awt.Component;

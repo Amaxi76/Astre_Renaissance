@@ -1,4 +1,4 @@
-package astre.vue.outils;
+package astre.vue.intervenants;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -30,8 +30,8 @@ public class ModeleTableauIntervenant extends AbstractTableModel
 	*/
 	public boolean isCellEditable(int row, int col)
 	{
-		/*if( col == 0 || col == 1 || col == 2 || col == 3 || col == 4 || col == 5 )
-            return true;*/
+		if( col == 0 || col == 1 || col == 2 || col == 3 || col == 4 )
+            return true;
         
         return false;
 	}
