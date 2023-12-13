@@ -30,7 +30,9 @@ public class BD
 		try 
 		{
 			Class.forName ( "org.postgresql.Driver" );
-			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+			
+			co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+			//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
@@ -443,9 +445,10 @@ public class BD
 				int s6 = getInterventionIntervenant ( rs.getInt(1), 6 );
 				int ttimp = s1 + s3 + s5;
 				int ttpair = s2 + s4 + s6;
-				
+
 				intervenants[cpt][0]  = rs.getInt    (1);//Id
 				intervenants[cpt][1]  = rs.getString (2);//contrat
+				//intervenants[cpt][1]  = box;//contrat
 				intervenants[cpt][2]  = rs.getString (3);//nom
 				intervenants[cpt][3]  = rs.getString (4);//prenom
 				intervenants[cpt][4]  = rs.getInt    (5);//hservice
@@ -501,7 +504,7 @@ public class BD
 			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
 		}
 
-		Object[][] intervenants = new Object[nbIntervients][7];
+		Object[][] intervients = new Object[nbIntervients][6];
 
 		try
 		{
@@ -510,13 +513,12 @@ public class BD
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervenants[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
-				intervenants[cpt][1] = rs.getString ( 2 );//heure
-				intervenants[cpt][2] = rs.getString ( 3 );//module
-				intervenants[cpt][2] = rs.getInt    ( 4 );//nbsemaine
-				intervenants[cpt][3] = rs.getInt    ( 5 );//nbgroupe
-				intervenants[cpt][4] = rs.getInt    ( 6 );//nbheure
-				intervenants[cpt][5] = rs.getString ( 7 );//commentaire
+				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
+				intervients[cpt][1] = rs.getString ( 2 );//heure
+				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString ( 6 );//commentaire
 
 				cpt++;
 			}
@@ -528,15 +530,15 @@ public class BD
 
 		if(nbIntervients == 0)
 		{
-			Object[][] inter = new Object[1][7];
-			for(int cpt=0; cpt < 7; cpt++)
+			Object[][] inter = new Object[1][6];
+			for(int cpt=0; cpt < 6; cpt++)
 			{
 				inter[0][cpt] = "";
 			}
 			return inter;
 		}
 
-		return intervenants;
+		return intervients;
 	}
 
 	public Object[][] getContratsTableau ( )
@@ -850,6 +852,25 @@ public class BD
 		catch ( SQLException x )
 		{
 			System.out.println ( "Erreur delete ( Intervient e ) : " + x );
+		}
+	}
+
+	public boolean deleteAllIntervient (  )
+	{
+		String req = "SELECT f_deleteIntervient ( )";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.executeUpdate ( );
+
+			ps.close ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur deleteAllIntervient ( ) : " + x );
+			return false;
 		}
 	}
 

@@ -18,17 +18,17 @@ public class ModeleTableauIntervenant extends AbstractTableModel
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
-    public int    getColumnCount()                 { return this.tabEntetes.length - 1;      }//permet de cacher la 1ere colonne
-	public int    getRowCount   ()                 { return this.tabDonnees.length;      }
-	public Object getValueAt    (int row, int col) { return this.tabDonnees[row][col + 1];   } //TODO certaine colonne veulent des Numeric pas des String??
-	public String getNomColonne (int col)          { return this.tabEntetes[col];        }
-	//public Class  getColumnClass(int c)            { return getValueAt(0, c).getClass(); }
-	public String getColumnName (int c)             { return this.tabEntetes[c + 1];           }//permet de cacher la 1ere colonne
+    public int      getColumnCount ( )                  { return this.tabEntetes.length - 1;           } //permet de cacher la 1ere colonne
+	public int      getRowCount    ( )                  { return this.tabDonnees.length;               }
+	public Object   getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + 1];        }
+	public String   getNomColonne  ( int col )          { return this.tabEntetes[col];                 }
+	public Class<?> getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( ); }
+	public String   getColumnName  ( int c )            { return this.tabEntetes[c + 1];               } //permet de cacher la 1ere colonne
 
     /**
 	* Donne la liste des cellules éditables.
 	*/
-	public boolean isCellEditable(int row, int col)
+	public boolean isCellEditable ( int row, int col )
 	{
 		if( col == 0 || col == 1 || col == 2 || col == 3 || col == 4 )
             return true;
@@ -39,45 +39,48 @@ public class ModeleTableauIntervenant extends AbstractTableModel
     /**
 	* Ajoute une valeur dans une case.
 	*/
-	public void setValueAt(Object value, int row, int col)
+	public void setValueAt ( Object value, int row, int col )
 	{
 		this.tabDonnees[row][col + 1] = value;
+        fireTableCellUpdated ( row, col );
 	}
 
     /**
 	* Ajoute une ligne vide au tableau.
 	*/
-    public void ajouterLigne()
+    public void ajouterLigne ( )
     {
-        
-        
-        if(tabDonnees != null && tabDonnees.length != 0)
+        if( tabDonnees != null && tabDonnees.length != 0 )
         {
             Object[][] nouveauTableau = new Object[tabDonnees.length + 1][tabDonnees[0].length];
 
-            for (int i = 0; i < tabDonnees.length; i++)
+            for ( int i = 0; i < tabDonnees.length; i++ )
             {
-                for (int j = 0; j < tabDonnees[0].length; j++)
+                for ( int j = 0; j < tabDonnees[0].length; j++ )
                 {
                     nouveauTableau[i][j] = tabDonnees[i][j];
                 }
             }
 
-            for (int j = 0; j < tabDonnees[0].length; j++)
+            for ( int j = 0; j < tabDonnees[0].length; j++ )
             {
-                if(tabEntetes[j].startsWith("Catégorie") || tabEntetes[j].startsWith("Nom") || tabEntetes[j].startsWith("Prénom"))
+                if ( tabDonnees[0][j].getClass ( ) == String.class )
+                {
                     nouveauTableau[tabDonnees.length][j] = "";
-                else
-                    nouveauTableau[tabDonnees.length][j] = 0;
-            }
+                }
 
+                if ( tabDonnees[0][j].getClass ( ) == Integer.class || tabDonnees[0][j].getClass ( ) == Double.class )
+                {
+                    nouveauTableau[tabDonnees.length][j] = 0;
+                }
+            }
             tabDonnees = nouveauTableau;
         }
         else
         {
             tabDonnees = new Object[1][tabEntetes.length];
         }
-        fireTableDataChanged();
+        fireTableDataChanged ( );
     }
 
     /**
@@ -98,19 +101,24 @@ public class ModeleTableauIntervenant extends AbstractTableModel
                 k++;
             }
         }
-
         tabDonnees = nouveauTableau;
-        fireTableDataChanged();
+        fireTableDataChanged ( );
     }
 
-    public Object[][] getDonnees()
+    /**
+	* Permet de récupérer les données du modele
+	*/
+    public Object[][] getDonnees ( )
     {
         return this.tabDonnees;
     }
 
-    public void modifDonnees(Object[][] donnee)
+    /**
+	* Permet de modifier les données du modele
+	*/
+    public void modifDonnees ( Object[][] donnee )
     {
         this.tabDonnees = donnee;
-        fireTableDataChanged();
+        fireTableDataChanged ( );
     }
 }

@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import astre.Controleur;
 
@@ -38,6 +39,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 	private JButton btnPrevisionnel;
 	private JButton btnIntervenants;
 	private JButton btnEtat;
+	private JButton btnAnnee;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -87,6 +89,8 @@ public class FrameAccueil extends JFrame implements ActionListener
 		JPanel panelButton   = new JPanel ( new GridLayout   ( 6, 1, 15, 15 ) );
 		JPanel panelInutile  = new JPanel (                                   );
 		JPanel panelInutile2 = new JPanel (                                   );
+
+		//JLabel lblAnneee     = new JLabel ("Année en cours "); //TODO: Affilier une année ?
 		
 		//JLabel j = new JLabel ( new ImageIcon ( scaledImg ) );
 		JLabel j = new JLabel ( );
@@ -98,15 +102,17 @@ public class FrameAccueil extends JFrame implements ActionListener
 		panelInutile .setOpaque ( false );
 		panelInutile2.setOpaque ( false );
 
-		this.btnParametre    = new JButton ( "Paramètre"    );
-		this.btnPrevisionnel = new JButton ( "Prévisionnel" );
-		this.btnIntervenants = new JButton ( "Intervenants" );
-		this.btnEtat         = new JButton ( "Etats"        );
+		this.btnParametre    = new JButton ( "Paramètre"                    );
+		this.btnPrevisionnel = new JButton ( "Prévisionnel"                 );
+		this.btnIntervenants = new JButton ( "Intervenants"                 );
+		this.btnEtat         = new JButton ( "Etats"                        );
+		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
 
 		panelButton.add ( this.btnParametre    );
 		panelButton.add ( this.btnPrevisionnel );
 		panelButton.add ( this.btnIntervenants );
 		panelButton.add ( this.btnEtat         );
+		panelButton.add ( this.btnAnnee        );
 
 		panelTest.add ( panelInutile  );
 		panelTest.add ( panelButton   );
@@ -126,6 +132,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.btnPrevisionnel.addActionListener ( this );
 		this.btnIntervenants.addActionListener ( this );
 		this.btnEtat        .addActionListener ( this );
+		this.btnAnnee       .addActionListener ( this );
 
 		//this.setIconImage             ( icon          );
 		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
@@ -152,8 +159,30 @@ public class FrameAccueil extends JFrame implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEtat )
 		{
-			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.INFORMATION_MESSAGE );
+			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.OK_CANCEL_OPTION );
 			new FrameAccueil ( this.ctrl );
+		}
+
+		if ( e.getSource() == this.btnAnnee )
+		{
+			System.out.println("Hello");
+			int retour1 = JOptionPane.showConfirmDialog(this, "ATTENTION \n Cela effacera les attributions des intervenants aux modules",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION);
+			
+			if (retour1 == 0)
+			{
+				int retour2 = JOptionPane.showConfirmDialog(this, "ATTENTION \n Vous êtes vraiment sûr de vouloir tout effacer ?",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION);
+			
+				if (retour2 == 0)
+				{
+					if ( this.ctrl.nouvelleAnnee() )
+						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
+					else
+						JOptionPane.showMessageDialog ( this, "Erreur, contactez l'équipe de développeurs D:", "Échec !", JOptionPane.OK_CANCEL_OPTION );
+				}
+				
+			}
+			
+			return;
 		}
 
 		this.cacher ( );
