@@ -25,6 +25,7 @@ public class Controleur
 	public Semestre   getSemestre           ( int numSemestre ) { return this.metier.getSemestre           ( numSemestre ); }
 	public Object[][] getTableauModule      ( int numSemestre ) { return this.metier.getTableauModule      ( numSemestre ); }
 	public Object[][] getTableauIntervenant (                 ) { return this.metier.getTableauIntervenant (             ); }
+	public Object[][] getTableauIntervient  (                 ) { return this.metier.getTableauIntervient  (             ); }
 
 	public void majSemestre ( Semestre s ) { this.metier.majSemestre ( s ); }
 
