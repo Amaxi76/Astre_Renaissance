@@ -44,5 +44,7 @@ src/astre/vue/previsionnel/module/PanelAffectation.java
 src/astre/vue/previsionnel/module/ModeleTableauIntervient.java
 src/astre/vue/previsionnel/module/TableauIntervient.java
 
+src/astre/vue/nouvelleAnnee/FrameNouvelleAnnee.java
+
 src/astre/vue/FrameAccueil.java
 
