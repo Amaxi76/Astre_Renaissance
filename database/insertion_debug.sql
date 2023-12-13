@@ -46,7 +46,7 @@ INSERT INTO ModuleIUT VALUES
 ('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , 6),
 ('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , 6);
 
-INSERT INTO Intervenant (nomInter, prenom, hService, hMax, Id_Contrat) VALUES
+INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
 ('Orwell'        , 'Georges',  25, 389, 2 ),
 ('Lovecraft'     , 'Howard' ,  85, 125, 2 );

@@ -60,21 +60,21 @@ CREATE TABLE ModuleIUT
    Id_Semestre     INTEGER NOT NULL,
 
    PRIMARY KEY(Code_ModuleIUT),
-   FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
+   FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre) ON DELETE CASCADE
 );
 
 
 CREATE TABLE Intervenant
 (
    Id_Intervenant SERIAL,
-   nomInter       VARCHAR(50)  NOT NULL,
+   nom            VARCHAR(50)  NOT NULL,
    prenom         VARCHAR(50)  NOT NULL,
    hService       INTEGER      NOT NULL,
    hMax           INTEGER      NOT NULL,
    Id_Contrat     INTEGER      NOT NULL,
 
    PRIMARY KEY(Id_Intervenant),
-   FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat)
+   FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat) ON DELETE CASCADE
 );
 
 CREATE TABLE Intervient
@@ -86,10 +86,11 @@ CREATE TABLE Intervient
    nbGroupe       INTEGER,
    nbHeure        INTEGER,
    commentaire    VARCHAR(50) ,
+
    PRIMARY KEY(Id_Intervenant, nomHeure, Code_ModuleIUT),
-   FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
-   FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),
-   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)
+   FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant) ON DELETE CASCADE,
+   FOREIGN KEY(nomHeure)       REFERENCES Heure(nomHeure)             ON DELETE CASCADE,
+   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)   ON DELETE CASCADE
 );
 
 
@@ -102,7 +103,7 @@ CREATE TABLE Horaire
    nbSemaine            INTEGER,
    
    PRIMARY KEY(nomHeure, Code_ModuleIUT),
-   FOREIGN KEY(nomHeure) REFERENCES Heure(nomHeure),
-   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)
+   FOREIGN KEY(nomHeure)       REFERENCES Heure(nomHeure)           ON DELETE CASCADE,
+   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) ON DELETE CASCADE
 );
 
