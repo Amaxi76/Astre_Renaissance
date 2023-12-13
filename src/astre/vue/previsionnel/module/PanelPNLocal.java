@@ -42,7 +42,7 @@ public class PanelPNLocal extends JPanel
 		/* ------------------------- */
 
 		this.setLayout ( new GridBagLayout() );
-		//this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
