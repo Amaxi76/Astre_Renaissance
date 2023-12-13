@@ -35,16 +35,16 @@ INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Contractuel'          , 85 , 125, 0.66 );
 
 INSERT INTO ModuleIUT VALUES
-('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 'Ressource', 1),
-('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 'Ressource', 1),
-('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 'SAE'      , 2),
-('R3.05', 'Programmation Système'       , 'prog_sys'     , 'Ressource', 3),
-('S4.ST', 'Stages'                      , 'stages'       , 'Stage'    , 4),
-('R5.03', 'Politique de communication'  , 'comm'         , 'Ressource', 5),
-('R5.06', 'Programmation multimédia'    , 'prog_media'   , 'Ressource', 5),
-('S5.01', 'Développement avancé'        , 'dev_avancé'   , 'SAE'      , 5),
-('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , 6),
-('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , 6);
+('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 'Ressource', false, 1),
+('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 'Ressource', true , 1),
+('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 'SAE'      , false, 2),
+('R3.05', 'Programmation Système'       , 'prog_sys'     , 'Ressource', false, 3),
+('S4.ST', 'Stages'                      , 'stages'       , 'Stage'    , false, 4),
+('R5.03', 'Politique de communication'  , 'comm'         , 'Ressource', false, 5),
+('R5.06', 'Programmation multimédia'    , 'prog_media'   , 'Ressource', false, 5),
+('S5.01', 'Développement avancé'        , 'dev_avancé'   , 'SAE'      , false, 5),
+('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , false, 6),
+('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , false, 6);
 
 INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
