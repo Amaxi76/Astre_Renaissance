@@ -620,7 +620,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Id_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
