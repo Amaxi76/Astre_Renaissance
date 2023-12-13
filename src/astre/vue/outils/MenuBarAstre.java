@@ -3,6 +3,12 @@ package astre.vue.outils;
 import javax.swing.*;
 import java.awt.Image;
 import java.awt.event.*;
+import astre.Controleur;
+import astre.vue.FrameAccueil;
+import astre.vue.intervenants.FrameIntervenants;
+import astre.vue.parametrage.FrameParametrage;
+import astre.vue.previsionnel.FramePrevisionnel;
+
 
 /** Menu de l'application
   * @author : Maxime Lemoine
@@ -12,7 +18,9 @@ import java.awt.event.*;
 
 public class MenuBarAstre extends JMenuBar implements ActionListener
 {
-	private static final String REPERTOIRE = "../../../../data/images/";
+	private static final String REPERTOIRE = "../data/images/";
+	private Controleur ctrl;
+	private JFrame     parent;
 	
 	//Position des éléments d'un menu dans le "modeleBar"
 	private final int TYPE = 0;
@@ -21,10 +29,12 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	private final int CHAR = 3;
 	private final int KEYS = 4;
 
-	public MenuBarAstre ( )
+	public MenuBarAstre ( Controleur ctrl, JFrame parent )
 	{
 		//Initialisation
 		super ( );
+		this.ctrl   = ctrl;
+		this.parent = parent;
 		JMenu menuEnCreation = null;
 
 		//Format du MenuBar
@@ -80,7 +90,10 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			menui.setIcon ( genererIcone ( image, 20 ) );
 		}
 
-		menui.setMnemonic ( mnemo.charAt ( 0 ) );
+		if ( !mnemo.equals( "" ) )
+		{
+			menui.setMnemonic ( mnemo.charAt ( 0 ) );
+		}
 
 		if( hotkey != null )
 		{
@@ -97,18 +110,48 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		//A décomenter lorsque l'on aura un lien vers les autres pages
-		/*if ( e.getSource ( ) instanceof JMenuItem )
+		if ( e.getSource ( ) instanceof JMenuItem )
 		{
 			String nom = ( ( JMenuItem ) e.getSource () ).getText ( );
 
 			switch ( nom )
 			{
-				case "Semestres" 	-> this.ctrl.afficherSemestres ( );
-				case "Enseignants" 	-> this.ctrl.afficherEnseignants ( );
-				case "Modules" 		-> this.ctrl.afficherModules ( );
+				case "Retour Accueil"	-> this.allerVersPage ( FrameAccueil.class );
+				case "Paramètre" 		-> this.allerVersPage ( FrameParametrage.class );
+				case "Prévisionnel"		-> this.allerVersPage ( FramePrevisionnel.class );
+				case "Intervenants"		-> this.allerVersPage ( FrameIntervenants.class );
+				//case "Etats" 			-> this.allerVersPage ( FrameEtats.class );
 			}
-		}*/
+		}
 	}
+	
+	private void allerVersPage ( Class c )
+	{
+		if ( c == FrameAccueil.class      ) { new FrameAccueil      ( this.ctrl ); }
+		if ( c == FrameParametrage.class  ) { new FrameParametrage  ( this.ctrl ); }
+		if ( c == FramePrevisionnel.class ) { new FramePrevisionnel ( this.ctrl ); }
+		if ( c == FrameIntervenants.class ) { new FrameIntervenants ( this.ctrl ); }
+		
+		this.parent.dispose ( );
+	}
+	
+	/*private void allerVersPage ( Class c )
+	{
+		try
+		{
+			this.parent.dispose ( );
+			
+			// Obtenez le constructeur avec un paramètre de type Ctrl (ou le type approprié)
+        	java.lang.reflect.Constructor<?> constructor = c.getDeclaredConstructor(Controleur.class);
+
+	        // Instanciez la nouvelle classe en passant l'objet ctrl dans le constructeur
+    	    constructor.newInstance(this.ctrl);
+		}
+		catch ( Exception e )
+		{
+			System.out.println( "Erreur menubar : " + e );
+		}
+	}*/
 
 	/**
 	 * Méthode utilitaire permettant de convertir une chaine de caractère en KeyStroke pour les raccourcis
@@ -132,7 +175,6 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	 */
 	public static ImageIcon genererIcone ( String image, int taille )
 	{
-		String REPERTOIRE = "imagesMenu/";
 		ImageIcon icone = new ImageIcon ( REPERTOIRE + image );
 		Image imgDim = icone.getImage ( ).getScaledInstance ( taille, taille, Image.SCALE_SMOOTH );
 		return new ImageIcon ( imgDim );
@@ -143,7 +185,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	 */
 	public static String[][] getModeleBar ( )
 	{
-		return new String[][] {
+		/*return new String[][] {
 			{ "M", "Gestion",		"gestion.png",		"G"				},
 			{ "I", "Semestres",		"semestres.png",	"S",			},
 			{ "I", "Enseignants" ,	"enseignants.png",	"E",			},
@@ -157,6 +199,22 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			{ "I", "Semestres",		"",					"S"				},
 			{ "S"														},
 			{ "I", "Général",		"",					"G", 			},
+
+			{ "M", "Exportation",	"exportation.png",	"E"				},
+			{ "I", "Format PDF",	"pdf.png",			"P", "CTRL+P"	},
+			{ "I", "Format HTML" ,	"html.png",			"H", 			},
+								};*/
+		
+		return new String[][] {
+			{ "M", "Retour Accueil","gestion.png",		"A"				},
+
+			{ "M", "Saisies",		"",					"S"				},
+			{ "I", "Paramètre",		"",					"",				},
+			{ "S"														},
+			{ "I", "Prévisionnel" ,	"",					"", 			},
+			{ "I", "Intervenants",	"",					""				},
+			
+			{ "M", "Etats",			"apercu.png",		"A"				},
 
 			{ "M", "Exportation",	"exportation.png",	"E"				},
 			{ "I", "Format PDF",	"pdf.png",			"P", "CTRL+P"	},

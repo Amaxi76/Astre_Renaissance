@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import astre.Controleur;
+import astre.vue.outils.MenuBarAstre;
 
 
 public class FrameAccueil extends JFrame implements ActionListener
@@ -74,9 +75,10 @@ public class FrameAccueil extends JFrame implements ActionListener
 		int l = ( tailleEcran.width  - 1000 ) / 2;
 		int h = ( tailleEcran.height -  700 ) / 2;
 
-		this.setSize     ( 1000, 700 );
-		this.setLocation (    l,   h );
-		this.setTitle    ( "ASTRE"   );
+		this.setSize     ( 1000, 700            );
+		this.setLocation (    l,   h            );
+		this.setTitle    ( "ASTRE"              );
+		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 
 		/* ------------------------- */
 		/* Création des composants   */
