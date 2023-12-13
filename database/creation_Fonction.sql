@@ -56,12 +56,12 @@ $$ LANGUAGE plpgsql;
 
 -- Selecion des ModulesIUT par semestres
 DROP              FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER );
-CREATE OR REPLACE FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( code_moduleiut VARCHAR, liblong VARCHAR, libcourt VARCHAR, typemodule VARCHAR, id_semestre INTEGER, nbgroupetp INTEGER, nbgroupetd INTEGER, nbetud INTEGER, nbsemaine INTEGER ) AS
+CREATE OR REPLACE FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( code_moduleiut VARCHAR, liblong VARCHAR, libcourt VARCHAR, typemodule VARCHAR, valide BOOLEAN, id_semestre INTEGER, nbgroupetp INTEGER, nbgroupetd INTEGER, nbetud INTEGER, nbsemaine INTEGER ) AS
 $$
 BEGIN
 
 	RETURN QUERY
-		SELECT m.code_moduleiut, m.liblong, m.libcourt, m.typemodule, s.id_semestre, s.nbgroupetp, s.nbgroupetd, s.nbetud, s.nbsemaine
+		SELECT m.code_moduleiut, m.liblong, m.libcourt, m.typemodule, m.valide, s.id_semestre, s.nbgroupetp, s.nbgroupetd, s.nbetud, s.nbsemaine
 		FROM   ModuleIUT m join Semestre s on m.id_semestre = s.id_semestre
 		WHERE  m.id_semestre = $1;
 

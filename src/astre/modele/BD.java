@@ -7,7 +7,6 @@ package astre.modele;
   */
 
 //TODO: Penser à fermer le rs et st
-//TODO: remplacer les requêtes complexes du java en un appel à une fonction définie directement dans la BD //en cours
 //TODO: Refactoriser la métode UPDATE
 
 import java.sql.*;
@@ -101,6 +100,8 @@ public class BD
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
+		//TODO: refaire le compteur
+		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 		
 		String REQUETE = "SELECT * FROM f_selectModulesIUTParSemestre(?)";
@@ -116,7 +117,7 @@ public class BD
 
 			while ( rs.next ( ) ) 
 			{
-				int iS = 5;
+				int iS = 6;
 				int iM = 1;
 
 				Semestre   semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
@@ -124,7 +125,9 @@ public class BD
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), hmHeuresPn, hmHeuresRepartiees );
+				ModuleIUT  moduleIUT =  new ModuleIUT ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );
+
+				System.out.println(moduleIUT.estValide());
 
 				ensModules.add ( moduleIUT );
 			}
