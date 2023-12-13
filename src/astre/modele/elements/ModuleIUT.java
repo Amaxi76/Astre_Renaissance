@@ -13,14 +13,14 @@ public class ModuleIUT
 	Map<Heure, Integer> hmHeuresPn;
 	Map<Heure, Integer> hmHeuresRepaties;
 	
-	Semestre   semestre;
-	TypeModule typeModule;
-	String     code;
-	String     libLong;
-	String     libCourt;
-	boolean    valide;
+	Semestre semestre;
+	String   typeModule;
+	String   code;
+	String   libLong;
+	String   libCourt;
+	boolean  valide;
 
-	public ModuleIUT ( Semestre semestre, TypeModule typeModule, String code, String libLong, String libCourt, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepaties )
+	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepaties )
 	{
 		this.semestre          = semestre;
 		this.typeModule        = typeModule;
@@ -38,7 +38,7 @@ public class ModuleIUT
 
 	public boolean             estValide             ( ) { return this.valide;            }
 	public Semestre            getSemestre           ( ) { return this.semestre;          }
-	public TypeModule          getTypeModule         ( ) { return this.typeModule;        }
+	public String              getTypeModule         ( ) { return this.typeModule;        }
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
 	public String              getLibCourt           ( ) { return this.libCourt;          }
@@ -71,14 +71,14 @@ public class ModuleIUT
 	/*---------------------------------------*/
 
 	public void setSemestre   ( Semestre   semestre   ) { this.semestre   = semestre;   }
-	public void setTypeModule ( TypeModule typeModule ) { this.typeModule = typeModule; }
+	public void setTypeModule ( String     typeModule ) { this.typeModule = typeModule; }
 	public void setCode       ( String     code       ) { this.code       = code;       }
 	public void setLibLong    ( String     libLong    ) { this.libLong    = libLong;    }
 	public void setLibCourt   ( String     libCourt   ) { this.libCourt   = libCourt;   }
 	public void setValide     ( boolean    choix      ) { this.valide     = choix;      }
 
 	@Override
-	public String toString()
+	public String toString ( )
 	{
 		return "ModuleIUT [hmHeuresPn=" + hmHeuresPn + ", hmHeuresRepaties=" + hmHeuresRepaties + ", semestre="
 				+ semestre + ", typeModule=" + typeModule + ", code=" + code + ", libLong=" + libLong + ", libCourt="
