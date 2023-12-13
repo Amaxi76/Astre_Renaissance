@@ -58,7 +58,7 @@ public class BD
 
 		try
 		{
-			Statement st = connection.createStatement ( );
+			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ( "SELECT * FROM " + tableName );
 
 			while ( rs.next ( ) )
