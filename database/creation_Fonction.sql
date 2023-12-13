@@ -1,6 +1,6 @@
 /*
 	@author Alizéa LEBARON
-	@version 1.0.0 - 12/12/2023 
+	@version 1.0.0 - 13/12/2023 
 	@date 12/12/2023 
 	@description Script de création des fonctions
 */
@@ -171,6 +171,39 @@ $$ LANGUAGE plpgsql;
 /* ------------------------------------------ */
 /*                   UPDATE                   */
 /* ------------------------------------------ */
+
+-- Update de semestre
+CREATE OR REPLACE FUNCTION f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeTP INTEGER, u_nbGroupeTD INTEGER, u_nbEtud INTEGER, u_nbSemaine INTEGER )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Semestre
+    SET 
+        nbGroupeTP  = u_nbGroupeTP,
+        nbGroupeTD  = u_nbGroupeTD,
+        nbEtud      = u_nbEtud,
+        nbSemaine   = u_nbSemaine
+
+    WHERE Id_Semestre = u_Id_Semestre;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update de contrat
+CREATE OR REPLACE FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Contrat
+    SET 
+        nomContrat      = u_nomContrat,
+        hServiceContrat = u_hServiceContrat,
+        hMaxContrat     = u_hMaxContrat,
+        ratioTP         = u_ratioTP
+
+    WHERE Id_Contrat = u_id_contrat;
+END;
+$$ LANGUAGE plpgsql;
+
 
 
 /* ------------------------------------------ */
