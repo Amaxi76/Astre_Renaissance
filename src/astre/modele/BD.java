@@ -296,11 +296,11 @@ public class BD
 			{
 				try
 				{
-					Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+					contrat = Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
 				}
 				catch (Exception e)
 				{
-					// TODO: handle exception
+					e.printStackTrace ( );
 				}
 				
 			}
