@@ -313,6 +313,8 @@ public class BD
 		
 		return result;
 	}
+
+	public 
 	
 	public Intervenant getIntervenant ( int i )
 	{
