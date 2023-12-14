@@ -266,62 +266,62 @@ public class PanelRepartition extends JPanel
 		});
 
 		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCM.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCM.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCM.setOpaque( true );
 
 		this.lblTotalTD.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTD.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTD.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTD.setOpaque( true );
 
 		this.lblTotalTP.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTP.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTP.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTP.setOpaque( true );
 
 		this.lblTotalSomme.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSomme.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSomme.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSomme.setOpaque( true );
 
 
 
 		this.lblTotalCMProm.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCMProm.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCMProm.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCMProm.setOpaque( true );
 
 		this.lblTotalTDProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTDProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTDProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTDProm.setOpaque( true );
 
 		this.lblTotalTPProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTPProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTPProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTPProm.setOpaque( true );
 
 		this.lblTotalHeurePProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalHeurePProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalHeurePProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalHeurePProm.setOpaque( true );
 
 		this.lblTotalSommeProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSommeProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSommeProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSommeProm.setOpaque( true );
 
 
 		this.lblTotalCMAff.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCMAff.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCMAff.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCMAff.setOpaque( true );
 
 		this.lblTotalTDAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTDAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTDAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTDAff.setOpaque( true );
 
 		this.lblTotalTPAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTPAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTPAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTPAff.setOpaque( true );
 
 		this.lblTotalHeurePAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalHeurePAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalHeurePAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalHeurePAff.setOpaque( true );
 
 		this.lblTotalSommeAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSommeAff.setOpaque( true );
 	}
 
@@ -419,18 +419,23 @@ public class PanelRepartition extends JPanel
 	{
 		double coeffCM = coeffHeure ( "CM" );
 		double totalCMProm = totalCM * coeffCM;
+		lblTotalCMProm.setText( String.valueOf ( totalCMProm ) );
 
 		double coeffTD = coeffHeure ( "TD" );
 		int nbGpTD = Integer.parseInt(frm.getPanelModuleLabel().lblNbGpTD.getText());
 		double totalTDProm = totalTD * coeffTD * nbGpTD;
+		lblTotalTDProm.setText( String.valueOf ( totalTDProm ) );
 
 		double coeffTP = coeffHeure ( "TP" );
 		int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().lblNbGpTP.getText() );
 		double totalTPProm = totalTP * coeffTP * nbGpTP;
+		lblTotalTPProm.setText( String.valueOf ( totalTPProm ) );
 
 		double totalHeurePProm = heureP * nbGpTD;
+		lblTotalHeurePProm.setText( String.valueOf ( totalHeurePProm ) );
 
-
+		double sommePromo = totalCMProm + totalTDProm + totalTPProm + totalHeurePProm;
+		lblTotalSommeProm.setText ( String.valueOf ( sommePromo ) );
 	}
 
 	private double coeffHeure ( String nomHeure )

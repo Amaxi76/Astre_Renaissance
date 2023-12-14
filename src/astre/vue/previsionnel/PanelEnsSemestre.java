@@ -15,7 +15,7 @@ public class PanelEnsSemestre extends JTabbedPane
 {
 	private Controleur ctrl;
 
-	public PanelEnsSemestre ( Controleur ctrl )
+	public PanelEnsSemestre ( Controleur ctrl, int semestreDefaut )
 	{
 		// Configuration
 		this.ctrl = ctrl;
@@ -27,6 +27,8 @@ public class PanelEnsSemestre extends JTabbedPane
 		for ( int cptSemestre = 1; cptSemestre < ConstantesVue.NB_SEMESTRE + 1; cptSemestre++ )
 			this.add ( "S" + cptSemestre, new PanelSemestre ( cptSemestre, this.ctrl ) );
 
+		// Selection du semestre par défaut
+		this.setSelectedIndex ( semestreDefaut );
 	}
 	
 }

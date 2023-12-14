@@ -29,7 +29,5 @@ public class FrameIntervenants extends JFrame
 		this.add ( this.panel );
 
 		this.setVisible   ( true );
-		this.requestFocus (      );
 	}
-	
 }
