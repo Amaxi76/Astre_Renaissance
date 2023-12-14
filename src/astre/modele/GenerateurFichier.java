@@ -44,24 +44,24 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLIntervenant (Intervenant i)
+	public static void GenererHTMLIntervenant (Intervenant inter)
 	{
-		String chemin = "./fichierGenerer/recapIntervenant" + i.getNom() + ".html";
+		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom() + ".html";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
             // Ecriture de l'entête
 			String entete = 
-			"<!DOCTYPE html>" + 
-			"<html lang=\"fr\">" + 
-			"<head>" + 
-				"<meta charset=\"UTF-8\">" + 
-				"<link href=\"style.css\" rel=\"stylesheet\">" + 
-				"<title>Intervenant [NOM]</title>" + 
-			"</head>" + 
-			"<body>" + 
+			"<!DOCTYPE html>"                                                          + 
+			"<html lang=\"fr\">"                                                       + 
+			"<head>"                                                                   + 
+				"<meta charset=\"UTF-8\">"                                             + 
+				"<link href=\"style.css\" rel=\"stylesheet\">"                         + 
+				"<title>Intervenant [NOM]</title>"                                     + 
+			"</head>"                                                                  + 
+			"<body>"                                                                   + 
 				"<img src=\"../data/images/astre.png\" alt=\"Logo de l'application\">" +
-				"<table>";
+				"<table>"                                                              ;
 
             ecrivain.write ( entete );
 
@@ -70,18 +70,18 @@ public class GenerateurFichier
 
             ecrivain.newLine ( );
 			
-			BD bd = BD.getInstance ( ); //A changer ??
-			Object[][] elem = bd.getIntervenantsTableau ( );
-			for ( int i = 0; i < elem.length; i++ )
-			{
-				for ( int j=1; j < elem[0].length; j++ )
-				{
-					ecrivain.write ( elem[i][j].toString ( ) + "," );
-				}
-            	ecrivain.newLine ( );
-			}
+			BD bd = BD.getInstance ( );
 
-			//Écriture 
+			
+
+			//Écriture fermant les balises html
+
+			String footer = 
+			"</table>" +
+			"</body>"  +
+			"</html>"  ;
+
+
 
             System.out.println ( "Fichier CSV créé avec succès." );
         } catch ( IOException e )
