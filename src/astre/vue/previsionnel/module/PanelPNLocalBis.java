@@ -15,6 +15,12 @@ import astre.modele.BD;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
 
+/** Classe PanelPNLocalBis
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 14/12/2023
+  */
+
 public class PanelPNLocalBis extends JPanel
 {
 	/*-------------*/
