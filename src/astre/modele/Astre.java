@@ -62,8 +62,6 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public boolean nouvelleAnnee ( ) { return this.bd.nouvelleAnnee(); }
-
 	public void update ( Object o )
 	{
 		String test = o.getClass().toString();
@@ -123,4 +121,6 @@ public class Astre
 			default : System.out.println("def");
 		}
 	}
+	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
+	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
 }

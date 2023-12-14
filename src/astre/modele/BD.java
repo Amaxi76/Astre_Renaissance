@@ -862,6 +862,30 @@ public class BD
 		}
 	}
 
+	public boolean nouvelleAnneeZero (  )
+	{
+		
+		try
+		{
+			String req = "SELECT f_deleteAll ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			ps.close ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x );
+			return false;
+		}
+	}
+
 	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
