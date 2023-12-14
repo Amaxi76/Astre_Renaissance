@@ -1,7 +1,6 @@
 package astre.vue.previsionnel.module;
 
 import astre.modele.elements.Semestre;
-import astre.modele.elements.Heure;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -55,8 +54,8 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibCourt = new JTextField ("", 10);
 
 		this.lblNbEtd  = new JLabel( );
-		this.lblNbGpTD = new JLabel( );
-		this.lblNbGpTP = new JLabel( );
+		this.lblNbGpTD = new JLabel( "0" );
+		this.lblNbGpTP = new JLabel( "0" );
 
 
 		gbc.gridy = 0;
