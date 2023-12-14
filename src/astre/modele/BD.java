@@ -56,14 +56,14 @@ public class BD
 	 * Exemple d'utilisation : ArrayList<Semestre> ensS= new ArrayList<> (getTable ( "Semestre", Semestre.class ) ) ;
 	 */
 
-	private <T> List<T> getTable ( String tableName, Class<T> clazz )
+	public <T> List<T> getTable ( Class<T> clazz )
 	{
 		ArrayList<T> lst = new ArrayList<>();
 
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT * FROM " + tableName );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM " + clazz.getSimpleName ( ) );
 
 			while ( rs.next ( ) )
 			{
@@ -71,10 +71,19 @@ public class BD
 					lst.add ( ( T ) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
 				
 				if ( clazz == Contrat.class      )
-					lst.add ( ( T ) new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
+				{
+					try
+					{
+						lst.add ( ( T ) Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
+					}
+					catch ( Exception e )
+					{
+						e.printStackTrace ( );
+					}
+				}
 				
 				if ( clazz == Heure.class        )
-					lst.add ( ( T ) new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) ) );
+					lst.add ( ( T ) new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) );
 				
 				if ( clazz == Intervenant.class )
 					lst.add ( ( T ) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
@@ -91,11 +100,11 @@ public class BD
 		return lst;
 	}
 
-	public List<Semestre>    getSemestres    ( ) { return this.getTable ( "Semestre"   , Semestre   .class ); }
-	public List<Intervenant> getIntervenants ( ) { return this.getTable ( "Intervenant", Intervenant.class ); }
-	public List<Contrat>     getContrats     ( ) { return this.getTable ( "Contrat"    , Contrat    .class ); }
-	public List<Heure>       getHeures       ( ) { return this.getTable ( "Heure"      , Heure      .class ); }
-	public List<Intervient>  getIntervients  ( ) { return this.getTable ( "Intervients", Intervient .class ); }
+	public List<Semestre>    getSemestres    ( ) { return this.getTable ( Semestre   .class ); }
+	public List<Intervenant> getIntervenants ( ) { return this.getTable ( Intervenant.class ); }
+	public List<Contrat>     getContrats     ( ) { return this.getTable ( Contrat    .class ); }
+	public List<Heure>       getHeures       ( ) { return this.getTable ( Heure      .class ); }
+	public List<Intervient>  getIntervients  ( ) { return this.getTable ( Intervient .class ); }
 
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )
@@ -254,7 +263,14 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Contrat where Id_Contrat = " + c );
 			while ( rs.next( ) )
 			{
-				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+				try
+				{
+					contrat = Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+				}
+				catch (Exception e)
+				{
+					// TODO: handle exception
+				}
 			}
 
 			rs.close();
@@ -278,7 +294,15 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Contrat where nomContrat = '" + c  +"'");
 			while ( rs.next( ) )
 			{
-				contrat = new Contrat ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+				try
+				{
+					Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+				}
+				catch (Exception e)
+				{
+					// TODO: handle exception
+				}
+				
 			}
 		}
 		catch ( SQLException e )
@@ -347,7 +371,7 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure where nomHeure = '" + h + "'" );
 			while ( rs.next ( ) ) 
 			{
-				heure = new Heure ( rs.getString ( 1 ), rs.getDouble ( 2 ) );
+				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
 			}
 		} 
 		catch ( SQLException e ) 

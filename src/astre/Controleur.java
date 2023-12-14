@@ -43,7 +43,9 @@ public class Controleur
 	public void insert ( Object o ) { this.metier.insert(o); }
 	public void delete ( Object o ) { this.metier.delete(o); }
 
-	public void majSemestre ( Semestre s ) { this.metier.majSemestre ( s ); }
+	public void majSemestre  ( Semestre s                    ) { this.metier.majSemestre  ( s         ); }
+	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
+
 
 	public static void afficherErreur ( String titre, String message )
 	{

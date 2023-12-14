@@ -54,13 +54,14 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De Balzac'     , 'Honoré' ,  65,  89, 3 ),
 ('Toriyama'      , 'Akira'  , 487, 478, 2 );
 
-INSERT INTO Heure (nomHeure, coeffTD) VALUES
-('TP' , 1   ),
-('TD' , 1   ),
-('CM' , 1.5 ),
-('REH', 1   ),
-('SAE', 1   ),
-('Tut', 1   );
+INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
+('TP'   , 1   ),
+('TD'   , 1   ),
+('CM'   , 1.5 ),
+('REH'  , 1   ),
+('SAE'  , 1   ),
+('PONCT', 1   ),
+('Tut'  , 1   );
 
 INSERT INTO Intervient (Id_Intervenant, Id_Heure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
 (1,  2, 'R5.03',    6,    2,    5, NULL         ),
@@ -76,7 +77,3 @@ INSERT INTO Horaire VALUES
 (5, 'S5.01', 60, 0,  3),
 (4, 'S2.05',  2, 0,  1),
 (6, 'S6.ST',  6, 0,  3);
-
-
-
-
