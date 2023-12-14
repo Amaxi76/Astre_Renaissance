@@ -51,7 +51,7 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.panelModuleLabel    = new PanelModuleLabel  ( this.ctrl );
+		this.panelModuleLabel    = new PanelModuleLabel  ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal      ( this.ctrl, this );
 		this.panelPNLocalBis     = new PanelPNLocalBis   ( this.ctrl );
 		this.panelRepartition    = new PanelRepartition  ( this.ctrl, this );
@@ -75,6 +75,7 @@ public class FrameModule extends JFrame
 		panelCentre.add ( this.panelRepartition,    gbcC );
 		panelCentre.add ( this.panelRepartitionBis, gbcC );
 		this.panelRepartitionBis.setVisible ( false );
+
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
@@ -105,4 +106,24 @@ public class FrameModule extends JFrame
 	}
 
 	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
+
+	public void setVisiblePanels(String typeModule)
+	{
+		if (typeModule.equals("SAE") || typeModule.equals("Stage"))
+		{
+			this.panelRepartition   .setVisible ( false );
+			this.panelRepartitionBis.setVisible ( true );
+
+			this.panelPNLocal		.setVisible ( false );
+			this.panelPNLocalBis	.setVisible ( true );
+		}
+		else
+		{
+			this.panelRepartition   .setVisible ( true );
+			this.panelRepartitionBis.setVisible ( false );
+
+			this.panelPNLocal		.setVisible ( true );
+			this.panelPNLocalBis	.setVisible ( false );
+		}
+	}
 }
