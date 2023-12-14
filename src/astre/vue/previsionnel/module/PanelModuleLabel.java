@@ -12,6 +12,12 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 
+/** Classe PanelModuleLabel
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 11/12/2023
+  */
+
 public class PanelModuleLabel  extends JPanel
 {
 	/*-------------*/

@@ -12,6 +12,12 @@ import javax.swing.JTextField;
 import astre.Controleur;
 import astre.modele.elements.Heure;
 
+/** Classe PanelRepartition
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 12/12/2023
+  */
+
 public class PanelRepartition extends JPanel
 {
 	/*-------------*/

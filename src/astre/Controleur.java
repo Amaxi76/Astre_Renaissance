@@ -1,7 +1,7 @@
 package astre;
 
 /** Classe Controleur 
-  * @author : Maximilien Lesterlin et Maxime Lemoine
+  * @author : Maximilien Lesterlin, Maxime Lemoine, Mateo Sa et Clémentin Ly
   * @version : 2.0 - 12/12/2023
   * @date : 06/12/2023
   */

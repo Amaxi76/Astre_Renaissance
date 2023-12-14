@@ -11,6 +11,12 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 
+/** Classe PanelRepartitionBis
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 14/12/2023
+  */
+
 public class PanelRepartitionBis extends JPanel
 {
 	/*-------------*/
