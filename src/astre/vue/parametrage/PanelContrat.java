@@ -35,6 +35,9 @@ public class PanelContrat extends JPanel
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 
 		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), true );
+		this.tabContrat.getModeleTableau().setDecalage(1);
+		this.tabContrat.getModeleTableau().setEditable(true);
+		
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 

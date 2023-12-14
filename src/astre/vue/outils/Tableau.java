@@ -66,7 +66,7 @@ public class Tableau extends JTable
 	public void ajouterLigne ( )
 	{
 		this.modele.ajouterLigne();
-		this.ajusterTailleColonnes ( );
+		//this.ajusterTailleColonnes ( );
 	}
 	
 	/**
@@ -88,6 +88,32 @@ public class Tableau extends JTable
 	public Object[][] getDonnees()
     {
         return this.modele.getDonnees();
+    }
+
+	public ModeleTableau getModeleTableau()
+	{
+		return this.modele;
+	}
+
+	public void setDecalage(int d)
+	{
+		this.modele.setDecalage(d);
+	}
+
+	/**
+	* Permet d'éditer ou non toutes les colonnes.
+	*/
+	public void setEditable ( boolean editable )
+	{
+		this.modele.setEditable(editable);
+	}
+
+    /**
+	* Permet de modifier la liste des cellules éditables avec les numéros de colonne choisi.
+	*/
+    public void setEditable ( int[] lst )
+    {
+        this.modele.setEditable(lst);
     }
 
 }

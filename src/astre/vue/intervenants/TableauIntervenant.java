@@ -33,7 +33,7 @@ public class TableauIntervenant extends JTable
 		//this.modele = new ModeleTableauIntervenant(this.nomColonnes, tabDonnees);
 		this.modele = new ModeleTableau(nomColonnes, tabDonnees);
 		this.modele.setEditable( new int[] {0, 1, 2, 3, 4} );
-		this.modele.setDecalage(1);
+		this.modele.setDecalage(0);
 		
 		this.setModel ( this.modele );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
