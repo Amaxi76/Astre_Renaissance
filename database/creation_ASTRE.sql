@@ -82,30 +82,30 @@ CREATE TABLE Intervenant
 CREATE TABLE Intervient
 (
    Id_Intervenant INTEGER,
-   nomHeure       VARCHAR(50) ,
+   Id_Heure       INTEGER ,
    Code_ModuleIUT VARCHAR(5) ,
    nbSemaine      INTEGER,
    nbGroupe       INTEGER,
    nbHeure        INTEGER,
    commentaire    VARCHAR(50) ,
 
-   PRIMARY KEY(Id_Intervenant, nomHeure, Code_ModuleIUT),
+   PRIMARY KEY(Id_Intervenant, Id_Heure, Code_ModuleIUT),
    FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant) ON DELETE CASCADE,
-   FOREIGN KEY(nomHeure)       REFERENCES Heure(nomHeure)             ON DELETE CASCADE,
+   FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)             ON DELETE CASCADE,
    FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)   ON DELETE CASCADE
 );
 
 
 CREATE TABLE Horaire
 ( 
-   nomHeure             VARCHAR(50),
+   Id_Heure             INTEGER,
    Code_ModuleIUT       VARCHAR(5),
    nbHeurePN            INTEGER,
    nbHeureRepartie      INTEGER,
    nbSemaine            INTEGER,
    
-   PRIMARY KEY(nomHeure, Code_ModuleIUT),
-   FOREIGN KEY(nomHeure)       REFERENCES Heure(nomHeure)           ON DELETE CASCADE,
+   PRIMARY KEY(Id_Heure, Code_ModuleIUT),
+   FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)           ON DELETE CASCADE,
    FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) ON DELETE CASCADE
 );
 
