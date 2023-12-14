@@ -184,6 +184,8 @@ public class PanelModuleLabel  extends JPanel
 			this.lblType.setText ( "PPP" );
 		}
 
+
+
 		if ( !lblType.getText().equals ( "PPP" ) )
 		{
 			valSemestre = ( code.length() > 1 ) ? Character.getNumericValue ( code.charAt ( 1 ) ) : -1;
@@ -192,6 +194,8 @@ public class PanelModuleLabel  extends JPanel
 		{
 			valSemestre = ( code.length() > 4 ) ? Character.getNumericValue ( code.charAt ( 4) ) : -1;
 		}
+
+		
 
 		if (valSemestre >= 1 && valSemestre <= 6)
 				this.lblSemestre.setText("S" + valSemestre);
