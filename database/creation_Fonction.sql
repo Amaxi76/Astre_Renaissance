@@ -218,6 +218,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Update Semestre nouvelle année
+DROP              FUNCTION f_updateAnneeSemestre ( );
+CREATE OR REPLACE FUNCTION f_updateAnneeSemestre ( )
+RETURNS VOID AS
+$$
+BEGIN
+    UPDATE Semestre
+
+    SET    nbGroupeTP  = 0,
+           nbGroupeTD  = 0,
+           nbEtud      = 0,
+           nbSemaine   = 0;
+END;
+$$ LANGUAGE plpgsql;
+
 -- Update de contrat
 DROP              FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION );
 CREATE OR REPLACE FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION )

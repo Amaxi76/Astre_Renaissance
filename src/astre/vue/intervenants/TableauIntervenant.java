@@ -45,12 +45,6 @@ public class TableauIntervenant extends JTable
 		this.setDragEnabled ( false );
 
 		//Permet la création de la comboBox
-		JComboBox<String> cbEdit = new JComboBox<>();
-		for ( Contrat c : this.ctrl.getContrats ( ) )
-		{
-			cbEdit.addItem ( c.getNom ( ) );
-		}
-		this.getColumnModel ( ).getColumn (0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 	}
 	
 	/**

@@ -34,8 +34,7 @@ public class PanelContrat extends JPanel
 
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 
-		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), true );
-		this.tabContrat.getModeleTableau().setDecalage(1);
+		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), 1 );
 		this.tabContrat.getModeleTableau().setEditable(true);
 		
 		this.tabContrat.setShowGrid ( false );
@@ -50,4 +49,12 @@ public class PanelContrat extends JPanel
 
 		this.add ( pnlListeModule, BorderLayout.CENTER );
 	}
+
+
+	public Tableau getTabContrat()
+	{
+		return this.tabContrat;
+	}
+
+	
 }

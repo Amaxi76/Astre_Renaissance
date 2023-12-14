@@ -22,7 +22,6 @@ public class PanelTypeHeure extends JPanel
 {
 	private Controleur ctrl;
 	private Tableau    tabContrat;
-
 	
 	public PanelTypeHeure ( Controleur ctrl )
 	{
@@ -34,7 +33,9 @@ public class PanelTypeHeure extends JPanel
 
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 
-		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauHeure ( ), true );
+		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauHeure ( ), 0 );
+		this.tabContrat.setEditable(true);
+		
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 
 import astre.Controleur;
+import astre.vue.outils.MenuBarAstre;
 import astre.vue.outils.ConstantesVue;
 
 public class FramePrevisionnel extends JFrame
@@ -37,6 +38,8 @@ public class FramePrevisionnel extends JFrame
 		this.setTitle              ( "Prévisionnel" );
 		this.setLocationRelativeTo ( null           );
 
+		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
+			
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */

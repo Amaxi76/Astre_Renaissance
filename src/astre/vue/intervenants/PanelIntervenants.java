@@ -19,7 +19,7 @@ import java.awt.BorderLayout;
 
 public class PanelIntervenants extends JPanel implements ActionListener
 {
-	private TableauIntervenant tableau;
+	private Tableau tableau;
 	private JScrollPane scrollPane;
 	
 	private JButton btnAjouter;
@@ -48,7 +48,16 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 		//this.tableau = new Tableau(noms);
 
-		this.tableau = new TableauIntervenant ( noms, this.ctrl.getTableauIntervenant(), this.ctrl );
+		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant(), 1 );
+
+		JComboBox<String> cbEdit = new JComboBox<>();
+		for ( Contrat c : this.ctrl.getContrats ( ) )
+		{
+			cbEdit.addItem ( c.getNom ( ) );
+		}
+		this.tableau.getColumnModel ( ).getColumn (0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
+
+		this.tableau.setEditable( new int[] {0, 1, 2, 3, 4} );
 		this.tableau.ajusterTailleColonnes();
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );

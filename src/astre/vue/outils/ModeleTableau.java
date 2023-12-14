@@ -27,23 +27,24 @@ public class ModeleTableau extends AbstractTableModel
         if(tabDonnees.length == 0)
             ajouterLigne();
         
-        for(int i=0; i<tabDonnees.length; i++)
+        //ecriture des tableau pour test
+        /*for(int i=0; i<tabDonnees.length; i++)
         {
             for(int j=0; j<tabDonnees[0].length; j++)
             {
                 System.out.print(tabDonnees[i][j] + " ");
             }
             System.out.println();
-        }
+        }*/
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
-    public int    getColumnCount ( )                  { return this.tabEntetes.length - decalage;      }
-	public int    getRowCount    ( )                  { return this.tabDonnees.length;                 }
-	public Object getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage];   }
-	public String getNomColonne  ( int col )          { return this.tabEntetes[col];                   }
-	public Class  getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );   }
-	public String getColumnName  ( int c )            { return this.tabEntetes[c + decalage];          }
+    public int    getColumnCount ( )                  { return this.tabEntetes.length - decalage;    }
+	public int    getRowCount    ( )                  { return this.tabDonnees.length;               }
+	public Object getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage]; }
+	public String getNomColonne  ( int col )          { return this.tabEntetes[col];                 }
+	public Class  getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );     }
+	public String getColumnName  ( int c )            { return this.tabEntetes[c + decalage];        }
 
     /**
 	* Donne la liste des cellules éditables.
