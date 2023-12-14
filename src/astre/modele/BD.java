@@ -843,11 +843,11 @@ public class BD
 
 	public void delete ( Heure h )
 	{
-		String req = "DELETE FROM Heure where nomHeure = ?";
+		String req = "DELETE FROM Heure where Id_Heure = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, h.getNom ( ) );
+			ps.setInt ( 1, h.getId ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
