@@ -11,7 +11,6 @@ import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
 
-import astre.vue.intervenants.TableauIntervenant;
 import astre.vue.outils.Tableau;
 
 /** Classe PanelParametrage

@@ -32,7 +32,14 @@ public class Controleur
 	public Object[][]    getTableauContrat     (                 ) { return this.metier.getTableauContrat     (             ); }
 	public Object[][]    getTableauHeure       (                 ) { return this.metier.getTableauHeure       (             ); }
 	public Heure         getHeure              ( String nom      ) { return this.metier.getHeure              ( nom         ); }
-	public List<Contrat> getContrats           (                 ) { return this.metier.getContrats           (             ); }
+	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
+
+	public List<Contrat>     getContrats       (                 ) { return this.metier.getContrats           (             ); }
+	public List<Intervenant> getIntervenants   (                 ) { return this.metier.getIntervenants       (             ); }
+
+	public void update ( Object o ) { this.metier.update(o); }
+	public void insert ( Object o ) { this.metier.insert(o); }
+	public void delete ( Object o ) { this.metier.delete(o); }
 
 	public void majSemestre ( Semestre s ) { this.metier.majSemestre ( s ); }
 
