@@ -23,6 +23,9 @@ public class Tableau extends JTable
 	{
 		this.nomColonnes = nomColonnes;
 		this.modele = new ModeleTableau ( this.nomColonnes, tabDonnees );
+
+		this.modele.setEditable( new int[] { 1, 2, 3, 4} );
+
 		
 		this.setModel ( this.modele );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
