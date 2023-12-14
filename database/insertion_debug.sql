@@ -49,7 +49,10 @@ INSERT INTO ModuleIUT VALUES
 INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
 ('Orwell'        , 'Georges',  25, 389, 2 ),
-('Lovecraft'     , 'Howard' ,  85, 125, 2 );
+('Lovecraft'     , 'Howard' ,  85, 125, 2 ),
+('Maupassant'    , 'Guy'    ,   2,   4, 1 ),
+('De Balzac'     , 'Honoré' ,  65,  89, 3 ),
+('Toriyama'      , 'Akira'  , 487, 478, 2 );
 
 INSERT INTO Heure VALUES
 ('TP' , 1   ),

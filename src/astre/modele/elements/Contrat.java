@@ -6,13 +6,8 @@ package astre.modele.elements;
   * @date : 06/12/2023
   */
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Contrat
 {
-	private static List<Contrat> ensContrat = new ArrayList<> ( );
-
 	private int    id;
 	private String nom;
 	private int    heureServiceContrat;
@@ -26,7 +21,7 @@ public class Contrat
 	 * @param heureMaxContrat
 	 * @param ratioTP
 	 */
-	public Contrat ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
+	private Contrat ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
 		this.id                  = id;
 		this.nom                 = nom;
@@ -89,15 +84,44 @@ public class Contrat
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/**
-	 * @return
-	 */
-	public boolean retirerListe ( )
+	public static Contrat creation ( Object[] contrat )
 	{
-		if ( ! Contrat.ensContrat.contains ( this ) ) return false;
+		Object i   = contrat[0];
+		Object n   = contrat[1];
+		Object hsc = contrat[2];
+		Object hmc = contrat[3];
+		Object rt  = contrat[4];
+
+		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( hsc instanceof Integer ) || !( hmc instanceof Integer ) || !( rt instanceof Number ) )
+			throw new IllegalArgumentException ( "Les données du contrat ne sont pas du bon type" );
 		
-		Contrat.ensContrat.remove ( this );
-		return true;
+		int    id                  = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
+		int    heureServiceContrat = Integer.parseInt ( hsc.toString ( ) );
+		int    heureMaxContrat     = Integer.parseInt ( hmc.toString ( ) );
+		String nom                 = n.toString ( );
+		double ratioTP             = Double.parseDouble ( rt.toString ( ) );
+
+		return Contrat.creation ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
+	}
+
+	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
+	{
+		if ( nom.equals ( "" ) )
+			throw new IllegalArgumentException ( "Une des données est vide" );
+
+		//hserv < 0 ou hmax < 0
+		if ( heureServiceContrat < 0 || heureMaxContrat < 0 )
+			throw new IllegalArgumentException ( "Les heures de services et heures max doivent etre touts 2 supérieur à 0" );
+
+		//hserv > hmax
+		if ( heureServiceContrat > heureMaxContrat )
+			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+
+		// Coef TD
+		if ( ratioTP < 0 )
+			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+		
+		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
 	/**

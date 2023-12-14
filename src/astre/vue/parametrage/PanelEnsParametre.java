@@ -35,17 +35,9 @@ public class PanelEnsParametre extends JTabbedPane
 		this.pnlContrat   = new PanelContrat   ( this.ctrl );
 		this.pnlTypeHeure = new PanelTypeHeure ( this.ctrl );
 
-		
-
-		
-
 		// Positionnement des composants
 		this.add ( "Contrat"   , this.pnlContrat   );
 		this.add ( "Type Heure", this.pnlTypeHeure );
-
-		
 	}
-
-
 	
 }

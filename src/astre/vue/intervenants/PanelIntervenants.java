@@ -40,25 +40,27 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	{
 		this.ctrl = ctrl;
 
-		this.setLayout ( new BorderLayout() );
+		this.setLayout ( new BorderLayout ( ) );
 		int marginSize = 10;
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		//création des composants
 		String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		//this.tableau = new Tableau(noms);
 
-		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant(), 1 );
+		//Création du tableau
+		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant ( ), 1 );
 
-		JComboBox<String> cbEdit = new JComboBox<>();
+		//Ajout d'une JComboBox au tableau
+		JComboBox<String> cbEdit = new JComboBox<> ( );
 		for ( Contrat c : this.ctrl.getContrats ( ) )
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
 		this.tableau.getColumnModel ( ).getColumn (0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
+		//Parametres du tableau
 		this.tableau.setEditable( new int[] {0, 1, 2, 3, 4} );
-		this.tableau.ajusterTailleColonnes();
+		this.tableau.ajusterTailleColonnes ( );
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );
 		this.btnSupprimer   = new JButton ( "Supprimer"   );
@@ -66,7 +68,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 		
 		this.panelCentre = new JPanel( );
-		panelCentre.setLayout ( new BorderLayout() );
+		panelCentre.setLayout ( new BorderLayout ( ) );
 		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		JPanel panelCentre2 = new JPanel( );
@@ -97,93 +99,113 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource() == this.btnAjouter )
+		if ( e.getSource ( ) == this.btnAjouter )
 		{
-			this.tableau.ajouterLigne();
-			this.repaint();
+			this.tableau.ajouterLigne ( );
+			this.repaint ( );
 		}
 		
-		if ( e.getSource() == this.btnSupprimer )
+		if ( e.getSource ( ) == this.btnSupprimer )
 		{
-			this.tableau.supprimerLigne();
-			this.repaint();
+			this.tableau.supprimerLigne ( );
+			this.repaint ( );
 		}
 		
-		if ( e.getSource() == this.btnEnregistrer )
+		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			if(!enregistrer( this.tableau.getDonnees() ))
+			if( enregistrer( this.tableau.getDonnees ( ) ) )
 			{
-				Controleur.afficherErreur("Enregistrement impossible", "Une ligne vide ne peut pas être enregistrer");
+				this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
 			}
-			
+			this.tableau.ajusterTailleColonnes ( );
 		}
 		
-		if ( e.getSource() == this.btnAnnuler )
+		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			this.tableau.modifDonnees(this.ctrl.getTableauIntervenant());
+			this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
+			this.tableau.ajusterTailleColonnes ( );
 		}
 	}
 
-	public boolean enregistrer(Object[][] deuxieme)
+	public boolean enregistrer ( Object[][] deuxieme )
 	{
-		ArrayList<Intervenant> lst = new ArrayList<Intervenant>();
-		BD bd = BD.getInstance();//a modif ptet
-
-		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) bd.getIntervenants();
+		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
+		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) this.ctrl.getIntervenants();
 		
+		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
 		Intervenant inter = null;
-		for (int i = 0; i < deuxieme.length; i++)
+		for ( int i = 0; i < deuxieme.length; i++ )
 		{
-			for(int cpt=1; cpt < deuxieme[0].length; cpt++)
+			//verif des erreurs
+			for ( int cpt=1; cpt < deuxieme[0].length; cpt++ )
 			{
-				System.out.println(deuxieme[i][cpt].toString());
-				
-				if(deuxieme[i][cpt].toString().equals(""))
-					return false; //faire une popup ? ou bien continuer en ignorant la ligne ?
+				//cases vides
+				if ( deuxieme[i][cpt].toString ( ).equals ( "" ) )
+				{
+					Controleur.afficherErreur("Enregistrement impossible", "La colonne " + cpt + " de la ligne " + (i + 1) + " est vide");
+					return false;
+				}
+
+				//hserv < 0 ou hmax < 0
+				if ( Integer.parseInt ( deuxieme[i][4].toString ( ) ) < 0 || Integer.parseInt ( deuxieme[i][5].toString ( ) ) < 0 )
+				{
+					Controleur.afficherErreur("Enregistrement impossible", "Les heures de services et heures max doivent etre touts 2 supérieur à 0 sur la ligne " + (i + 1) );
+					return false;
+				}
+
+				//hserv > hmax
+				if ( Integer.parseInt ( deuxieme[i][4].toString ( ) ) > Integer.parseInt ( deuxieme[i][5].toString ( ) ) )
+				{
+					Controleur.afficherErreur("Enregistrement impossible", "Les heures de services sont supérieur à ses heures max sur la ligne " + (i + 1) );
+					return false;
+				}
+					
 			}
 
-			if(deuxieme[i][0].toString().equals(""))
-				inter = new Intervenant(0, deuxieme[i][2].toString(), deuxieme[i][3].toString(), bd.getContrat(deuxieme[i][1].toString()), Integer.parseInt(deuxieme[i][4].toString()), Integer.parseInt(deuxieme[i][5].toString()) );
+			//si pas ID creer une ID à 0
+			if ( deuxieme[i][0].toString ( ).equals ("" ) )
+				inter = new Intervenant ( 0, deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
 			else
-				inter = new Intervenant(Integer.parseInt(deuxieme[i][0].toString()), deuxieme[i][2].toString(), deuxieme[i][3].toString(), bd.getContrat(deuxieme[i][1].toString()), Integer.parseInt(deuxieme[i][4].toString()), Integer.parseInt(deuxieme[i][5].toString()) );
+				inter = new Intervenant ( Integer.parseInt ( deuxieme[i][0].toString ( ) ), deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
 			
-			lst.add(inter);
+			//Ajout a une liste pour les suppression apres
+			lst.add ( inter );
 
 			boolean up = false;
-			for(Intervenant venant : lstBD)
+			for ( Intervenant venant : lstBD )
 			{
-				if(inter.getId() == venant.getId())
+				if ( inter.getId ( ) == venant.getId ( ) )
 				{
 					up = true;
 				}
 			}
 
-			if(up)
+			if ( up )
 			{
-				bd.update(inter);
+				this.ctrl.update(inter);
 			}
 			else
 			{
-				bd.insert(inter);
+				this.ctrl.insert(inter);
 			}
 		}
 
-		for(Intervenant venant : lstBD)
+		//Pour tout intervenant dans BD, si ID dans nouveau tab alors garder l'intervenant
+		for ( Intervenant venant : lstBD )
 		{
 			boolean del = true;
-			for(Intervenant venant2 : lst)
+			for ( Intervenant venant2 : lst )
 			{
-				if(venant2.getId() == venant.getId())
+				if ( venant2.getId ( ) == venant.getId ( ) )
 				{
 					del = false;
 					break;
 				}
-				System.out.println(venant2.getId() +" "+venant.getId());
 			}
 
-			if(del)
+			if ( del )
 			{
-				bd.delete(venant);
+				this.ctrl.delete(venant);
 			}
 		}
 		return true;
