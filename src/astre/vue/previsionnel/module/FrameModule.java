@@ -29,11 +29,8 @@ public class FrameModule extends JFrame
 	private PanelPNLocalPPP	    panelPNLocalPPP;
 	private PanelRepartition    panelRepartition;
 	private PanelRepartitionBis panelRepartitionBis;
-<<<<<<< HEAD
 	private PanelAffectation    panelAffectation;
-=======
 	private PanelRepartitionPPP panelRepartitionPPP;
->>>>>>> a9cf96b0907bdadec99b77dd2d40d5f51e3b2e70
 
 	private JCheckBox cbValidation;
 
@@ -61,16 +58,10 @@ public class FrameModule extends JFrame
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
 		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl );
-<<<<<<< HEAD
-		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
-		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl );
-		this.panelAffectation    = new PanelAffectation    ( this.ctrl );
-=======
 		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl );
 		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
 		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl );
 		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl );
->>>>>>> a9cf96b0907bdadec99b77dd2d40d5f51e3b2e70
 
 		this.cbValidation = new JCheckBox ( "Validation" );
 
