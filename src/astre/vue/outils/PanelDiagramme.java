@@ -2,7 +2,7 @@ package astre.vue.outils;
 
 /** Classe PanelDiagramme
   * @author : Maxime Lemoine
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0 - 14/12/2023
   * @date : 06/12/2023
  */
 
@@ -29,30 +29,30 @@ import org.jfree.chart.labels.*;
 public class PanelDiagramme extends JPanel
 {
 	private static final Color COULEUR_DEFAUT = Color.GRAY;
-	
+
 	private Map donnees;
-	
+
 	public PanelDiagramme ( Map donnees, Color couleurMin, Color couleurMax )
 	{
 		this.donnees = donnees;
 		this.setSize( new Dimension ( 800,500 ) );
-		
+
 		//Ajout des données
 		final DefaultPieDataset pieDataset = new DefaultPieDataset ( );
-		
+
 		Iterator iterator = this.donnees.entrySet ( ).iterator ( );
 		while ( iterator.hasNext ( ) )
 		{
 			Map.Entry mapentry = ( Map.Entry ) iterator.next ( );
 			pieDataset.setValue ( ( String ) mapentry.getKey ( ), ( Double ) mapentry.getValue ( ) );
 		}
-		
+
 		final JFreeChart pieChart = ChartFactory.createPieChart ( "Répartitions des heures de l'enseignant X", pieDataset, true, true, true );
 		final ChartPanel cPanel = new ChartPanel ( pieChart );
-		
+
 		// Ajout des couleurs
 		PiePlot plot = ( PiePlot ) pieChart.getPlot ( );
-		
+
 		int nbDonnes = donnees.size ( );
 		List<Color> degrade = generateGradientColors ( couleurMin, couleurMax, nbDonnes );
 		int cptD=0;
@@ -60,7 +60,7 @@ public class PanelDiagramme extends JPanel
 		while ( iterator.hasNext ( ) )
 		{
 			Map.Entry mapentry = ( Map.Entry ) iterator.next ( );
-			
+
 			if ( cptD == nbDonnes-1 ) { plot.setSectionPaint ( ( String ) mapentry.getKey ( ), COULEUR_DEFAUT ); }
 			else
 			{
@@ -76,7 +76,7 @@ public class PanelDiagramme extends JPanel
 		plot.setLabelOutlinePaint    ( null );
 		plot.setLabelShadowPaint     ( null );
 		plot.setLabelPaint           ( Color.WHITE );
-		
+
 		Font font = new Font ( "Arial", Font.BOLD, 14 );
 		plot.setLabelFont      ( font );
 		plot.setLabelGenerator ( new StandardPieSectionLabelGenerator ( "{1}h" ) );
@@ -89,7 +89,7 @@ public class PanelDiagramme extends JPanel
 	public static void main ( String[] args )
 	{
 		// Donnees
-		Map donnees = new LinkedHashMap<String,Double> ( );
+		Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
 		donnees.put ( "TP", 56+56+12+12+0.0 );
 		donnees.put ( "TD", 28+28+9+9+19.5 );
 		donnees.put ( "CM", 28.0 );
@@ -97,7 +97,7 @@ public class PanelDiagramme extends JPanel
 		donnees.put ( "B", 28.0 );
 		donnees.put ( "C", 28.0 );*/
 		donnees.put ( "NA", 20.0 ); //((int)(165.5))-(heuresTP+heuresTD+heuresCM)
-		
+
 		// Generation
 		JFrame f = new JFrame ( );
 		f.setVisible ( true );
@@ -113,11 +113,11 @@ public class PanelDiagramme extends JPanel
 		for ( int i = 0; i < steps; i++ )
 		{
 			float ratio = ( float ) i / ( float ) ( steps - 1 );
-			
+
 			int red   = ( int ) ( startColor.getRed   ( ) + ratio * ( endColor.getRed   ( ) - startColor.getRed   ( ) ) );
 			int green = ( int ) ( startColor.getGreen ( ) + ratio * ( endColor.getGreen ( ) - startColor.getGreen ( ) ) );
 			int blue  = ( int ) ( startColor.getBlue  ( ) + ratio * ( endColor.getBlue  ( ) - startColor.getBlue  ( ) ) );
-			
+
 			Color color = new Color ( red, green, blue );
 			gradientColors.add ( color );
 		}
