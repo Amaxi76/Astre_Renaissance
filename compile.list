@@ -35,6 +35,9 @@ src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
 src/astre/vue/previsionnel/PanelSemestre.java
 
+src/astre/vue/etats/FrameEtats.java
+src/astre/vue/etats/PanelEtats.java
+
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModuleLabel.java
 src/astre/vue/previsionnel/module/PanelModuleBouton.java
