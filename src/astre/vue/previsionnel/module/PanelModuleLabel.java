@@ -1,7 +1,7 @@
 package astre.vue.previsionnel.module;
 
+import astre.modele.elements.ModuleIUT;
 import astre.modele.elements.Semestre;
-import astre.modele.elements.Heure;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,6 +13,12 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 
+/** Classe PanelModuleLabel
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 11/12/2023
+  */
+
 public class PanelModuleLabel  extends JPanel
 {
 	/*-------------*/
@@ -20,6 +26,7 @@ public class PanelModuleLabel  extends JPanel
 	/*-------------*/
 
 	private Controleur ctrl;
+	private FrameModule frm;
 
 	private JLabel     lblType;
 	private JLabel     lblSemestre;
@@ -36,9 +43,11 @@ public class PanelModuleLabel  extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelModuleLabel ( Controleur ctrl )
+	public PanelModuleLabel ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
+
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
@@ -55,8 +64,8 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibCourt = new JTextField ("", 10);
 
 		this.lblNbEtd  = new JLabel( );
-		this.lblNbGpTD = new JLabel( );
-		this.lblNbGpTP = new JLabel( );
+		this.lblNbGpTD = new JLabel( "0" );
+		this.lblNbGpTP = new JLabel( "0" );
 
 
 		gbc.gridy = 0;
@@ -150,6 +159,7 @@ public class PanelModuleLabel  extends JPanel
 	private void majLabels()
 	{
 		String code = this.txtCode.getText();
+		int valSemestre = -1;
 
 		if ( code.contains ( "ST" ) )
 		{
@@ -169,12 +179,30 @@ public class PanelModuleLabel  extends JPanel
 			this.lblType.setText ( "SAE" );
 		}
 
-		int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
+		else if ( code.startsWith ( "PPP" ) )
+		{
+			this.lblType.setText ( "PPP" );
+		}
+
+
+
+		if ( !lblType.getText().equals ( "PPP" ) )
+		{
+			valSemestre = ( code.length() > 1 ) ? Character.getNumericValue ( code.charAt ( 1 ) ) : -1;
+		}
+		else
+		{
+			valSemestre = ( code.length() > 4 ) ? Character.getNumericValue ( code.charAt ( 4) ) : -1;
+		}
+
+		
 
 		if (valSemestre >= 1 && valSemestre <= 6)
-			this.lblSemestre.setText("S" + valSemestre);
+				this.lblSemestre.setText("S" + valSemestre);
 
 		attributsSemestre(valSemestre);
+
+		this.frm.setVisiblePanels ( this.lblType.getText() );
 	}
 
 	private void attributsSemestre( int valSemestre )
@@ -188,4 +216,19 @@ public class PanelModuleLabel  extends JPanel
 			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP() ) );
 		}
 	}
+
+	public void setModule ( ModuleIUT module )
+	{
+		this.lblSemestre.setText ( "S" + module.getSemestre ( ).getIdSemestre ( ) );
+		this.lblType    .setText ( module.getTypeModule ( ) );
+		this.lblNbEtd   .setText ( module.getSemestre ( ).getNbEtudiant ( ) + "" );
+		this.lblNbGpTD  .setText ( module.getSemestre ( ).getNbGroupeTD ( ) + "" );
+		this.lblNbGpTP  .setText ( module.getSemestre ( ).getNbGroupeTP ( ) + "" );
+
+		this.txtLibLong .setText ( module.getLibLong  ( ) );
+		this.txtLibCourt.setText ( module.getLibCourt ( ) );
+		this.txtCode    .setText ( module.getCode     ( ) );
+	}
+	
+	public String getLblType() { return this.lblType.getText(); }
 }

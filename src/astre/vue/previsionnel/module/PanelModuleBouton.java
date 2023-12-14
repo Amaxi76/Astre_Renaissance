@@ -9,6 +9,12 @@ import javax.swing.JFrame;
 
 import astre.Controleur;
 
+/** Classe PanelModuleBouton
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 11/12/2023
+  */
+
 public class PanelModuleBouton  extends JPanel implements ActionListener
 {
 	/*-------------*/
@@ -56,7 +62,6 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
 			( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose(); //TODO: fonctionne mais peut être mettre qqch de plus propre via une valeur passée en paramètre de contructeur ?
-			System.out.println ( "Annuler" );
 		}
 	}
 }

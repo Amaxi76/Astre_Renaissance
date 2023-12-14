@@ -11,6 +11,12 @@ import javax.swing.JScrollPane;
 import astre.Controleur;
 import astre.vue.outils.Tableau;
 
+/** Classe PanelAffectation 
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 13/12/2023
+  */
+
 public class PanelAffectation extends JPanel implements ActionListener
 {
 	/*-------------*/

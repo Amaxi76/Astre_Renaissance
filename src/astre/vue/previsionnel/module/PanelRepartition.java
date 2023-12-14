@@ -3,6 +3,7 @@ package astre.vue.previsionnel.module;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -10,6 +11,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.BD;
+import astre.modele.elements.Heure;
+import astre.modele.elements.Horaire;
+import astre.modele.elements.ModuleIUT;
+
+/** Classe PanelRepartition
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 12/12/2023
+  */
 
 public class PanelRepartition extends JPanel
 {
@@ -17,7 +28,8 @@ public class PanelRepartition extends JPanel
 	/*--Attributs--*/
 	/*-------------*/
 
-	private Controleur ctrl;
+	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtNbSemCM;
 	private JTextField txtNbHCM;
@@ -48,9 +60,11 @@ public class PanelRepartition extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelRepartition ( Controleur ctrl )
+	public PanelRepartition ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
+
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
@@ -262,62 +276,62 @@ public class PanelRepartition extends JPanel
 		});
 
 		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCM.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCM.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCM.setOpaque( true );
 
 		this.lblTotalTD.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTD.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTD.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTD.setOpaque( true );
 
 		this.lblTotalTP.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTP.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTP.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTP.setOpaque( true );
 
 		this.lblTotalSomme.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSomme.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSomme.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSomme.setOpaque( true );
 
 
 
 		this.lblTotalCMProm.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCMProm.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCMProm.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCMProm.setOpaque( true );
 
 		this.lblTotalTDProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTDProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTDProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTDProm.setOpaque( true );
 
 		this.lblTotalTPProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTPProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTPProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTPProm.setOpaque( true );
 
 		this.lblTotalHeurePProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalHeurePProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalHeurePProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalHeurePProm.setOpaque( true );
 
 		this.lblTotalSommeProm.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSommeProm.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSommeProm.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSommeProm.setOpaque( true );
 
 
 		this.lblTotalCMAff.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCMAff.setPreferredSize ( new Dimension ( 25, 15 ) );
+		this.lblTotalCMAff.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblTotalCMAff.setOpaque( true );
 
 		this.lblTotalTDAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTDAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTDAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTDAff.setOpaque( true );
 
 		this.lblTotalTPAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTPAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalTPAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalTPAff.setOpaque( true );
 
 		this.lblTotalHeurePAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalHeurePAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalHeurePAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalHeurePAff.setOpaque( true );
 
 		this.lblTotalSommeAff.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 25, 15 ) );
+		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSommeAff.setOpaque( true );
 	}
 
@@ -407,5 +421,89 @@ public class PanelRepartition extends JPanel
 
 		int somme = totalCM + totalTD + totalTP + heureP;
 		lblTotalSomme.setText ( String.valueOf ( somme ) );
+
+		majTotalPromo(totalCM, totalTD, totalTP, heureP);
+	}
+
+	private void majTotalPromo(int totalCM, int totalTD, int totalTP, int heureP)
+	{
+		double coeffCM = coeffHeure ( "CM" );
+		double totalCMProm = totalCM * coeffCM;
+		lblTotalCMProm.setText( String.valueOf ( totalCMProm ) );
+
+		double coeffTD = coeffHeure ( "TD" );
+		int nbGpTD = Integer.parseInt(frm.getPanelModuleLabel().lblNbGpTD.getText());
+		double totalTDProm = totalTD * coeffTD * nbGpTD;
+		lblTotalTDProm.setText( String.valueOf ( totalTDProm ) );
+
+		double coeffTP = coeffHeure ( "TP" );
+		int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().lblNbGpTP.getText() );
+		double totalTPProm = totalTP * coeffTP * nbGpTP;
+		lblTotalTPProm.setText( String.valueOf ( totalTPProm ) );
+
+		double totalHeurePProm = heureP * nbGpTD;
+		lblTotalHeurePProm.setText( String.valueOf ( totalHeurePProm ) );
+
+		double sommePromo = totalCMProm + totalTDProm + totalTPProm + totalHeurePProm;
+		lblTotalSommeProm.setText ( String.valueOf ( sommePromo ) );
+	}
+
+	private double coeffHeure ( String nomHeure )
+	{
+		Heure heure = this.ctrl.getHeure ( nomHeure );
+
+		double coefficient = 0.0;
+
+		switch (nomHeure)
+		{
+			case "CM":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TD":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TP":
+				coefficient = heure.getCoefTd();
+				break;
+		
+			default:
+				break;
+		}
+
+		return coefficient;
+	}
+
+	public void setModule ( ModuleIUT module )
+	{
+		this.txtNbSemCM.setText( "0" );
+		this.txtNbHCM  .setText( "0" );
+		this.txtNbSemTD.setText( "0" );
+		this.txtNbHTD  .setText( "0" );
+		this.txtNbSemTP.setText( "0" );
+		this.txtNbHTP  .setText( "0" );
+		this.txtHeureP .setText( "0" );
+		
+		ArrayList<Horaire> lstHoraire = (ArrayList<Horaire>) BD.getInstance().getHoraires( module.getCode() );
+
+		for(Horaire h : lstHoraire)
+		{
+			switch( h.getHeure().getNom().toUpperCase() )
+			{
+				case "CM" : this.txtNbHCM  .setText( h.getNbHeure  () + "" );
+				            this.txtNbSemCM.setText( h.getNbSemaine() + "" ); break;
+
+				case "TP" : this.txtNbHTP  .setText( h.getNbHeure  () + "" );
+				            this.txtNbSemTP.setText( h.getNbSemaine() + "" ); break;
+
+				case "TD" : this.txtNbHTD  .setText( h.getNbHeure  () + "" );
+				            this.txtNbSemTD.setText( h.getNbSemaine() + "" ); break;
+				default : ;
+			}
+		}
+
+		majTotalCM();
+		majTotalTD();
+		majTotalTP();
+		majTotalHeure();
 	}
 }

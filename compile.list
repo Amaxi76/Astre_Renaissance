@@ -4,6 +4,7 @@ src/astre/Controleur.java
 
 src/astre/modele/BD.java
 src/astre/modele/Astre.java
+src/astre/modele/GenerateurFichier.java
 
 src/astre/modele/elements/Contrat.java
 src/astre/modele/elements/Heure.java
@@ -15,7 +16,6 @@ src/astre/modele/elements/Semestre.java
 
 src/astre/vue/intervenants/PanelIntervenants.java
 src/astre/vue/intervenants/FrameIntervenants.java
-src/astre/vue/intervenants/TableauIntervenant.java
 
 src/astre/vue/outils/ConstantesVue.java
 src/astre/vue/outils/MenuBarAstre.java
@@ -35,14 +35,17 @@ src/astre/vue/previsionnel/PanelBouton.java
 src/astre/vue/previsionnel/PanelEnsSemestre.java
 src/astre/vue/previsionnel/PanelSemestre.java
 
+src/astre/vue/etats/FrameEtats.java
+src/astre/vue/etats/PanelEtats.java
+
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModuleLabel.java
 src/astre/vue/previsionnel/module/PanelModuleBouton.java
 src/astre/vue/previsionnel/module/PanelPNLocal.java
+src/astre/vue/previsionnel/module/PanelPNLocalBis.java
 src/astre/vue/previsionnel/module/PanelRepartition.java
+src/astre/vue/previsionnel/module/PanelRepartitionBis.java
 src/astre/vue/previsionnel/module/PanelAffectation.java
-src/astre/vue/previsionnel/module/ModeleTableauIntervient.java
-src/astre/vue/previsionnel/module/TableauIntervient.java
 
 src/astre/vue/nouvelleAnnee/FrameNouvelleAnnee.java
 
