@@ -44,9 +44,9 @@ public class PanelContrat extends JPanel implements ActionListener
 		/* ------------------------- */
 
 		String[]    enTete       = { "id","Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
-		JPanel      pnlContenu   = new JPanel ( new BorderLayout ( ) );
-		JPanel      pnlBouttonBD = new JPanel ( new FlowLayout  ( FlowLayout.RIGHT ) );
-		JPanel      pnlBoutton   = new JPanel ( new GridLayout ( 1, 2 ) );
+		JPanel      pnlContenu   = new JPanel ( new BorderLayout (                  ) );
+		JPanel      pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
+		JPanel      pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
 		
 		this.tabContrat     = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), 1 );
 
@@ -55,12 +55,12 @@ public class PanelContrat extends JPanel implements ActionListener
 
 		pnlContenu.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		this.tabContrat.setEditable ( true );
+		this.tabContrat.setEditable ( true  );
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
 		// Ajout du titre et rend la liste défilable 
-		JScrollPane spTab        = new JScrollPane ( this.tabContrat );
+		JScrollPane spTab = new JScrollPane ( this.tabContrat );
 		spTab.setBorder                  ( new TitledBorder ( "Liste des contrats" )     );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 

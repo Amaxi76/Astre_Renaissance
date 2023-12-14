@@ -18,7 +18,7 @@ import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
-import astre.modele.elements.Contrat;
+import astre.modele.elements.Heure;
 
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN
@@ -43,7 +43,7 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String[] enTete = { "Nom Heure", " Coeff TD" };
+		String[] enTete = { "id_Heure","Nom Heure", " Coeff TD" };
 		JPanel      pnlContenu   = new JPanel ( new BorderLayout ( ) );
 		JPanel      pnlBouttonBD = new JPanel ( new FlowLayout  ( FlowLayout.RIGHT ) );
 		JPanel      pnlBoutton   = new JPanel ( new GridLayout ( 1, 2 ) );
@@ -55,7 +55,7 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 
 		pnlContenu.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		this.tabContrat.setEditable ( true );
+		this.tabContrat.setEditable ( true  );
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
@@ -101,7 +101,7 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
-			this.ctrl.majTableauBD ( this.tabContrat.getDonnees ( ), Contrat.class );
+			this.ctrl.majTableauBD ( this.tabContrat.getDonnees ( ), Heure.class );
 	}
 
 	public Tableau getTab ( ) { return this.tabContrat; }

@@ -6,6 +6,8 @@ package astre.modele.elements;
   * @date : 06/12/2023
   */
 
+// TODO: Faire en sorte que ça ne supprime pas toutes la base de donnée 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class Heure
 		Object n = heure[1];
 		Object c = heure[2];
 
+		System.out.println(!( c instanceof Number ));
+
 		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( c instanceof Number ) )
 			throw new IllegalArgumentException ( "Les données de l'heure ne sont pas du bon type" );
 		
@@ -46,7 +50,7 @@ public class Heure
 			throw new IllegalArgumentException ( "Une des données est vide" );
 
 		//TODO: Demander confirmation au prof
-		if ( coefTD > 0  )
+		if ( coefTD >= 0  )
 			throw new IllegalArgumentException ( "Le coef TP doit être supérieur à 0" );
 
 		return new Heure ( id, nom, coefTD );
