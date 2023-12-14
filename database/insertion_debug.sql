@@ -54,7 +54,7 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De Balzac'     , 'Honoré' ,  65,  89, 3 ),
 ('Toriyama'      , 'Akira'  , 487, 478, 2 );
 
-INSERT INTO Heure VALUES
+INSERT INTO Heure (nom, coeffTD) VALUES
 ('TP' , 1   ),
 ('TD' , 1   ),
 ('CM' , 1.5 ),

@@ -159,6 +159,7 @@ public class PanelModuleLabel  extends JPanel
 	private void majLabels()
 	{
 		String code = this.txtCode.getText();
+		int valSemestre = -1;
 
 		if ( code.contains ( "ST" ) )
 		{
@@ -178,10 +179,26 @@ public class PanelModuleLabel  extends JPanel
 			this.lblType.setText ( "SAE" );
 		}
 
-		int valSemestre = (code.length() > 1) ? Character.getNumericValue(code.charAt(1)) : -1;
+		else if ( code.startsWith ( "PPP" ) )
+		{
+			this.lblType.setText ( "PPP" );
+		}
+
+
+
+		if ( !lblType.getText().equals ( "PPP" ) )
+		{
+			valSemestre = ( code.length() > 1 ) ? Character.getNumericValue ( code.charAt ( 1 ) ) : -1;
+		}
+		else
+		{
+			valSemestre = ( code.length() > 4 ) ? Character.getNumericValue ( code.charAt ( 4) ) : -1;
+		}
+
+		
 
 		if (valSemestre >= 1 && valSemestre <= 6)
-			this.lblSemestre.setText("S" + valSemestre);
+				this.lblSemestre.setText("S" + valSemestre);
 
 		attributsSemestre(valSemestre);
 
