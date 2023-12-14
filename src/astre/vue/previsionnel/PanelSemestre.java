@@ -71,7 +71,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		this.tableauEnsembleModule = new Tableau ( this.ctrl.getTableauModule ( numSemestre ), false );
+		this.tableauEnsembleModule = new Tableau ( new String[] {"", "", "", ""}, this.ctrl.getTableauModule ( numSemestre ), 0 );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 

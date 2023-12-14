@@ -10,7 +10,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
-import astre.vue.intervenants.TableauIntervenant;
+
 import astre.vue.outils.Tableau;
 
 /** Classe PanelParametrage
@@ -35,9 +35,9 @@ public class PanelContrat extends JPanel
 
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 
-		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), true);
-	
-		this.tabContrat.getModeleTableau().setDecalage(1);
+		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), 1 );
+		this.tabContrat.getModeleTableau().setEditable(true);
+		
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
@@ -52,7 +52,7 @@ public class PanelContrat extends JPanel
 	}
 
 
-	public Tableau getTabContrat()
+	public Tableau getTabContrat ( )
 	{
 		return this.tabContrat;
 	}

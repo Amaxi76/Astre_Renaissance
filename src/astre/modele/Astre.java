@@ -41,13 +41,16 @@ public class Astre
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Object[][]    getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau ( );  }
-	public Object[][]    getTableauIntervient  (                 ) { return this.bd.getIntervientsTableau  ( );  }
-	public Object[][]    getTableauContrat     (                 ) { return this.bd.getContratsTableau     ( );  }
-	public Object[][]    getTableauHeure       (                 ) { return this.bd.getHeureTableau        ( );  }
+	public Object[][]    getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau  ( ); }
+	public Object[][]    getTableauIntervient  (                 ) { return this.bd.getIntervientsTableau   ( ); }
+	public Object[][]    getTableauContrat     (                 ) { return this.bd.getContratsTableau      ( ); }
+	public Object[][]    getTableauHeure       (                 ) { return this.bd.getHeureTableau         ( ); }
 	public Semestre      getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
-	public Heure 	     getHeure              ( String nom      ) { return this.bd.getHeure    ( nom );         }
-	public List<Contrat> getContrats           (                 ) { return this.bd.getContrats ( );             }
+	public Heure 	     getHeure              ( String nom      ) { return this.bd.getHeure            ( nom ); }
+	public Contrat       getContrat            ( String nom      ) { return this.bd.getContrat          ( nom ); }
+
+	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats             ( ); }
+	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants         ( ); }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
@@ -59,5 +62,65 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public boolean nouvelleAnnee ( ) { return this.bd.nouvelleAnnee(); }
+	public void update ( Object o )
+	{
+		String test = o.getClass().toString();
+		//System.out.println(test);
+		String str[] = test.split("\\.");
+
+		switch(str[str.length - 1])
+		{
+			case "Contrat"     : this.bd.update ( ( Contrat     ) o ); break;
+			case "Heure"       : this.bd.update ( ( Heure       ) o ); break;
+			case "Horaire"     : this.bd.update ( ( Horaire     ) o ); break;
+			case "Intervenant" : this.bd.update ( ( Intervenant ) o ); break;
+			case "Intervient"  : this.bd.update ( ( Intervient  ) o ); break;
+			case "ModuleIUT"   : this.bd.update ( ( ModuleIUT   ) o ); break;
+			case "Semestre"    : this.bd.update ( ( Semestre    ) o ); break;
+
+			default : System.out.println("def");
+		}
+	}
+
+	public void insert ( Object o )
+	{
+		String test = o.getClass().toString();
+		//System.out.println(test);
+		String str[] = test.split("\\.");
+
+		switch(str[str.length - 1])
+		{
+			case "Contrat"     : this.bd.insert ( ( Contrat     ) o ); break;
+			case "Heure"       : this.bd.insert ( ( Heure       ) o ); break;
+			case "Horaire"     : this.bd.insert ( ( Horaire     ) o ); break;
+			case "Intervenant" : this.bd.insert ( ( Intervenant ) o ); break;
+			case "Intervient"  : this.bd.insert ( ( Intervient  ) o ); break;
+			//case "ModuleIUT"   : this.bd.insert ( ( ModuleIUT   ) o ); break;
+			//case "Semestre"    : this.bd.insert ( ( Semestre    ) o ); break;
+
+			default : System.out.println("def");
+		}
+	}
+
+	public void delete ( Object o )
+	{
+		String test = o.getClass().toString();
+		//System.out.println(test);
+		String str[] = test.split("\\.");
+
+		switch(str[str.length - 1])
+		{
+			case "Contrat"     : this.bd.delete ( ( Contrat     ) o ); break;
+			case "Heure"       : this.bd.delete ( ( Heure       ) o ); break;
+			case "Horaire"     : this.bd.delete ( ( Horaire     ) o ); break;
+			case "Intervenant" : this.bd.delete ( ( Intervenant ) o ); break;
+			case "Intervient"  : this.bd.delete ( ( Intervient  ) o ); break;
+			case "ModuleIUT"   : this.bd.delete ( ( ModuleIUT   ) o ); break;
+			//case "Semestre"    : this.bd.delete ( ( Semestre    ) o ); break;
+
+			default : System.out.println("def");
+		}
+	}
+	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
+	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
 }

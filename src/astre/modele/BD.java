@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JComboBox;
-
 import astre.modele.elements.*;
 
 public class BD
@@ -858,6 +856,30 @@ public class BD
 		catch ( SQLException x )
 		{
 			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
+			return false;
+		}
+	}
+
+	public boolean nouvelleAnneeZero (  )
+	{
+		
+		try
+		{
+			String req = "SELECT f_deleteAll ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			ps.close ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x );
 			return false;
 		}
 	}

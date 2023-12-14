@@ -168,7 +168,9 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	/**
 	 * Actions à réaliser lors des selections
 	 */
+
 	private void allerVersPage ( String nom ) //TODO: ajouter tous les accès aux frames
+
 	{
 		// TODO: récupérer la chaine "options" d'une autre manière qu'en dur dans le code (chercher dans le modèle du tableau ou créer une hashmap)
 		String[] options = {, "Paramètre", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année"};
