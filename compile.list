@@ -4,6 +4,7 @@ src/astre/Controleur.java
 
 src/astre/modele/BD.java
 src/astre/modele/Astre.java
+src/astre/modele/GenerateurFichier.java
 
 src/astre/modele/elements/Contrat.java
 src/astre/modele/elements/Heure.java
