@@ -209,7 +209,7 @@ public class BD
 
 			while ( rs.next ( ) ) 
 			{
-				Horaire h = new Horaire( getHeure( rs.getString(1)), getModule(rs.getString(2)), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+				Horaire h = new Horaire( getHeure( rs.getInt(1)), getModule(rs.getString(2)), rs.getInt(3), rs.getInt(4), rs.getInt(5));
 				ensHoraire.add ( h );
 			}
 
@@ -338,6 +338,49 @@ public class BD
 		return result;
 	}
 
+	public 
+	
+	public Intervenant getIntervenant ( int i )
+	{
+		Intervenant intervenant = null;
+		
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Intervenant where Id_Intervenant = " + i );
+			while ( rs.next ( ) ) 
+			{
+				intervenant = new Intervenant ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 4 ) ), rs.getInt ( 5 ), rs.getInt ( 6 ) );
+			}
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( "Erreur getIntervenant(int c) : " + e );
+		}
+		
+		return intervenant;
+	}
+
+	public Heure getHeure ( int h )
+	{
+		Heure heure = null;
+		
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Heure where Id_Heure = " + h  );
+			while ( rs.next ( ) ) 
+			{
+				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+			}
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( "Erreur getHeure(int h) : " + e );
+		}
+		
+		return heure;
+	}
 
 	public Heure getHeure ( String h )
 	{
@@ -346,7 +389,7 @@ public class BD
 		try 
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Heure where nomHeure = '" + h + "'" );
+			ResultSet rs = st.executeQuery ( "select * from Heure where nomheure = '" + h + "'"  );
 			while ( rs.next ( ) ) 
 			{
 				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
@@ -508,48 +551,104 @@ public class BD
 		return intervenants;
 	}
 
-	// public Object[][] getIntervientsTableau()
-	// {
-	// 	int nbIntervients = 0;
+	public Object[][] getIntervientsTableau( String module )
+	{
+		int nbIntervients = 0;
 		
-	// 	try
-	// 	{
-	// 		Statement st = co.createStatement ( );
-	// 		ResultSet rs = st.executeQuery ( "select count(*) from Intervient" );
-	// 		while ( rs.next ( ) )
-	// 			nbIntervients = rs.getInt ( 1 );
-	// 	}
-	// 	catch ( SQLException e )
-	// 	{
-	// 		System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
-	// 	}
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient where Code_ModuleIUT ='" + module + "'" );
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
 
 	// 	Object[][] intervients = new Object[nbIntervients][6];
 
-	// 	try
-	// 	{
-	// 		Statement st = co.createStatement ( );
-	// 		ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
-	// 		int cpt = 0;
-	// 		while ( rs.next ( ) )
-	// 		{
-	// 			intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
-	// 			intervients[cpt][1] = rs.getString ( 2 );//heure
-	// 			intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
-	// 			intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
-	// 			intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
-	// 			intervients[cpt][5] = rs.getString ( 6 );//commentaire
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient where Code_ModuleIUT ='" + module + "'" );
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
+				intervients[cpt][1] = rs.getString ( 2 );//heure
+				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString ( 6 );//commentaire
 
 	// 			if( intervients[cpt][5] == null )
 	// 				intervients[cpt][5] = "";
 
-	// 			cpt++;
-	// 		}
-	// 	}
-	// 	catch ( SQLException e )
-	// 	{
-	// 		System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
-	// 	}
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
+
+		if( nbInbIntervients == 0 )
+		{
+			Object[][] test = new Object[1][6];
+			for( int cpt = 0; cpt < intervients.length; cpt++)
+			{
+				test[0][cpt] = "";
+			}
+			return test;
+		}
+
+		return intervients;
+	}
+
+	public Object[][] getIntervientsTableau( )
+	{
+		int nbIntervients = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient");
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		Object[][] intervients = new Object[nbIntervients][6];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, Id_Heure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient");
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
+				intervients[cpt][1] = getHeure(rs.getInt ( 2 )).getNom();//heure
+				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString ( 6 );//commentaire
+
+				if( intervients[cpt][5] == null )
+					intervients[cpt][5] = "";
+
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
 
 	// 	return intervients;
 	// }

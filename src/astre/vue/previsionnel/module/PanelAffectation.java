@@ -3,12 +3,17 @@ package astre.vue.previsionnel.module;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import astre.Controleur;
+import astre.modele.BD;
+import astre.modele.elements.Horaire;
+import astre.modele.elements.Intervient;
+import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.Tableau;
 
 /** Classe PanelAffectation 
@@ -88,4 +93,10 @@ public class PanelAffectation extends JPanel implements ActionListener
 			this.repaint();
 		}
 	}
+
+	public void setDonnee ( ModuleIUT module )
+	{
+		//TODO verif si ce truc marche
+		//this.tableau.modifDonnees(this.ctrl.getTableauContrat());
+	}	
 }
