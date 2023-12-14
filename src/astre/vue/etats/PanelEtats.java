@@ -1,6 +1,7 @@
 package astre.vue.etats;
 
 import astre.Controleur;
+import astre.modele.GenerateurFichier;
 
 /** Page de gestion des intervenants
   * @author : Matéo Sa
@@ -63,7 +64,7 @@ public class PanelEtats extends JPanel implements ActionListener
 		
 		if ( e.getSource ( ) == this.btnRecapTtInter )
 		{
-			
+			GenerateurFichier.recapTtInter();
 		}
 	}
 }
