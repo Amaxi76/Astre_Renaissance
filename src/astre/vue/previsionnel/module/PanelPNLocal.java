@@ -18,7 +18,7 @@ public class PanelPNLocal extends JPanel
 	/*--Attributs--*/
 	/*-------------*/
 
-	private Controleur ctrl;
+	private Controleur  ctrl;
 	private FrameModule frm;
 
 	private JTextField txtCM;
@@ -38,7 +38,7 @@ public class PanelPNLocal extends JPanel
 	public PanelPNLocal(Controleur ctrl, FrameModule frm)
 	{
 		this.ctrl = ctrl;
-		this.frm = frm;
+		this.frm  = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
