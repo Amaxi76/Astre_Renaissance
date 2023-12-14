@@ -28,8 +28,8 @@ public class PanelModuleLabel  extends JPanel
 	private JTextField txtLibCourt;
 
 	private JLabel lblNbEtd;
-	private JLabel lblNbGpTD;
-	private JLabel lblNbGpTP;
+	public  JLabel lblNbGpTD;
+	public  JLabel lblNbGpTP;
 
 
 	/*----------------*/

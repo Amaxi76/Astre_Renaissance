@@ -59,5 +59,5 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public boolean nouvelleAnnee ( ) { return this.bd.deleteAllIntervient(); }
+	public boolean nouvelleAnnee ( ) { return this.bd.nouvelleAnnee(); }
 }
