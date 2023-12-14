@@ -97,7 +97,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT * FROM " + clazz.getSimpleName ( ) );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM " + type.getSimpleName ( ) );
 
 			while ( rs.next ( ) )
 			{
