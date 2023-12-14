@@ -868,10 +868,14 @@ public class BD
 		try
 		{
 			String req = "SELECT f_deleteAll ( )";
-			
 			ps = co.prepareStatement ( req );
 			ps.execute ( );
-			ps.close   ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			ps.close ( );
 
 			return true;
 		}
