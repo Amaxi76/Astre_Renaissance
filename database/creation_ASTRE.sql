@@ -45,10 +45,11 @@ CREATE TABLE Contrat
 
 CREATE TABLE Heure
 (
+   Id_Heure SERIAL,
    nomHeure VARCHAR(50),
    coeffTD  DOUBLE PRECISION,
 
-   PRIMARY KEY(nomHeure)
+   PRIMARY KEY(Id_Heure)
 );
 
 CREATE TABLE ModuleIUT
