@@ -340,6 +340,23 @@ $$ LANGUAGE plpgsql;
 /*                   DELETE                   */
 /* ------------------------------------------ */
 
+-- Supprimer TOUTES les données
+DROP              FUNCTION f_deleteAll ( );
+CREATE OR REPLACE FUNCTION f_deleteAll ( ) RETURNS VOID AS 
+$$
+BEGIN
+
+	DELETE FROM Intervient  CASCADE;
+    DELETE FROM Horaire     CASCADE;
+    DELETE FROM ModuleIUT   CASCADE;
+    DELETE FROM Intervenant CASCADE;
+    DELETE FROM Contrat     CASCADE;
+    DELETE FROM Heure       CASCADE;
+
+END;
+$$ LANGUAGE plpgsql;
+
+
 -- Supprimer un contrat
 
 DROP              FUNCTION f_deleteContrat ( d_id_contrat INTEGER );

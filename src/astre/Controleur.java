@@ -41,7 +41,8 @@ public class Controleur
 		new PopUpErreur ( titre, message );
 	}
 
-	public boolean nouvelleAnnee ( ) { return this.metier.nouvelleAnnee(); }
+	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee    (); }
+	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero(); }
 
 	public static void main ( String[] args )
 	{

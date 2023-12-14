@@ -31,8 +31,8 @@ public class BD
 		{
 			Class.forName ( "org.postgresql.Driver" );
 			
-			//co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+			co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+			//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
@@ -858,6 +858,26 @@ public class BD
 		catch ( SQLException x )
 		{
 			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
+			return false;
+		}
+	}
+
+	public boolean nouvelleAnneeZero (  )
+	{
+		
+		try
+		{
+			String req = "SELECT f_deleteAll ( )";
+			
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+			ps.close   ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x );
 			return false;
 		}
 	}
