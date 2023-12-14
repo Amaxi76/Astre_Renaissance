@@ -32,12 +32,16 @@ public class Heure
 		Object n = heure[1];
 		Object c = heure[2];
 
-		System.out.println(!( c instanceof Number ));
+		System.out.println(i);
+
+		System.out.println( "Conditon 1 : " + ( i != null && !( i instanceof Integer ) ));
+		System.out.println( "Conditon 2 : " + !( n instanceof String ));
+		System.out.println( "Conditon 3 : " + !( c instanceof Number ));
 
 		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( c instanceof Number ) )
 			throw new IllegalArgumentException ( "Les données de l'heure ne sont pas du bon type" );
 		
-		int    id   = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
+		int    id                  = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
 		double coef = Double.parseDouble ( c.toString ( ) );
 		String nom  = n.toString ( );
 
@@ -50,7 +54,7 @@ public class Heure
 			throw new IllegalArgumentException ( "Une des données est vide" );
 
 		//TODO: Demander confirmation au prof
-		if ( coefTD >= 0  )
+		if ( coefTD <= 0  )
 			throw new IllegalArgumentException ( "Le coef TP doit être supérieur à 0" );
 
 		return new Heure ( id, nom, coefTD );
@@ -62,8 +66,9 @@ public class Heure
 
 	public static List<Heure> getHeures ( ) { return Heure.ensHeure;  }
 
-	public String getNom    ( ) { return nom;    }
-	public double getCoefTd ( ) { return coefTd; }
+	public int    getId     ( ) { return this.id;     }
+	public String getNom    ( ) { return this.nom;    }
+	public double getCoefTd ( ) { return this.coefTd; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */

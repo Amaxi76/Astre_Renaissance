@@ -95,6 +95,8 @@ public class Astre
 		// Ajout
 		lstAjout.removeAll ( lstBD );
 
+		System.out.println(lstAjout.size());
+
 		// Suppression
 		lstSuppression.removeAll ( lstLocal );
 

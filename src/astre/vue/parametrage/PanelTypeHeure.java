@@ -29,7 +29,7 @@ import astre.modele.elements.Heure;
 public class PanelTypeHeure extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
-	private Tableau    tabContrat;
+	private Tableau    tabHeure;
 	
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
@@ -48,19 +48,19 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 		JPanel      pnlBouttonBD = new JPanel ( new FlowLayout  ( FlowLayout.RIGHT ) );
 		JPanel      pnlBoutton   = new JPanel ( new GridLayout ( 1, 2 ) );
 		
-		this.tabContrat     = new Tableau ( enTete , this.ctrl.getTableauHeure ( ), 1 );
+		this.tabHeure     = new Tableau ( enTete , this.ctrl.getTableauHeure ( ), 1 );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
 		pnlContenu.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		this.tabContrat.setEditable ( true  );
-		this.tabContrat.setShowGrid ( false );
-		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
+		this.tabHeure.setEditable ( true  );
+		this.tabHeure.setShowGrid ( false );
+		this.tabHeure.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
 		// Ajout du titre et rend la liste défilable 
-		JScrollPane spTab        = new JScrollPane ( this.tabContrat );
+		JScrollPane spTab        = new JScrollPane ( this.tabHeure );
 		spTab.setBorder                  ( new TitledBorder ( "Liste des type d'heure" ) );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
@@ -101,10 +101,10 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
-			this.ctrl.majTableauBD ( this.tabContrat.getDonnees ( ), Heure.class );
+			this.ctrl.majTableauBD ( this.tabHeure.getDonnees ( ), Heure.class );
 	}
 
-	public Tableau getTab ( ) { return this.tabContrat; }
+	public Tableau getTab ( ) { return this.tabHeure; }
 
 	
 }
