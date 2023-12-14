@@ -55,12 +55,13 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('Toriyama'      , 'Akira'  , 487, 478, 2 );
 
 INSERT INTO Heure VALUES
-('TP' , 1   ),
-('TD' , 1   ),
-('CM' , 1.5 ),
-('REH', 1   ),
-('SAE', 1   ),
-('Tut', 1   );
+('TP'   , 1   ),
+('TD'   , 1   ),
+('CM'   , 1.5 ),
+('REH'  , 1   ),
+('SAE'  , 1   ),
+('PONCT', 1   ),
+('Tut'  , 1   );
 
 INSERT INTO Intervient (Id_Intervenant, nomHeure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
 (1,  'TD', 'R5.03',    6,    2,    5, NULL         ),
