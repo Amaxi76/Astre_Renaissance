@@ -504,14 +504,14 @@ public class BD
 		return intervenants;
 	}
 
-	public Object[][] getIntervientsTableau()
+	public Object[][] getIntervientsTableau( String module )
 	{
 		int nbIntervients = 0;
 		
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select count(*) from Intervient" );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient where Code_ModuleIUT ='" + module + "'" );
 			while ( rs.next ( ) )
 				nbIntervients = rs.getInt ( 1 );
 		}
@@ -525,7 +525,63 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient where Code_ModuleIUT ='" + module + "'" );
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
+				intervients[cpt][1] = rs.getString ( 2 );//heure
+				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString ( 6 );//commentaire
+
+				if( intervients[cpt][5] == null )
+					intervients[cpt][5] = "";
+
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
+
+		if( nbInbIntervients == 0 )
+		{
+			Object[][] test = new Object[1][6];
+			for( int cpt = 0; cpt < intervients.length; cpt++)
+			{
+				test[0][cpt] = "";
+			}
+			return test;
+		}
+
+		return intervients;
+	}
+
+	public Object[][] getIntervientsTableau( )
+	{
+		int nbIntervients = 0;
+		
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient");
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		Object[][] intervients = new Object[nbIntervients][6];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient");
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{

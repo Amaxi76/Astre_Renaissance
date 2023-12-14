@@ -28,6 +28,7 @@ public class FrameModule extends JFrame
 	private PanelPNLocalBis	    panelPNLocalBis;
 	private PanelRepartition    panelRepartition;
 	private PanelRepartitionBis panelRepartitionBis;
+	private PanelAffectation    panelAffectation;
 
 	private JCheckBox cbValidation;
 
@@ -52,11 +53,12 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.panelModuleLabel    = new PanelModuleLabel  ( this.ctrl, this );
-		this.panelPNLocal        = new PanelPNLocal      ( this.ctrl, this );
-		this.panelPNLocalBis     = new PanelPNLocalBis   ( this.ctrl );
-		this.panelRepartition    = new PanelRepartition  ( this.ctrl, this );
+		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
+		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
+		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl );
+		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
 		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl );
+		this.panelAffectation    = new PanelAffectation    ( this.ctrl );
 
 		this.cbValidation = new JCheckBox ( "Validation" );
 
@@ -80,7 +82,7 @@ public class FrameModule extends JFrame
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
-		panelCentre.add ( new PanelAffectation ( this.ctrl ), gbcC );
+		panelCentre.add ( this.panelAffectation, gbcC );
 		
 
 		JPanel panelOuest = new JPanel ( new GridBagLayout() );
@@ -121,6 +123,8 @@ public class FrameModule extends JFrame
 		
 		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
 		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
+
+		this.panelAffectation.setDonnee ( module );
 	}
 		
 
