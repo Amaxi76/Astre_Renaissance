@@ -258,7 +258,7 @@ RETURNS VOID AS
 $$
 BEGIN
     UPDATE Heure
-    SET    coeffTD  = u_coeffTD
+    SET    coeffTD  = u_coeffTD,
            nomHeure = u_nomHeure
            
     WHERE  Id_Heure = u_Id_Heure;
@@ -310,7 +310,7 @@ RETURNS VOID AS
 $$
 BEGIN
     UPDATE Intervient
-DROP              FUNCTION f_updateHoraire ( u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN IN
+
     SET    nbSemaine   = u_nbSemaine,  
            nbGroupe    = u_nbGroupe,
            nbHeure     = u_nbHeure,
