@@ -19,6 +19,7 @@ public class PanelPNLocal extends JPanel
 	/*-------------*/
 
 	private Controleur ctrl;
+	private FrameModule frm;
 
 	private JTextField txtCM;
 	private JTextField txtTD;
@@ -34,9 +35,10 @@ public class PanelPNLocal extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelPNLocal(Controleur ctrl)
+	public PanelPNLocal(Controleur ctrl, FrameModule frm)
 	{
 		this.ctrl = ctrl;
+		this.frm = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -135,7 +137,7 @@ public class PanelPNLocal extends JPanel
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme(); 
+		public void keyTyped   ( KeyEvent e ) { majSomme();
 												majTotalHeure();}
 		public void keyPressed ( KeyEvent e ) {}
 		public void keyReleased( KeyEvent e ) {}
@@ -198,19 +200,11 @@ public class PanelPNLocal extends JPanel
 
 	private void majTotalHeure()
 	{
-		PanelModuleLabel panelModuleLabel = new PanelModuleLabel(ctrl);
-
 		try
 		{
 			int CM = 0;
 			int TD = 0;
 			int TP = 0;
-
-			int nbGpTD = 1;
-			String nbGpTDText = panelModuleLabel.lblNbGpTD.getText();
-			if (!nbGpTDText.isEmpty()) {
-				nbGpTD = Integer.parseInt(nbGpTDText);
-			}
 	
 			if ( !txtCM.getText().isEmpty() )
 			{
@@ -224,7 +218,7 @@ public class PanelPNLocal extends JPanel
 			if (!txtTD.getText().isEmpty())
 			{
 				TD = Integer.parseInt(txtTD.getText());
-				//nbGpTD = Integer.parseInt(panelModuleLabel.lblNbGpTD.getText());
+				int nbGpTD = Integer.parseInt(frm.getPanelModuleLabel().lblNbGpTD.getText());
 				double coeffTD = coeffHeure("TD");
 				double totalTD = TD * coeffTD * nbGpTD;
 
@@ -234,8 +228,9 @@ public class PanelPNLocal extends JPanel
 			if ( !txtTP.getText().isEmpty() )
 			{
 				TP = Integer.parseInt ( txtTP.getText() );
+				int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().lblNbGpTP.getText() );
 				double coeffTP = coeffHeure ( "TP" );
-				double totalTP = TP * coeffTP;
+				double totalTP = TP * coeffTP * nbGpTP;
 	
 				lblTotalTP.setText ( String.valueOf ( totalTP ) );
 			}
