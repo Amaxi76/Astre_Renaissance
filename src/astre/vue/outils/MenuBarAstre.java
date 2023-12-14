@@ -173,7 +173,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 
 	{
 		// TODO: récupérer la chaine "options" d'une autre manière qu'en dur dans le code (chercher dans le modèle du tableau ou créer une hashmap)
-		String[] options = {, "Paramètre", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année"};
+		String[] options = {, "Paramètres", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année"};
 		System.out.println( "selectionné : " + nom ); // TODO: à supprimer
 		
 		if ( nom.equals( options[0] ) ){ new FrameAccueil      ( this.ctrl );  }
