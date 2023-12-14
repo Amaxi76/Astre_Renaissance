@@ -20,6 +20,7 @@ public class PanelModuleLabel  extends JPanel
 	/*-------------*/
 
 	private Controleur ctrl;
+	private FrameModule frm;
 
 	private JLabel     lblType;
 	private JLabel     lblSemestre;
@@ -36,9 +37,11 @@ public class PanelModuleLabel  extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelModuleLabel ( Controleur ctrl )
+	public PanelModuleLabel ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
+
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
@@ -175,6 +178,8 @@ public class PanelModuleLabel  extends JPanel
 			this.lblSemestre.setText("S" + valSemestre);
 
 		attributsSemestre(valSemestre);
+
+		this.frm.setVisiblePanels ( this.lblType.getText() );
 	}
 
 	private void attributsSemestre( int valSemestre )
@@ -201,4 +206,6 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibCourt.setText ( module.getLibCourt ( ) );
 		this.txtCode    .setText ( module.getCode     ( ) );
 	}
+	
+	public String getLblType() { return this.lblType.getText(); }
 }

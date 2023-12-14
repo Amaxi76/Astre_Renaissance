@@ -56,7 +56,6 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
 			( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose(); //TODO: fonctionne mais peut être mettre qqch de plus propre via une valeur passée en paramètre de contructeur ?
-			System.out.println ( "Annuler" );
 		}
 	}
 }

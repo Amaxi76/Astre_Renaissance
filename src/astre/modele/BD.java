@@ -182,10 +182,39 @@ public class BD
 	}
 		
 	
-	/*public List<Horaire> getHoraires()
+	public List<Horaire> getHoraires( String module )
 	{
+		ArrayList<Horaire> ensHoraire = new ArrayList<> ( );
 		
-	}*/
+		//TODO faire fonction
+		String REQUETE = "SELECT * FROM Horaire where Code_ModuleIUT = ?";
+
+		try 
+		{
+			Statement         st = co.createStatement  (         );
+			PreparedStatement ps = co.prepareStatement ( REQUETE );
+
+			ps.setString ( 1, module );
+
+			ResultSet rs = ps.executeQuery ( );
+
+			while ( rs.next ( ) ) 
+			{
+				Horaire h = new Horaire( getHeure( rs.getString(1)), getModule(rs.getString(2)), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+				ensHoraire.add ( h );
+			}
+
+			rs.close ( );
+			ps.close ( );
+			st.close ( );
+		} 
+		catch ( SQLException e )
+		{
+			System.out.println ( "getHoraire ( )" +  e );
+		}
+		
+		return ensHoraire;
+	}
 	
 	/*---------------------------------------*/
 	/*             RECUP UNITAIRE            */
@@ -446,7 +475,6 @@ public class BD
 
 				intervenants[cpt][0]  = rs.getInt    (1);//Id
 				intervenants[cpt][1]  = rs.getString (2);//contrat
-				//intervenants[cpt][1]  = box;//contrat
 				intervenants[cpt][2]  = rs.getString (3);//nom
 				intervenants[cpt][3]  = rs.getString (4);//prenom
 				intervenants[cpt][4]  = rs.getInt    (5);//hservice

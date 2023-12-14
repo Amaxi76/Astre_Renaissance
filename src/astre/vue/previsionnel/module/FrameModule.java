@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import astre.Controleur;
+import astre.modele.elements.ModuleIUT;
 
 /** Classe FrameModule
  * @author : Clémentin Ly
@@ -22,7 +23,12 @@ public class FrameModule extends JFrame
 
 	private Controleur ctrl;
 
-	private PanelModuleLabel  panelModuleLabel;
+	private PanelModuleLabel    panelModuleLabel;
+	private PanelPNLocal	    panelPNLocal;
+	private PanelPNLocalBis	    panelPNLocalBis;
+	private PanelRepartition    panelRepartition;
+	private PanelRepartitionBis panelRepartitionBis;
+
 	private JCheckBox cbValidation;
 
 	/*----------------*/
@@ -46,23 +52,31 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.panelModuleLabel  = new PanelModuleLabel  ( this.ctrl );
+		this.panelModuleLabel    = new PanelModuleLabel  ( this.ctrl, this );
+		this.panelPNLocal        = new PanelPNLocal      ( this.ctrl, this );
+		this.panelPNLocalBis     = new PanelPNLocalBis   ( this.ctrl );
+		this.panelRepartition    = new PanelRepartition  ( this.ctrl, this );
+		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl );
+
 		this.cbValidation = new JCheckBox ( "Validation" );
 
 
+		this.add ( panelModuleLabel, BorderLayout.NORTH  );
+
+
 		JPanel panelCentre  = new JPanel ( new GridBagLayout() );
+		
+		this.add ( panelCentre, BorderLayout.CENTER );
 
 		GridBagConstraints gbcC = new GridBagConstraints();
 		gbcC.insets = new Insets ( 5, 10, 15, 10 );
 
-		this.add ( panelModuleLabel, BorderLayout.NORTH  );
-		
-		this.add ( panelCentre, BorderLayout.CENTER );
-
 		gbcC.gridy = 0;
 		gbcC.gridx = 0;
-		panelCentre.add ( new PanelRepartition  ( this.ctrl, this ), gbcC );
-		//panelCentre.add ( new PanelRepartitionBis  ( this.ctrl ), gbcC );
+		panelCentre.add ( this.panelRepartition,    gbcC );
+		panelCentre.add ( this.panelRepartitionBis, gbcC );
+		this.panelRepartitionBis.setVisible ( false );
+
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
@@ -78,8 +92,9 @@ public class FrameModule extends JFrame
 
 		gbcO.gridy = 0;
 		gbcO.gridx = 0;
-		panelOuest.add ( new PanelPNLocal ( this.ctrl, this ), gbcO  );
-		//panelOuest.add ( new PanelPNLocalBis ( this.ctrl ), gbcO  );
+		panelOuest.add ( this.panelPNLocal,    gbcO  );
+		panelOuest.add ( this.panelPNLocalBis, gbcO  );
+		this.panelPNLocalBis.setVisible ( false );
 
 		gbcO.gridy = 1;
 		gbcO.gridx = 0;
@@ -95,10 +110,37 @@ public class FrameModule extends JFrame
 
 	public void setModule ( String code )
 	{
-		System.out.println(code);
+		ModuleIUT module = this.ctrl.getModule ( code );
 
-		this.panelModuleLabel.setModule( this.ctrl.getModule(code) );
+		this.panelModuleLabel.setModule ( module );
+		this.setVisiblePanels( module.getTypeModule() );
+
+		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
+		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
+		//if( this.panelPNLocal.isVisible() ) this.panelPNLocal.setModule ( module ); si autres panel rajouter
+		
+		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
+		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
+	}
 		
 
+	public void setVisiblePanels(String typeModule)
+	{
+		if (typeModule.equals("SAE") || typeModule.equals("Stage"))
+		{
+			this.panelRepartition   .setVisible ( false );
+			this.panelRepartitionBis.setVisible ( true );
+
+			this.panelPNLocal		.setVisible ( false );
+			this.panelPNLocalBis	.setVisible ( true );
+		}
+		else
+		{
+			this.panelRepartition   .setVisible ( true );
+			this.panelRepartitionBis.setVisible ( false );
+
+			this.panelPNLocal		.setVisible ( true );
+			this.panelPNLocalBis	.setVisible ( false );
+		}
 	}
 }
