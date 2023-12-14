@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import astre.Controleur;
+import astre.vue.outils.Tableau;
 
 public class PanelAffectation extends JPanel implements ActionListener
 {
@@ -18,7 +19,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 
-	private TableauIntervient tableau;
+	private Tableau tableau;
 	private JScrollPane scrollPane;
 
 	private JButton btnAjouter;
@@ -40,7 +41,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 		String[] noms = {"Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 
-		this.tableau = new TableauIntervient ( noms, this.ctrl.getTableauIntervient());
+		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervient(), 0);
 		this.tableau.ajusterTailleColonnes( );
 
 		this.scrollPane = new JScrollPane ( this.tableau );
