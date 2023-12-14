@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.elements.Heure;
 
 public class PanelRepartition extends JPanel
 {
@@ -17,7 +18,8 @@ public class PanelRepartition extends JPanel
 	/*--Attributs--*/
 	/*-------------*/
 
-	private Controleur ctrl;
+	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtNbSemCM;
 	private JTextField txtNbHCM;
@@ -48,9 +50,11 @@ public class PanelRepartition extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelRepartition ( Controleur ctrl )
+	public PanelRepartition ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
+
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
@@ -407,5 +411,50 @@ public class PanelRepartition extends JPanel
 
 		int somme = totalCM + totalTD + totalTP + heureP;
 		lblTotalSomme.setText ( String.valueOf ( somme ) );
+
+		majTotalPromo(totalCM, totalTD, totalTP, heureP);
+	}
+
+	private void majTotalPromo(int totalCM, int totalTD, int totalTP, int heureP)
+	{
+		double coeffCM = coeffHeure ( "CM" );
+		double totalCMProm = totalCM * coeffCM;
+
+		double coeffTD = coeffHeure ( "TD" );
+		int nbGpTD = Integer.parseInt(frm.getPanelModuleLabel().lblNbGpTD.getText());
+		double totalTDProm = totalTD * coeffTD * nbGpTD;
+
+		double coeffTP = coeffHeure ( "TP" );
+		int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().lblNbGpTP.getText() );
+		double totalTPProm = totalTP * coeffTP * nbGpTP;
+
+		double totalHeurePProm = heureP * nbGpTD;
+
+
+	}
+
+	private double coeffHeure ( String nomHeure )
+	{
+		Heure heure = this.ctrl.getHeure ( nomHeure );
+
+		double coefficient = 0.0;
+
+		switch (nomHeure)
+		{
+			case "CM":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TD":
+				coefficient = heure.getCoefTd();
+				break;
+			case "TP":
+				coefficient = heure.getCoefTd();
+				break;
+		
+			default:
+				break;
+		}
+
+		return coefficient;
 	}
 }

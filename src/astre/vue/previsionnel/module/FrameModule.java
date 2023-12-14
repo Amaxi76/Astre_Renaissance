@@ -61,7 +61,7 @@ public class FrameModule extends JFrame
 
 		gbcC.gridy = 0;
 		gbcC.gridx = 0;
-		panelCentre.add ( new PanelRepartition  ( this.ctrl ), gbcC );
+		panelCentre.add ( new PanelRepartition  ( this.ctrl, this ), gbcC );
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;

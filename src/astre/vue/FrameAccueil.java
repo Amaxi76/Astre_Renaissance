@@ -7,6 +7,7 @@ package astre.vue;
   */
 
 import astre.vue.previsionnel.FramePrevisionnel;
+import astre.vue.etats.FrameEtats;
 import astre.vue.intervenants.FrameIntervenants;
 import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
 import astre.vue.parametrage.FrameParametrage;
@@ -163,8 +164,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEtat )
 		{
-			JOptionPane.showMessageDialog ( this, "En cours de développement...", "Erreur", JOptionPane.OK_CANCEL_OPTION );
-			new FrameAccueil ( this.ctrl );
+			new FrameEtats ( this.ctrl );
 		}
 
 		if ( e.getSource() == this.btnAnnee )
