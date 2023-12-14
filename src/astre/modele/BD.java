@@ -42,6 +42,40 @@ public class BD
 		}
 	}
 
+	// TODO: à tester sur linux + mac + windows !
+	/*private BD ( )
+	{
+		try
+		{
+			Class.forName ( "org.postgresql.Driver" );
+
+			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+		}
+		catch ( ClassNotFoundException e )
+		{
+			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+
+			try
+			{
+				Class.forName ( "org.postgresql.Driver" );
+
+				co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" );
+			}
+			catch ( ClassNotFoundException e )
+			{
+				System.out.println ( "Erreur 1.2 de connexion à la base de données : " + e );
+			}
+			catch ( SQLException e )
+			{
+				System.out.println ( "Erreur 2.2 de connexion à la base de données " +  e );
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
+		}
+	}*/
+
 	public static BD getInstance ( )
 	{
 		return dbInstance != null ? dbInstance : new BD ( );
