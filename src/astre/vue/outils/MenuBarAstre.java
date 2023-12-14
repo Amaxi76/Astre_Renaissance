@@ -129,7 +129,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener, MenuListen
 	/**
 	 * Détection des évènements sur le JMenu
 	 */
-	public void menuSelected​ ( MenuEvent e )
+	public void menuSelected ( MenuEvent e )
 	{
 		if ( e.getSource ( ) instanceof JMenu  )
 		{

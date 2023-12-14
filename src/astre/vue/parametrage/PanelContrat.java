@@ -10,6 +10,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
+
 import astre.vue.intervenants.TableauIntervenant;
 import astre.vue.outils.Tableau;
 
@@ -52,7 +53,7 @@ public class PanelContrat extends JPanel
 	}
 
 
-	public Tableau getTabContrat()
+	public Tableau getTabContrat ( )
 	{
 		return this.tabContrat;
 	}
