@@ -6,6 +6,7 @@ src/astre/modele/BD.java
 src/astre/modele/Astre.java
 src/astre/modele/GenerateurFichier.java
 
+src/astre/modele/elements/IElement.java
 src/astre/modele/elements/Contrat.java
 src/astre/modele/elements/Heure.java
 src/astre/modele/elements/Horaire.java
@@ -52,4 +53,3 @@ src/astre/vue/previsionnel/module/PanelAffectation.java
 src/astre/vue/nouvelleAnnee/FrameNouvelleAnnee.java
 
 src/astre/vue/FrameAccueil.java
-
