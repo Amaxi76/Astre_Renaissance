@@ -1,12 +1,13 @@
 package astre.vue.parametrage;
 
-/** Classe FramePrevisionnel
-  * @author : Clémentin Ly, Maxime Lemoine
+import java.awt.FlowLayout;
+
+/** Classe PanelBouton
+  * @author : Maximilien LESTERLIN
   * @version : 1.0 - 11/12/2023
   * @date : 06/12/2023
   */
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import astre.vue.outils.ConstantesVue;
-import astre.vue.previsionnel.module.*;
 import astre.Controleur;
 
 public class PanelBouton extends JPanel implements ActionListener
@@ -26,45 +26,37 @@ public class PanelBouton extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 	
-	private FrameModule       frameModule;
-	private PanelEnsParametre pnl;
+	private JPanel pnl;
 
 	private JButton btnCreer;
-	private JButton btnModifier;
 	private JButton btnSupprimer;
-
 
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelBouton ( Controleur ctrl, PanelEnsParametre pnl )
+	public PanelBouton ( Controleur ctrl, JPanel pnl )
 	{
 		this.ctrl        = ctrl;
 		this.pnl         = pnl;
-		this.frameModule = null;
 		this.setBorder ( new EmptyBorder ( ConstantesVue.MARGE_EXTERIEURE_COMPOSANT, 0, 0, 0 ) );
+		this.setLayout ( new FlowLayout  ( FlowLayout.LEFT                                   ) );
 		
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
-
-		this.setLayout ( new GridLayout ( 1, 5, 5, 0 ) );
-
-		this.btnCreer     = new JButton ( "<html>créer</html>" );
-		this.btnModifier  = new JButton ( "modifier"           );
+		
+		this.btnCreer     = new JButton ( "créer" );
 		this.btnSupprimer = new JButton ( "supprimer"          );
-
+		
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 		
 		this.centrerTexte ( this.btnCreer     );
-		this.centrerTexte ( this.btnModifier  );
 		this.centrerTexte ( this.btnSupprimer );
 		
 		this.add ( this.btnCreer     );
-		this.add ( this.btnModifier  );
 		this.add ( this.btnSupprimer );
 
 		/* ------------------------- */
@@ -72,7 +64,6 @@ public class PanelBouton extends JPanel implements ActionListener
 		/* ------------------------- */
 
 		this.btnCreer     .addActionListener ( this );
-		this.btnModifier  .addActionListener ( this );
 		this.btnSupprimer .addActionListener ( this );
 	}
 
@@ -81,21 +72,20 @@ public class PanelBouton extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnCreer )
 		{
-			if ( this.pnl.getSelectedIndex ( ) == 0 )
-				this.pnl.getPnlContrat ( ).getTabContrat ( ).ajouterLigne ( );
-			else
-				System.out.println ( "non" );
-		}
-
-		if ( e.getSource ( ) == this.btnModifier )
-		{
-			this.frameModule = new FrameModule ( this.ctrl );
+			if ( this.pnl instanceof PanelTypeHeure )
+				( ( PanelTypeHeure ) this.pnl ).getTab ( ).ajouterLigne ( );
+			if ( this.pnl instanceof PanelContrat )
+				( ( PanelContrat   ) this.pnl ).getTab ( ).ajouterLigne ( );
 		}
 
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
-			this.frameModule = new FrameModule ( this.ctrl );
+			if ( this.pnl instanceof PanelTypeHeure )
+				( ( PanelTypeHeure ) this.pnl ).getTab ( ).supprimerLigne ( );
+			if ( this.pnl instanceof PanelContrat )
+				( ( PanelContrat   ) this.pnl ).getTab ( ).supprimerLigne ( );
 		}
+
 	}
 
 	private void centrerTexte ( JButton btn )

@@ -10,6 +10,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
+import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
 /** Classe PanelParametrage
@@ -27,16 +28,16 @@ public class PanelTypeHeure extends JPanel
 	{
 		this.ctrl = ctrl;
 
-		this.setLayout ( new GridLayout ( 1, 2 ) );
+		this.setLayout ( new GridLayout ( 1, 1 ) );
 		
 		String[] enTete = { "Nom Heure", " Coeff TD" };
 
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
+		pnlListeModule.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
 		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauHeure ( ), 0 );
-		this.tabContrat.setEditable(true);
-		
-		this.tabContrat.setShowGrid ( false );
+		this.tabContrat.setEditable         ( true                   );
+		this.tabContrat.setShowGrid         ( false                  );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
 		// Ajout du titre et rend la liste défilable
@@ -44,8 +45,12 @@ public class PanelTypeHeure extends JPanel
 		spTab.setBorder                  ( new TitledBorder ( "Liste des type d'heure" ) );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
-		pnlListeModule.add ( spTab, BorderLayout.CENTER );
+		pnlListeModule.add ( spTab                              , BorderLayout.CENTER );
+		pnlListeModule.add ( new PanelBouton ( this.ctrl, this ), BorderLayout.SOUTH );
 
-		this.add ( pnlListeModule, BorderLayout.CENTER );
+		this.add ( pnlListeModule );
 	}
+
+	public Tableau getTab ( ) { return this.tabContrat; }
+
 }

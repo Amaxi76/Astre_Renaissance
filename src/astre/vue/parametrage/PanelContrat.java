@@ -1,8 +1,8 @@
 package astre.vue.parametrage;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,8 +10,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
-
-import astre.vue.intervenants.TableauIntervenant;
+import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
 /** Classe PanelParametrage
@@ -30,14 +29,15 @@ public class PanelContrat extends JPanel
 	{
 		this.ctrl = ctrl;
 
-		this.setLayout ( new GridLayout ( 1, 2 ) );
-		
+		this.setLayout ( new GridLayout ( 1 ,1 ) );
+
 		String[] enTete = { "id","Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
 
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
+		pnlListeModule.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
 		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), 1 );
-		this.tabContrat.getModeleTableau().setEditable(true);
+		this.tabContrat.getModeleTableau ( ).setEditable ( true );
 		
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
@@ -48,15 +48,10 @@ public class PanelContrat extends JPanel
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
 		pnlListeModule.add ( spTab, BorderLayout.CENTER );
+		pnlListeModule.add ( new PanelBouton ( this.ctrl, this ), BorderLayout.SOUTH );
 
-		this.add ( pnlListeModule, BorderLayout.CENTER );
+		this.add ( pnlListeModule );
 	}
 
-
-	public Tableau getTabContrat ( )
-	{
-		return this.tabContrat;
-	}
-
-	
+	public Tableau getTab ( ) { return this.tabContrat; }
 }

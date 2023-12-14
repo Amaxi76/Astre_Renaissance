@@ -25,7 +25,7 @@ public class Tableau extends JTable
 	{
 		this.nomColonnes = nomColonnes;
 		this.modele = new ModeleTableau ( this.nomColonnes, tabDonnees );
-		this.modele.setDecalage(decal);
+		this.modele.setDecalage ( decal );
 		
 		this.setModel ( this.modele );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
