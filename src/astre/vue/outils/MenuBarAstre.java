@@ -2,7 +2,10 @@ package astre.vue.outils;
 
 import javax.swing.*;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.*;
+import javax.swing.event.*;
+
 import astre.Controleur;
 import astre.vue.FrameAccueil;
 import astre.vue.intervenants.FrameIntervenants;
@@ -16,7 +19,10 @@ import astre.vue.previsionnel.FramePrevisionnel;
   * @date : 06/12/2023
   */
 
-public class MenuBarAstre extends JMenuBar implements ActionListener
+//TODO : désactiver les détections via le JMenu car une fois cliqué, la souris peut rester et glisser sur les différents boutons et quitter sans cliquer
+// ou probablement supprimer les MenuListener pour mettre un ActionListener sur les JMenu
+
+public class MenuBarAstre extends JMenuBar implements ActionListener, MenuListener
 {
 	private static final String REPERTOIRE = "../data/images/";
 	private Controleur ctrl;
@@ -33,6 +39,8 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	{
 		//Initialisation
 		super ( );
+		//TODO: ne fonctionne pas encore : this.setMargin​ ( new Insets ( 2,20,2,20 ) );
+		
 		this.ctrl   = ctrl;
 		this.parent = parent;
 		JMenu menuEnCreation = null;
@@ -74,6 +82,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			menuTmp.setIcon ( genererIcone( image, 20 ) );
 		}
 
+		menuTmp.addMenuListener ( this );
 		menuTmp.setMnemonic ( mnemo.charAt( 0 ) );
 		return menuTmp;
 	}
@@ -109,30 +118,46 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	 */
 	public void actionPerformed ( ActionEvent e )
 	{
-		//A décomenter lorsque l'on aura un lien vers les autres pages
 		if ( e.getSource ( ) instanceof JMenuItem )
 		{
 			String nom = ( ( JMenuItem ) e.getSource () ).getText ( );
 
-			switch ( nom )
-			{
-				case "Retour Accueil"	-> this.allerVersPage ( FrameAccueil.class );
-				case "Paramètre" 		-> this.allerVersPage ( FrameParametrage.class );
-				case "Prévisionnel"		-> this.allerVersPage ( FramePrevisionnel.class );
-				case "Intervenants"		-> this.allerVersPage ( FrameIntervenants.class );
-				//case "Etats" 			-> this.allerVersPage ( FrameEtats.class );
-			}
+			this.allerVersPage ( nom );
 		}
 	}
 	
-	private void allerVersPage ( Class c )
+	/**
+	 * Détection des évènements sur le JMenu
+	 */
+	public void menuSelected ( MenuEvent e )
 	{
-		if ( c == FrameAccueil.class      ) { new FrameAccueil      ( this.ctrl ); }
-		if ( c == FrameParametrage.class  ) { new FrameParametrage  ( this.ctrl ); }
-		if ( c == FramePrevisionnel.class ) { new FramePrevisionnel ( this.ctrl ); }
-		if ( c == FrameIntervenants.class ) { new FrameIntervenants ( this.ctrl ); }
+		if ( e.getSource ( ) instanceof JMenu  )
+		{
+			String nom = ( ( JMenu ) e.getSource () ).getText ( );
+
+			this.allerVersPage ( nom );
+		}
+	}
+	
+	public void menuCanceled   ( MenuEvent e ) { }
+	public void menuDeselected ( MenuEvent e ) { }
+	
+	private void allerVersPage ( String nom )
+	{
+		String[] options = {"Retour Accueil", "Paramètre", "Prévisionnel", "Intervenants", "Quitter"};
+		System.out.println( "selectionné : " + nom );
 		
-		this.parent.dispose ( );
+		if ( nom.equals( options[0] ) ){ new FrameAccueil      ( this.ctrl ); }
+		if ( nom.equals( options[1] ) ){ new FrameParametrage  ( this.ctrl ); }
+		if ( nom.equals( options[2] ) ){ new FramePrevisionnel ( this.ctrl ); }
+		if ( nom.equals( options[3] ) ){ new FrameIntervenants ( this.ctrl ); }
+		if ( nom.equals( options[4] ) ){ parent.dispose ( );                    }
+		//if ...  "Etats" 			-> this.allerVersPage ( FrameEtats.class );
+		
+		if ( java.util.Arrays.asList(options).contains(nom) )
+		{
+			this.parent.dispose ( );
+		}
 	}
 	
 	/*private void allerVersPage ( Class c )
@@ -206,19 +231,21 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 								};*/
 		
 		return new String[][] {
-			{ "M", "Retour Accueil","gestion.png",		"A"				},
+			{ "M", "Retour Accueil","",		"A", "CTRL+H"	},
 
 			{ "M", "Saisies",		"",					"S"				},
-			{ "I", "Paramètre",		"",					"",				},
+			{ "I", "Paramètre",		"",					""				},
 			{ "S"														},
-			{ "I", "Prévisionnel" ,	"",					"", 			},
-			{ "I", "Intervenants",	"",					""				},
+			{ "I", "Prévisionnel" ,	"modules.png",		""				},
+			{ "I", "Intervenants",	"enseignants.png",	""				},
 			
 			{ "M", "Etats",			"apercu.png",		"A"				},
 
 			{ "M", "Exportation",	"exportation.png",	"E"				},
 			{ "I", "Format PDF",	"pdf.png",			"P", "CTRL+P"	},
-			{ "I", "Format HTML" ,	"html.png",			"H", 			},
+			{ "I", "Format HTML" ,	"html.png",			"H"				},
+			
+			{ "M", "Quitter",		"",					"Q", "CTRL+Q"	},
 								};
 	}
 

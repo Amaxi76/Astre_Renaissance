@@ -81,6 +81,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.setSize     ( 1000, 700            );
 		this.setLocation (    l,   h            );
 		this.setTitle    ( "ASTRE"              );
+		
 		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 
 		/* ------------------------- */
