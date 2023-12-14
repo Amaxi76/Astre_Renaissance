@@ -97,6 +97,6 @@ public class PanelAffectation extends JPanel implements ActionListener
 	public void setDonnee ( ModuleIUT module )
 	{
 		//TODO verif si ce truc marche
-		this.tableau.modifDonnees(this.ctrl.getTableauContrat());
+		//this.tableau.modifDonnees(this.ctrl.getTableauContrat());
 	}	
 }

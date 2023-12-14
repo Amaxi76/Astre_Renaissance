@@ -209,7 +209,7 @@ public class BD
 
 			while ( rs.next ( ) ) 
 			{
-				Horaire h = new Horaire( getHeure( rs.getString(1)), getModule(rs.getString(2)), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+				Horaire h = new Horaire( getHeure( rs.getInt(1)), getModule(rs.getString(2)), rs.getInt(3), rs.getInt(4), rs.getInt(5));
 				ensHoraire.add ( h );
 			}
 
@@ -296,11 +296,11 @@ public class BD
 			{
 				try
 				{
-					Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
+					contrat = Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) );
 				}
 				catch (Exception e)
 				{
-					// TODO: handle exception
+					e.printStackTrace ( );
 				}
 				
 			}
@@ -361,6 +361,27 @@ public class BD
 		return intervenant;
 	}
 
+	public Heure getHeure ( int h )
+	{
+		Heure heure = null;
+		
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Heure where Id_Heure = " + h  );
+			while ( rs.next ( ) ) 
+			{
+				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+			}
+		} 
+		catch ( SQLException e ) 
+		{
+			System.out.println ( "Erreur getHeure(int h) : " + e );
+		}
+		
+		return heure;
+	}
+
 	public Heure getHeure ( String h )
 	{
 		Heure heure = null;
@@ -368,7 +389,7 @@ public class BD
 		try 
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Heure where nomHeure = '" + h + "'" );
+			ResultSet rs = st.executeQuery ( "select * from Heure where nomheure = '" + h + "'"  );
 			while ( rs.next ( ) ) 
 			{
 				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
@@ -607,12 +628,12 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomHeure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient");
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, Id_Heure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient");
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
 				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
-				intervients[cpt][1] = rs.getString ( 2 );//heure
+				intervients[cpt][1] = getHeure(rs.getInt ( 2 )).getNom();//heure
 				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
 				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
 				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure

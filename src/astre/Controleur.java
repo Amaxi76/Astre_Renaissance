@@ -31,7 +31,9 @@ public class Controleur
 	public Object[][]    getTableauIntervient  (                 ) { return this.metier.getTableauIntervient  (             ); }
 	public Object[][]    getTableauContrat     (                 ) { return this.metier.getTableauContrat     (             ); }
 	public Object[][]    getTableauHeure       (                 ) { return this.metier.getTableauHeure       (             ); }
+	public Heure         getHeure              ( int nom      ) { return this.metier.getHeure              ( nom         ); }
 	public Heure         getHeure              ( String nom      ) { return this.metier.getHeure              ( nom         ); }
+
 	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
 	public ModuleIUT     getModule             ( String nom      ) { return this.metier.getModule             ( nom         ); }
 
