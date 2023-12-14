@@ -23,6 +23,10 @@ public class PanelRepartitionBis extends JPanel
 	private JTextField txtHTut;
 	private JLabel     lblSomme;
 
+	private JLabel     lblTotalHSaeAff;
+	private JLabel     lblTotalHTutAff;
+	private JLabel     lblTotalSommeAff;
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -41,9 +45,13 @@ public class PanelRepartitionBis extends JPanel
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
-		this.txtHSae = new JTextField ( "", 2 );
-		this.txtHTut = new JTextField ( "", 2 );
-		this.lblSomme   = new JLabel();
+		this.txtHSae  = new JTextField ( "", 2 );
+		this.txtHTut  = new JTextField ( "", 2 );
+		this.lblSomme = new JLabel();
+
+		this.lblTotalHSaeAff  = new JLabel();
+		this.lblTotalHTutAff  = new JLabel();
+		this.lblTotalSommeAff = new JLabel();
 
 		gbc.gridy = 0;
 		gbc.gridx = 1;
@@ -53,21 +61,35 @@ public class PanelRepartitionBis extends JPanel
 		this.add ( new JLabel ( "h Tut" ), gbc );
 
 		gbc.gridx = 3;
-		this.add ( new JLabel ( "Σ" ), gbc  );
+		this.add ( new JLabel ( "Σ" ), gbc      );
 
 
 		gbc.gridy = 1;
 		gbc.gridx = 0;
-		this.add ( new JLabel ( "Total (eqtd) promo" ), gbc );
+		this.add ( new JLabel ( "Total promo (eqtd)" ), gbc );
 
 		gbc.gridx = 1;
-		this.add ( this.txtHSae, gbc    );
+		this.add ( this.txtHSae, gbc  );
 
 		gbc.gridx = 2;
-		this.add ( this.txtHTut, gbc    );
+		this.add ( this.txtHTut, gbc  );
 
 		gbc.gridx = 3;
 		this.add ( this.lblSomme, gbc );
+
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		this.add ( new JLabel ( "Total affecté (eqtd)" ), gbc );
+
+		gbc.gridx = 1;
+		this.add ( this.lblTotalHSaeAff, gbc  );
+
+		gbc.gridx = 2;
+		this.add ( this.lblTotalHTutAff, gbc  );
+
+		gbc.gridx = 3;
+		this.add ( this.lblTotalSommeAff, gbc );
+		
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -79,6 +101,18 @@ public class PanelRepartitionBis extends JPanel
 		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
 		this.lblSomme.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblSomme.setOpaque( true );
+
+		this.lblTotalHSaeAff.setBackground ( Color.LIGHT_GRAY );
+		this.lblTotalHSaeAff.setPreferredSize ( new Dimension ( 40, 15 ) );
+		this.lblTotalHSaeAff.setOpaque( true );
+
+		this.lblTotalHTutAff.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalHTutAff.setPreferredSize( new Dimension ( 40, 15 ) );
+		this.lblTotalHTutAff.setOpaque( true );
+
+		this.lblTotalSommeAff.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 40, 15 ) );
+		this.lblTotalSommeAff.setOpaque( true );
 	}
 
 	private class AjoutKeyListenerSomme implements KeyListener
