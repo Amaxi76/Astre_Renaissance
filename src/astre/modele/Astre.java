@@ -48,6 +48,7 @@ public class Astre
 	public Semestre      getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
 	public Heure 	     getHeure              ( String nom      ) { return this.bd.getHeure            ( nom ); }
 	public Contrat       getContrat            ( String nom      ) { return this.bd.getContrat          ( nom ); }
+	public ModuleIUT     getModule             ( String nom      ) { return this.bd.getModule           ( nom ); }
 
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats             ( ); }
 	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants         ( ); }

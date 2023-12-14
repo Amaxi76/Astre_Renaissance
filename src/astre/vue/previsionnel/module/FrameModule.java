@@ -61,8 +61,8 @@ public class FrameModule extends JFrame
 
 		gbcC.gridy = 0;
 		gbcC.gridx = 0;
-		//panelCentre.add ( new PanelRepartition  ( this.ctrl, this ), gbcC );
-		panelCentre.add ( new PanelRepartitionBis  ( this.ctrl ), gbcC );
+		panelCentre.add ( new PanelRepartition  ( this.ctrl, this ), gbcC );
+		//panelCentre.add ( new PanelRepartitionBis  ( this.ctrl ), gbcC );
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
@@ -78,8 +78,8 @@ public class FrameModule extends JFrame
 
 		gbcO.gridy = 0;
 		gbcO.gridx = 0;
-		//panelOuest.add ( new PanelPNLocal ( this.ctrl, this ), gbcO  );
-		panelOuest.add ( new PanelPNLocalBis ( this.ctrl ), gbcO  );
+		panelOuest.add ( new PanelPNLocal ( this.ctrl, this ), gbcO  );
+		//panelOuest.add ( new PanelPNLocalBis ( this.ctrl ), gbcO  );
 
 		gbcO.gridy = 1;
 		gbcO.gridx = 0;
@@ -92,4 +92,13 @@ public class FrameModule extends JFrame
 	}
 
 	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
+
+	public void setModule ( String code )
+	{
+		System.out.println(code);
+
+		this.panelModuleLabel.setModule( this.ctrl.getModule(code) );
+		
+
+	}
 }

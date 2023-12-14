@@ -1,5 +1,6 @@
 package astre.vue.previsionnel.module;
 
+import astre.modele.elements.ModuleIUT;
 import astre.modele.elements.Semestre;
 
 import java.awt.*;
@@ -186,5 +187,18 @@ public class PanelModuleLabel  extends JPanel
 			this.lblNbGpTD.setText ( String.valueOf ( sem.getNbGroupeTD() ) );
 			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP() ) );
 		}
+	}
+
+	public void setModule ( ModuleIUT module )
+	{
+		this.lblSemestre.setText ( "S" + module.getSemestre ( ).getIdSemestre ( ) );
+		this.lblType    .setText ( module.getTypeModule ( ) );
+		this.lblNbEtd   .setText ( module.getSemestre ( ).getNbEtudiant ( ) + "" );
+		this.lblNbGpTD  .setText ( module.getSemestre ( ).getNbGroupeTD ( ) + "" );
+		this.lblNbGpTP  .setText ( module.getSemestre ( ).getNbGroupeTP ( ) + "" );
+
+		this.txtLibLong .setText ( module.getLibLong  ( ) );
+		this.txtLibCourt.setText ( module.getLibCourt ( ) );
+		this.txtCode    .setText ( module.getCode     ( ) );
 	}
 }

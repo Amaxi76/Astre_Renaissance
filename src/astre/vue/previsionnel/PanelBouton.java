@@ -26,7 +26,8 @@ public class PanelBouton extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 	
-	private FrameModule frameModule;
+	private FrameModule       frameModule;
+	private FramePrevisionnel framePrevisionnel;
 
 	private JButton btncreerRessource;
 	private JButton btncreerSAE;
@@ -39,9 +40,10 @@ public class PanelBouton extends JPanel implements ActionListener
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelBouton ( Controleur ctrl )
+	public PanelBouton ( Controleur ctrl, FramePrevisionnel frame )
 	{
 		this.ctrl = ctrl;
+		this.framePrevisionnel = frame;
 		this.frameModule = null;
 		this.setBorder( new EmptyBorder ( ConstantesVue.MARGE_EXTERIEURE_COMPOSANT, 0, 0, 0 ) );
 		
@@ -91,6 +93,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
 			this.frameModule = new FrameModule ( this.ctrl );
+			//TODO faire enregistrement des Intervients
 		}
 
 		if ( e.getSource ( ) == this.btncreerSAE )
@@ -101,6 +104,15 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerStage )
 		{
 			this.frameModule = new FrameModule ( this.ctrl );
+		}
+
+		if ( e.getSource ( ) == this.btnModifier )
+		{
+			if( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			{
+				this.frameModule = new FrameModule ( this.ctrl );
+				this.frameModule.setModule( this.framePrevisionnel.getModuleSelection( ) );
+			}
 		}
 	}
 

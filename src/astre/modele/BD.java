@@ -334,13 +334,13 @@ public class BD
 		try 
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Module where Id_Module = '" + m + "'" );
+			ResultSet rs = st.executeQuery ( "select * from ModuleIUT where Code_ModuleIUT = '" + m + "'" );
 			while ( rs.next ( ) ) 
 			{
 				Map<Heure, Integer> hmHeuresPn         = this.getHeures ( rs.getString ( 1 ), 'P' );
 				Map<Heure, Integer> hmHeuresRepartiees = this.getHeures ( rs.getString ( 1 ), 'R' );
 				
-				module = new ModuleIUT ( getSemestre ( rs.getInt ( 1 ) ), rs.getString ( 2 ), rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ),rs.getBoolean ( 6 ), hmHeuresPn, hmHeuresRepartiees );
+				module = new ModuleIUT ( getSemestre ( rs.getInt ( 6 ) ), rs.getString ( 4 ), rs.getString ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ),rs.getBoolean ( 5 ), hmHeuresPn, hmHeuresRepartiees );
 			}
 		} 
 		catch ( SQLException e ) 
