@@ -10,6 +10,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
+import astre.vue.intervenants.TableauIntervenant;
 import astre.vue.outils.Tableau;
 
 /** Classe PanelParametrage
@@ -34,12 +35,13 @@ public class PanelContrat extends JPanel
 
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 
-		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), true );
-		this.tabContrat.getModeleTableau ( ).setDecalage ( 1 );
+		this.tabContrat = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), true);
+	
+		this.tabContrat.getModeleTableau().setDecalage(1);
 		this.tabContrat.setShowGrid ( false );
 		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
-		// Ajout du titre et rend la liste défilable
+		// Ajout du titre et rend la liste défilable 
 		JScrollPane spTab = new JScrollPane ( this.tabContrat );
 		spTab.setBorder                  ( new TitledBorder ( "Liste des contrats" )     );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
