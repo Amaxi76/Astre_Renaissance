@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import astre.Controleur;
+import astre.modele.elements.ModuleIUT;
 
 /** Classe FrameModule
  * @author : Clémentin Ly
@@ -106,6 +107,22 @@ public class FrameModule extends JFrame
 	}
 
 	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
+
+	public void setModule ( String code )
+	{
+		ModuleIUT module = this.ctrl.getModule ( code );
+
+		this.panelModuleLabel.setModule ( module );
+		this.setVisiblePanels( module.getTypeModule() );
+
+		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
+		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
+		//if( this.panelPNLocal.isVisible() ) this.panelPNLocal.setModule ( module ); si autres panel rajouter
+		
+		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
+		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
+	}
+		
 
 	public void setVisiblePanels(String typeModule)
 	{

@@ -3,6 +3,7 @@ package astre.vue.previsionnel.module;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -10,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.BD;
+import astre.modele.elements.Horaire;
+import astre.modele.elements.ModuleIUT;
 
 /** Classe PanelRepartitionBis
   * @author : Clémentin Ly
@@ -152,5 +156,25 @@ public class PanelRepartitionBis extends JPanel
 		{
 			lblSomme.setText ( "Erreur" );
 		}
+	}
+
+	public void setModule ( ModuleIUT module )
+	{
+		this.txtHSae.setText( "0" );
+		this.txtHTut.setText( "0" );
+		
+		ArrayList<Horaire> lstHoraire = (ArrayList<Horaire>) BD.getInstance().getHoraires( module.getCode() );
+
+		for(Horaire h : lstHoraire)
+		{
+			switch( h.getHeure().getNom().toUpperCase() )
+			{
+				case "SAE" : this.txtHSae.setText( h.getNbHeure  () + "" );
+				case "TUT" : this.txtHTut.setText( h.getNbHeure  () + "" );
+
+				default : ;
+			}
+		}
+		majSomme();
 	}
 }

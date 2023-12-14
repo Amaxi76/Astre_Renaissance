@@ -3,6 +3,7 @@ package astre.vue.previsionnel.module;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -10,7 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.BD;
 import astre.modele.elements.Heure;
+import astre.modele.elements.Horaire;
+import astre.modele.elements.ModuleIUT;
 
 /** Classe PanelPNLocal
   * @author : Clémentin Ly
@@ -272,5 +276,28 @@ public class PanelPNLocal extends JPanel
 		}
 
 		return coefficient;
+	}
+
+	public void setModule ( ModuleIUT module )
+	{
+		this.txtCM.setText( "0" );
+		this.txtTP.setText( "0" );
+		this.txtTD.setText( "0" );
+		
+		ArrayList<Horaire> lstHoraire = (ArrayList<Horaire>) BD.getInstance().getHoraires( module.getCode() );
+
+		for(Horaire h : lstHoraire)
+		{
+			switch( h.getHeure().getNom().toUpperCase() )
+			{
+				case "CM" : this.txtCM.setText( h.getNbHeurePN() + "" ); break;
+				case "TP" : this.txtTP.setText( h.getNbHeurePN() + "" ); break;
+				case "TD" : this.txtTD.setText( h.getNbHeurePN() + "" ); break;
+				default : ;
+			}
+		}
+
+		majSomme();
+		majTotalHeure();
 	}
 }
