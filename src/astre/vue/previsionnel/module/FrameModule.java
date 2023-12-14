@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import astre.Controleur;
 
@@ -23,6 +22,7 @@ public class FrameModule extends JFrame
 
 	private Controleur ctrl;
 
+	private PanelModuleLabel  panelModuleLabel;
 	private JCheckBox cbValidation;
 
 	/*----------------*/
@@ -46,6 +46,7 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
+		this.panelModuleLabel  = new PanelModuleLabel  ( this.ctrl );
 		this.cbValidation = new JCheckBox ( "Validation" );
 
 
@@ -54,9 +55,9 @@ public class FrameModule extends JFrame
 		GridBagConstraints gbcC = new GridBagConstraints();
 		gbcC.insets = new Insets ( 5, 10, 15, 10 );
 
-		this.add ( new PanelModuleLabel  ( this.ctrl ), BorderLayout.NORTH  );
+		this.add ( panelModuleLabel, BorderLayout.NORTH  );
 		
-		this.add ( panelCentre, BorderLayout.CENTER                         );
+		this.add ( panelCentre, BorderLayout.CENTER );
 
 		gbcC.gridy = 0;
 		gbcC.gridx = 0;
@@ -76,7 +77,7 @@ public class FrameModule extends JFrame
 
 		gbcO.gridy = 0;
 		gbcO.gridx = 0;
-		panelOuest.add ( new PanelPNLocal ( this.ctrl ), gbcO  );
+		panelOuest.add ( new PanelPNLocal ( this.ctrl, this ), gbcO  );
 
 		gbcO.gridy = 1;
 		gbcO.gridx = 0;
@@ -87,4 +88,6 @@ public class FrameModule extends JFrame
 
 		this.setVisible ( true );
 	}
+
+	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
 }
