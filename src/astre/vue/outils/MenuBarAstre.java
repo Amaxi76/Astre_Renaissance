@@ -11,6 +11,7 @@ import astre.vue.FrameAccueil;
 import astre.vue.intervenants.FrameIntervenants;
 import astre.vue.parametrage.FrameParametrage;
 import astre.vue.previsionnel.FramePrevisionnel;
+import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
 
 /** Menu de l'application
   * @author : Maxime Lemoine
@@ -173,17 +174,21 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 
 	{
 		// TODO: récupérer la chaine "options" d'une autre manière qu'en dur dans le code (chercher dans le modèle du tableau ou créer une hashmap)
-		String[] options = {, "Paramètres", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année"};
+		String[] options = {"Accueil", "Paramètres", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année", "S"};
 		System.out.println( "selectionné : " + nom ); // TODO: à supprimer
 		
-		if ( nom.equals( options[0] ) ){ new FrameAccueil      ( this.ctrl );  }
-		if ( nom.equals( options[1] ) ){ new FrameParametrage  ( this.ctrl );  }
-		if ( nom.equals( options[2] ) ){ new FramePrevisionnel ( this.ctrl );  }
-		if ( nom.equals( options[3] ) ){ new FrameIntervenants ( this.ctrl );  }
-		if ( nom.equals( options[4] ) ){ parent.dispose ( );                   }
-		if ( nom.equals( options[5] ) ){ new FrameNouvelleAnnee ( this.ctrl ); }
+		if ( nom.equals( options[0] ) ) { new FrameAccueil      ( this.ctrl );  }
+		if ( nom.equals( options[1] ) ) { new FrameParametrage  ( this.ctrl );  }
+		if ( nom.equals( options[2] ) ) { new FramePrevisionnel ( this.ctrl );  }
+		if ( nom.equals( options[3] ) ) { new FrameIntervenants ( this.ctrl );  }
+		if ( nom.equals( options[4] ) ) { parent.dispose ( );                   }
+		if ( nom.equals( options[5] ) ) { new FrameNouvelleAnnee ( this.ctrl ); }
 		
-		if ( java.util.Arrays.asList(options).contains(nom) )
+		// cas des sous menus avec semestre
+		if ( nom.contains( options[6] ) ) { new FramePrevisionnel  ( this.ctrl, Integer.parseInt( nom.charAt ( 1 ) +"" )-1 ); }
+		
+		// femermer la fenetre existante
+		if ( java.util.Arrays.asList ( options ).contains ( nom ) || nom.contains ( "S" ) )
 		{
 			this.parent.dispose ( );
 		}
@@ -251,11 +256,18 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			{	MENU, 				"Edition",			"",					"E", "CTRL+E"	},
 			{		ITEM, 			"Paramètres",		"",					"P"				},
 			{		SEPARATEUR																},
-			{		ITEM, 			"Prévisionnel",		"modules.png",		"P"				},
+			{		SOUS_MENU, 		"Prévisionnel...",	"modules.png",		"P"				},
+			{			ITEM_SM,	"S1",				"",					"1" 			},
+			{			ITEM_SM,	"S2",				"",					"2" 			},
+			{			ITEM_SM,	"S3",				"",					"3" 			},
+			{			ITEM_SM,	"S4",				"",					"4" 			},
+			{			ITEM_SM,	"S5",				"",					"5" 			},
+			{			ITEM_SM,	"S6",				"",					"6" 			},
+			{		ITEM, 			"Prévisionnel",		"",					"P"				},
 			{		ITEM, 			"Intervenants",		"enseignants.png",	"I"				},
 			{		ITEM, 			"Nouvelle année",	"",					"N"				},
 			{	MENU, 				"Affichage",		"",					"A"				},
-			{		ITEM, 			"Etats",			"apercu.png",		"E"				},
+			{		ITEM, 			"Etats",			"apercu.png",		"E"				}
 								};
 								
 		/* //Première version (fonctionne)

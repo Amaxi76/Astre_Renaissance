@@ -30,7 +30,7 @@ public class FramePrevisionnel extends JFrame
 	 * 
 	 */
 
-	public FramePrevisionnel ( Controleur ctrl )
+	public FramePrevisionnel ( Controleur ctrl, int semestreDefaut )
 	{
 		this.ctrl = ctrl;
 
@@ -47,11 +47,16 @@ public class FramePrevisionnel extends JFrame
 		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
 		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		panelBordure.add ( new PanelEnsSemestre  ( this.ctrl ), BorderLayout.CENTER );
-		panelBordure.add ( new PanelBouton       ( this.ctrl ), BorderLayout.SOUTH  );
+		panelBordure.add ( new PanelEnsSemestre  ( this.ctrl, semestreDefaut ), BorderLayout.CENTER );
+		panelBordure.add ( new PanelBouton       ( this.ctrl                 ), BorderLayout.SOUTH  );
 
 		this.add ( panelBordure );
 
 		this.setVisible ( true );
+	}
+
+	public FramePrevisionnel ( Controleur ctrl )
+	{
+		this ( ctrl, 1 );
 	}
 }
