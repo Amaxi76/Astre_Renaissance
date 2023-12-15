@@ -58,7 +58,7 @@ public class GenerateurFichier
 			"<html lang=\"fr\">"                                                       + 
 			"<head>"                                                                   + 
 				"<meta charset=\"UTF-8\">"                                             + 
-				"<link href=\"style.css\" rel=\"stylesheet\">"                         + 
+				"<link href=\"/css/style.css\" rel=\"stylesheet\">"                    + 
 				"<title>Intervenant " + inter.getNom().toUpperCase() + " </title>"     + 
 			"</head>"                                                                  + 
 			"<body>"                                                                   + 
