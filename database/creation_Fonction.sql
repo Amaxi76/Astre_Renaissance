@@ -83,6 +83,71 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Sélection du nombre d'heure pour un enseignant, un module et une heure précise
+-- Utilisée dans la génération HTML des modules
+
+DROP              FUNCTION f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_Intervenant INTEGER, s_Id_Heure INTEGER );
+CREATE OR REPLACE FUNCTION f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    v_result INTEGER;
+BEGIN
+   
+    SELECT nbSemaine * nbGroupe * nbHeure
+    INTO v_result
+    FROM Intervient
+    WHERE Code_ModuleIUT = s_code AND 
+          Id_Intervenant = s_Id_Intervenant AND 
+          Id_Heure = s_Id_Heure;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(v_result, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sélection du nombre d'heure PN pour un module et une heure donnée
+-- Utilisée dans la génération HTML des modules
+
+DROP              FUNCTION f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER );
+CREATE OR REPLACE FUNCTION f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    v_result INTEGER;
+BEGIN
+   
+    SELECT nbHeurePN
+    INTO v_result
+    FROM Horaire
+    WHERE Code_ModuleIUT = s_code AND 
+          Id_Heure = s_Id_Heure;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(v_result, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sélection du nombre d'heure Répartie pour un module et une heure donnée
+-- Utilisée dans la génération HTML des modules
+
+DROP              FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER );
+CREATE OR REPLACE FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    v_result INTEGER;
+BEGIN
+   
+    SELECT nbHeureRepartie
+    INTO v_result
+    FROM Horaire
+    WHERE Code_ModuleIUT = s_code AND 
+          Id_Heure = s_Id_Heure;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(v_result, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
 -- -- Sélectionner les heuresPN
