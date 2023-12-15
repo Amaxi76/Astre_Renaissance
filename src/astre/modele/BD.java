@@ -122,7 +122,10 @@ public class BD
 				if ( type.equals ( Intervenant.class )  )
 					lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 					//lst.add ( ( T ) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-
+				
+				if ( type.equals ( Intervient.class )  )
+					lst.add ( type.cast ( new Intervient( getIntervenant( rs.getInt ( 1 ) ), getHeure( rs.getInt(2)), getModule(rs.getString(3)), rs.getInt(4), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString ( 7 ) ) ) );
+			
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
 			}
 

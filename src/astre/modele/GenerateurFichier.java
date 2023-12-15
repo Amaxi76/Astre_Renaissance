@@ -46,9 +46,9 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLIntervenant (Intervenant inter)
+	public static void GenererHTMLIntervenant ( Intervenant inter )
 	{
-		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom() + ".html";
+		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
@@ -62,7 +62,6 @@ public class GenerateurFichier
 				"<title>Intervenant " + inter.getNom().toUpperCase() + " </title>"     + 
 			"</head>"                                                                  + 
 			"<body>"                                                                   + 
-				"<img src=\"../data/images/astre.png\" alt=\"Logo de l'application\">" +
 				"<table>"                                                              ;
 
             ecrivain.write ( entete );
@@ -74,43 +73,45 @@ public class GenerateurFichier
 						  );
 			ecrivain.newLine ( );
 
-			ecrivain.write("<tr>" + 
-								"<td class=\"num\">Numéro de ligne</td>" +
-								"<td class=\"mod\">Code de la matière et nom</td>" +
-								"<td class=\"heure\">CM - nbHCM <br> TD - nbHTD</td>" +
+			ecrivain.write ( "<tr>"                                                  + 
+								"<td class=\"first\">Numéro de ligne</td>"           +
+								"<td class=\"first\">Code de la matière et nom</td>" +
+								"<td class=\"first\">Heure dans la matière</td>"     +
 						   "</tr>"
-						  );
+						   );
 			ecrivain.newLine ( );
 			
 			// Ecriture du corps du tableau
 			BD bd = BD.getInstance ( );
-			ArrayList<Intervient> lstInter = (ArrayList<Intervient>) bd.getTable(Intervient.class);
+			ArrayList<Intervient> lstInter = ( ArrayList<Intervient> ) bd.getTable ( Intervient.class );
 
 			Intervient prec = null;
 			int compt = 1;
-			for(Intervient intervient : lstInter )
+			for ( Intervient intervient : lstInter )
 			{
-				if( intervient.getIntervenant().getId() == inter.getId() )
+				if ( intervient.getIntervenant ( ).getId ( ) == inter.getId ( ) )
 				{
-					if( prec != null && prec.getModule().equals(intervient.getModule() ) )
+					if ( prec != null && prec.getModule ( ).getCode ( ).equals ( intervient.getModule ( ).getCode ( ) ) )
 					{
-						ecrivain.write(" <br> " + intervient.getHeure().getNom() + " - " + ( intervient.getNbGroupe() * intervient.getNbSemaine() * intervient.getNbHeure() ) );
-						ecrivain.write("  ");
+						ecrivain.write ( " <br> " + intervient.getHeure ( ).getNom ( ) + " - " + ( intervient.getNbGroupe ( ) * intervient.getNbSemaine ( ) * intervient.getNbHeure ( ) ) + " heures ");
+						ecrivain.newLine ( );
 					}
 					else
 					{
-						if( compt != 0 )
+						if ( compt != 1 )
 						{
-							ecrivain.write("\t</td> " + 
+							ecrivain.write ( "\t</td> " + 
 							               "</tr> "
-							              );
+							               );
+							ecrivain.newLine ( );
 						}
 
-						ecrivain.write( "<tr>" +
+						ecrivain.write ( "<tr>" +
 										"\t<td class=\"num\">" + compt++ + "</td>" + 
 										"\t<td class=\"mod\">" + intervient.getModule().getCode() + " - " + intervient.getModule().getLibLong() + "</td>" +
-										"\t<td class=\"heure\"> " +  intervient.getHeure().getNom() + " - " + ( intervient.getNbGroupe() * intervient.getNbSemaine() * intervient.getNbHeure() )
+										"\t<td class=\"heure\"> " +  intervient.getHeure().getNom() + " - " + ( intervient.getNbGroupe() * intervient.getNbSemaine() * intervient.getNbHeure() ) + " heures "
 									  );
+						ecrivain.newLine ( );
 						prec = intervient;
 					}
 				}	
@@ -122,15 +123,12 @@ public class GenerateurFichier
 			"</body>"  +
 			"</html>"  ;
 
-			ecrivain.write(footer);
+			ecrivain.write ( footer );
 
-            System.out.println ( "Fichier CSV créé avec succès." );
+            System.out.println ( "Fichier HTML créé avec succès." );
         } catch ( IOException e )
 		{
             e.printStackTrace ( );
         }
-
-
-
 	}
 }
