@@ -51,7 +51,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
-		for ( Contrat c : this.ctrl.getContrats ( ) )
+		for ( Contrat c : this.ctrl.getTable(Contrat.class) )
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
@@ -129,7 +129,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	public boolean enregistrer ( Object[][] deuxieme )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
-		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) this.ctrl.getIntervenants();
+		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) this.ctrl.getTable(Intervenant.class);
 		
 		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
 		Intervenant inter = null;

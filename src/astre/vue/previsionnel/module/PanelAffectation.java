@@ -3,16 +3,17 @@ package astre.vue.previsionnel.module;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import astre.Controleur;
 import astre.modele.BD;
-import astre.modele.elements.Horaire;
-import astre.modele.elements.Intervient;
+import astre.modele.elements.Heure;
+import astre.modele.elements.Intervenant;
 import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.Tableau;
 
@@ -53,10 +54,27 @@ public class PanelAffectation extends JPanel implements ActionListener
 		String[] noms = {"Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 
 		this.tableau = new Tableau ( noms, null, 0);
+		this.tableau.setEditable(true);
 		this.tableau.ajusterTailleColonnes( );
 
-		this.scrollPane = new JScrollPane ( this.tableau );
+		//Ajout d'une JComboBox pour les intervenants au tableau
+		JComboBox<String> cbEditInter = new JComboBox<> ( );
+		for ( Intervenant i : this.ctrl.getTable(Intervenant.class) )
+		{
+			cbEditInter.addItem ( i.getNom ( ) );
+		}
+		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEditInter ) );
 
+		//Ajout d'une JComboBox pour les intervenants au tableau
+		JComboBox<String> cbEditHeure = new JComboBox<> ( );
+		for ( Heure h : this.ctrl.getTable(Heure.class) )
+		{
+			cbEditHeure.addItem ( h.getNom ( ) );
+		}
+		this.tableau.getColumnModel ( ).getColumn ( 1 ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );
+
+
+		this.scrollPane = new JScrollPane ( this.tableau );
 
 		JPanel panelSud = new JPanel( );
 
