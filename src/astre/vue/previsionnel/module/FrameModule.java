@@ -1,6 +1,7 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
+import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -15,7 +16,7 @@ import astre.modele.elements.ModuleIUT;
 * @date : 11/12/2023
 */
 
-public class FrameModule extends JFrame
+public class FrameModule extends JFrame implements ItemListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -111,10 +112,27 @@ public class FrameModule extends JFrame
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
+		this.cbValidation.addItemListener( this );
+
 
 		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
 
 		this.setVisible ( true );
+	}
+
+	public void itemStateChanged(java.awt.event.ItemEvent e)
+	{
+		if ( e.getSource() == this.cbValidation )
+		{
+			if ( this.cbValidation.isSelected() )
+			{
+				this.ctrl.getModule(getName()).setValide(true);
+			}
+			else
+			{
+				this.ctrl.getModule(getName()).setValide(false);
+			}
+		}
 	}
 
 	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }

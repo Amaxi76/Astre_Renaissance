@@ -158,7 +158,7 @@ public class PanelModuleLabel  extends JPanel
 
 	private void majLabels()
 	{
-		String code = this.txtCode.getText ( );
+		String code = this.txtCode.getText ( ).toUpperCase ( );
 		int valSemestre = -1;
 
 		if ( code.contains ( "ST" ) )
