@@ -150,7 +150,7 @@ public class FrameModule extends JFrame
 			this.panelPNLocalBis	.setVisible ( true );
 			this.panelPNLocalPPP	.setVisible ( false );
 		}
-		else if ( typeModule.equals ( "PP" ) )
+		else if ( typeModule.equals ( "PPP" ) )
 		{
 			this.panelRepartition   .setVisible ( false );
 			this.panelRepartitionBis.setVisible ( false );
