@@ -2,6 +2,8 @@ package astre.vue.etats;
 
 import astre.Controleur;
 import astre.modele.GenerateurFichier;
+import astre.modele.elements.Contrat;
+import astre.modele.elements.Intervenant;
 
 /** Page de gestion des intervenants
   * @author : Matéo Sa
@@ -21,6 +23,8 @@ public class PanelEtats extends JPanel implements ActionListener
 	private JButton btnRecapModule;
 	private JButton btnRecapTtInter;
 
+	JComboBox<String> cbEdit;
+
 	private Controleur ctrl;
 	
 	/**
@@ -32,15 +36,23 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.setLayout( new GridLayout( 4, 1, 10, 10) );
+		this.setLayout( new GridLayout( 5, 1, 10, 10) );
 
 		this.btnRecapInter   = new JButton ( "Intervenant individuel" );
+
+		cbEdit = new JComboBox<> ( );
+		for ( Intervenant c : this.ctrl.getTable( Intervenant.class ) )
+		{
+			cbEdit.addItem ( c.getNom ( ) );
+		}
+
 		this.btnRecapModule  = new JButton ( "Tous les modules"       );
 		this.btnRecapTtInter = new JButton ( "Tous les intervenants"  );
 		
 		//Ajout des composants
 		this.add ( new JLabel ( "Générer un récapitulatif pour :" ) );
 		this.add ( this.btnRecapInter   );
+		this.add ( cbEdit );
 		this.add ( this.btnRecapModule  );
 		this.add ( this.btnRecapTtInter );
 		
@@ -54,7 +66,7 @@ public class PanelEtats extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnRecapInter )
 		{
-
+			GenerateurFichier.GenererHTMLIntervenant( this.ctrl.getTable(Intervenant.class).get(this.cbEdit.getSelectedIndex()) );
 		}
 		
 		if ( e.getSource ( ) == this.btnRecapModule )
