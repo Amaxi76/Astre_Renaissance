@@ -18,6 +18,7 @@ src/astre/modele/elements/Semestre.java
 src/astre/vue/intervenants/PanelIntervenants.java
 src/astre/vue/intervenants/FrameIntervenants.java
 
+src/astre/vue/outils/AFrame.java
 src/astre/vue/outils/ConstantesVue.java
 src/astre/vue/outils/MenuBarAstre.java
 src/astre/vue/outils/PanelDiagramme.java
