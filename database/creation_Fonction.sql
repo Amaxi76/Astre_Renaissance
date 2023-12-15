@@ -83,37 +83,55 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Sélectionner les heuresPN
-
-DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- Sélectionner les heures d'un intervenant dans intervient
+DROP              FUNCTION f_selectHeureIntervenant ( s_Id_Intervenant INTEGER );
+CREATE OR REPLACE FUNCTION f_selectHeureIntervenant ( s_Id_Intervenant INTEGER ) RETURNS TABLE ( result_row RECORD ) AS
 $$
 BEGIN
 
-	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
-						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
-										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-						  WHERE ho.Code_ModuleIUT = $1'
-	USING p_code;
+	RETURN QUERY     SELECT m.Code_ModuleIUT, nomHeure, libLong, nbSemaine, nbGroupe, nbHeure
+                     FROM   Intervenant i JOIN Intervient t ON i.Id_Intervenant = t.Id_Intervenant
+                                                 JOIN Heure h      ON h.Id_heure       = t.Id_Heure
+                                                 JOIN ModuleIUT m  ON m.Code_ModuleIUT = t.Code_ModuleIUT
+                     WHERE  t.Id_Intervenant = s_Id_Intervenant;	
 
 END;
 $$ LANGUAGE plpgsql;
 
--- Sélectionner les heureRepartie
+/* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
-DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
+-- -- Sélectionner les heuresPN
 
-	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
-						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
-										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-						  WHERE ho.Code_ModuleIUT = $1'
-	USING p_code;
+-- DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
+-- CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- $$
+-- BEGIN
 
-END;
-$$ LANGUAGE plpgsql;
+-- 	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
+-- 						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
+-- 										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+-- 						  WHERE ho.Code_ModuleIUT = $1'
+-- 	USING p_code;
+
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- -- Sélectionner les heureRepartie
+
+-- DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
+-- CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- $$
+-- BEGIN
+
+-- 	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
+-- 						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
+-- 										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+-- 						  WHERE ho.Code_ModuleIUT = $1'
+-- 	USING p_code;
+
+-- END;
+-- $$ LANGUAGE plpgsql;
+
 
 
 /* ------------------------------------------ */

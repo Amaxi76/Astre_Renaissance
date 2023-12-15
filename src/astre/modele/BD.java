@@ -463,6 +463,36 @@ public class BD
 		return module;
 	}
 
+	public void getHeureIntervenant ( int id_Intervenant )
+	{
+		String requete = "SELECT * FROM f_selectHeureIntervenant(?)";
+
+		try
+		{
+			Statement         st = co.createStatement  (         );
+			PreparedStatement ps = co.prepareStatement ( requete );
+
+			ps.setInt ( 1, id_Intervenant );
+
+			ResultSet rs = ps.executeQuery ( );
+
+			while ( rs.next ( ) )
+			{
+				
+			}
+
+			rs.close ( );
+			ps.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+
+
+	}
+
 
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */

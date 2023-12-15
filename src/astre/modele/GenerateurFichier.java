@@ -60,7 +60,6 @@ public class GenerateurFichier
 				"<title>Intervenant [NOM]</title>"                                     + 
 			"</head>"                                                                  + 
 			"<body>"                                                                   + 
-				"<img src=\"../data/images/astre.png\" alt=\"Logo de l'application\">" +
 				"<table>"                                                              ;
 
             ecrivain.write ( entete );
