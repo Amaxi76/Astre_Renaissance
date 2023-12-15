@@ -231,4 +231,9 @@ public class PanelModuleLabel  extends JPanel
 	}
 	
 	public String getLblType ( ) { return this.lblType.getText ( ); }
+
+	public ModuleIUT getModule ( )
+	{
+		return this.ctrl.getModule( this.txtCode.getText() );
+	}
 }

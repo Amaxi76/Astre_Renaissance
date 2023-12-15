@@ -126,11 +126,15 @@ public class FrameModule extends JFrame implements ItemListener
 		{
 			if ( this.cbValidation.isSelected() )
 			{
-				this.ctrl.getModule(getName()).setValide(true);
+				System.out.println("yay");
+				this.panelModuleLabel.getModule().setValide(true);
+				repaint();
 			}
 			else
 			{
-				this.ctrl.getModule(getName()).setValide(false);
+				System.out.println("boo");
+				this.panelModuleLabel.getModule().setValide(false);
+				repaint();
 			}
 		}
 	}
