@@ -19,14 +19,18 @@ public class ModeleTableau extends AbstractTableModel
     public ModeleTableau ( String[] tabEntetes, Object[][] tabDonnees )
     {
         this.tabEntetes = tabEntetes;
-        this.tabDonnees = tabDonnees;
 
         this.decalage = 0;
         this.modifiable = new ArrayList<Integer>();
-
-        if(tabDonnees.length == 0)
-            ajouterLigne();
         
+        if(tabDonnees == null)
+        {
+            this.tabDonnees = new Object[0][tabEntetes.length];
+            ajouterLigne();
+        }
+        else
+            this.tabDonnees = tabDonnees;
+
         //ecriture des tableau pour test
         /*for(int i=0; i<tabDonnees.length; i++)
         {

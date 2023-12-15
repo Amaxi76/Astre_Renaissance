@@ -19,11 +19,18 @@ import astre.modele.elements.*;
 
 public class BD
 {
+	private static final String JDBC      = "org.postgresql.Driver";
+	private static final String LOGIN     = "sm220306";
+	private static final String PASSWORD  = /* mot de passe ---> */																																					"mateo2705";
+	private static final String URL_WOODY = "jdbc:postgresql://woody/" + LOGIN;
+	private static final String URL_LOCAL = "jdbc:postgresql://localhost:7777/" + LOGIN;
+	
+	private static BD dbInstance;
+	
 	Connection co;
 	PreparedStatement ps;
-	private static BD dbInstance;
 
-	private BD ( )
+	/*private BD ( )
 	{
 		try
 		{
@@ -40,41 +47,31 @@ public class BD
 		{
 			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
 		}
-	}
+	}*/
 
 	// TODO: à tester sur linux + mac + windows !
-	/*private BD ( )
+	private BD ( )
 	{
 		try
 		{
-			Class.forName ( "org.postgresql.Driver" );
-
-			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+			Class.forName ( JDBC );
+			co = DriverManager.getConnection ( URL_WOODY , LOGIN, PASSWORD );
 		}
-		catch ( ClassNotFoundException e )
+		catch ( ClassNotFoundException | SQLException e1 )
 		{
-			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+			System.out.println( "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 );
 
 			try
 			{
 				Class.forName ( "org.postgresql.Driver" );
-
-				co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" );
+				co = DriverManager.getConnection( URL_LOCAL, LOGIN, PASSWORD );
 			}
-			catch ( ClassNotFoundException e )
+			catch ( ClassNotFoundException | SQLException e2 )
 			{
-				System.out.println ( "Erreur 1.2 de connexion à la base de données : " + e );
-			}
-			catch ( SQLException e )
-			{
-				System.out.println ( "Erreur 2.2 de connexion à la base de données " +  e );
+				System.out.println("Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 );
 			}
 		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
-		}
-	}*/
+	}
 
 	public static BD getInstance ( )
 	{
@@ -615,6 +612,53 @@ public class BD
 		}
 
 		return intervenants;
+	}
+
+
+	public Object[][] getIntervientsTableau( String module )
+	{
+		int nbIntervients = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient where code_moduleIUT = '" + module + "'");
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		Object[][] intervients = new Object[nbIntervients][6];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, Id_Heure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient where code_moduleIUT = '" + module + "'");
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
+				intervients[cpt][1] = getHeure(rs.getInt ( 2 )).getNom();//heure
+				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString ( 6 );//commentaire
+
+				if( intervients[cpt][5] == null )
+					intervients[cpt][5] = "";
+
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
+
+	 	return intervients;
 	}
 
 

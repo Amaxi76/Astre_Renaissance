@@ -88,6 +88,7 @@ public class FrameModule extends JFrame
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
+		this.panelAffectation.setPreferredSize(new Dimension(850, 500));
 		panelCentre.add ( this.panelAffectation, gbcC );
 		
 
@@ -127,13 +128,13 @@ public class FrameModule extends JFrame
 
 		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
 		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
-		//if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
+		if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
 		
 		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
 		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
-		//if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
+		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
 		
-		//this.panelAffectation.setDonnee ( module );
+		this.panelAffectation.setDonnee ( module );
 	}
 		
 
@@ -149,7 +150,7 @@ public class FrameModule extends JFrame
 			this.panelPNLocalBis	.setVisible ( true );
 			this.panelPNLocalPPP	.setVisible ( false );
 		}
-		else if ( typeModule.equals ( "PPP" ) )
+		else if ( typeModule.equals ( "PP" ) )
 		{
 			this.panelRepartition   .setVisible ( false );
 			this.panelRepartitionBis.setVisible ( false );
