@@ -29,37 +29,37 @@ public class PanelAffectation extends JPanel implements ActionListener
 	/*--Attributs--*/
 	/*-------------*/
 
-	private Controleur ctrl;
+	private Controleur  ctrl;
 
-	private Tableau tableau;
+	private Tableau     tableau;
 	private JScrollPane scrollPane;
 
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
+	private JButton     btnAjouter;
+	private JButton     btnSupprimer;
 
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelAffectation( Controleur ctrl )
+	public PanelAffectation ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
 
-		this.setLayout ( new BorderLayout() );
+		this.setLayout ( new BorderLayout ( ) );
 
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String[] noms = {"Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
+		String[] noms = { "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 
-		this.tableau = new Tableau ( noms, null, 0);
-		this.tableau.setEditable(true);
-		this.tableau.ajusterTailleColonnes( );
+		this.tableau = new Tableau ( noms, null, 0 );
+		this.tableau.setEditable ( true );
+		this.tableau.ajusterTailleColonnes ( );
 
 		//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditInter = new JComboBox<> ( );
-		for ( Intervenant i : this.ctrl.getTable(Intervenant.class) )
+		for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
 		{
 			cbEditInter.addItem ( i.getNom ( ) );
 		}
@@ -67,7 +67,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 		//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditHeure = new JComboBox<> ( );
-		for ( Heure h : this.ctrl.getTable(Heure.class) )
+		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
 			cbEditHeure.addItem ( h.getNom ( ) );
 		}
@@ -76,7 +76,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 		this.scrollPane = new JScrollPane ( this.tableau );
 
-		JPanel panelSud = new JPanel( );
+		JPanel panelSud = new JPanel ( );
 
 		this.btnAjouter   = new JButton ( "Ajouter"   );
 		this.btnSupprimer = new JButton ( "Supprimer" );
@@ -86,7 +86,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 		panelSud.add ( this.btnAjouter   );
 		panelSud.add ( this.btnSupprimer );
 
-		this.add ( panelSud, BorderLayout.SOUTH);
+		this.add ( panelSud, BorderLayout.SOUTH );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -99,21 +99,23 @@ public class PanelAffectation extends JPanel implements ActionListener
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource() == this.btnAjouter )
+		if ( e.getSource ( ) == this.btnAjouter )
 		{
-			this.tableau.ajouterLigne();
-			this.repaint();
+			this.tableau.ajouterLigne ( );
+			this.tableau.ajusterTailleColonnes ( );
+			this.repaint ( );
 		}
 		
-		if ( e.getSource() == this.btnSupprimer )
+		if ( e.getSource ( ) == this.btnSupprimer )
 		{
-			this.tableau.supprimerLigne();
-			this.repaint();
+			this.tableau.supprimerLigne ( );
+			this.tableau.ajusterTailleColonnes ( );
+			this.repaint ( );
 		}
 	}
 
 	public void setDonnee ( ModuleIUT module )
 	{
-		this.tableau.modifDonnees(BD.getInstance().getIntervientsTableau(module.getCode()));
+		this.tableau.modifDonnees ( BD.getInstance ( ).getIntervientsTableau ( module.getCode ( ) ) );
 	}	
 }

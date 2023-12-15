@@ -25,18 +25,18 @@ public class PanelModuleLabel  extends JPanel
 	/*--Attributs--*/
 	/*-------------*/
 
-	private Controleur ctrl;
+	private Controleur  ctrl;
 	private FrameModule frm;
 
-	private JLabel     lblType;
-	private JLabel     lblSemestre;
-	private JTextField txtCode;
-	private JTextField txtLibLong;
-	private JTextField txtLibCourt;
+	private JLabel      lblType;
+	private JLabel      lblSemestre;
+	private JTextField  txtCode;
+	private JTextField  txtLibLong;
+	private JTextField  txtLibCourt;
 
-	private JLabel lblNbEtd;
-	public  JLabel lblNbGpTD;
-	public  JLabel lblNbGpTP;
+	private JLabel      lblNbEtd;
+	public  JLabel      lblNbGpTD;
+	public  JLabel      lblNbGpTP;
 
 
 	/*----------------*/
@@ -52,9 +52,9 @@ public class PanelModuleLabel  extends JPanel
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.setLayout ( new GridBagLayout() );
+		this.setLayout ( new GridBagLayout ( ) );
 
-		GridBagConstraints gbc = new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints ( );
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.lblType	 = new JLabel ( );
@@ -70,16 +70,16 @@ public class PanelModuleLabel  extends JPanel
 
 		gbc.gridy = 0;
 		gbc.gridx = 0;
-		this.add ( new JLabel ( "type module" ), gbc );
+		this.add ( new JLabel ( "type module"   ), gbc );
 
 		gbc.gridx = 1;
-		this.add ( new JLabel ( "semestre" ), gbc );
+		this.add ( new JLabel ( "semestre"      ), gbc );
 
 		gbc.gridx = 2;
-		this.add ( new JLabel ( "code"  ), gbc );
+		this.add ( new JLabel ( "code"          ), gbc );
 
 		gbc.gridx = 3;
-		this.add ( new JLabel ( "libellé long" ), gbc );
+		this.add ( new JLabel ( "libellé long"  ), gbc );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "libellé court" ), gbc );
@@ -104,7 +104,7 @@ public class PanelModuleLabel  extends JPanel
 
 		gbc.gridy = 2;
 		gbc.gridx = 1;
-		this.add ( new JLabel ( "nb Etd : " ), gbc );
+		this.add ( new JLabel ( "nb Etd : "   ), gbc );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "nb gp TD : " ), gbc );
@@ -138,27 +138,27 @@ public class PanelModuleLabel  extends JPanel
 		this.txtCode.addKeyListener(new KeyListener()
 		{
 			public void keyTyped    ( KeyEvent e ) { majLabels(); }
-			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyPressed  ( KeyEvent e ) { }
+			public void keyReleased ( KeyEvent e ) { }
 		} );
 
 
 		this.lblNbEtd .setBackground ( Color.LIGHT_GRAY );
-		this.lblNbEtd .setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbEtd .setPreferredSize ( new Dimension ( 25, 15 ) );
 		this.lblNbEtd .setOpaque ( true );
 
 		this.lblNbGpTD.setBackground ( Color.LIGHT_GRAY );
-		this.lblNbGpTD.setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbGpTD.setPreferredSize ( new Dimension ( 25, 15 ) );
 		this.lblNbGpTD.setOpaque ( true );
 
 		this.lblNbGpTP.setBackground ( Color.LIGHT_GRAY );
-		this.lblNbGpTP.setPreferredSize ( new Dimension ( 25, 15) );
+		this.lblNbGpTP.setPreferredSize ( new Dimension ( 25, 15 ) );
 		this.lblNbGpTP.setOpaque ( true );
 	}
 
 	private void majLabels()
 	{
-		String code = this.txtCode.getText();
+		String code = this.txtCode.getText ( );
 		int valSemestre = -1;
 
 		if ( code.contains ( "ST" ) )
@@ -186,7 +186,7 @@ public class PanelModuleLabel  extends JPanel
 
 
 
-		if ( !lblType.getText().equals ( "PPP" ) )
+		if ( !lblType.getText ( ).equals ( "PPP" ) )
 		{
 			valSemestre = ( code.length() > 1 ) ? Character.getNumericValue ( code.charAt ( 1 ) ) : -1;
 		}
@@ -197,23 +197,23 @@ public class PanelModuleLabel  extends JPanel
 
 		
 
-		if (valSemestre >= 1 && valSemestre <= 6)
-				this.lblSemestre.setText("S" + valSemestre);
+		if ( valSemestre >= 1 && valSemestre <= 6 )
+				this.lblSemestre.setText ( "S" + valSemestre );
 
-		attributsSemestre(valSemestre);
+		attributsSemestre ( valSemestre );
 
-		this.frm.setVisiblePanels ( this.lblType.getText() );
+		this.frm.setVisiblePanels ( this.lblType.getText ( ) );
 	}
 
-	private void attributsSemestre( int valSemestre )
+	private void attributsSemestre ( int valSemestre )
 	{
 		Semestre sem = this.ctrl.getSemestre ( valSemestre );
 
 		if ( sem != null )
 		{
-			this.lblNbEtd .setText ( String.valueOf ( sem.getNbEtudiant() ) );
-			this.lblNbGpTD.setText ( String.valueOf ( sem.getNbGroupeTD() ) );
-			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP() ) );
+			this.lblNbEtd .setText ( String.valueOf ( sem.getNbEtudiant ( ) ) );
+			this.lblNbGpTD.setText ( String.valueOf ( sem.getNbGroupeTD ( ) ) );
+			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP ( ) ) );
 		}
 	}
 
@@ -230,5 +230,5 @@ public class PanelModuleLabel  extends JPanel
 		this.txtCode    .setText ( module.getCode     ( ) );
 	}
 	
-	public String getLblType() { return this.lblType.getText(); }
+	public String getLblType ( ) { return this.lblType.getText ( ); }
 }

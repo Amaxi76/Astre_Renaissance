@@ -21,7 +21,7 @@ public class FrameModule extends JFrame
 	/*--Attributs--*/
 	/*-------------*/
 
-	private Controleur ctrl;
+	private Controleur          ctrl;
 
 	private PanelModuleLabel    panelModuleLabel;
 	private PanelPNLocal	    panelPNLocal;
@@ -32,7 +32,7 @@ public class FrameModule extends JFrame
 	private PanelAffectation    panelAffectation;
 	private PanelRepartitionPPP panelRepartitionPPP;
 
-	private JCheckBox cbValidation;
+	private JCheckBox           cbValidation;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -49,7 +49,7 @@ public class FrameModule extends JFrame
 
 		this.setSize   ( 1300, 1000       );
 		this.setTitle  ( "Prévisionnel : Module" );
-		this.setLocationRelativeTo ( null           );
+		this.setLocationRelativeTo ( null            );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -57,12 +57,12 @@ public class FrameModule extends JFrame
 
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
-		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl );
-		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl );
+		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl       );
+		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl       );
 		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
-		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl );
-		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl );
-		this.panelAffectation    = new PanelAffectation(this.ctrl);
+		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl       );
+		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl       );
+		this.panelAffectation    = new PanelAffectation    ( this.ctrl       );
 
 		this.cbValidation = new JCheckBox ( "Validation" );
 
@@ -70,11 +70,11 @@ public class FrameModule extends JFrame
 		this.add ( panelModuleLabel, BorderLayout.NORTH  );
 
 
-		JPanel panelCentre  = new JPanel ( new GridBagLayout() );
+		JPanel panelCentre  = new JPanel ( new GridBagLayout ( ) );
 		
 		this.add ( panelCentre, BorderLayout.CENTER );
 
-		GridBagConstraints gbcC = new GridBagConstraints();
+		GridBagConstraints gbcC = new GridBagConstraints ( );
 		gbcC.insets = new Insets ( 5, 10, 15, 10 );
 
 		gbcC.gridy = 0;
@@ -82,17 +82,17 @@ public class FrameModule extends JFrame
 		panelCentre.add ( this.panelRepartition,    gbcC );
 		panelCentre.add ( this.panelRepartitionBis, gbcC );
 		panelCentre.add ( this.panelRepartitionPPP, gbcC );
+
 		this.panelRepartitionBis.setVisible ( false );
 		this.panelRepartitionPPP.setVisible ( false );
 
-
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
-		this.panelAffectation.setPreferredSize(new Dimension(850, 500));
+		this.panelAffectation.setPreferredSize ( new Dimension ( 850, 500 ) );
 		panelCentre.add ( this.panelAffectation, gbcC );
 		
 
-		JPanel panelOuest = new JPanel ( new GridBagLayout() );
+		JPanel panelOuest = new JPanel ( new GridBagLayout ( ) );
 
 		GridBagConstraints gbcO = new GridBagConstraints();
 		gbcO.insets = new Insets ( 5, 10, 15, 10 );
@@ -124,7 +124,7 @@ public class FrameModule extends JFrame
 		ModuleIUT module = this.ctrl.getModule ( code );
 
 		this.panelModuleLabel.setModule ( module );
-		this.setVisiblePanels( module.getTypeModule() );
+		this.setVisiblePanels( module.getTypeModule ( ) );
 
 		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
 		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
@@ -138,16 +138,16 @@ public class FrameModule extends JFrame
 	}
 		
 
-	public void setVisiblePanels(String typeModule)
+	public void setVisiblePanels ( String typeModule )
 	{
-		if (typeModule.equals("SAE") || typeModule.equals("Stage"))
+		if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
 		{
 			this.panelRepartition   .setVisible ( false );
-			this.panelRepartitionBis.setVisible ( true );
+			this.panelRepartitionBis.setVisible ( true  );
 			this.panelRepartitionPPP.setVisible ( false );
 
 			this.panelPNLocal		.setVisible ( false );
-			this.panelPNLocalBis	.setVisible ( true );
+			this.panelPNLocalBis	.setVisible ( true  );
 			this.panelPNLocalPPP	.setVisible ( false );
 		}
 		else if ( typeModule.equals ( "PPP" ) )
@@ -162,11 +162,11 @@ public class FrameModule extends JFrame
 		}
 		else
 		{
-			this.panelRepartition   .setVisible ( true );
+			this.panelRepartition   .setVisible ( true  );
 			this.panelRepartitionBis.setVisible ( false );
 			this.panelRepartitionPPP.setVisible ( false );
 
-			this.panelPNLocal		.setVisible ( true );
+			this.panelPNLocal		.setVisible ( true  );
 			this.panelPNLocalBis	.setVisible ( false );
 			this.panelPNLocalPPP	.setVisible ( false );
 		}
