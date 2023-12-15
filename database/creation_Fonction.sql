@@ -83,21 +83,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Sélectionner les heures d'un intervenant dans intervient
-DROP              FUNCTION f_selectHeureIntervenant ( s_Id_Intervenant INTEGER );
-CREATE OR REPLACE FUNCTION f_selectHeureIntervenant ( s_Id_Intervenant INTEGER ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
-
-	RETURN QUERY     SELECT m.Code_ModuleIUT, libLong, libCourt, typeModule, Id_Semestre nomHeure, nbSemaine, nbGroupe, nbHeure
-                     FROM   Intervenant i JOIN Intervient t ON i.Id_Intervenant = t.Id_Intervenant
-                                                 JOIN Heure h      ON h.Id_heure       = t.Id_Heure
-                                                 JOIN ModuleIUT m  ON m.Code_ModuleIUT = t.Code_ModuleIUT
-                     WHERE  t.Id_Intervenant = s_Id_Intervenant;	
-
-END;
-$$ LANGUAGE plpgsql;
-
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
 -- -- Sélectionner les heuresPN

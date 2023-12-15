@@ -469,41 +469,6 @@ public class BD
 		return module;
 	}
 
-	public Map <String[], List<Intervient>> getHeureIntervenant ( int id_Intervenant )
-	{
-		HashMap <String[], List<Intervient>> ensDonnes = new HashMap <String[], List<Intervient>> ( );
-		String[] cle = new String[2];
-
-		String requete = "SELECT * FROM f_selectHeureIntervenant(?)";
-
-		try
-		{
-			Statement         st = co.createStatement  (         );
-			PreparedStatement ps = co.prepareStatement ( requete );
-
-			ps.setInt ( 1, id_Intervenant );
-
-			ResultSet rs = ps.executeQuery ( );
-
-			while ( rs.next ( ) )
-			{
-				cle[0] = rs.getString(1);
-				cle[1] = rs.getString(2);
-			}
-
-			rs.close ( );
-			ps.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-
-		return ensDonnes;
-	}
-
-
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
