@@ -130,4 +130,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		}
 		return "pas de selection";
 	}
+
+	public void majTableau ( )
+	{
+		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauModule ( this.numSemestre ) );
+	}
+	
 }

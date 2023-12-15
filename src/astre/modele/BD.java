@@ -707,7 +707,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur 1 getModulesTableau() : " + e );
+			System.out.println ( "Erreur 1 getContratsTableau() : " + e );
 		}
 
 		Object[][] contrats = new Object[nbContrat][5];
@@ -1139,22 +1139,23 @@ public class BD
 
 	public void update ( ModuleIUT m )
 	{
-		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
+		String req = "UPDATE ModuleIUT SET libLong = ?, libCourt = ?, typeModule = ?, valide = ?, Id_Semestre = ? WHERE code_Moduleiut = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, m.getLibLong    ( ) );
 			ps.setString ( 2, m.getLibCourt   ( ) );
 			ps.setString ( 3, m.getTypeModule ( ) );
-			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
-			ps.setString ( 5, m.getCode       ( ) );
+			ps.setBoolean( 4, m.estValide()       );
+			ps.setInt    ( 5, m.getSemestre   ( ).getIdSemestre ( ) );
+			ps.setString ( 6, m.getCode       ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Module m ) : " + e);
+			System.out.println ( "Erreur update ( ModuleIUT m ) : " + e);
 		}
 	}
 

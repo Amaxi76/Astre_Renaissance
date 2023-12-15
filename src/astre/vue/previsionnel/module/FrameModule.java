@@ -1,7 +1,6 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
-import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -16,7 +15,7 @@ import astre.modele.elements.ModuleIUT;
 * @date : 11/12/2023
 */
 
-public class FrameModule extends JFrame implements ItemListener
+public class FrameModule extends JFrame
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -112,31 +111,9 @@ public class FrameModule extends JFrame implements ItemListener
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
-		this.cbValidation.addItemListener( this );
-
-
 		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
 
 		this.setVisible ( true );
-	}
-
-	public void itemStateChanged(java.awt.event.ItemEvent e)
-	{
-		if ( e.getSource() == this.cbValidation )
-		{
-			if ( this.cbValidation.isSelected() )
-			{
-				System.out.println("yay");
-				this.panelModuleLabel.getModule().setValide(true);
-				repaint();
-			}
-			else
-			{
-				System.out.println("boo");
-				this.panelModuleLabel.getModule().setValide(false);
-				repaint();
-			}
-		}
 	}
 
 	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
@@ -157,6 +134,8 @@ public class FrameModule extends JFrame implements ItemListener
 		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
 		
 		this.panelAffectation.setDonnee ( module );
+
+		this.cbValidation.setSelected( module.estValide( ) );
 	}
 		
 

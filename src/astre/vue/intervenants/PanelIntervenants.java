@@ -2,7 +2,7 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
-
+import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 
 import javax.swing.*;
@@ -120,8 +120,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
-			this.tableau.ajusterTailleColonnes ( );
+			( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose();
+			new FrameAccueil(this.ctrl);
 		}
 	}
 
