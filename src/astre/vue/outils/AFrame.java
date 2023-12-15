@@ -13,5 +13,5 @@ public class AFrame extends JFrame
 	//quitter()
 	//static getParent
 	
-	public 
+	//public 
 }
