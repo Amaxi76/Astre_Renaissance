@@ -20,14 +20,14 @@ public class FrameIntervenants extends JFrame
 		this.ctrl  = ctrl;
 		this.panel = new PanelIntervenants ( this.ctrl );
 		
-		this.setTitle              ( "Intervenants" );
-		this.setSize               ( 1000,500       );
-		this.setLocationRelativeTo ( null           );
+		this.setTitle              ( "Intervenants"  );
+		this.setSize               ( 1000,500 );
+		this.setLocationRelativeTo ( null                );
 		
 		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 		
 		this.add ( this.panel );
 
-		this.setVisible   ( true );
+		this.setVisible ( true );
 	}
 }

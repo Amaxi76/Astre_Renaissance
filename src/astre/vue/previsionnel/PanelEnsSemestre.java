@@ -6,7 +6,6 @@ import astre.vue.outils.ConstantesVue;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /**
  * Classe PanelEnsSemestre

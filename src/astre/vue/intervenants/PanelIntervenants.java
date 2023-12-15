@@ -1,14 +1,7 @@
 package astre.vue.intervenants;
 
 import astre.Controleur;
-import astre.modele.BD;
 import astre.modele.elements.*;
-
-/** Page de gestion des intervenants
-  * @author : Matéo Sa
-  * @version : 1.0 - 11/12/2023
-  * @date : 06/12/2023
-  */
 
 import astre.vue.outils.*;
 
@@ -17,23 +10,28 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 
+/** Page de gestion des intervenants
+  * @author : Matéo Sa
+  * @version : 1.0 - 11/12/2023
+  * @date : 06/12/2023
+  */
+
 public class PanelIntervenants extends JPanel implements ActionListener
 {
-	private Tableau tableau;
+	private Tableau     tableau;
 	private JScrollPane scrollPane;
 	
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
-	
-	private JButton btnEnregistrer;
-	private JButton btnAnnuler;
+	private JButton     btnAjouter;
+	private JButton     btnSupprimer;
+	private JButton     btnEnregistrer;
+	private JButton     btnAnnuler;
 
-	private JPanel panelCentre;
+	private JPanel      panelCentre;
 
-	private Controleur ctrl;
+	private Controleur  ctrl;
 	
 	/**
-	 * 	Panel pour la frame des intervenants..
+	 * 	Panel pour la frame des intervenants.
 	 * @author Matéo
 	 */
 	public PanelIntervenants ( Controleur ctrl )
@@ -45,21 +43,21 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		//création des composants
-		String[] noms = {"Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		String[] noms = { "Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 
 		//Création du tableau
 		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant ( ), 1 );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
-		for ( Contrat c : this.ctrl.getContrats ( ) )
+		for ( Contrat c : this.ctrl.getTable( Contrat.class ) )
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
-		this.tableau.getColumnModel ( ).getColumn (0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
+		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
-		this.tableau.setEditable( new int[] {0, 1, 2, 3, 4} );
+		this.tableau.setEditable ( new int[] { 0, 1, 2, 3, 4 } );
 		this.tableau.ajusterTailleColonnes ( );
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );
@@ -67,12 +65,12 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 		
-		this.panelCentre = new JPanel( );
+		this.panelCentre = new JPanel ( );
 		panelCentre.setLayout ( new BorderLayout ( ) );
 		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
-		JPanel panelCentre2 = new JPanel( );
-		JPanel panelSud     = new JPanel( );
+		JPanel panelCentre2 = new JPanel ( );
+		JPanel panelSud     = new JPanel ( );
 		
 		this.scrollPane = new JScrollPane ( this.tableau );
 		
@@ -80,15 +78,15 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		panelCentre2.add ( this.btnAjouter   );
 		panelCentre2.add ( this.btnSupprimer );
 		
-		panelCentre.add ( panelCentre2, BorderLayout.SOUTH );
-		panelCentre.add ( scrollPane, BorderLayout.CENTER  );
+		panelCentre.add ( panelCentre2, BorderLayout.SOUTH  );
+		panelCentre.add ( scrollPane  , BorderLayout.CENTER );
 		
 		panelSud.add ( this.btnEnregistrer );
 		panelSud.add ( this.btnAnnuler     );
 		
-		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH );
-		this.add ( panelCentre, BorderLayout.CENTER );
-		this.add ( panelSud   , BorderLayout.SOUTH  );
+		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
+		this.add ( panelCentre                                 , BorderLayout.CENTER );
+		this.add ( panelSud                                    , BorderLayout.SOUTH  );
 		
 		//met les actionListener
 		this.btnAjouter    .addActionListener ( this );
@@ -113,7 +111,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			if( enregistrer( this.tableau.getDonnees ( ) ) )
+			if ( enregistrer ( this.tableau.getDonnees ( ) ) )
 			{
 				this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
 			}
@@ -130,7 +128,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	public boolean enregistrer ( Object[][] deuxieme )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
-		ArrayList<Intervenant> lstBD = (ArrayList<Intervenant>) this.ctrl.getIntervenants();
+		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
 		
 		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
 		Intervenant inter = null;
