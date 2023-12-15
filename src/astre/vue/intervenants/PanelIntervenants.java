@@ -1,7 +1,6 @@
 package astre.vue.intervenants;
 
 import astre.Controleur;
-import astre.modele.BD;
 import astre.modele.elements.*;
 
 /** Page de gestion des intervenants
