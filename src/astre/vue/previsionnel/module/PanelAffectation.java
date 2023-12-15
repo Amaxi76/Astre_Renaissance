@@ -52,7 +52,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 		String[] noms = {"Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 
-		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervient(), 0);
+		this.tableau = new Tableau ( noms, null, 0);
 		this.tableau.ajusterTailleColonnes( );
 
 		this.scrollPane = new JScrollPane ( this.tableau );
@@ -96,7 +96,6 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 	public void setDonnee ( ModuleIUT module )
 	{
-		//TODO verif si ce truc marche
-		//this.tableau.modifDonnees(this.ctrl.getTableauContrat());
+		this.tableau.modifDonnees(BD.getInstance().getIntervientsTableau(module.getCode()));
 	}	
 }
