@@ -3,6 +3,10 @@ package astre.modele;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import astre.modele.elements.Intervenant;
 
@@ -52,25 +56,43 @@ public class GenerateurFichier
 		{
             // Ecriture de l'entête
 			String entete = 
-			"<!DOCTYPE html>"                                                          + 
-			"<html lang=\"fr\">"                                                       + 
-			"<head>"                                                                   + 
-				"<meta charset=\"UTF-8\">"                                             + 
-				"<link href=\"style.css\" rel=\"stylesheet\">"                         + 
-				"<title>Intervenant [NOM]</title>"                                     + 
-			"</head>"                                                                  + 
-			"<body>"                                                                   + 
-				"<img src=\"../data/images/astre.png\" alt=\"Logo de l'application\">" +
-				"<table>"                                                              ;
+			"<!DOCTYPE html>"                                                                             + 
+			"<html lang=\"fr\">"                                                                          + 
+			"<head>"                                                                                      + 
+				"<meta charset=\"UTF-8\">"                                                                + 
+				"<link href=\"style.css\" rel=\"stylesheet\">"                                            + 
+				"<title>Intervenant [NOM]</title>"                                                        + 
+			"</head>"                                                                                     + 
+			"<body>"                                                                                      +
+				"<table>"                                                                                 +
+					"<tr>"                                                                                +
+			  			"<th colspan=\"4\">"+ inter.getPrenom() +  inter.getNom().toUpperCase() + "</th>" +
+					"</tr>"                                                                               +
+					"<tr>"                                                                                +
+						"<td class=\"first\">Numéro de ligne</td>"                                        +
+						"<td class=\"first\">Code de la matière et nom</td>"                              +
+						"<td class=\"first\">Heure dans la matière</td>"                                  +
+					"</tr>"                                                                               ;
 
             ecrivain.write ( entete );
 
 			
 			// Ecriture du corps du tableau
-
-            ecrivain.newLine ( );
 			
 			BD bd = BD.getInstance ( );
+			Map<Integer, List<Object>> ensDonnes = bd.getHeureIntervenant(inter.getId());
+
+			String corps = "";
+
+			for (Integer key : ensDonnes.keySet())
+			{
+				corps += 
+				    	"<tr>" +
+							"<td class=\"first\">"+ key                                                         + "</td>" +
+							"<td class=\"first\">"+ ensDonnes.get(key).get(0) + " " + ensDonnes.get(key).get(2) + "</td>" +
+							"<td class=\"first\">Heure dans la matière</td>"                                    +
+						"</tr>";
+			}
 
 			
 

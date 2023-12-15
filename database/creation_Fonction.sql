@@ -83,37 +83,40 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Sélectionner les heuresPN
+/* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
-DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
+-- -- Sélectionner les heuresPN
 
-	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
-						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
-										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-						  WHERE ho.Code_ModuleIUT = $1'
-	USING p_code;
+-- DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
+-- CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- $$
+-- BEGIN
 
-END;
-$$ LANGUAGE plpgsql;
+-- 	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
+-- 						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
+-- 										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+-- 						  WHERE ho.Code_ModuleIUT = $1'
+-- 	USING p_code;
 
--- Sélectionner les heureRepartie
+-- END;
+-- $$ LANGUAGE plpgsql;
 
-DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
+-- -- Sélectionner les heureRepartie
 
-	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
-						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
-										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-						  WHERE ho.Code_ModuleIUT = $1'
-	USING p_code;
+-- DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
+-- CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- $$
+-- BEGIN
 
-END;
-$$ LANGUAGE plpgsql;
+-- 	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
+-- 						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
+-- 										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+-- 						  WHERE ho.Code_ModuleIUT = $1'
+-- 	USING p_code;
+
+-- END;
+-- $$ LANGUAGE plpgsql;
+
 
 
 /* ------------------------------------------ */

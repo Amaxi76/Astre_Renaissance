@@ -2,9 +2,7 @@ package astre.vue.outils;
 
 import javax.swing.*;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.*;
-import javax.swing.event.*;
 
 import astre.Controleur;
 import astre.vue.FrameAccueil;

@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
 
-import astre.Controleur;
-
 /** Classe représentant un tableau personnalisable.
  *  @author Matéo et Maxime
  *  @version : 1.0 - 11/12/2023

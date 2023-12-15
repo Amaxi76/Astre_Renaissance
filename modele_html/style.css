@@ -38,6 +38,12 @@ tr:nth-child(even)
 	background-color: #f7c5bc;
 }
 
+.first
+{
+	text-align: center;
+	font-weight: bold;
+}
+
 .num
 {
 	width: 10%;

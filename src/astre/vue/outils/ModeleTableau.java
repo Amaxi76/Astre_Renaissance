@@ -43,12 +43,12 @@ public class ModeleTableau extends AbstractTableModel
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
-    public int    getColumnCount ( )                  { return this.tabEntetes.length - decalage;    }
-	public int    getRowCount    ( )                  { return this.tabDonnees.length;               }
-	public Object getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage]; }
-	public String getNomColonne  ( int col )          { return this.tabEntetes[col];                 }
-	public Class  getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );     }
-	public String getColumnName  ( int c )            { return this.tabEntetes[c + decalage];        }
+    public int      getColumnCount ( )                  { return this.tabEntetes.length - decalage;    }
+	public int      getRowCount    ( )                  { return this.tabDonnees.length;               }
+	public Object   getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage]; }
+	public String   getNomColonne  ( int col )          { return this.tabEntetes[col];                 }
+	public Class<?> getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );     }
+	public String   getColumnName  ( int c )            { return this.tabEntetes[c + decalage];        }
 
     /**
 	* Donne la liste des cellules éditables.
