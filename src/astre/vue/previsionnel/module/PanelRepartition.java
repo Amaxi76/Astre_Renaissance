@@ -15,6 +15,7 @@ import astre.modele.BD;
 import astre.modele.elements.Heure;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
+import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelRepartition
   * @author : Clémentin Ly
@@ -76,11 +77,22 @@ public class PanelRepartition extends JPanel
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.txtNbSemCM = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbSemCM );
+
 		this.txtNbHCM   = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbHCM );
+
 		this.txtNbSemTD = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbSemTD );
+
 		this.txtNbHTD   = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbHTD );
+
 		this.txtNbSemTP = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbSemTP );
+
 		this.txtNbHTP   = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbHTP );
 
 		this.lblTotalCM    = new JLabel();
 		this.lblTotalTD    = new JLabel();

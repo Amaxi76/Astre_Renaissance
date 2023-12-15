@@ -62,9 +62,14 @@ public class PanelPNLocal extends JPanel
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.txtCM      = new JTextField ( "", 2 );
-		//FiltreTextFieldEntier.appliquer ( txtCM );
+		FiltreTextFieldEntier.appliquer ( txtCM );
+
 		this.txtTD      = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtTD );
+
 		this.txtTP      = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtTP );
+		
 		this.lblSomme   = new JLabel();
 
 		this.lblTotalCM    = new JLabel();

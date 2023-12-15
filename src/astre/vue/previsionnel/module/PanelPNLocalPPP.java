@@ -14,6 +14,7 @@ import astre.Controleur;
 import astre.modele.BD;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
+import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelPNLocalPPP
   * @author : Clémentin Ly
@@ -56,10 +57,20 @@ public class PanelPNLocalPPP extends JPanel
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.txtCM	  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtCM );
+
 		this.txtTD	  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtTD );
+
 		this.txtTP	  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtTP );
+
 		this.txtHTut  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtHTut );
+
 		this.txtHP    = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtHP );
+		
 		this.lblSomme = new JLabel();
 
 		gbc.gridy = 0;

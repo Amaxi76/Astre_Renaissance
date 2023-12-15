@@ -14,6 +14,7 @@ import astre.Controleur;
 import astre.modele.BD;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
+import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelPNLocalBis
   * @author : Clémentin Ly
@@ -52,7 +53,11 @@ public class PanelPNLocalBis extends JPanel
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.txtHSae = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtHSae );
+
 		this.txtHTut = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtHTut );
+		
 		this.lblSomme   = new JLabel();
 
 		gbc.gridy = 0;
