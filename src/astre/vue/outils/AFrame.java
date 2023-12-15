@@ -12,4 +12,6 @@ public class AFrame extends JFrame
 	//new menubar
 	//quitter()
 	//static getParent
+	
+	//public 
 }
