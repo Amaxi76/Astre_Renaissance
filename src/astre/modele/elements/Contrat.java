@@ -118,8 +118,8 @@ public class Contrat
 			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
 
 		// Coef TD
-		if ( ratioTP < 0 )
-			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+		if ( ratioTP <= 0 )
+			throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0" );
 		
 		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}

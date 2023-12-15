@@ -779,8 +779,6 @@ public class BD
 				heures[cpt][1] = rs.getString ( 2 );
 				heures[cpt][2] = rs.getDouble ( 3 );
 
-				System.out.println( "SQL : " + !( heures[cpt][2] instanceof Number ));
-
 				cpt++;
 			}
 

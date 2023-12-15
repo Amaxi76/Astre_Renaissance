@@ -3,43 +3,90 @@ package astre.vue.outils;
 import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
+import astre.modele.outils.ModeleTableau;
 
 /** Classe représentant un tableau personnalisable.
- *  @author Matéo et Maxime
+ *  @author Matéo Sa, Maxime Lemoine et Maximilien Lesterlin
  *  @version : 1.0 - 11/12/2023
  *  @date : 06/12/2023
 */
 
-//TODO: simplifier les constructeurs, en les appelant les uns les autres
 //TODO: ajouter un booleen pour le constructeur sans titre de colonnes
-//TODO: nettoyer les constructeurs qui semblent inutiles (utilisés avant pour les tests avec tableaux vides)
 
 public class Tableau extends JTable
 {
-	private String[] nomColonnes;
+	private static final int DECALAGE_DEFAUT = 0;
+	
 	private ModeleTableau modele;
 	
-	public Tableau ( String[] nomColonnes, Object[][] tabDonnees, int decal)
+	private Tableau ( String[] ensEntete, Object[] ensDefaut, boolean[] ensModifiable, int decalage, Object[][] tabDonnees )
 	{
-		this.nomColonnes = nomColonnes;
-		this.modele = new ModeleTableau ( this.nomColonnes, tabDonnees );
-		this.modele.setDecalage ( decal );
+		this.modele = new ModeleTableau ( ensEntete, ensDefaut, ensModifiable, decalage, tabDonnees );
+		//this.modele.setDecalage ( decal );
 		
-		this.setModel ( this.modele );
+		this.setModel         ( this.modele                         );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
 		
 		//Permet au tableau de prendre toute la frame
-		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS );
+		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS     );
 
-		//Permet d'enpecher de déplacer les cases (je crois)(ne marche pas vraiment)
-		this.setDragEnabled ( false );
+		//Permet d'empecher de déplacer les cases (je crois)(ne marche pas vraiment)
+		//this.setDragEnabled ( false );
+
+		//Permet de ne pas mettre d'entetes
+		boolean contientEntete = false;
+		for ( String s : ensEntete )
+			if ( !s.equals ( "" ) )
+				contientEntete = true;
+		
+		if ( !contientEntete ) this.setTableHeader ( null );
 	}
-	
-	/*public Tableau ( Object[][] tabDonnees, boolean estModifiable )
+
+	public static Tableau initialiserTableau ( String[] ensEntete, Object[] ensDefaut, boolean[] ensModifiable, int decalage, Object[][] tabDonnees )
 	{
-		this ( new String[] { "","","","" }, tabDonnees );
-		this.setTableHeader(null);
-	}*/
+		// ensDefaut est le seul paramètre obligatoire
+		if ( ensDefaut == null ) return null;
+		
+		int nbColonnes = ensDefaut.length;
+		
+		// initialisation de tous les attributs
+		if ( ensEntete == null )
+		{
+			ensEntete = new String[nbColonnes];
+			
+			for ( int i = 0; i < nbColonnes; i++ )
+				ensEntete[i] = "";
+		}
+
+		if ( ensModifiable == null )
+		{
+			ensModifiable = new boolean[nbColonnes];
+			for ( int i = 0; i < nbColonnes; i++ )
+				ensModifiable[i] = true;
+		}
+
+		tabDonnees = ( tabDonnees == null ) ? new Object[0][ nbColonnes ] : tabDonnees;
+
+		return new Tableau ( ensEntete, ensDefaut, ensModifiable, decalage , tabDonnees );
+	}
+
+	public static Tableau initialiserTableau ( String[] ensEntete, Object[] ensDefaut, boolean estModifiable, int decalage, Object[][] tabDonnees )
+	{
+		int nbColonnes = ensDefaut.length;
+
+		if ( decalage < 0 || decalage > nbColonnes ) decalage = DECALAGE_DEFAUT; 
+		
+		boolean[] ensModifiable = new boolean[nbColonnes];
+		for ( int i = 0; i < nbColonnes; i++ )
+			ensModifiable[i] = estModifiable;
+
+		return initialiserTableau ( ensEntete, ensDefaut, ensModifiable, decalage, tabDonnees );
+	}
+
+	public static Tableau initialiserTableau ( Object[] ensDefaut )
+	{
+		return Tableau.initialiserTableau ( null, ensDefaut, true, DECALAGE_DEFAUT, null );
+	}
 	
 	/**
 	* Ajuste la taille des colonnes.
@@ -66,7 +113,7 @@ public class Tableau extends JTable
 	*/
 	public void ajouterLigne ( )
 	{
-		this.modele.ajouterLigne();
+		this.modele.ajouterLigne ( );
 		//this.ajusterTailleColonnes ( );
 	}
 	
@@ -86,43 +133,28 @@ public class Tableau extends JTable
 	/**
 	* Permet de récupérer les données du modele
 	*/
-	public Object[][] getDonnees()
-    {
-        return this.modele.getDonnees();
-    }
+	public Object[][] getDonnees ( ) { return this.modele.getDonnees ( ); }
+
+	public ModeleTableau getModeleTableau ( ) { return this.modele; }
 
 	/**
 	* Permet de modifier les données du modele
 	*/
 	public void modifDonnees ( Object[][] donnee )
 	{
-		this.modele.modifDonnees ( donnee );
+		this.modele.majDonnees ( donnee );
 	}
 
-	public ModeleTableau getModeleTableau ( )
-	{
-		return this.modele;
-	}
-
-	public void setDecalage(int d)
-	{
-		this.modele.setDecalage(d);
-	}
+	public void setDecalage ( int d ) { this.modele.setDecalage ( d ); }
 
 	/**
 	* Permet d'éditer ou non toutes les colonnes.
 	*/
-	public void setEditable ( boolean editable )
-	{
-		this.modele.setEditable(editable);
-	}
+	public void setEditable ( boolean editable ) { this.modele.setEditable(editable); }
 
-    /**
+	/**
 	* Permet de modifier la liste des cellules éditables avec les numéros de colonne choisi.
 	*/
-    public void setEditable ( int[] lst )
-    {
-        this.modele.setEditable(lst);
-    }
+	public void setEditable ( boolean[] lst ) { this.modele.setEditable ( lst ); }
 
 }

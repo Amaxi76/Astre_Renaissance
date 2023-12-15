@@ -71,7 +71,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		this.tableauEnsembleModule = new Tableau ( new String[] {"", "", "", ""}, this.ctrl.getTableauModule ( numSemestre ), 0 );
+		Object[] typeDefaut = new Object[]{"", "", "", false};
+		this.tableauEnsembleModule = Tableau.initialiserTableau( null, typeDefaut, false, 0, this.ctrl.getTableauModule ( numSemestre ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
@@ -79,6 +80,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );
 		spTab.setBorder                  ( new TitledBorder ( "Liste des modules" )      );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+
+		//DEBUG:
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
