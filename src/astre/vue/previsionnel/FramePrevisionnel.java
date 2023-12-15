@@ -19,6 +19,8 @@ public class FramePrevisionnel extends JFrame
 	/*--Attributs--*/
 	/*-------------*/
 
+	private static final int SEMESTRE_DEFAUT = 1;
+
 	private Controleur ctrl;
 
 	private PanelBouton pnlBouton;
@@ -63,7 +65,7 @@ public class FramePrevisionnel extends JFrame
 
 	public FramePrevisionnel ( Controleur ctrl )
 	{
-		this ( ctrl, 1 );
+		this ( ctrl, SEMESTRE_DEFAUT-1 );
 	}
 
 	public String getModuleSelection ( )
