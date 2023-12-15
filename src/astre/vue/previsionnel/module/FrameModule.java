@@ -68,8 +68,16 @@ public class FrameModule extends JFrame implements ItemListener
 		this.cbValidation = new JCheckBox ( "Validation" );
 
 
+		/*---------*/
+		/*  Nord   */
+		/*---------*/
+
 		this.add ( panelModuleLabel, BorderLayout.NORTH  );
 
+
+		/*----------*/
+		/*  Centre  */
+		/*----------*/
 
 		JPanel panelCentre  = new JPanel ( new GridBagLayout ( ) );
 		
@@ -91,7 +99,11 @@ public class FrameModule extends JFrame implements ItemListener
 		gbcC.gridx = 0;
 		this.panelAffectation.setPreferredSize ( new Dimension ( 850, 500 ) );
 		panelCentre.add ( this.panelAffectation, gbcC );
+
 		
+		/*---------*/
+		/*  Ouest  */
+		/*---------*/
 
 		JPanel panelOuest = new JPanel ( new GridBagLayout ( ) );
 
@@ -112,14 +124,24 @@ public class FrameModule extends JFrame implements ItemListener
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
-		this.cbValidation.addItemListener( this );
 
+		/*-------*/
+		/*  Sud  */
+		/*-------*/
 
 		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
+
+
+		/* ------------------------- */
+		/* Activation des composants */
+		/* ------------------------- */
+
+		this.cbValidation.addItemListener( this );
 
 		this.setVisible ( true );
 	}
 
+	/* ItemListener */
 	public void itemStateChanged(java.awt.event.ItemEvent e)
 	{
 		if ( e.getSource() == this.cbValidation )
