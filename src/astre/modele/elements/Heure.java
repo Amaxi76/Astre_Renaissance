@@ -19,7 +19,7 @@ public class Heure
 	private String nom;
 	private double coefTd;
 
-	public Heure ( int id, String nom, double coefTd )
+	private Heure ( int id, String nom, double coefTd )
 	{
 		this.id     = id;
 		this.nom    = nom;
@@ -32,16 +32,10 @@ public class Heure
 		Object n = heure[1];
 		Object c = heure[2];
 
-		System.out.println(i);
-
-		System.out.println( "Conditon 1 : " + ( i != null && !( i instanceof Integer ) ));
-		System.out.println( "Conditon 2 : " + !( n instanceof String ));
-		System.out.println( "Conditon 3 : " + !( c instanceof Number ));
-
 		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( c instanceof Number ) )
 			throw new IllegalArgumentException ( "Les données de l'heure ne sont pas du bon type" );
 		
-		int    id                  = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
+		int    id   = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
 		double coef = Double.parseDouble ( c.toString ( ) );
 		String nom  = n.toString ( );
 

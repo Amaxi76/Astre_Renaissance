@@ -98,35 +98,21 @@ public class BD
 
 			while ( rs.next ( ) )
 			{
-				if ( type.equals ( Semestre.class )     )
-					lst.add ( type.cast( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
-					//TODO: supprimer ligne si fonctionne //lst.add ( ( T ) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-
-				if ( type.equals ( Contrat.class )      )
+				try
 				{
-					try
-					{
+					if ( type.equals ( Semestre.class )     )
+						lst.add ( type.cast( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+
+					if ( type.equals ( Contrat.class )      )
 						lst.add ( type.cast ( Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) ) );
-						//lst.add ( ( T ) Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
-					}
-					catch ( Exception e )
-					{
-						e.printStackTrace ( );
-					}
-				}
 
-				if ( type.equals ( Heure.class )        )
-					lst.add ( type.cast ( new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
-					//lst.add ( ( T ) new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) );
-
-				if ( type.equals ( Intervenant.class )  )
-					lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
-					//lst.add ( ( T ) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-				
-				if ( type.equals ( Intervient.class )  )
-					lst.add ( type.cast ( new Intervient( getIntervenant( rs.getInt ( 1 ) ), getHeure( rs.getInt(2)), getModule(rs.getString(3)), rs.getInt(4), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString ( 7 ) ) ) );
+					if ( type.equals ( Heure.class )        )
+						lst.add ( type.cast ( Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
 			
-				if ( type.equals ( ModuleIUT.class )  )
+					if ( type.equals ( Intervenant.class )  )
+						lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+
+					if ( type.equals ( ModuleIUT.class )  )
 					lst.add ( type.cast ( new ModuleIUT(  getSemestre(rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(5), null, null ) ) );
 
 				if ( type.equals ( Horaire.class )  )
@@ -134,6 +120,12 @@ public class BD
 			
 				
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
+				}
+				catch ( Exception e )
+				{
+					e.printStackTrace ( );
+				}
+				
 			}
 
 		}
@@ -458,7 +450,15 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure where Id_Heure = " + h  );
 			while ( rs.next ( ) )
 			{
-				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				try
+				{
+					heure = Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				}
+				catch ( Exception e )
+				{
+					e.printStackTrace ( );
+				}
+				
 			}
 		}
 		catch ( SQLException e )
@@ -479,7 +479,15 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure where nomheure = '" + h + "'"  );
 			while ( rs.next ( ) )
 			{
-				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				try
+				{
+					heure = Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				}
+				catch ( Exception e )
+				{
+					e.printStackTrace ( );
+				}
+				
 			}
 		}
 		catch ( SQLException e )

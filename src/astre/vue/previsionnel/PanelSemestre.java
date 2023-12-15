@@ -6,10 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -34,6 +36,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 	private JTextField txtNbGpTP;
 	private JTextField txtNbEtud;
 	private JTextField txtNbSemaine;
+	private JButton    btnEnregistrer;
+	private Timer      timerMessageEnregistrement;
+
+	private JLabel     lblMessageEnregistrement;
 	
 	private Tableau tableauEnsembleModule;
 	
@@ -50,10 +56,23 @@ public class PanelSemestre extends JPanel implements ActionListener
 		/*    Création des composants    */
 		/* -----------------------    -- */
 
-		this.txtNbGpTD    = new JTextField ( );
-		this.txtNbGpTP    = new JTextField ( );
-		this.txtNbEtud    = new JTextField ( );
-		this.txtNbSemaine = new JTextField ( );
+		this.txtNbGpTD      = new JTextField ( );
+		this.txtNbGpTP      = new JTextField ( );
+		this.txtNbEtud      = new JTextField ( );
+		this.txtNbSemaine   = new JTextField ( );
+		this.btnEnregistrer = new JButton ( "Enregistrer" );
+
+		//Met un délai de 3 secondes sur le message d'enregistrement
+		this.timerMessageEnregistrement = new Timer(3000, new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				lblMessageEnregistrement.setText("");
+				timerMessageEnregistrement.stop();
+			}
+		});
+
+		this.lblMessageEnregistrement = new JLabel ( "" );
 
 		// Affecte toutes les valeurs de la base de donnée aux JTextField
 		this.txtNbGpTD   .setText ( "" + this.ctrl.getSemestre ( this.numSemestre ).getNbGroupeTD ( ) );
@@ -71,7 +90,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		this.tableauEnsembleModule = new Tableau ( new String[] {"", "", "", ""}, this.ctrl.getTableauModule ( numSemestre ), 0 );
+		Object[] typeDefaut = new Object[]{"", "", "", false};
+		this.tableauEnsembleModule = Tableau.initialiserTableau( null, typeDefaut, false, 0, this.ctrl.getTableauModule ( numSemestre ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
@@ -79,19 +99,23 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );
 		spTab.setBorder                  ( new TitledBorder ( "Liste des modules" )      );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+
+		//DEBUG:
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 
 		pnlOptionSemestre.add ( new JLabel ( "nb gp TD"    ) );
-		pnlOptionSemestre.add ( this.txtNbGpTD );
+		pnlOptionSemestre.add ( this.txtNbGpTD                );
 		pnlOptionSemestre.add ( new JLabel ( "nb gp TP"    ) );
-		pnlOptionSemestre.add ( this.txtNbGpTP               );
+		pnlOptionSemestre.add ( this.txtNbGpTP                );
 		pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
-		pnlOptionSemestre.add ( this.txtNbEtud               );
+		pnlOptionSemestre.add ( this.txtNbEtud                );
 		pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
-		pnlOptionSemestre.add ( this.txtNbSemaine            );
+		pnlOptionSemestre.add ( this.txtNbSemaine             );
+		pnlOptionSemestre.add ( this.btnEnregistrer           );
+		pnlOptionSemestre.add ( this.lblMessageEnregistrement );
 
 		pnlListeModule.add ( spTab, BorderLayout.CENTER );
 
@@ -102,15 +126,16 @@ public class PanelSemestre extends JPanel implements ActionListener
 		/*   Activation des composants   */
 		/* -----------------------    -- */
 
-		this.txtNbGpTD   .addActionListener ( this );
-		this.txtNbGpTP   .addActionListener ( this );
-		this.txtNbEtud   .addActionListener ( this );
-		this.txtNbSemaine.addActionListener ( this );
+		this.txtNbGpTD     .addActionListener ( this );
+		this.txtNbGpTP     .addActionListener ( this );
+		this.txtNbEtud     .addActionListener ( this );
+		this.txtNbSemaine  .addActionListener ( this );
+		this.btnEnregistrer.addActionListener ( this );
 	}
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.txtNbGpTD || e.getSource ( ) == this.txtNbGpTP || e.getSource ( ) == this.txtNbEtud || e.getSource ( ) == this.txtNbSemaine )
+		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			int nbGpTD = Integer.parseInt ( this.txtNbGpTD   .getText ( ) );
 			int nbGpTP = Integer.parseInt ( this.txtNbGpTP   .getText ( ) );
@@ -118,7 +143,11 @@ public class PanelSemestre extends JPanel implements ActionListener
 			int nbSem  = Integer.parseInt ( this.txtNbSemaine.getText ( ) );
 			
 			// Mise à jour de la base de donnée
-			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTD, nbGpTP, nbEtud, nbSem ) );
+			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
+
+			// Affichage du message d'enregistrement pendant 3 secondes
+			this.lblMessageEnregistrement.setText("Enregistré !");
+			timerMessageEnregistrement.start();
 		}
 	}
 

@@ -8,7 +8,11 @@ package astre;
 
 import astre.modele.elements.*;
 
+import java.awt.Component;
 import java.util.List;
+
+import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 import astre.modele.*;
 import astre.vue.*;
@@ -39,12 +43,26 @@ public class Controleur
 	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
 	public ModuleIUT     getModule             ( String nom      ) { return this.metier.getModule             ( nom         ); }
 
-	public void update ( Object o ) { this.metier.update(o); }
-	public void insert ( Object o ) { this.metier.insert(o); }
-	public void delete ( Object o ) { this.metier.delete(o); }
+	public void update ( Object o ) { this.metier.update ( o ); }
+	public void insert ( Object o ) { this.metier.insert ( o ); }
+	public void delete ( Object o ) { this.metier.delete ( o ); }
 
 	public void majSemestre  ( Semestre s                    ) { this.metier.majSemestre  ( s         ); }
 	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
+
+	public static void retour ( Component compo )
+	{
+		java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor ( compo );
+
+		if ( window instanceof JFrame )
+		{
+			JFrame parentFrame = ( JFrame ) window;
+			parentFrame.dispose();
+
+			//parentFrame.getClass().newInstance();
+
+		}
+	}
 
 
 	public static void afficherErreur ( String titre, String message )
