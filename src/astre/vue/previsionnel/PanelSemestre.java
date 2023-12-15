@@ -132,17 +132,6 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		/*if ( e.getSource ( ) == this.txtNbGpTD || e.getSource ( ) == this.txtNbGpTP || e.getSource ( ) == this.txtNbEtud || e.getSource ( ) == this.txtNbSemaine )
-		{
-			int nbGpTD = Integer.parseInt ( this.txtNbGpTD   .getText ( ) );
-			int nbGpTP = Integer.parseInt ( this.txtNbGpTP   .getText ( ) );
-			int nbEtud = Integer.parseInt ( this.txtNbEtud   .getText ( ) );
-			int nbSem  = Integer.parseInt ( this.txtNbSemaine.getText ( ) );
-			
-			// Mise à jour de la base de donnée
-			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
-		}*/
-
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			int nbGpTD = Integer.parseInt ( this.txtNbGpTD   .getText ( ) );
