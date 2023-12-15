@@ -45,4 +45,9 @@ public class PanelEnsSemestre extends JTabbedPane {
 		return this.lstSemestre.get(this.getSelectedIndex()).getModuleSelection() ;
 	}
 
+	public void majTableau ( )
+	{
+		this.lstSemestre.get ( this.getSelectedIndex ( ) ).majTableau ( );
+	}
+
 }

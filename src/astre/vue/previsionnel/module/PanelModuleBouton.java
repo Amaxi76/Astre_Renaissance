@@ -57,6 +57,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			System.out.println ( "Enregistrer" );
+			//TODO faire l'enregistrement
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )

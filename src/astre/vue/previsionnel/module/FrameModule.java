@@ -1,7 +1,6 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
-import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -16,7 +15,7 @@ import astre.modele.elements.ModuleIUT;
 * @date : 11/12/2023
 */
 
-public class FrameModule extends JFrame implements ItemListener
+public class FrameModule extends JFrame
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -67,9 +66,15 @@ public class FrameModule extends JFrame implements ItemListener
 
 		this.cbValidation = new JCheckBox ( "Validation" );
 
+		/*---------*/
+		/*  Nord   */
+		/*---------*/
 
 		this.add ( panelModuleLabel, BorderLayout.NORTH  );
 
+		/*----------*/
+		/*  Centre  */
+		/*----------*/
 
 		JPanel panelCentre  = new JPanel ( new GridBagLayout ( ) );
 		
@@ -91,7 +96,11 @@ public class FrameModule extends JFrame implements ItemListener
 		gbcC.gridx = 0;
 		this.panelAffectation.setPreferredSize ( new Dimension ( 850, 500 ) );
 		panelCentre.add ( this.panelAffectation, gbcC );
+
 		
+		/*---------*/
+		/*  Ouest  */
+		/*---------*/
 
 		JPanel panelOuest = new JPanel ( new GridBagLayout ( ) );
 
@@ -112,27 +121,18 @@ public class FrameModule extends JFrame implements ItemListener
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
-		this.cbValidation.addItemListener( this );
-
+		/*-------*/
+		/*  Sud  */
+		/*-------*/
 
 		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
 
-		this.setVisible ( true );
-	}
 
-	public void itemStateChanged(java.awt.event.ItemEvent e)
-	{
-		if ( e.getSource() == this.cbValidation )
-		{
-			if ( this.cbValidation.isSelected() )
-			{
-				this.ctrl.getModule(getName()).setValide(true);
-			}
-			else
-			{
-				this.ctrl.getModule(getName()).setValide(false);
-			}
-		}
+		/* ------------------------- */
+		/* Activation des composants */
+		/* ------------------------- */
+
+		this.setVisible ( true );
 	}
 
 	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
@@ -153,6 +153,8 @@ public class FrameModule extends JFrame implements ItemListener
 		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
 		
 		this.panelAffectation.setDonnee ( module );
+
+		this.cbValidation.setSelected( module.estValide( ) );
 	}
 		
 

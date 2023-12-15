@@ -16,7 +16,7 @@ public class Astre
 
 	public Object[][] getTableauModule ( int numeroSemestre )
 	{
-		//à remplacer par une commande de BD
+		//TODO à remplacer par une commande de BD
 		/*Object[][] tableau = { {"R1.01", "Initia", "437/465", "V"}, {"R2.02", "Dev", "374/374", "V"} };
 		return tableau;*/
 		
