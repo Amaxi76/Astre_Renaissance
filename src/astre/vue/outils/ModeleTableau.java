@@ -119,7 +119,7 @@ public class ModeleTableau extends AbstractTableModel
             tabDonnees = new Object[1][tabEntetes.length];
             for ( int j = 0; j < tabDonnees[0].length; j++ )
             {
-                tabDonnees[0][j] = ""; //TODO comment faire pour savoir la classe de la case ?
+                tabDonnees[0][j] = ""; //TODO: comment faire pour savoir la classe de la case ?
             }
         }
         else
