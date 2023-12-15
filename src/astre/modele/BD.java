@@ -348,21 +348,30 @@ public class BD
 		return contrat;
 	}
 
-	public int getInterventionIntervenant(int inter, int semes)
+	public double getInterventionIntervenant(int inter, int semes)
 	{
-		int result = 0;
+		double result = 0;
+		double ligne;
 
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure " +
+			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
 					                         "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
 					                         "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
 				                             "Where  Id_Semestre      = "+ semes +" AND " +
 					                         "       i.Id_intervenant = " + inter);
 			while ( rs.next( ) )
 			{
-				result = rs.getInt(1) * rs.getInt(2) * rs.getInt(3);
+				ligne = 0;
+				ligne += rs.getInt(1) * rs.getInt(2) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
+
+				if( getHeure(rs.getInt(5)).getNom().equals("TP") )
+				{
+					ligne *= getIntervenant(rs.getInt(4)).getContrat().getRatioTP();
+				}
+
+				result += ligne;
 			}
 		}
 		catch ( SQLException e )
@@ -383,7 +392,7 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Intervenant where Id_Intervenant = " + i );
 			while ( rs.next ( ) )
 			{
-				intervenant = new Intervenant ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 4 ) ), rs.getInt ( 5 ), rs.getInt ( 6 ) );
+				intervenant = new Intervenant ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) );
 			}
 		}
 		catch ( SQLException e )
@@ -544,14 +553,14 @@ public class BD
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				int s1 = getInterventionIntervenant ( rs.getInt(1), 1 );
-				int s2 = getInterventionIntervenant ( rs.getInt(1), 2 );
-				int s3 = getInterventionIntervenant ( rs.getInt(1), 3 );
-				int s4 = getInterventionIntervenant ( rs.getInt(1), 4 );
-				int s5 = getInterventionIntervenant ( rs.getInt(1), 5 );
-				int s6 = getInterventionIntervenant ( rs.getInt(1), 6 );
-				int ttimp = s1 + s3 + s5;
-				int ttpair = s2 + s4 + s6;
+				double s1 = getInterventionIntervenant ( rs.getInt(1), 1 );
+				double s2 = getInterventionIntervenant ( rs.getInt(1), 2 );
+				double s3 = getInterventionIntervenant ( rs.getInt(1), 3 );
+				double s4 = getInterventionIntervenant ( rs.getInt(1), 4 );
+				double s5 = getInterventionIntervenant ( rs.getInt(1), 5 );
+				double s6 = getInterventionIntervenant ( rs.getInt(1), 6 );
+				double ttimp = s1 + s3 + s5;
+				double ttpair = s2 + s4 + s6;
 
 				intervenants[cpt][0]  = rs.getInt    (1);//Id
 				intervenants[cpt][1]  = rs.getString (2);//contrat
