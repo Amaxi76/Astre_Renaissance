@@ -2,7 +2,7 @@ package astre.modele;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0 - 15/12/2023
   * @date : 06/12/2023
   */
 
@@ -468,7 +468,6 @@ public class BD
 
 		return module;
 	}
-
 
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
