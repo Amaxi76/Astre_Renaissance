@@ -179,7 +179,7 @@ public class PanelModuleLabel  extends JPanel
 			this.lblType.setText ( "SAE" );
 		}
 
-		else if ( code.startsWith ( "PPP" ) )
+		else if ( code.startsWith ( "PP" ) )
 		{
 			this.lblType.setText ( "PPP" );
 		}
