@@ -62,8 +62,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.txtNbSemaine   = new JTextField ( );
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 
-		//Met un délai de 5 secondes sur le message d'enregistrement
-		this.timerMessageEnregistrement = new Timer(5000, new ActionListener()
+		//Met un délai de 3 secondes sur le message d'enregistrement
+		this.timerMessageEnregistrement = new Timer(3000, new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -142,7 +142,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 			// Mise à jour de la base de donnée
 			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
 
-			// Affichage du message d'enregistrement pendant 5 secondes
+			// Affichage du message d'enregistrement pendant 3 secondes
 			this.lblMessageEnregistrement.setText("Enregistré !");
 			timerMessageEnregistrement.start();
 		}
