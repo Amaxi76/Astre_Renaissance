@@ -54,9 +54,9 @@ public class GenerateurFichier
 		{
             // Ecriture de l'entête
 			String entete = 
-			"<!DOCTYPE html>"                                                          + 
-			"<html lang=\"fr\">"                                                       + 
-			"<head>"                                                                   + 
+			"<!DOCTYPE html>\n"                                                          + 
+			"<html lang=\"fr>\n"                                                       + 
+			"<head>\n"                                                                   + 
 				"<meta charset=\"UTF-8\">"                                             + 
 				"<link href=\"style.css\" rel=\"stylesheet\">"                         + 
 				"<title>Intervenant " + inter.getNom().toUpperCase() + " </title>"     + 
