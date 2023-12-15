@@ -15,6 +15,7 @@ import astre.modele.BD;
 import astre.modele.elements.Heure;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
+import astre.vue.outils.IntegerTextField;
 
 /** Classe PanelPNLocal
   * @author : Clémentin Ly
