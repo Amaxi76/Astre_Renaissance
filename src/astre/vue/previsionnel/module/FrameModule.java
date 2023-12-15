@@ -66,9 +66,15 @@ public class FrameModule extends JFrame
 
 		this.cbValidation = new JCheckBox ( "Validation" );
 
+		/*---------*/
+		/*  Nord   */
+		/*---------*/
 
 		this.add ( panelModuleLabel, BorderLayout.NORTH  );
 
+		/*----------*/
+		/*  Centre  */
+		/*----------*/
 
 		JPanel panelCentre  = new JPanel ( new GridBagLayout ( ) );
 		
@@ -90,7 +96,11 @@ public class FrameModule extends JFrame
 		gbcC.gridx = 0;
 		this.panelAffectation.setPreferredSize ( new Dimension ( 850, 500 ) );
 		panelCentre.add ( this.panelAffectation, gbcC );
+
 		
+		/*---------*/
+		/*  Ouest  */
+		/*---------*/
 
 		JPanel panelOuest = new JPanel ( new GridBagLayout ( ) );
 
@@ -111,7 +121,16 @@ public class FrameModule extends JFrame
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
+		/*-------*/
+		/*  Sud  */
+		/*-------*/
+
 		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
+
+
+		/* ------------------------- */
+		/* Activation des composants */
+		/* ------------------------- */
 
 		this.setVisible ( true );
 	}
