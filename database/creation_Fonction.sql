@@ -89,7 +89,7 @@ CREATE OR REPLACE FUNCTION f_selectHeureIntervenant ( s_Id_Intervenant INTEGER )
 $$
 BEGIN
 
-	RETURN QUERY     SELECT m.Code_ModuleIUT, nomHeure, libLong, nbSemaine, nbGroupe, nbHeure
+	RETURN QUERY     SELECT m.Code_ModuleIUT, libLong, libCourt, typeModule, Id_Semestre nomHeure, nbSemaine, nbGroupe, nbHeure
                      FROM   Intervenant i JOIN Intervient t ON i.Id_Intervenant = t.Id_Intervenant
                                                  JOIN Heure h      ON h.Id_heure       = t.Id_Heure
                                                  JOIN ModuleIUT m  ON m.Code_ModuleIUT = t.Code_ModuleIUT
