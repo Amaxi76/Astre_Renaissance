@@ -70,50 +70,53 @@ $$ LANGUAGE plpgsql;
 
 -- Selecion des heures par rapport à un module
 DROP              FUNCTION f_selectHoraireParModule ( code VARCHAR );
-CREATE OR REPLACE FUNCTION f_selectHoraireParModule ( code VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeurePn INTEGER, nbHeureRepartie INTEGER ) AS
+CREATE OR REPLACE FUNCTION f_selectHoraireParModule ( code VARCHAR ) RETURNS TABLE ( Id_heure INTEGER, nbHeurePn INTEGER, nbHeureRepartie INTEGER ) AS
 $$
 BEGIN
 
 	RETURN QUERY
-		SELECT he.nomHeure, ho.nbHeurePn, ho.nbHeureRepartie
-		FROM   Horaire ho JOIN Heure he    ON ho.nomHeure       = he.nomHeure 
+		SELECT he.Id_Heure, ho.nbHeurePn, ho.nbHeureRepartie
+		FROM   Horaire ho JOIN Heure he    ON ho.Id_Heure       = he.Id_Heure 
 		                  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT 
 		WHERE ho.Code_ModuleIUT = $1;
 
 END;
 $$ LANGUAGE plpgsql;
 
--- Sélectionner les heuresPN
+/* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
-DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
+-- -- Sélectionner les heuresPN
 
-	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
-						  FROM Horaire ho JOIN Heure he ON ho.nomHeure = he.nomHeure
-										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-						  WHERE ho.Code_ModuleIUT = $1'
-	USING p_code;
+-- DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
+-- CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- $$
+-- BEGIN
 
-END;
-$$ LANGUAGE plpgsql;
+-- 	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeurePN
+-- 						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
+-- 										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+-- 						  WHERE ho.Code_ModuleIUT = $1'
+-- 	USING p_code;
 
--- Sélectionner les heureRepartie
+-- END;
+-- $$ LANGUAGE plpgsql;
 
-DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
+-- -- Sélectionner les heureRepartie
 
-	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
-						  FROM Horaire ho JOIN Heure he ON ho.nomHeure = he.nomHeure
-										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
-						  WHERE ho.Code_ModuleIUT = $1'
-	USING p_code;
+-- DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
+-- CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
+-- $$
+-- BEGIN
 
-END;
-$$ LANGUAGE plpgsql;
+-- 	RETURN QUERY EXECUTE 'SELECT he.nomHeure, ho.nbHeureRepartie
+-- 						  FROM Horaire ho JOIN Heure he ON ho.Id_Heure = he.Id_Heure
+-- 										  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT
+-- 						  WHERE ho.Code_ModuleIUT = $1'
+-- 	USING p_code;
+
+-- END;
+-- $$ LANGUAGE plpgsql;
+
 
 
 /* ------------------------------------------ */
@@ -173,26 +176,26 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer dans intervient
 
-DROP              FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_nomHeure VARCHAR(50), i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50));
-CREATE OR REPLACE FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_nomHeure VARCHAR(50), i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50)) RETURNS VOID AS
+DROP              FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50));
+CREATE OR REPLACE FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50)) RETURNS VOID AS
 $$
 BEGIN
 
-	INSERT INTO Intervient  (   Id_Intervenant,   nomHeure,   Code_ModuleIUT,   nbSemaine,   nbGroupe,   nbHeure,   commentaire,   nbHeure,   commentaire ) 
-	VALUES                  ( i_Id_Intervenant, i_nomHeure, i_Code_ModuleIUT, i_nbSemaine, i_nbGroupe, i_nbHeure, i_commentaire, i_nbHeure, i_commentaire );
+	INSERT INTO Intervient  (   Id_Intervenant,   Id_Heure,   Code_ModuleIUT,   nbSemaine,   nbGroupe,   nbHeure,   commentaire,   nbHeure,   commentaire ) 
+	VALUES                  ( i_Id_Intervenant, i_Id_Heure, i_Code_ModuleIUT, i_nbSemaine, i_nbGroupe, i_nbHeure, i_commentaire, i_nbHeure, i_commentaire );
 
 END;
 $$ LANGUAGE plpgsql;
 
 -- Insérer dans horaire
 
-DROP              FUNCTION f_insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
-CREATE OR REPLACE FUNCTION f_insertHoraire ( i_nomHeure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50)) RETURNS VOID AS
+DROP              FUNCTION f_insertHoraire ( i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
+CREATE OR REPLACE FUNCTION f_insertHoraire ( i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50)) RETURNS VOID AS
 $$
 BEGIN
 
-	INSERT INTO Horaire  (   nomHeure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
-	VALUES               ( i_nomHeure , i_Code_ModuleIUT, i_nbHeurePN , i_nbHeureRepartie , i_nbSemaine );
+	INSERT INTO Horaire  (   Id_Heure ,   Code_ModuleIUT,   nbHeurePN ,   nbHeureRepartie ,   nbSemaine ) 
+	VALUES               ( i_Id_Heure , i_Code_ModuleIUT, i_nbHeurePN , i_nbHeureRepartie , i_nbSemaine );
 
 END;
 $$ LANGUAGE plpgsql;
@@ -252,14 +255,16 @@ $$ LANGUAGE plpgsql;
 
 -- Update de Heure
 
-DROP              FUNCTION f_updateHeure ( u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION );
-CREATE OR REPLACE FUNCTION f_updateHeure ( u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION )
+DROP              FUNCTION f_updateHeure ( u_Id_Heure INTEGER, u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION );
+CREATE OR REPLACE FUNCTION f_updateHeure ( u_Id_Heure INTEGER, u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION )
 RETURNS VOID AS
 $$
 BEGIN
     UPDATE Heure
-    SET    coeffTD  = u_coeffTD
-    WHERE  nomHeure = u_nomHeure;
+    SET    coeffTD  = u_coeffTD,
+           nomHeure = u_nomHeure
+           
+    WHERE  Id_Heure = u_Id_Heure;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -302,8 +307,8 @@ $$ LANGUAGE plpgsql;
 
 -- Update d'intervient
 
-DROP              FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) );
-CREATE OR REPLACE FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) )
+DROP              FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_Id_Heure INTEGER, u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) );
+CREATE OR REPLACE FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_Id_Heure INTEGER, u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) )
 RETURNS VOID AS
 $$
 BEGIN
@@ -314,14 +319,14 @@ BEGIN
            nbHeure     = u_nbHeure,
            commentaire = u_commentaire
 
-    WHERE  Id_Intervenant = u_Id_Intervenant AND nomHeure = u_nomHeure AND Code_ModuleIUT = u_Code_ModuleIUT;
+    WHERE  Id_Intervenant = u_Id_Intervenant AND Id_Heure = u_Id_Heure AND Code_ModuleIUT = u_Code_ModuleIUT;
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update d'horaire
 
-DROP              FUNCTION f_updateHoraire ( u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER );
-CREATE OR REPLACE FUNCTION f_updateHoraire ( u_nomHeure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER )
+DROP              FUNCTION f_updateHoraire ( u_Id_Heure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER );
+CREATE OR REPLACE FUNCTION f_updateHoraire ( u_Id_Heure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER )
 RETURNS VOID AS
 $$
 BEGIN
@@ -331,7 +336,7 @@ BEGIN
            nbHeureRepartie   = u_nbHeureRepartie,
            nbHeurePN         = u_nbHeurePN
 
-    WHERE  nomHeure = u_nomHeure AND Code_ModuleIUT = u_Code_ModuleIUT;
+    WHERE  Id_Heure = u_Id_Heure AND Code_ModuleIUT = u_Code_ModuleIUT;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -407,12 +412,12 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer dans intervient
 
-DROP              FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
+DROP              FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
 
-	DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+	DELETE FROM Intervient WHERE Id_Intervenant = d_Id_Intervenant AND Id_Heure = d_Id_Heure AND Code_ModuleIUT = d_Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -431,12 +436,12 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer dans horaire
 
-DROP              FUNCTION f_deleteHoraire ( d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) );
-CREATE OR REPLACE FUNCTION f_deleteHoraire ( d_nomHeure VARCHAR(50), d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
+DROP              FUNCTION f_deleteHoraire ( d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteHoraire ( d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
 
-	DELETE FROM Horaire WHERE nomHeure = d_nomHeure AND Code_ModuleIUT = d_Code_ModuleIUT;
+	DELETE FROM Horaire WHERE Id_Heure = d_Id_Heure AND Code_ModuleIUT = d_Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;

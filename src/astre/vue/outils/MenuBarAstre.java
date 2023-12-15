@@ -2,9 +2,7 @@ package astre.vue.outils;
 
 import javax.swing.*;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.*;
-import javax.swing.event.*;
 
 import astre.Controleur;
 import astre.vue.FrameAccueil;
@@ -246,26 +244,25 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	{
 		return new String[][] {
 			{	MENU, 				"Fichier",			"",					"F"				},
-			{		ITEM, 			"Accueil",			"",					"A", "CTRL+H"	},
+			{		ITEM, 			"Accueil",			"accueil.png",		"A", "CTRL+H"	},
 			{		SEPARATEUR																},
-			{		SOUS_MENU, 		"Exporter...",		"exportation.png",	"E", "CTRL+P"	},
+			{		SOUS_MENU, 		"Exporter...",		"exporter.png",		"E", "CTRL+P"	},
 			{			ITEM_SM,	"Format PDF",		"pdf.png",			"P" 			},
 			{			ITEM_SM,	"Format HTML",		"html.png",			"H" 			},
 			{		SEPARATEUR																},
-			{		ITEM, 			"Quitter",			"",					"Q", "CTRL+Q"	},
+			{		ITEM, 			"Quitter",			"quitter.png",		"Q", "CTRL+Q"	},
 			{	MENU, 				"Edition",			"",					"E", "CTRL+E"	},
-			{		ITEM, 			"Paramètres",		"",					"P"				},
+			{		ITEM, 			"Paramètres",		"parametres.png",	"P"				},
 			{		SEPARATEUR																},
-			{		SOUS_MENU, 		"Prévisionnel...",	"modules.png",		"P"				},
+			{		SOUS_MENU, 		"Prévisionnel...",	"previsionnel.png",	"P"				},
 			{			ITEM_SM,	"S1",				"",					"1" 			},
 			{			ITEM_SM,	"S2",				"",					"2" 			},
 			{			ITEM_SM,	"S3",				"",					"3" 			},
 			{			ITEM_SM,	"S4",				"",					"4" 			},
 			{			ITEM_SM,	"S5",				"",					"5" 			},
 			{			ITEM_SM,	"S6",				"",					"6" 			},
-			{		ITEM, 			"Prévisionnel",		"",					"P"				},
 			{		ITEM, 			"Intervenants",		"enseignants.png",	"I"				},
-			{		ITEM, 			"Nouvelle année",	"",					"N"				},
+			{		ITEM, 			"Nouvelle année",	"parametres.png",	"N"				},
 			{	MENU, 				"Affichage",		"",					"A"				},
 			{		ITEM, 			"Etats",			"apercu.png",		"E"				}
 								};

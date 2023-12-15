@@ -19,14 +19,18 @@ public class ModeleTableau extends AbstractTableModel
     public ModeleTableau ( String[] tabEntetes, Object[][] tabDonnees )
     {
         this.tabEntetes = tabEntetes;
-        this.tabDonnees = tabDonnees;
 
         this.decalage = 0;
         this.modifiable = new ArrayList<Integer>();
-
-        if(tabDonnees.length == 0)
-            ajouterLigne();
         
+        if(tabDonnees == null)
+        {
+            this.tabDonnees = new Object[0][tabEntetes.length];
+            ajouterLigne();
+        }
+        else
+            this.tabDonnees = tabDonnees;
+
         //ecriture des tableau pour test
         /*for(int i=0; i<tabDonnees.length; i++)
         {
@@ -39,12 +43,12 @@ public class ModeleTableau extends AbstractTableModel
     }
     
     //si la méthode est en anglais c'est qu'elle est obligatoire.
-    public int    getColumnCount ( )                  { return this.tabEntetes.length - decalage;    }
-	public int    getRowCount    ( )                  { return this.tabDonnees.length;               }
-	public Object getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage]; }
-	public String getNomColonne  ( int col )          { return this.tabEntetes[col];                 }
-	public Class  getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );     }
-	public String getColumnName  ( int c )            { return this.tabEntetes[c + decalage];        }
+    public int      getColumnCount ( )                  { return this.tabEntetes.length - decalage;    }
+	public int      getRowCount    ( )                  { return this.tabDonnees.length;               }
+	public Object   getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage]; }
+	public String   getNomColonne  ( int col )          { return this.tabEntetes[col];                 }
+	public Class<?> getColumnClass ( int c )            { return getValueAt ( 0, c ).getClass ( );     }
+	public String   getColumnName  ( int c )            { return this.tabEntetes[c + decalage];        }
 
     /**
 	* Donne la liste des cellules éditables.

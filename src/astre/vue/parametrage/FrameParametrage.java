@@ -26,18 +26,16 @@ public class FrameParametrage extends JFrame
 		this.setTitle              ( "Paramètrage" );
 		this.setSize               ( 800, 700      );
 		this.setLocationRelativeTo ( null          );
-		
 		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
-		
+
 		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
 		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
 		this.pnlEnsParametre = new PanelEnsParametre ( this.ctrl );
 
 		panelBordure.add ( this.pnlEnsParametre , BorderLayout.CENTER );
-		panelBordure.add ( new PanelBouton       ( this.ctrl, this.pnlEnsParametre ), BorderLayout.SOUTH );
 
-		this.add ( panelBordure );
+		this.add ( panelBordure                   , BorderLayout.CENTER );
 
 		this.setVisible   ( true );
 		this.requestFocus (      );

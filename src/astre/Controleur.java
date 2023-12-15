@@ -1,7 +1,7 @@
 package astre;
 
 /** Classe Controleur 
-  * @author : Maximilien Lesterlin et Maxime Lemoine
+  * @author : Maximilien Lesterlin, Maxime Lemoine, Mateo Sa et Clémentin Ly
   * @version : 2.0 - 12/12/2023
   * @date : 06/12/2023
   */
@@ -25,23 +25,27 @@ public class Controleur
 		this.metier = new Astre        (      );
 	}
 
+	public <T> List<T>   getTable              ( Class<T> type   ) { return this.metier.getTable              ( type        ); }
+
 	public Semestre      getSemestre           ( int numSemestre ) { return this.metier.getSemestre           ( numSemestre ); }
 	public Object[][]    getTableauModule      ( int numSemestre ) { return this.metier.getTableauModule      ( numSemestre ); }
 	public Object[][]    getTableauIntervenant (                 ) { return this.metier.getTableauIntervenant (             ); }
 	public Object[][]    getTableauIntervient  (                 ) { return this.metier.getTableauIntervient  (             ); }
 	public Object[][]    getTableauContrat     (                 ) { return this.metier.getTableauContrat     (             ); }
 	public Object[][]    getTableauHeure       (                 ) { return this.metier.getTableauHeure       (             ); }
+	public Heure         getHeure              ( int nom         ) { return this.metier.getHeure              ( nom         ); }
 	public Heure         getHeure              ( String nom      ) { return this.metier.getHeure              ( nom         ); }
-	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
 
-	public List<Contrat>     getContrats       (                 ) { return this.metier.getContrats           (             ); }
-	public List<Intervenant> getIntervenants   (                 ) { return this.metier.getIntervenants       (             ); }
+	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
+	public ModuleIUT     getModule             ( String nom      ) { return this.metier.getModule             ( nom         ); }
 
 	public void update ( Object o ) { this.metier.update(o); }
 	public void insert ( Object o ) { this.metier.insert(o); }
 	public void delete ( Object o ) { this.metier.delete(o); }
 
-	public void majSemestre ( Semestre s ) { this.metier.majSemestre ( s ); }
+	public void majSemestre  ( Semestre s                    ) { this.metier.majSemestre  ( s         ); }
+	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
+
 
 	public static void afficherErreur ( String titre, String message )
 	{

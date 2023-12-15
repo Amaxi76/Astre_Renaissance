@@ -121,4 +121,13 @@ public class PanelSemestre extends JPanel implements ActionListener
 			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTD, nbGpTP, nbEtud, nbSem ) );
 		}
 	}
+
+	public String getModuleSelection()
+	{
+		if( this.tableauEnsembleModule.getSelectedRow() != -1)
+		{
+			return this.tableauEnsembleModule.getValueAt(this.tableauEnsembleModule.getSelectedRow(), 0).toString();
+		}
+		return "pas de selection";
+	}
 }

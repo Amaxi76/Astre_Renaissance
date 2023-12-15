@@ -19,7 +19,12 @@ public class FramePrevisionnel extends JFrame
 	/*--Attributs--*/
 	/*-------------*/
 
+	private static final int SEMESTRE_DEFAUT = 1;
+
 	private Controleur ctrl;
+
+	private PanelBouton pnlBouton;
+	private PanelEnsSemestre pnlEnsSemestre;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -44,11 +49,14 @@ public class FramePrevisionnel extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
+		this.pnlEnsSemestre = new PanelEnsSemestre  ( this.ctrl, semestreDefaut );
+		this.pnlBouton      = new PanelBouton       ( this.ctrl, this           );
+
 		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
 		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		panelBordure.add ( new PanelEnsSemestre  ( this.ctrl, semestreDefaut ), BorderLayout.CENTER );
-		panelBordure.add ( new PanelBouton       ( this.ctrl                 ), BorderLayout.SOUTH  );
+		panelBordure.add ( this.pnlEnsSemestre, BorderLayout.CENTER );
+		panelBordure.add ( this.pnlBouton     , BorderLayout.SOUTH  );
 
 		this.add ( panelBordure );
 
@@ -57,6 +65,11 @@ public class FramePrevisionnel extends JFrame
 
 	public FramePrevisionnel ( Controleur ctrl )
 	{
-		this ( ctrl, 1 );
+		this ( ctrl, SEMESTRE_DEFAUT-1 );
+	}
+
+	public String getModuleSelection ( )
+	{
+		return this.pnlEnsSemestre.getModuleSelection ( );
 	}
 }

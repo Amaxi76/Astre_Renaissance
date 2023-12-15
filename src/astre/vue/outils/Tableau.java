@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
 
-import astre.Controleur;
-
 /** Classe représentant un tableau personnalisable.
  *  @author Matéo et Maxime
  *  @version : 1.0 - 11/12/2023
@@ -25,7 +23,7 @@ public class Tableau extends JTable
 	{
 		this.nomColonnes = nomColonnes;
 		this.modele = new ModeleTableau ( this.nomColonnes, tabDonnees );
-		this.modele.setDecalage(decal);
+		this.modele.setDecalage ( decal );
 		
 		this.setModel ( this.modele );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );

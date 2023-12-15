@@ -3,6 +3,7 @@ package astre.vue.previsionnel.module;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -10,7 +11,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
+import astre.modele.BD;
 import astre.modele.elements.Heure;
+import astre.modele.elements.Horaire;
+import astre.modele.elements.ModuleIUT;
+import astre.vue.outils.FiltreTextFieldEntier;
+
+/** Classe PanelRepartition
+  * @author : Clémentin Ly
+  * @version : 2.0 - 14/12/2023
+  * @date : 12/12/2023
+  */
 
 public class PanelRepartition extends JPanel
 {
@@ -66,11 +77,22 @@ public class PanelRepartition extends JPanel
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
 		this.txtNbSemCM = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbSemCM );
+
 		this.txtNbHCM   = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbHCM );
+
 		this.txtNbSemTD = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbSemTD );
+
 		this.txtNbHTD   = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbHTD );
+
 		this.txtNbSemTP = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbSemTP );
+
 		this.txtNbHTP   = new JTextField ("", 2);
+		FiltreTextFieldEntier.appliquer ( txtNbHTP );
 
 		this.lblTotalCM    = new JLabel();
 		this.lblTotalTD    = new JLabel();
@@ -461,5 +483,39 @@ public class PanelRepartition extends JPanel
 		}
 
 		return coefficient;
+	}
+
+	public void setModule ( ModuleIUT module )
+	{
+		this.txtNbSemCM.setText( "0" );
+		this.txtNbHCM  .setText( "0" );
+		this.txtNbSemTD.setText( "0" );
+		this.txtNbHTD  .setText( "0" );
+		this.txtNbSemTP.setText( "0" );
+		this.txtNbHTP  .setText( "0" );
+		this.txtHeureP .setText( "0" );
+		
+		ArrayList<Horaire> lstHoraire = (ArrayList<Horaire>) BD.getInstance().getHoraires( module.getCode() );
+
+		for(Horaire h : lstHoraire)
+		{
+			switch( h.getHeure().getNom().toUpperCase() )
+			{
+				case "CM" : this.txtNbHCM  .setText( h.getNbHeure  () + "" );
+				            this.txtNbSemCM.setText( h.getNbSemaine() + "" ); break;
+
+				case "TP" : this.txtNbHTP  .setText( h.getNbHeure  () + "" );
+				            this.txtNbSemTP.setText( h.getNbSemaine() + "" ); break;
+
+				case "TD" : this.txtNbHTD  .setText( h.getNbHeure  () + "" );
+				            this.txtNbSemTD.setText( h.getNbSemaine() + "" ); break;
+				default : ;
+			}
+		}
+
+		majTotalCM();
+		majTotalTD();
+		majTotalTP();
+		majTotalHeure();
 	}
 }

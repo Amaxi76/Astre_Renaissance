@@ -46,11 +46,15 @@ public class Astre
 	public Object[][]    getTableauContrat     (                 ) { return this.bd.getContratsTableau      ( ); }
 	public Object[][]    getTableauHeure       (                 ) { return this.bd.getHeureTableau         ( ); }
 	public Semestre      getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
+	public Heure 	     getHeure              ( int nom      ) { return this.bd.getHeure            ( nom ); }
 	public Heure 	     getHeure              ( String nom      ) { return this.bd.getHeure            ( nom ); }
-	public Contrat       getContrat            ( String nom      ) { return this.bd.getContrat          ( nom ); }
 
-	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats             ( ); }
-	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants         ( ); }
+	public Contrat       getContrat            ( String nom      ) { return this.bd.getContrat          ( nom ); }
+	public ModuleIUT     getModule             ( String nom      ) { return this.bd.getModule           ( nom ); }
+
+	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }
+	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants (      ); }
+	public <T> List<T>       getTable          ( Class<T> type   ) { return this.bd.getTable        ( type ); }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
@@ -61,6 +65,56 @@ public class Astre
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/ 
+
+	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
+	{
+		ArrayList<Object> lstLocal = new ArrayList<> (                           );
+		ArrayList<Object> lstBD    = new ArrayList<> ( this.bd.getTable ( type ) );
+		
+		//Pour tout contrat dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
+		Object objet = null;
+		for ( int i = 0; i < tabDonneeBD.length; i++ )
+		{
+			try
+			{
+				objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) tabDonneeBD[i] );
+				
+				lstLocal.add ( objet );
+			}
+			catch ( Exception e )
+			{
+				e.printStackTrace ( );
+			}
+
+		}
+
+		ArrayList<Object> lstAjout       = new ArrayList<> ( lstLocal                  );
+		ArrayList<Object> lstSuppression = new ArrayList<> ( this.bd.getTable ( type ) );
+		ArrayList<Object> lstUpdate      = new ArrayList<> (                           );
+
+		// Ajout
+		lstAjout.removeAll ( lstBD );
+
+		System.out.println(lstAjout.size());
+
+		// Suppression
+		lstSuppression.removeAll ( lstLocal );
+
+		// Update
+		lstBD   .removeAll(lstLocal);
+		lstLocal.removeAll(lstBD);
+		lstUpdate.addAll ( new ArrayList<> ( lstBD ) );
+		lstUpdate.addAll ( new ArrayList<> ( lstLocal ) );
+		
+		for ( Object obj : lstAjout )
+			this.insert ( obj );
+
+		for ( Object obj : lstSuppression )
+			this.delete ( obj );
+
+		for ( Object obj : lstUpdate )
+			this.update ( obj );
+	}
 
 	public void update ( Object o )
 	{
