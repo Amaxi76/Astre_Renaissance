@@ -88,7 +88,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 
 		ModuleIUT module = new ModuleIUT( semestre, typeModule, code, libLong, libCourt, cbOk);
 		
-		if ( typeModule.equals( "Ressource" ) )
+		if ( typeModule.equals ( "Ressource" ) )
 		{
 			Heure CM      = this.ctrl.getHeure ( "CM" );
 			int   CMPN    = this.frm.getPanelPNLocal().getCM();
