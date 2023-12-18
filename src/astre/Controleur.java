@@ -51,21 +51,6 @@ public class Controleur
 	public void majSemestre  ( Semestre s                    ) { this.metier.majSemestre  ( s         ); }
 	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
 
-	public static void retour ( Component compo )
-	{
-		java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor ( compo );
-
-		if ( window instanceof JFrame )
-		{
-			JFrame parentFrame = ( JFrame ) window;
-			parentFrame.dispose();
-
-			//parentFrame.getClass().newInstance();
-
-		}
-	}
-
-
 	public static void afficherErreur ( String titre, String message )
 	{
 		new PopUpErreur ( titre, message );
@@ -76,7 +61,6 @@ public class Controleur
 
 	public static void main ( String[] args )
 	{
-		//afficherErreur ( "Erreur java", "petite fenetre de test pour afficher les erreurs" );
 		new Controleur ( );
 	}
 }

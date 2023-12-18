@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 import astre.Controleur;
-import astre.vue.outils.MenuBarAstre;
+import astre.vue.outils.AFrame;
 import astre.vue.outils.ConstantesVue;
 
 /** Page de gestion des intervenants
@@ -14,19 +14,17 @@ import astre.vue.outils.ConstantesVue;
   * @date : 06/12/2023
   */
 
-public class FrameParametrage extends JFrame
+public class FrameParametrage extends AFrame
 {
 	private PanelEnsParametre pnlEnsParametre;
-	private Controleur        ctrl;
 	
 	public FrameParametrage ( Controleur ctrl )
 	{
-		this.ctrl  = ctrl;
+		super ( ctrl );
 		
 		this.setTitle              ( "Paramètrage" );
 		this.setSize               ( 800, 700      );
 		this.setLocationRelativeTo ( null          );
-		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 
 		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
 		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
@@ -37,8 +35,8 @@ public class FrameParametrage extends JFrame
 
 		this.add ( panelBordure                   , BorderLayout.CENTER );
 
-		this.setVisible   ( true );
-		this.requestFocus (      );
+		this.requestFocus ();
+		
+		this.setVisible ( true );
 	}
-	
 }

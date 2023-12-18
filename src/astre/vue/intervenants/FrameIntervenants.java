@@ -7,24 +7,21 @@ package astre.vue.intervenants;
   */
 
 import astre.Controleur;
-import astre.vue.outils.MenuBarAstre;
+import astre.vue.outils.AFrame;
 import javax.swing.*;
 
-public class FrameIntervenants extends JFrame
+public class FrameIntervenants extends AFrame
 {
 	private PanelIntervenants panel;
-	private Controleur        ctrl;
 	
 	public FrameIntervenants ( Controleur ctrl )
 	{
-		this.ctrl  = ctrl;
+		super ( ctrl );
 		this.panel = new PanelIntervenants ( this.ctrl );
 		
-		this.setTitle              ( "Intervenants"  );
-		this.setSize               ( 1000,500 );
-		this.setLocationRelativeTo ( null                );
-		
-		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
+		this.setTitle              ( "Intervenants" );
+		this.setSize               ( 1000,500       );
+		this.setLocationRelativeTo ( null           );
 		
 		this.add ( this.panel );
 

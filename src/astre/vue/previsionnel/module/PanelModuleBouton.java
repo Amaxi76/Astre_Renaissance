@@ -81,13 +81,14 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		int      nbSem    = Character.getNumericValue ( sem.charAt ( 1 ) );
 		Semestre semestre = this.ctrl.getSemestre ( nbSem );
 
-		String code     = this.frm.getPanelModuleLabel().getCode();
-		String libLong  = this.frm.getPanelModuleLabel().getLibLong();
-		String libCourt = this.frm.getPanelModuleLabel().getLibCourt();
+		String  code     = this.frm.getPanelModuleLabel().getCode();
+		String  libLong  = this.frm.getPanelModuleLabel().getLibLong();
+		String  libCourt = this.frm.getPanelModuleLabel().getLibCourt();
+		boolean cbOk     = this.frm.getCbValidation();
 
-		ModuleIUT module = new ModuleIUT( semestre, typeModule, code, libLong, libCourt, this.frm.getCbValidation());
+		ModuleIUT module = new ModuleIUT( semestre, typeModule, code, libLong, libCourt, cbOk);
 		
-		if ( typeModule.equals( "Ressource" ) )
+		if ( typeModule.equals ( "Ressource" ) )
 		{
 			Heure CM      = this.ctrl.getHeure ( "CM" );
 			int   CMPN    = this.frm.getPanelPNLocal().getCM();
@@ -116,13 +117,13 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		{
 			Heure SAE   = this.ctrl.getHeure ( "SAE" );
 			int   SAEPN = this.frm.getPanelPNLocal().getCM();
-			int   HSAE  = this.frm.getPanelRepartitionBis().getSaeRepatition();
+			int   HSAE  = this.frm.getPanelRepartitionBis().getSaeRepartition();
 
 			new Horaire ( SAE, module, SAEPN, 1, HSAE );
 
 			Heure TUT   = this.ctrl.getHeure ( "Tut" );
 			int   TUTPN = this.frm.getPanelPNLocal().getTD();
-			int   HTUT  = this.frm.getPanelRepartitionBis().getTutRepatition();
+			int   HTUT  = this.frm.getPanelRepartitionBis().getTutRepartition();
 
 			new Horaire ( TUT, module, TUTPN, 1, HTUT );
 		}

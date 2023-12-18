@@ -51,6 +51,9 @@ src/astre/vue/previsionnel/module/PanelRepartitionBis.java
 src/astre/vue/previsionnel/module/PanelRepartitionPPP.java
 src/astre/vue/previsionnel/module/PanelAffectation.java
 
+src/astre/vue/historique/FrameHistorique.java
+src/astre/vue/historique/PanelHistorique.java
+
 src/astre/vue/nouvelleAnnee/FrameNouvelleAnnee.java
 
 src/astre/vue/historique/FrameHistorique.java
