@@ -23,10 +23,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import astre.Controleur;
-import astre.vue.outils.MenuBarAstre;
+import astre.vue.outils.AFrame;
 
 
-public class FrameAccueil extends JFrame implements ActionListener
+public class FrameAccueil extends AFrame implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -35,8 +35,6 @@ public class FrameAccueil extends JFrame implements ActionListener
 	/** Un Controleur pour pouvoir accéder au controleur
 	 * 
 	 */
-	private Controleur  ctrl;
-
 	private JButton btnParametre;
 	private JButton btnPrevisionnel;
 	private JButton btnIntervenants;
@@ -54,36 +52,11 @@ public class FrameAccueil extends JFrame implements ActionListener
 	 */
 	public FrameAccueil ( Controleur ctrl )
 	{
-		this.ctrl = ctrl;
-		// Image
-		// Image  img = null;
-		// Image icon = null;
+		super( ctrl );
 
-
-		// try
-		// {
-		// 	img = new ImageIcon ( ImageIO.read ( Controleur.class.getResourceAsStream ( "/images/imgAccueil.png" ) ) ).getImage();
-		// }
-		// catch ( Exception e ) { }
-		
-		// try
-		// {
-		// 	icon = new ImageIcon ( ImageIO.read ( Controleur.class.getResourceAsStream ( "/images/icon.png" ) ) ).getImage();
-		// }
-		// catch ( Exception e ) { }
-
-		//Image scaledImg = img.getScaledInstance ( 1000, 700, Image.SCALE_SMOOTH );
-
-		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-
-		int l = ( tailleEcran.width  - 1000 ) / 2;
-		int h = ( tailleEcran.height -  700 ) / 2;
-
-		this.setSize     ( 1000, 700            );
-		this.setLocation (    l,   h            );
-		this.setTitle    ( "ASTRE"              );
-		
-		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
+		this.setSize               ( 1000, 700 );
+		this.setTitle              ( "ASTRE"   );
+		this.setLocationRelativeTo ( null      );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -142,9 +115,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.btnAnnee       .addActionListener ( this );
 		this.btnHistorique  .addActionListener ( this );
 
-		//this.setIconImage             ( icon          );
-		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
-		this.setVisible               ( true          );
+		this.setVisible ( true );
 	}
 
 	/* ActionListener */
@@ -181,9 +152,6 @@ public class FrameAccueil extends JFrame implements ActionListener
 			new FrameHistorique ( this.ctrl );
 		}
 
-		this.cacher ( );
+		this.dispose ( );
 	}
-
-	public void cacher ( ) { this.dispose ( ); }
-
 }

@@ -2,6 +2,7 @@ src/astre/Controleur.java
 
 src/astre/modele/outils/ModeleTableau.java
 src/astre/modele/outils/TableauUtilitaire.java
+src/astre/modele/outils/SuppressionException.java
 
 src/astre/modele/BD.java
 src/astre/modele/Astre.java
@@ -50,6 +51,9 @@ src/astre/vue/previsionnel/module/PanelRepartition.java
 src/astre/vue/previsionnel/module/PanelRepartitionBis.java
 src/astre/vue/previsionnel/module/PanelRepartitionPPP.java
 src/astre/vue/previsionnel/module/PanelAffectation.java
+
+src/astre/vue/historique/FrameHistorique.java
+src/astre/vue/historique/PanelHistorique.java
 
 src/astre/vue/nouvelleAnnee/FrameNouvelleAnnee.java
 
