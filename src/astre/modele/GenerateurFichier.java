@@ -120,6 +120,9 @@ public class GenerateurFichier
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
+			// Accès à la base de données 
+			BD bd = BD.getInstance ( );
+
             // Ecriture de l'entête
 			String entete = 
 			"<!DOCTYPE html>\n"                                                           + 
@@ -129,61 +132,78 @@ public class GenerateurFichier
 				"\t<link href=\"./css/style.css\" rel=\"stylesheet\">\n"                  + 
 				"\t<title>Intervenant " + inter.getNom().toUpperCase() + " </title>\n"    + 
 			"</head>\n"                                                                   + 
-			"<body>\n"                                                                    + 
-				"\t<table>\n"                                                             ;
-
+			"<body>\n"                                                                    ; 
+			
+			// Ecriture du head et des paramètres
             ecrivain.write ( entete );
 			ecrivain.newLine ( );
 
-			ecrivain.write( "\t\t<tr>\n" + 
-			                "\t\t\t<th colspan=\"4\">" + inter.getPrenom ( ) + " - " + inter.getNom ( ).toUpperCase ( ) + "</th>\n" +
-							"\t</tr>\n"
-						  );
+			String header = "<header>\r\n" + 
+								"\t\t<h1>" + inter.getPrenom() + " " + inter.getNom().toUpperCase() + "</h1>\r\n" + 
+							"</header>";
+
+			// Ecriture du header de la page
+			ecrivain.write ( header );
 			ecrivain.newLine ( );
 
-			ecrivain.write ( "\t\t<tr>\n"                                                  + 
-								"\t\t\t<td class=\"first\">Numéro de ligne</td>\n"           +
-								"\t\t\t<td class=\"first\">Code de la matière et nom</td>\n" +
-								"\t\t\t<td class=\"first\">Heure dans la matière</td>\n"     +
-						   "\t\t</tr>"
-						   );
-			ecrivain.newLine ( );
-			
-			// Ecriture du corps du tableau
-			BD bd = BD.getInstance ( );
-			ArrayList<Intervient> lstInter = ( ArrayList<Intervient> ) bd.getTable ( Intervient.class );
+			String table = "<table>";
 
-			Intervient prec = null;
-			int compt = 1;
-			for ( Intervient intervient : lstInter )
+			int nombreHeure = bd.getTable ( Heure.class ).size ( );
+
+			// Ecriture de la première ligne
+			table += "<tr>" +
+						"<th rowspan='2'>Numéro de ligne</th>"           +
+						"<th rowspan='2'>Code de la matière et nom</th>" +
+						"<th colspan=" + (nombreHeure + 1) + ">Heure dans la matière</th>"     +
+		   			 "</tr>";
+
+			//Ecriture de la seconde entete de tableau
+
+			table += "<tr>" ;
+
+			for (Heure h : bd.getTable ( Heure.class ))
 			{
-				if ( intervient.getIntervenant ( ).getId ( ) == inter.getId ( ) )
-				{
-					if ( prec != null && prec.getModule ( ).getCode ( ).equals ( intervient.getModule ( ).getCode ( ) ) )
-					{
-						ecrivain.write ( " <br> " + intervient.getHeure ( ).getNom ( ) + " - " + ( intervient.getNbGroupe ( ) * intervient.getNbSemaine ( ) * intervient.getNbHeure ( ) ) + " heures ");
-						ecrivain.newLine ( );
-					}
-					else
-					{
-						if ( compt != 1 )
-						{
-							ecrivain.write ( "\t\t\t</td>\n " + 
-							               "\t\t</tr> "
-							               );
-							ecrivain.newLine ( );
-						}
-
-						ecrivain.write ( "\t\t<tr>\n" +
-										"\t\t\t<td class=\"num\">" + compt++ + "</td>\n" + 
-										"\t\t\t<td class=\"mod\">" + intervient.getModule ( ).getCode ( ) + " - " + intervient.getModule ( ).getLibLong ( ) + "</td>\n" +
-										"\t\t\t<td class=\"heure\"> " +  intervient.getHeure ( ).getNom ( ) + " - " + ( intervient.getNbGroupe() * intervient.getNbSemaine ( ) * intervient.getNbHeure ( ) ) + " heures "
-									  );
-						ecrivain.newLine ( );
-						prec = intervient;
-					}
-				}	
+				table += "<th>" + h.getNom() + "</th>";
 			}
+
+			table += "<th> Total </th> </tr>";
+			
+			//Ecriture des données de l'enseignants
+
+			ArrayList<String> ensDejaTraite = new ArrayList<String>();
+			int somme = 0;
+			int cpt = 1;
+			int nbHeure = 0;
+
+			for ( Intervient intervient : bd.getTable ( Intervient.class ) )
+			{
+				if (intervient.getIntervenant ( ).getId ( ) == inter.getId ( ) && !ensDejaTraite.contains ( intervient.getModule ( ).getCode ( ) ) )
+				{
+					
+					table += "<tr>";
+					table += "<td class='num'>" + cpt++ + "</td>";
+					table += "<td class='mod'>" + intervient.getModule ( ).getCode ( ) + " - " + intervient.getModule ( ).getLibLong ( ) + "</td>";
+
+					for (Heure h : bd.getTable ( Heure.class ) )
+					{
+						nbHeure = bd.getNBHeureParModule ( intervient.getModule( ).getCode( ), intervient.getIntervenant ( ).getId ( ), h.getId ( ) );
+						
+						table += "<td class = 'heure'>" + nbHeure + "</td>";
+						
+						somme += nbHeure;
+					}
+					
+					table += "<td class = 'heure'>" + somme + " heures </td>";
+					table += "</tr>";
+
+					somme = 0;
+					
+					ensDejaTraite.add ( intervient.getModule ( ).getCode ( ) );
+
+				}
+			}
+			
+			ecrivain.write(table);
 			
 			//Écriture fermant les balises html
 			String footer = 
@@ -241,7 +261,7 @@ public class GenerateurFichier
 			
 			for ( Heure he : bd.getTable ( Heure.class ) )
 			{
-				int heureRecPN  = bd.getNBHeurePNParModule ( module.getCode ( ), he.getId ( ) );
+				int heureRecPN  = bd.getNBHeurePNParModule  ( module.getCode ( ), he.getId ( ) );
 				int heureRecRep = bd.getNBHeureRepParModule ( module.getCode ( ), he.getId ( ) );
 				
 				sommePN  += heureRecPN;

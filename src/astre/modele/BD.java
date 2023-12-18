@@ -531,7 +531,6 @@ public class BD
 
 		try 
 		{
-			System.out.println("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
 
