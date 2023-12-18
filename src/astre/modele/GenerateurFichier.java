@@ -225,7 +225,7 @@ public class GenerateurFichier
 			ecrivain.newLine ( );
 
 
-			ecrivain.write("\t<table id=\"centre\">\n" +
+			ecrivain.write("\t<table class=\"centre\">\n" +
 			"\t\t<tr>") ;
 
 			// Initialisation des variables à écrires
@@ -261,28 +261,26 @@ public class GenerateurFichier
 			ecrivain.write ( "<tr>"                           + heureAct + "</tr>" );
 			ecrivain.write ( "<tr>"                           + heurePN  + "</tr>" );
 
-			// Initialisation des variables changeant une fois sur deux pour l'HTML
-			// Si pair alors le tableau ira à gauche sinon il ira a droite
-			String cote = "";
-			int cpt = 0;
-
 			// On fait de l'économie de variables 
 			heureAct = "";
 			sommeAct =  0;
 			int nbHeure;
-			ArrayList<Intervenant> ensDejaTraite = new ArrayList<Intervenant>();
+			ArrayList<Integer> ensDejaTraite = new ArrayList<Integer>();
+
+			ecrivain.write( "\t<table class=\"intervenant\">\n"+
+					        "\t\t<tr>\n"+
+						    "\t\t\t<th colspan=2>\n &nbsp;</th>" + nomHeure + "\t\t</tr>\n");
 
 			for ( Intervient inter : bd.getTable ( Intervient.class ) )
 			{
-				if (inter.getModule ( ).getCode ( ).equals ( module.getCode( ) ) && !ensDejaTraite.contains(inter.getIntervenant()) )
+				System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom());
+
+				if (inter.getModule ( ).getCode ( ).equals ( module.getCode( ) ) && !ensDejaTraite.contains(inter.getIntervenant ( ).getId ( ) ) )
 				{
-					cote = cpt++ % 2 == 0 ? "gauche" : "droite" ;
-					
-					ecrivain.write( "\t<table class=" + cote +">\n"+
-					                "\t\t<tr>\n"+
-						            "\t\t\t<th rowspan=\"2\">\n" + inter.getIntervenant().getPrenom() + " " + inter.getIntervenant().getNom().toUpperCase() + "</th>" + nomHeure + "\t\t</tr>\n");
-					
+					System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom());
 					ecrivain.write("<tr>");
+					ecrivain.write("<td colspan=2>" + inter.getIntervenant().getPrenom() + " " + inter.getIntervenant().getNom().toUpperCase() + "</td>");
+
 					for (Heure h : bd.getTable ( Heure.class ) )
 					{
 						nbHeure = bd.getNBHeureParModule ( inter.getModule( ).getCode( ), inter.getIntervenant ( ).getId ( ), h.getId ( ) );
@@ -297,11 +295,9 @@ public class GenerateurFichier
 
 					sommeAct = 0;
 					
-					
+					ensDejaTraite.add(inter.getIntervenant().getId());
 				}
 
-				ensDejaTraite.add(inter.getIntervenant());
-				
 			}
 			
 			//Écriture fermant les balises html

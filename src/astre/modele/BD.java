@@ -31,26 +31,26 @@ public class BD
 	Connection co;
 	PreparedStatement ps;
 
-	/*private BD ( )
-	{
-		try
-		{
-			Class.forName ( "org.postgresql.Driver" );
+	// private BD ( )
+	// {
+	// 	try
+	// 	{
+	// 		Class.forName ( "org.postgresql.Driver" );
 
-			//co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
-		}
-		catch ( ClassNotFoundException e )
-		{
-			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
-		}
-	}*/
+	// 		co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+	// 		//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+	// 	}
+	// 	catch ( ClassNotFoundException e )
+	// 	{
+	// 		System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+	// 	}
+	// 	catch ( SQLException e )
+	// 	{
+	// 		System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
+	// 	}
+	// }
 
-	// TODO: à tester sur linux + mac + windows !
+	//TODO: à tester sur linux + mac + windows !
 	private BD ( )
 	{
 		try
@@ -114,11 +114,14 @@ public class BD
 						lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 
 					if ( type.equals ( ModuleIUT.class )  )
-					lst.add ( type.cast ( new ModuleIUT(  getSemestre(rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(5), null, null ) ) );
+						lst.add ( type.cast ( new ModuleIUT(  getSemestre(rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(5), null, null ) ) );
 
-				if ( type.equals ( Horaire.class )  )
-					lst.add ( type.cast ( new Horaire( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
-			
+					if ( type.equals ( Horaire.class )  )
+						lst.add ( type.cast ( new Horaire( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
+
+					if ( type.equals ( Intervient.class )  )
+						lst.add ( type.cast ( new Intervient( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
+						// Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire
 				
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
 				}

@@ -31,69 +31,44 @@ td, th
 	padding: 1vh;
 }
 
-#centre
+.centre, .intervenant
 {
 	margin: 0 auto;
 	margin-top: 2vh;
-
 	width: 40%;
 }
 
-#centre tr th
+.intervenant
+{
+	margin-top: 4vh;
+	width: 60%;
+}
+
+.intervenant td, .intervenant th
+{
+	width: 7vh;
+	height: 7vh;
+	padding: 1vh;
+}
+
+.intervenant tr:nth-child(odd)
+{
+	background-color: #f5e1dd;
+}
+
+.centre tr th, .intervenant tr th
 {
 	background-color: #f7c5bc;
 }
 
-#centre tr th:first-child
+.centre tr th:first-child, .intervenant tr th:first-child
 {
 	background-color: #1D2F47;
 	color: aliceblue;
 }
 
-#centre tr td:first-child
+.centre tr td:first-child
 {
 	background-color: #f7c5bc;
 }
 
-.droite, .gauche
-{
-	margin-top: 3vh;
-	width: 40%;
-}
-
-.droite tr th, .gauche tr th
-{
-	background-color: #f7c5bc;
-}
-
-.droite tr th:first-child, .gauche tr th:first-child
-{
-	background-color: #1D2F47;
-	color: aliceblue;
-	width: 25%;
-}
-
-.gauche 
-{
-	float: left;
-	margin-right: 4%; /* Ajoutez 4% d'espace entre les deux tableaux */
-	margin-left: 8%;
-	
- 
-}
-
-.droite 
-{
-	float: right;
-	margin-right: 8%;
-}
-
-@media (max-width: 1100px) 
-{
-	.gauche, .droite 
-	{
-		width: 80%; 
-		margin: 4vh 10% 0px 10%; 
-		position: static;
-	}
-}
