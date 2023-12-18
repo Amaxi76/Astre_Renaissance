@@ -167,6 +167,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Sélection du nombre d'heure etqd
+-- Utilisé dans l'affectation et la répartition
+
+DROP              FUNCTION f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure VARCHAR ( 50 ) );
+CREATE OR REPLACE FUNCTION f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure VARCHAR ( 50 ) ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER;
+BEGIN
+    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+    SELECT  SUM (nbSemaine * nbGroupe * coeffTD) INTO totalHeures
+    FROM    Intervient i JOIN Heure h ON i.Id_Heure = h.Id_Heure
+    WHERE   Code_ModuleIUT = s_code AND 
+            nomHeure = s_nomHeure;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
 -- -- Sélectionner les heuresPN

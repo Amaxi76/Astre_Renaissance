@@ -33,21 +33,21 @@ public class BD
 
 	// private BD ( )
 	// {
-		// try
-		// {
-			// Class.forName ( "org.postgresql.Driver" );
+	// 	try
+	// 	{
+	// 		Class.forName ( "org.postgresql.Driver" );
 
-			// co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			// //co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
-		// }
-		// catch ( ClassNotFoundException e )
-		// {
-			// System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
-		// }
-		// catch ( SQLException e )
-		// {
-			// System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
-		// }
+	// 		co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+	// 		//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+	// 	}
+	// 	catch ( ClassNotFoundException e )
+	// 	{
+	// 		System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+	// 	}
+	// 	catch ( SQLException e )
+	// 	{
+	// 		System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
+	// 	}
 	// }
 
 	//TODO: à tester sur linux + mac + windows !
@@ -543,6 +543,28 @@ public class BD
 		catch (Exception e) 
 		{
 			System.out.println ( "Erreur  getNBHeureParModule (String code, int Id_Inter, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
+	// Utilisée dans panelAffectation.java
+	public int getNBHeureEQTD (String code, String nomHeure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureEQTD('" + code + "','" + nomHeure + "')" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e) 
+		{
+			System.out.println ( "getNBHeureEQTD (String code, String nomHeure) : " + e );
 		}
 
 		return somme;
