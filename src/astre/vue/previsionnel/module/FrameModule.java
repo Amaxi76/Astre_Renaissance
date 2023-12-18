@@ -24,6 +24,7 @@ public class FrameModule extends JFrame
 	private Controleur          ctrl;
 
 	private PanelModuleLabel    panelModuleLabel;
+	private PanelModuleBouton   panelModuleBouton;
 	private PanelPNLocal	    panelPNLocal;
 	private PanelPNLocalBis	    panelPNLocalBis;
 	private PanelPNLocalPPP	    panelPNLocalPPP;
@@ -56,6 +57,7 @@ public class FrameModule extends JFrame
 		/* ------------------------- */
 
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
+		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
 		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl       );
 		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl       );
@@ -125,7 +127,7 @@ public class FrameModule extends JFrame
 		/*  Sud  */
 		/*-------*/
 
-		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
+		this.add ( this.panelModuleBouton, BorderLayout.SOUTH);
 
 
 		/* ------------------------- */
@@ -135,7 +137,15 @@ public class FrameModule extends JFrame
 		this.setVisible ( true );
 	}
 
-	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
+	public boolean getCbValidation ( ) { return this.cbValidation.isSelected ( ); }
+
+	public PanelModuleLabel    getPanelModuleLabel    ( ) { return this.panelModuleLabel;    }
+	public PanelPNLocal	       getPanelPNLocal        ( ) { return this.panelPNLocal;        }
+	public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
+	public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
+	public PanelRepartition    getPanelRepartition    ( ) { return this.panelRepartition;    }
+	public PanelRepartitionBis getPanelRepartitionBis ( ) { return this.panelRepartitionBis; }
+	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
 
 	public void setModule ( String code )
 	{
