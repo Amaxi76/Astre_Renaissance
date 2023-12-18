@@ -77,8 +77,8 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 	{
 		String typeModule = this.frm.getPanelModuleLabel().getType();
 
-		String sem        = this.frm.getPanelModuleLabel().getSemestre();
-		int nbSem         = Character.getNumericValue ( sem.charAt ( 1 ) );
+		String   sem      = this.frm.getPanelModuleLabel().getSemestre();
+		int      nbSem    = Character.getNumericValue ( sem.charAt ( 1 ) );
 		Semestre semestre = this.ctrl.getSemestre ( nbSem );
 
 		String code     = this.frm.getPanelModuleLabel().getCode();
