@@ -17,7 +17,6 @@ import java.util.Map;
 
 import astre.Controleur;
 import astre.modele.elements.*;
-import astre.modele.outils.SuppressionException;
 
 public class BD
 {

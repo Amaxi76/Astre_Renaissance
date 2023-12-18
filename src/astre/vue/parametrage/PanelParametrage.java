@@ -15,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
-import astre.modele.outils.SuppressionException;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 

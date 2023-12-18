@@ -7,7 +7,6 @@ package astre;
   */
 
 import astre.modele.elements.*;
-import astre.modele.outils.SuppressionException;
 
 import java.awt.Component;
 import java.sql.SQLException;

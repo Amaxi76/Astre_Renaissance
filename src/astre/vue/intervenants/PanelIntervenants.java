@@ -2,7 +2,6 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
-import astre.modele.outils.SuppressionException;
 import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 

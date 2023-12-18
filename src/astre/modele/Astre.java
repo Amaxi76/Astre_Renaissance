@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.elements.*;
-import astre.modele.outils.SuppressionException;
 
 public class Astre
 {
