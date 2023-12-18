@@ -30,26 +30,26 @@ public class BD
 	Connection co;
 	PreparedStatement ps;
 
-	/*private BD ( )
-	{
-		try
-		{
-			Class.forName ( "org.postgresql.Driver" );
+	// private BD ( )
+	// {
+	// 	try
+	// 	{
+	// 		Class.forName ( "org.postgresql.Driver" );
 
-			//co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
-		}
-		catch ( ClassNotFoundException e )
-		{
-			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
-		}
-	}*/
+	// 		co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+	// 		//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+	// 	}
+	// 	catch ( ClassNotFoundException e )
+	// 	{
+	// 		System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+	// 	}
+	// 	catch ( SQLException e )
+	// 	{
+	// 		System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
+	// 	}
+	// }
 
-	// TODO: à tester sur linux + mac + windows !
+	//TODO: à tester sur linux + mac + windows !
 	private BD ( )
 	{
 		try
@@ -98,35 +98,37 @@ public class BD
 
 			while ( rs.next ( ) )
 			{
-				if ( type.equals ( Semestre.class )     )
-					lst.add ( type.cast( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
-					//TODO: supprimer ligne si fonctionne //lst.add ( ( T ) new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-
-				if ( type.equals ( Contrat.class )      )
+				try
 				{
-					try
-					{
+					if ( type.equals ( Semestre.class )     )
+						lst.add ( type.cast( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+
+					if ( type.equals ( Contrat.class )      )
 						lst.add ( type.cast ( Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) ) );
-						//lst.add ( ( T ) Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) );
-					}
-					catch ( Exception e )
-					{
-						e.printStackTrace ( );
-					}
-				}
 
-				if ( type.equals ( Heure.class )        )
-					lst.add ( type.cast ( new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
-					//lst.add ( ( T ) new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) );
-
-				if ( type.equals ( Intervenant.class )  )
-					lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
-					//lst.add ( ( T ) new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) );
-				
-				if ( type.equals ( Intervient.class )  )
-					lst.add ( type.cast ( new Intervient( getIntervenant( rs.getInt ( 1 ) ), getHeure( rs.getInt(2)), getModule(rs.getString(3)), rs.getInt(4), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString ( 7 ) ) ) );
+					if ( type.equals ( Heure.class )        )
+						lst.add ( type.cast ( Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
 			
+					if ( type.equals ( Intervenant.class )  )
+						lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+
+					if ( type.equals ( ModuleIUT.class )  )
+						lst.add ( type.cast ( new ModuleIUT(  getSemestre(rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(5), null, null ) ) );
+
+					if ( type.equals ( Horaire.class )  )
+						lst.add ( type.cast ( new Horaire( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
+
+					if ( type.equals ( Intervient.class )  )
+						lst.add ( type.cast ( new Intervient( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
+						// Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire
+				
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
+				}
+				catch ( Exception e )
+				{
+					e.printStackTrace ( );
+				}
+				
 			}
 
 		}
@@ -385,6 +387,41 @@ public class BD
 		return result;
 	}
 
+	//meme méthode qu'au dessus mais sans prendre en compte les coeff tp
+	public double getInterventionIntervenantTheo(int inter, int semes)
+	{
+		double result = 0;
+		double ligne;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
+					                         "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
+					                         "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
+				                             "Where  Id_Semestre      = "+ semes +" AND " +
+					                         "       i.Id_intervenant = " + inter);
+			while ( rs.next( ) )
+			{
+				ligne = 0;
+				ligne += rs.getInt(1) * rs.getInt(2) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
+
+				/*if( getHeure(rs.getInt(5)).getNom().equals("TP") )
+				{
+					ligne *= getIntervenant(rs.getInt(4)).getContrat().getRatioTP();
+				}*/
+
+				result += ligne;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+
+		return result;
+	}
+
 	public Intervenant getIntervenant ( int i )
 	{
 		Intervenant intervenant = null;
@@ -416,7 +453,15 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure where Id_Heure = " + h  );
 			while ( rs.next ( ) )
 			{
-				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				try
+				{
+					heure = Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				}
+				catch ( Exception e )
+				{
+					e.printStackTrace ( );
+				}
+				
 			}
 		}
 		catch ( SQLException e )
@@ -437,7 +482,15 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Heure where nomheure = '" + h + "'"  );
 			while ( rs.next ( ) )
 			{
-				heure = new Heure ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				try
+				{
+					heure = Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) );
+				}
+				catch ( Exception e )
+				{
+					e.printStackTrace ( );
+				}
+				
 			}
 		}
 		catch ( SQLException e )
@@ -472,11 +525,73 @@ public class BD
 		return module;
 	}
 
+	public int getNBHeureParModule (String code, int Id_Inter, int Id_Heure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			System.out.println("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur  getNBHeureParModule (String code, int Id_Inter, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
+	public int getNBHeurePNParModule (String code, int Id_Heure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeurePNParModule('" + code + "'," + Id_Heure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur getNBHeurePNParModule (String code, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
+	public int getNBHeureRepParModule (String code, int Id_Heure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureRepParModule('" + code + "'," + Id_Heure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur getNBHeureRepParModule (String code, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
-
-	//TODO: Fonction SQL ?
 
 	public Object[][] getModulesTableau ( )
 	{
@@ -707,7 +822,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur 1 getModulesTableau() : " + e );
+			System.out.println ( "Erreur 1 getContratsTableau() : " + e );
 		}
 
 		Object[][] contrats = new Object[nbContrat][5];
@@ -1139,22 +1254,23 @@ public class BD
 
 	public void update ( ModuleIUT m )
 	{
-		String req = "UPDATE Module SET libLong = ?, libCourt = ?, Id_TypeModule = ?, Id_Semestre = ? WHERE Id_Module = ?";
+		String req = "UPDATE ModuleIUT SET libLong = ?, libCourt = ?, typeModule = ?, valide = ?, Id_Semestre = ? WHERE code_Moduleiut = ?";
 		try
 		{
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, m.getLibLong    ( ) );
 			ps.setString ( 2, m.getLibCourt   ( ) );
 			ps.setString ( 3, m.getTypeModule ( ) );
-			ps.setInt    ( 4, m.getSemestre   ( ).getIdSemestre ( ) );
-			ps.setString ( 5, m.getCode       ( ) );
+			ps.setBoolean( 4, m.estValide()       );
+			ps.setInt    ( 5, m.getSemestre   ( ).getIdSemestre ( ) );
+			ps.setString ( 6, m.getCode       ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Module m ) : " + e);
+			System.out.println ( "Erreur update ( ModuleIUT m ) : " + e);
 		}
 	}
 

@@ -18,50 +18,49 @@ import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
-import astre.modele.elements.Contrat;
-
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN
   * @version : 1.0 - 13/12/23
   * @date : 13/12/2023
   */
 
-public class PanelContrat extends JPanel implements ActionListener
+public class PanelParametrage extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
-	private Tableau    tabContrat;
+	private Tableau    tab;
+	private Class      classe;
 	
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
 
-	public PanelContrat ( Controleur ctrl )
+	public PanelParametrage ( Controleur ctrl, String[] enTete, Object[] tabObjects , Object[][] tabDonnee, String nomTab, Class classe )
 	{
-		this.ctrl = ctrl;
+		this.ctrl   = ctrl;
+		this.classe = classe;
 		this.setLayout ( new GridLayout ( 1 ,1 ) );
 
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String[]    enTete       = { "id","Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
-		JPanel      pnlContenu   = new JPanel ( new BorderLayout (                  ) );
-		JPanel      pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
-		JPanel      pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
+		JPanel   pnlContenu   = new JPanel ( new BorderLayout (                  ) );
+		JPanel   pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
+		JPanel   pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
 		
-		this.tabContrat     = new Tableau ( enTete , this.ctrl.getTableauContrat ( ), 1 );
+		this.tab     = Tableau.initialiserTableau ( enTete, tabObjects, true, 1, tabDonnee );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
 		pnlContenu.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		this.tabContrat.setEditable ( true  );
-		this.tabContrat.setShowGrid ( false );
-		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
+		this.tab.setEditable ( true  );
+		this.tab.setShowGrid ( false );
+		this.tab.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
 		// Ajout du titre et rend la liste défilable 
-		JScrollPane spTab = new JScrollPane ( this.tabContrat );
-		spTab.setBorder                  ( new TitledBorder ( "Liste des contrats" )     );
+		JScrollPane spTab = new JScrollPane ( this.tab );
+		spTab.setBorder                  ( new TitledBorder ( nomTab ) );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
 		/* ----------------------------- */
@@ -101,10 +100,13 @@ public class PanelContrat extends JPanel implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
-			this.ctrl.majTableauBD ( this.tabContrat.getDonnees ( ), Contrat.class );
+			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
+
+		if ( e.getSource ( ) == this.btnAnnuler )
+		{
+			
+		}
 	}
 
-	public Tableau getTab ( ) { return this.tabContrat; }
-
-	
+	public Tableau getTab ( ) { return this.tab; }
 }

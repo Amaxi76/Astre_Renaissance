@@ -72,4 +72,10 @@ public class FramePrevisionnel extends JFrame
 	{
 		return this.pnlEnsSemestre.getModuleSelection ( );
 	}
+
+	public void majTableau ( )
+	{
+		this.pnlEnsSemestre.majTableau ( );
+		repaint();
+	}
 }

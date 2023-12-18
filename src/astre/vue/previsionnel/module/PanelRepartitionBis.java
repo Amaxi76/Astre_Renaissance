@@ -182,4 +182,8 @@ public class PanelRepartitionBis extends JPanel
 		}
 		majSomme();
 	}
+
+	public int getSaeRepatition() { return Integer.parseInt ( this.txtHSae.getText() ); }
+	public int getTutRepatition() { return Integer.parseInt ( this.txtHTut.getText() ); }
+
 }

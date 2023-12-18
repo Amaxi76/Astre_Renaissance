@@ -18,7 +18,7 @@ import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
-import astre.modele.elements.Heure;
+import astre.modele.elements.Contrat;
 
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN
@@ -26,15 +26,15 @@ import astre.modele.elements.Heure;
   * @date : 13/12/2023
   */
 
-public class PanelTypeHeure extends JPanel implements ActionListener
+public class PanelParametrage extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
-	private Tableau    tabHeure;
+	private Tableau    tabContrat;
 	
 	private JButton btnEnregistrer;
 	private JButton btnAnnuler;
 
-	public PanelTypeHeure ( Controleur ctrl )
+	public PanelParametrage ( Controleur ctrl, String[] enTete, Object[] tabObjects , Object[][] tabDonnee, String nomTab, Class classe )
 	{
 		this.ctrl = ctrl;
 		this.setLayout ( new GridLayout ( 1 ,1 ) );
@@ -43,25 +43,24 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String[] enTete = { "id_Heure","Nom Heure", " Coeff TD" };
-		JPanel      pnlContenu   = new JPanel ( new BorderLayout ( ) );
-		JPanel      pnlBouttonBD = new JPanel ( new FlowLayout  ( FlowLayout.RIGHT ) );
-		JPanel      pnlBoutton   = new JPanel ( new GridLayout ( 1, 2 ) );
+		JPanel   pnlContenu   = new JPanel ( new BorderLayout (                  ) );
+		JPanel   pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
+		JPanel   pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
 		
-		this.tabHeure     = new Tableau ( enTete , this.ctrl.getTableauHeure ( ), 1 );
+		this.tabContrat     = Tableau.initialiserTableau ( enTete, tabObjects, true, 1, this.ctrl.getTableauContrat ( ) );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
 		pnlContenu.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );
 
-		this.tabHeure.setEditable ( true  );
-		this.tabHeure.setShowGrid ( false );
-		this.tabHeure.setIntercellSpacing ( new Dimension ( 0, 0 ) );
+		this.tabContrat.setEditable ( true  );
+		this.tabContrat.setShowGrid ( false );
+		this.tabContrat.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
 		// Ajout du titre et rend la liste défilable 
-		JScrollPane spTab        = new JScrollPane ( this.tabHeure );
-		spTab.setBorder                  ( new TitledBorder ( "Liste des type d'heure" ) );
+		JScrollPane spTab = new JScrollPane ( this.tabContrat );
+		spTab.setBorder                  ( new TitledBorder ( "Liste des contrats" )     );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
 		/* ----------------------------- */
@@ -101,10 +100,15 @@ public class PanelTypeHeure extends JPanel implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
-			this.ctrl.majTableauBD ( this.tabHeure.getDonnees ( ), Heure.class );
+			this.ctrl.majTableauBD ( this.tabContrat.getDonnees ( ), Contrat.class );
+
+		if ( e.getSource ( ) == this.btnAnnuler )
+		{
+			
+		}
 	}
 
-	public Tableau getTab ( ) { return this.tabHeure; }
+	public Tableau getTab ( ) { return this.tabContrat; }
 
 	
 }

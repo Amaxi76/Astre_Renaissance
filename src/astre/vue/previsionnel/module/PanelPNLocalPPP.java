@@ -208,4 +208,10 @@ public class PanelPNLocalPPP extends JPanel
 
 		majSomme();
 	}
+
+	public int getCM    ( ) { return Integer.parseInt( this.txtCM  .getText() ); }
+	public int getTD    ( ) { return Integer.parseInt( this.txtTD  .getText() ); }
+	public int getTP    ( ) { return Integer.parseInt( this.txtTP  .getText() ); }
+	public int getTut   ( ) { return Integer.parseInt( this.txtHTut.getText() ); }
+	public int getPonct ( ) { return Integer.parseInt( this.txtHP  .getText() ); }
 }

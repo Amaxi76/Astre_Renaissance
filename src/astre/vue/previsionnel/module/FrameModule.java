@@ -1,7 +1,6 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
-import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -16,7 +15,7 @@ import astre.modele.elements.ModuleIUT;
 * @date : 11/12/2023
 */
 
-public class FrameModule extends JFrame implements ItemListener
+public class FrameModule extends JFrame
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -25,6 +24,7 @@ public class FrameModule extends JFrame implements ItemListener
 	private Controleur          ctrl;
 
 	private PanelModuleLabel    panelModuleLabel;
+	private PanelModuleBouton   panelModuleBouton;
 	private PanelPNLocal	    panelPNLocal;
 	private PanelPNLocalBis	    panelPNLocalBis;
 	private PanelPNLocalPPP	    panelPNLocalPPP;
@@ -57,6 +57,7 @@ public class FrameModule extends JFrame implements ItemListener
 		/* ------------------------- */
 
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
+		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
 		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl       );
 		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl       );
@@ -67,13 +68,11 @@ public class FrameModule extends JFrame implements ItemListener
 
 		this.cbValidation = new JCheckBox ( "Validation" );
 
-
 		/*---------*/
 		/*  Nord   */
 		/*---------*/
 
 		this.add ( panelModuleLabel, BorderLayout.NORTH  );
-
 
 		/*----------*/
 		/*  Centre  */
@@ -124,44 +123,24 @@ public class FrameModule extends JFrame implements ItemListener
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
-
 		/*-------*/
 		/*  Sud  */
 		/*-------*/
 
-		this.add ( new PanelModuleBouton ( this.ctrl ), BorderLayout.SOUTH);
-
-
-		/* ------------------------- */
-		/* Activation des composants */
-		/* ------------------------- */
-
-		this.cbValidation.addItemListener( this );
+		this.add ( this.panelModuleBouton, BorderLayout.SOUTH);
 
 		this.setVisible ( true );
 	}
 
-	/* ItemListener */
-	public void itemStateChanged(java.awt.event.ItemEvent e)
-	{
-		if ( e.getSource() == this.cbValidation )
-		{
-			if ( this.cbValidation.isSelected() )
-			{
-				System.out.println("yay");
-				this.panelModuleLabel.getModule().setValide(true);
-				repaint();
-			}
-			else
-			{
-				System.out.println("boo");
-				this.panelModuleLabel.getModule().setValide(false);
-				repaint();
-			}
-		}
-	}
+	public boolean getCbValidation ( ) { return this.cbValidation.isSelected ( ); }
 
-	public PanelModuleLabel getPanelModuleLabel ( ) { return this.panelModuleLabel; }
+	public PanelModuleLabel    getPanelModuleLabel    ( ) { return this.panelModuleLabel;    }
+	public PanelPNLocal	       getPanelPNLocal        ( ) { return this.panelPNLocal;        }
+	public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
+	public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
+	public PanelRepartition    getPanelRepartition    ( ) { return this.panelRepartition;    }
+	public PanelRepartitionBis getPanelRepartitionBis ( ) { return this.panelRepartitionBis; }
+	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
 
 	public void setModule ( String code )
 	{
@@ -179,6 +158,8 @@ public class FrameModule extends JFrame implements ItemListener
 		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
 		
 		this.panelAffectation.setDonnee ( module );
+
+		this.cbValidation.setSelected( module.estValide( ) );
 	}
 		
 

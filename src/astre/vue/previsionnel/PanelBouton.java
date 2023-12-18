@@ -93,7 +93,6 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
 			this.frameModule = new FrameModule ( this.ctrl );
-			//TODO faire enregistrement des Intervients
 		}
 
 		if ( e.getSource ( ) == this.btncreerSAE )

@@ -2,7 +2,7 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
-
+import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 
 import javax.swing.*;
@@ -43,10 +43,11 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 		
 		//création des composants
-		String[] noms = { "Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		String[] noms    = { "Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		Object[] defauts = { "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
 
 		//Création du tableau
-		this.tableau = new Tableau ( noms, this.ctrl.getTableauIntervenant ( ), 1 );
+		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableauIntervenant() );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
@@ -57,7 +58,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
-		this.tableau.setEditable ( new int[] { 0, 1, 2, 3, 4 } );
+		//this.tableau.setEditable ( new int[] { 0, 1, 2, 3, 4 } );
 		this.tableau.ajusterTailleColonnes ( );
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );
@@ -120,8 +121,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
-			this.tableau.ajusterTailleColonnes ( );
+			( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose();
+			new FrameAccueil(this.ctrl);
 		}
 	}
 

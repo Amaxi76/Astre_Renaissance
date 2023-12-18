@@ -52,8 +52,9 @@ public class PanelAffectation extends JPanel implements ActionListener
 		/* ------------------------- */
 
 		String[] noms = { "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
+		Object[] typeDefaut = { "", "", 0, 0, 0, "..." };
 
-		this.tableau = new Tableau ( noms, null, 0 );
+		this.tableau = Tableau.initialiserTableau( noms, typeDefaut, true, 0, null );
 		this.tableau.setEditable ( true );
 		this.tableau.ajusterTailleColonnes ( );
 

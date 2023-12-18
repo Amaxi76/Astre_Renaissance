@@ -240,42 +240,48 @@ public class PanelRepartition extends JPanel
 
 		this.txtNbSemCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalCM(); }
+			public void keyTyped    ( KeyEvent e ) { majTotalCM();
+													 majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbHCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalCM(); }
+			public void keyTyped    ( KeyEvent e ) { majTotalCM();
+													 majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbSemTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTD(); }
+			public void keyTyped    ( KeyEvent e ) { majTotalTD();
+													 majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbHTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTD(); }
+			public void keyTyped    ( KeyEvent e ) { majTotalTD();
+													 majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbSemTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTP(); }
+			public void keyTyped    ( KeyEvent e ) { majTotalTP();
+													 majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
 
 		this.txtNbHTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTP(); }
+			public void keyTyped    ( KeyEvent e ) { majTotalTP();
+													 majTotalHeure(); }
 			public void keyPressed  ( KeyEvent e ) {}
 			public void keyReleased ( KeyEvent e ) {}
 		});
@@ -444,12 +450,12 @@ public class PanelRepartition extends JPanel
 		lblTotalCMProm.setText( String.valueOf ( totalCMProm ) );
 
 		double coeffTD = coeffHeure ( "TD" );
-		int nbGpTD = Integer.parseInt(frm.getPanelModuleLabel().lblNbGpTD.getText());
+		int nbGpTD = Integer.parseInt( frm.getPanelModuleLabel().getNbGpTD() );
 		double totalTDProm = totalTD * coeffTD * nbGpTD;
 		lblTotalTDProm.setText( String.valueOf ( totalTDProm ) );
 
 		double coeffTP = coeffHeure ( "TP" );
-		int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().lblNbGpTP.getText() );
+		int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().getNbGpTP() );
 		double totalTPProm = totalTP * coeffTP * nbGpTP;
 		lblTotalTPProm.setText( String.valueOf ( totalTPProm ) );
 
@@ -518,4 +524,11 @@ public class PanelRepartition extends JPanel
 		majTotalTP();
 		majTotalHeure();
 	}
+
+	public int getNbSemCM() { return Integer.parseInt ( this.txtNbSemCM.getText() ); }
+	public int getNbHCM()   { return Integer.parseInt ( this.txtNbHCM  .getText() ); }
+	public int getNbSemTD() { return Integer.parseInt ( this.txtNbSemTD.getText() ); }
+	public int getNbHTD()   { return Integer.parseInt ( this.txtNbHTD  .getText() ); }
+	public int getNbSemTP() { return Integer.parseInt ( this.txtNbSemTP.getText() ); }
+	public int getNbHTP()   { return Integer.parseInt ( this.txtNbHTP  .getText() ); }
 }

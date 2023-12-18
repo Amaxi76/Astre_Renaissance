@@ -26,7 +26,7 @@ public class PanelBouton extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 	
-	private JPanel pnl;
+	private PanelParametrage pnl;
 
 	private JButton btnCreer;
 	private JButton btnSupprimer;
@@ -35,7 +35,7 @@ public class PanelBouton extends JPanel implements ActionListener
 	/*--Constructeur--*/
 	/*----------------*/
 	
-	public PanelBouton ( Controleur ctrl, JPanel pnl )
+	public PanelBouton ( Controleur ctrl, PanelParametrage pnl )
 	{
 		this.ctrl        = ctrl;
 		this.pnl         = pnl;
@@ -46,8 +46,8 @@ public class PanelBouton extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 		
-		this.btnCreer     = new JButton ( "créer" );
-		this.btnSupprimer = new JButton ( "supprimer"          );
+		this.btnCreer     = new JButton ( "Créer"     );
+		this.btnSupprimer = new JButton ( "Supprimer" );
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
@@ -71,21 +71,10 @@ public class PanelBouton extends JPanel implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnCreer )
-		{
-			if ( this.pnl instanceof PanelTypeHeure )
-				( ( PanelTypeHeure ) this.pnl ).getTab ( ).ajouterLigne ( );
-			if ( this.pnl instanceof PanelContrat )
-				( ( PanelContrat   ) this.pnl ).getTab ( ).ajouterLigne ( );
-		}
+			this.pnl.getTab ( ).ajouterLigne ( );
 
 		if ( e.getSource ( ) == this.btnSupprimer )
-		{
-			if ( this.pnl instanceof PanelTypeHeure )
-				( ( PanelTypeHeure ) this.pnl ).getTab ( ).supprimerLigne ( );
-			if ( this.pnl instanceof PanelContrat )
-				( ( PanelContrat   ) this.pnl ).getTab ( ).supprimerLigne ( );
-		}
-
+			this.pnl .getTab ( ).supprimerLigne ( );
 	}
 
 	private void centrerTexte ( JButton btn )
