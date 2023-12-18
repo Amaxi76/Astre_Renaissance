@@ -102,14 +102,7 @@ public class PanelParametrage extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			try
-			{
-				this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
-			}
-			catch ( SuppressionException exc )
-			{
-				Controleur.afficherErreur ( "Suppression impossible", exc.getMessage ( ) );
-			}
+			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
 		}
 			
 

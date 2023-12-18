@@ -68,7 +68,7 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type ) throws SuppressionException
+	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
 	{
 		ArrayList<Object> lstLocal = new ArrayList<> (                           );
 		ArrayList<Object> lstBD    = new ArrayList<> ( this.bd.getTable ( type ) );
@@ -158,7 +158,7 @@ public class Astre
 		}
 	}
 
-	public void delete ( Object o ) throws SuppressionException
+	public void delete ( Object o )
 	{
 		String test = o.getClass().toString();
 		//System.out.println(test);

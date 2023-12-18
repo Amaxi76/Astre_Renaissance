@@ -114,15 +114,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			try
-			{
-				enregistrer ( this.tableau.getDonnees ( ) );
-				this.tableau.ajusterTailleColonnes ( );
-			} 
-			catch ( SuppressionException exc )
-			{
-				Controleur.afficherErreur ( "Suppression impossible", exc.getMessage ( ) );
-			}
+
+			enregistrer ( this.tableau.getDonnees ( ) );
+			this.tableau.ajusterTailleColonnes ( );
 
 			this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
 		}
@@ -134,7 +128,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		}
 	}
 
-	public boolean enregistrer ( Object[][] deuxieme ) throws SuppressionException
+	public boolean enregistrer ( Object[][] deuxieme )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
 		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
