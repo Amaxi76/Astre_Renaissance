@@ -56,19 +56,20 @@ public abstract class TableauUtilitaire
 	}
 
 	/**
-	 * Copie profonde d'un tableau avec nbLignesASupprimer à supprimer
+	 * Copie profonde d'un tableau avec 1 à supprimer
 	 */
-	public static Object[][] copier ( Object[][] tableau, int nbLignesASupprimer )
+	public static Object[][] copier ( Object[][] tableau, int index )
 	{
-		if ( nbLignesASupprimer < 0              ) { nbLignesASupprimer = 0;              }
-		if ( nbLignesASupprimer > tableau.length ) { nbLignesASupprimer = tableau.length; }
+		int cptLigTmp = 0;
 
-		Object[][] tableauTmp = new Object[tableau.length - nbLignesASupprimer][0];
+		if ( index < 0              ) { index = 0;              }
+		if ( index > tableau.length ) { index = tableau.length; }
 
-		for ( int lig = 0; lig < (tableau.length - nbLignesASupprimer); lig++ )
-		{
-			tableauTmp[lig] = copier ( tableau[lig] );
-		}
+		Object[][] tableauTmp = new Object[tableau.length - 1][tableau[0].length];
+
+		for ( int lig = 0; lig < tableau.length; lig++ )
+			if ( lig != index )
+				tableauTmp[cptLigTmp++] = copier ( tableau[lig] );
 
 		return tableauTmp;
 	}

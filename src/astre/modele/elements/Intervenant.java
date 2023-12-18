@@ -6,7 +6,7 @@ package astre.modele.elements;
   * @date : 06/12/2023
   */
 
-public class Intervenant
+public class Intervenant extends Element
 {
 	private int 	id;
 	private String  nom;
@@ -110,10 +110,16 @@ public class Intervenant
 		return sRet;
 	}
 
-	public boolean equals( Intervenant i )
+	@Override
+	public boolean equals( Object o )
 	{
-		if( this.id == i.getId() && this.nom.equals( i.getNom() ) && this.prenom.equals( i.getPrenom() ) && this.heureService == i.getheureService() && this.heureMaximum == i.getHeureMaximum() )
-			return true;
+		if ( o instanceof Intervenant )
+		{
+			Intervenant i = (Intervenant)o;
+
+			if( this.id == i.getId() && this.nom.equals( i.getNom() ) && this.prenom.equals( i.getPrenom() ) && this.heureService == i.getheureService() && this.heureMaximum == i.getHeureMaximum() )
+				return true;
+		}
 		
 		return false;
 	}

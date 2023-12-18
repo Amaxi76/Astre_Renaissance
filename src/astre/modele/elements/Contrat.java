@@ -143,11 +143,10 @@ public class Contrat
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "Nom : %-20s - "                 , this.nom                 ) +
+		return String.format ( "Nom : %-22s - "                 , this.nom                 ) +
 		       String.format ( "Heure Service Contrat : %02d - ", this.heureServiceContrat ) +
 		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
 		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             );
-
 	}
 	
 }

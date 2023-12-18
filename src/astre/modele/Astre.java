@@ -67,10 +67,13 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
+	public void majTableauBD_ancien ( Object[][] tabDonneeBD, Class<?> type )
 	{
 		ArrayList<Object> lstLocal = new ArrayList<> (                           );
 		ArrayList<Object> lstBD    = new ArrayList<> ( this.bd.getTable ( type ) );
+
+		System.out.println ( TableauUtilitaire.afficherTableau ( lstBD    ) );
+
 		
 		//Pour tout contrat dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
 		Object objet = null;
@@ -91,30 +94,39 @@ public class Astre
 
 		ArrayList<Object> lstAjout       = new ArrayList<> ( lstLocal                  );
 		ArrayList<Object> lstSuppression = new ArrayList<> ( this.bd.getTable ( type ) );
-		ArrayList<Object> lstUpdate      = new ArrayList<> (                           );
+		ArrayList<Object> lstModification      = new ArrayList<> (                           );
 
 		// Ajout
 
-		System.out.println( lstAjout.get(0).equals(lstBD.get(0)));
-		System.out.println( lstAjout.get(0).getClass() );
-		System.out.println( lstBD.get(0).getClass() );
+		System.out.println ( lstAjout.get ( 0 ).equals ( lstBD.get ( 0 ) ) );
+		System.out.println ( lstAjout.get ( 0 ).getClass ( ) );
+		System.out.println ( lstBD   .get ( 0 ).getClass ( ) );
 
 		lstAjout.removeAll ( lstBD );
 
-		System.out.println ( TableauUtilitaire.afficherTableau ( lstAjout ) );
+		//System.out.println ( TableauUtilitaire.afficherTableau ( lstAjout ) );
 		
 
 		// Suppression
 		lstSuppression.removeAll ( lstLocal );
-		System.out.println ( TableauUtilitaire.afficherTableau ( lstSuppression ) );
+		//System.out.println ( TableauUtilitaire.afficherTableau ( lstSuppression ) );
 
 
 		// Update
-		lstBD   .removeAll(lstLocal);
-		lstLocal.removeAll(lstBD);
-		lstUpdate.addAll ( new ArrayList<> ( lstBD ) );
-		lstUpdate.addAll ( new ArrayList<> ( lstLocal ) );
-		System.out.println ( TableauUtilitaire.afficherTableau ( lstUpdate ) );
+		/*lstBD   .removeAll ( lstLocal );
+		lstLocal.removeAll ( lstBD    );
+
+		System.out.println ( TableauUtilitaire.afficherTableau ( lstBD    ) );
+		//System.out.println ( TableauUtilitaire.afficherTableau ( lstLocal ) );
+		lstUpdate.addAll ( new ArrayList<> ( lstBD )    );
+		lstUpdate.addAll ( new ArrayList<> ( lstLocal ) );*/
+
+		/*ArrayList<Object> intersection = new ArrayList<>(lstLocal);
+		intersection.retainAll(lstBD);
+
+		lstModification.addAll(lstBD);
+		lstModification.removeAll(intersection);
+		System.out.println ( TableauUtilitaire.afficherTableau ( lstModification ) );*/
 
 		
 		for ( Object obj : lstAjout )
@@ -123,15 +135,78 @@ public class Astre
 		for ( Object obj : lstSuppression )
 			this.delete ( obj );
 
-		for ( Object obj : lstUpdate )
+		for ( Object obj : lstModification )
+			this.update ( obj );
+	}
+
+	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
+	{
+		ArrayList<Object> lstLocal = new ArrayList<> (                           );
+		ArrayList<Object> lstBD    = new ArrayList<> ( this.bd.getTable ( type ) );
+		
+		Object objet = null;
+		for ( int i = 0; i < tabDonneeBD.length; i++ )
+		{
+			try
+			{
+				objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) tabDonneeBD[i] );
+				
+				lstLocal.add ( objet );
+			}
+			catch ( Exception e )
+			{
+				e.printStackTrace ( );
+			}
+		}
+
+		System.out.println ( "lstLocal : \n"  + TableauUtilitaire.afficherTableau ( lstLocal ) );
+		System.out.println ( "lstBD    : \n"  + TableauUtilitaire.afficherTableau ( lstBD ) );
+
+		ArrayList<Object> lstAjout        = new ArrayList<> ( lstLocal                  );
+		ArrayList<Object> lstSuppression  = new ArrayList<> ( this.bd.getTable ( type ) );
+		ArrayList<Object> lstModification = new ArrayList<> (                           );
+		
+		lstAjout      .removeAll ( lstBD    );
+		lstSuppression.removeAll ( lstLocal );
+
+		for ( Object eltLocal : lstLocal )
+		{
+			for ( Object eltBD : lstBD )
+			{
+				System.out.println("Condition 1 :" + !lstLocal.contains ( eltBD ));
+				System.out.println("Condition 2 :" + !lstBD.contains ( eltLocal ));
+				System.out.println("Condition 3 :" + !lstModification.contains ( eltLocal ));
+				System.out.println("Condition 4 :" + ( lstAjout.contains(eltLocal) && lstSuppression.contains ( eltBD ) ));
+
+				if ( !lstLocal.contains ( eltBD ) && !lstBD.contains ( eltLocal ) && !lstModification.contains ( eltLocal ) && ( lstAjout.contains(eltLocal) && lstSuppression.contains ( eltBD ) ) )
+				{
+					System.out.println("eltLocal : " + eltLocal);
+					lstModification.add    ( eltLocal );
+					lstAjout       .remove ( eltLocal );
+					//lstAjout       .remove ( eltBD    );
+					lstSuppression .remove ( eltBD    );
+					//lstSuppression .remove ( eltLocal );
+				}
+			}
+		}
+
+		System.out.println ( "lstAjout        : \n" + TableauUtilitaire.afficherTableau ( lstAjout        ) );
+		System.out.println ( "lstSuppr        : \n" + TableauUtilitaire.afficherTableau ( lstSuppression  ) );
+		System.out.println ( "lstModification : \n" + TableauUtilitaire.afficherTableau ( lstModification ) );
+		
+		for ( Object obj : lstAjout )
+			this.insert ( obj );
+
+		for ( Object obj : lstSuppression )
+			this.delete ( obj );
+
+		for ( Object obj : lstModification )
 			this.update ( obj );
 	}
 
 	public void update ( Object o )
 	{
-		String test = o.getClass().toString();
-		//System.out.println(test);
-		String str[] = test.split("\\.");
+		String str[] = o.getClass ( ).toString ( ).split ( "\\." );
 
 		switch(str[str.length - 1])
 		{
@@ -149,9 +224,7 @@ public class Astre
 
 	public void insert ( Object o )
 	{
-		String test = o.getClass().toString();
-		//System.out.println(test);
-		String str[] = test.split("\\.");
+		String str[] = o.getClass().toString().split("\\.");
 
 		switch(str[str.length - 1])
 		{
@@ -169,9 +242,7 @@ public class Astre
 
 	public void delete ( Object o )
 	{
-		String test = o.getClass().toString();
-		//System.out.println(test);
-		String str[] = test.split("\\.");
+		String str[] = o.getClass().toString().split("\\.");
 
 		switch(str[str.length - 1])
 		{
