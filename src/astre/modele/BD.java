@@ -2,7 +2,7 @@ package astre.modele;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
-  * @version : 1.0 - 15/12/2023
+  * @version : 1.0 - 18/12/2023
   * @date : 06/12/2023
   */
 
@@ -31,48 +31,49 @@ public class BD
 	Connection co;
 	PreparedStatement ps;
 
-	// private BD ( )
-	// {
-	// 	try
-	// 	{
-	// 		Class.forName ( "org.postgresql.Driver" );
-
-	// 		co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-	// 		//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
-	// 	}
-	// 	catch ( ClassNotFoundException e )
-	// 	{
-	// 		System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
-	// 	}
-	// 	catch ( SQLException e )
-	// 	{
-	// 		System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
-	// 	}
-	// }
-
-	//TODO: à tester sur linux + mac + windows !
 	private BD ( )
 	{
 		try
 		{
-			Class.forName ( JDBC );
-			co = DriverManager.getConnection ( URL_WOODY , LOGIN, PASSWORD );
-		}
-		catch ( ClassNotFoundException | SQLException e1 )
-		{
-			System.out.println( "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 );
+			Class.forName ( "org.postgresql.Driver" );
 
-			try
-			{
-				Class.forName ( "org.postgresql.Driver" );
-				co = DriverManager.getConnection( URL_LOCAL, LOGIN, PASSWORD );
-			}
-			catch ( ClassNotFoundException | SQLException e2 )
-			{
-				System.out.println("Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 );
-			}
+			co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+			//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+		}
+		catch ( ClassNotFoundException e )
+		{
+			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
 		}
 	}
+
+	//TODO: à tester sur linux + mac + windows !
+
+	// private BD ( )
+	// {
+	// 	try
+	// 	{
+	// 		Class.forName ( JDBC );
+	// 		co = DriverManager.getConnection ( URL_WOODY , LOGIN, PASSWORD );
+	// 	}
+	// 	catch ( ClassNotFoundException | SQLException e1 )
+	// 	{
+	// 		System.out.println( "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 );
+
+	// 		try
+	// 		{
+	// 			Class.forName ( "org.postgresql.Driver" );
+	// 			co = DriverManager.getConnection( URL_LOCAL, LOGIN, PASSWORD );
+	// 		}
+	// 		catch ( ClassNotFoundException | SQLException e2 )
+	// 		{
+	// 			System.out.println("Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 );
+	// 		}
+	// 	}
+	// }
 
 	public static BD getInstance ( )
 	{
@@ -547,6 +548,29 @@ public class BD
 		return somme;
 	}
 
+	// Utilisée dans générateur.java
+	public int getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestre(" + Id_Semestre + "," + Id_Intervenant + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant) : " + e );
+		}
+
+		return somme;
+	}
+
+	// Utilisée dans générateur.java
 	public int getNBHeurePNParModule (String code, int Id_Heure)
 	{
 		int somme = 0;
@@ -568,6 +592,7 @@ public class BD
 		return somme;
 	}
 
+	// Utilisée dans générateur.java
 	public int getNBHeureRepParModule (String code, int Id_Heure)
 	{
 		int somme = 0;
