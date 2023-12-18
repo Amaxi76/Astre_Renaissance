@@ -40,28 +40,29 @@ public class GenerateurFichier
 					s[j] = elem[i][j + 1].toString ( );
 				}
 
-				s[6] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[7] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[8] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[9] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[10] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 5) + "";
-				s[11] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 5) + "";
+				//deso pas reussi a faire mieux
+				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[ 9] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[10] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
+				s[11] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
 
-				s[12] = Double.parseDouble(s[6]) + Double.parseDouble(s[8]) + Double.parseDouble(s[10]) + "";
-				s[13] = Double.parseDouble(s[7]) + Double.parseDouble(s[9]) + Double.parseDouble(s[11]) + "";
+				s[12] = Double.parseDouble ( s[6] ) + Double.parseDouble ( s[8] ) + Double.parseDouble ( s[10] ) + "";
+				s[13] = Double.parseDouble ( s[7] ) + Double.parseDouble ( s[9] ) + Double.parseDouble ( s[11] ) + "";
 				
-				s[14] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[15] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[16] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[17] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[18] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 5) + "";
-				s[19] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 5) + "";
+				s[14] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[15] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[16] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[17] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[18] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
+				s[19] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
 
-				s[20] = Double.parseDouble(s[14]) + Double.parseDouble(s[16]) + Double.parseDouble(s[18]) + "";
-				s[21] = Double.parseDouble(s[15]) + Double.parseDouble(s[17]) + Double.parseDouble(s[19]) + "";
+				s[20] = Double.parseDouble ( s[14] ) + Double.parseDouble ( s[16] ) + Double.parseDouble ( s[18] ) + "";
+				s[21] = Double.parseDouble ( s[15] ) + Double.parseDouble ( s[17] ) + Double.parseDouble ( s[19] ) + "";
 				
-				s[22] = Double.parseDouble(s[12]) + Double.parseDouble(s[20]) + "";
-				s[23] = Double.parseDouble(s[13]) + Double.parseDouble(s[21]) + "";
+				s[22] = Double.parseDouble ( s[12] ) + Double.parseDouble ( s[20] ) + "";
+				s[23] = Double.parseDouble ( s[13] ) + Double.parseDouble ( s[21] ) + "";
 
 				/*double ttsemT = 0;
 				double ttsemR = 0;
