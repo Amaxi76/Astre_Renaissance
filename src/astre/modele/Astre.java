@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.elements.*;
+import astre.modele.outils.TableauUtilitaire;
 
 public class Astre
 {
@@ -16,7 +17,7 @@ public class Astre
 
 	public Object[][] getTableauModule ( int numeroSemestre )
 	{
-		//TODO à remplacer par une commande de BD
+		//à remplacer par une commande de BD
 		/*Object[][] tableau = { {"R1.01", "Initia", "437/465", "V"}, {"R2.02", "Dev", "374/374", "V"} };
 		return tableau;*/
 		
@@ -93,18 +94,28 @@ public class Astre
 		ArrayList<Object> lstUpdate      = new ArrayList<> (                           );
 
 		// Ajout
+
+		System.out.println( lstAjout.get(0).equals(lstBD.get(0)));
+		System.out.println( lstAjout.get(0).getClass() );
+		System.out.println( lstBD.get(0).getClass() );
+
 		lstAjout.removeAll ( lstBD );
 
-		System.out.println(lstAjout.size());
+		System.out.println ( TableauUtilitaire.afficherTableau ( lstAjout ) );
+		
 
 		// Suppression
 		lstSuppression.removeAll ( lstLocal );
+		System.out.println ( TableauUtilitaire.afficherTableau ( lstSuppression ) );
+
 
 		// Update
 		lstBD   .removeAll(lstLocal);
 		lstLocal.removeAll(lstBD);
 		lstUpdate.addAll ( new ArrayList<> ( lstBD ) );
 		lstUpdate.addAll ( new ArrayList<> ( lstLocal ) );
+		System.out.println ( TableauUtilitaire.afficherTableau ( lstUpdate ) );
+
 		
 		for ( Object obj : lstAjout )
 			this.insert ( obj );

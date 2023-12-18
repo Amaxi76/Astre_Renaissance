@@ -723,7 +723,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select * from Contrat" );
+			ResultSet rs = st.executeQuery ( "select * from Contrat ORDER BY nomcontrat ASC" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{

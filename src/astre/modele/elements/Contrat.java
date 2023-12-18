@@ -124,9 +124,23 @@ public class Contrat
 		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
+	@Override
+	public boolean equals ( Object o )
+	{
+		if ( o == null ) return false;
+		if ( o == this ) return true;
+
+		if ( !( o instanceof Contrat ) ) return false;
+
+		Contrat c = ( Contrat ) o;
+
+		return this.id == c.id && this.nom.equals ( c.nom ) && this.heureServiceContrat == c.heureServiceContrat && this.heureMaxContrat == c.heureMaxContrat && this.ratioTP == c.ratioTP;
+	}
+
 	/**
 	 * @return
 	 */
+	@Override
 	public String toString ( )
 	{
 		return String.format ( "Nom : %-20s - "                 , this.nom                 ) +

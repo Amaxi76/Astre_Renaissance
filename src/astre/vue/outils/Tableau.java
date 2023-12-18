@@ -27,11 +27,9 @@ public class Tableau extends JTable
 		this.setModel         ( this.modele                         );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
 		
+		this.getTableHeader ( ).setReorderingAllowed ( false );
 		//Permet au tableau de prendre toute la frame
 		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS     );
-
-		//Permet d'empecher de déplacer les cases (je crois)(ne marche pas vraiment)
-		//this.setDragEnabled ( false );
 
 		//Permet de ne pas mettre d'entetes
 		boolean contientEntete = false;

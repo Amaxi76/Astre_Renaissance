@@ -1,6 +1,7 @@
 package astre.modele.outils;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Classe des données et d'affichage du tableau.
@@ -13,6 +14,21 @@ public abstract class TableauUtilitaire
 	 * Classe utilitaire sans constructeur
 	 */
 	private TableauUtilitaire () {}
+
+	/**
+	 * toString
+	 */
+	public static String afficherTableau ( List<Object> liste )
+	{
+		String s="";
+		
+		for ( Object o : liste )
+		{
+			s += o.toString ( ) + "\n";
+		}
+		
+		return s;
+	}
 
 	/**
 	 * Copie profonde d'un tableau avec ajout d'une copie d'une nouvelle ligne
