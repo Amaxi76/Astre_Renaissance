@@ -351,6 +351,8 @@ public class PanelRepartition extends JPanel
 		this.lblTotalSommeAff.setBackground( Color.LIGHT_GRAY );
 		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 40, 15 ) );
 		this.lblTotalSommeAff.setOpaque( true );
+
+		majAffectation();
 	}
 
 	private void majTotalCM()
@@ -464,6 +466,11 @@ public class PanelRepartition extends JPanel
 
 		double sommePromo = totalCMProm + totalTDProm + totalTPProm + totalHeurePProm;
 		lblTotalSommeProm.setText ( String.valueOf ( sommePromo ) );
+	}
+
+	private void majAffectation ()
+	{
+		lblTotalCMAff.setText( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "CM") ) );
 	}
 
 	private double coeffHeure ( String nomHeure )
