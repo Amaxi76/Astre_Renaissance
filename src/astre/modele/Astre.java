@@ -1,9 +1,11 @@
 package astre.modele;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.elements.*;
+import astre.modele.outils.SuppressionException;
 
 public class Astre
 {
@@ -66,7 +68,7 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
+	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type ) throws SuppressionException
 	{
 		ArrayList<Object> lstLocal = new ArrayList<> (                           );
 		ArrayList<Object> lstBD    = new ArrayList<> ( this.bd.getTable ( type ) );
@@ -156,7 +158,7 @@ public class Astre
 		}
 	}
 
-	public void delete ( Object o )
+	public void delete ( Object o ) throws SuppressionException
 	{
 		String test = o.getClass().toString();
 		//System.out.println(test);

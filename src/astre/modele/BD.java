@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import astre.modele.elements.*;
+import astre.modele.outils.SuppressionException;
 
 public class BD
 {
@@ -663,7 +664,7 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomContrat, nom, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat" );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, nomContrat, nom, prenom, hService, hMax from Intervenant i join Contrat c on i.Id_Contrat = c.Id_Contrat order by Id_intervenant asc" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
@@ -1029,10 +1030,11 @@ public class BD
 	/*                DELETE                 */
 	/*---------------------------------------*/
 
-	public void delete ( Contrat c )
+	public void delete ( Contrat c ) throws SuppressionException
 	{
 		String req = "DELETE FROM Contrat where Id_Contrat = ?";
-		try
+		
+		try 
 		{
 			ps = co.prepareStatement ( req );
 			ps.setInt ( 1, c.getId ( ) );
@@ -1042,14 +1044,15 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete ( Contrat c ) : " + e );
+			throw new SuppressionException ( "Impossible de supprimer le contrat " + c.getNom ( ) + " car il est présent dans une autre table" );
 		}
 	}
 
-	public void delete ( Heure h )
+	public void delete ( Heure h ) throws SuppressionException
 	{
 		String req = "DELETE FROM Heure where Id_Heure = ?";
-		try
+
+		try 
 		{
 			ps = co.prepareStatement ( req );
 			ps.setInt ( 1, h.getId ( ) );
@@ -1059,127 +1062,83 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur delete ( Heure h ) : " + e );
+			throw new SuppressionException ( "Impossible de supprimer l'heure " + h.getNom ( ) + " car elle est présente dans une autre table" );
 		}
 	}
 
-	public void delete ( ModuleIUT m )
+	public void delete ( ModuleIUT m ) throws SuppressionException
 	{
 		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
+		
 		try
 		{
-			ps = co.prepareStatement ( req );
-			ps.setString ( 1, m.getCode ( ) );
-			ps.executeUpdate ( );
+            ps = co.prepareStatement ( req );
+            ps.setString ( 1, m.getCode ( ) );
+            ps.executeUpdate ( );
 
 			ps.close ( );
-		}
-		catch ( SQLException e )
+        }
+		catch ( SQLException e ) 
 		{
-			System.out.println ( "Erreur delete ( Module m ) : " +  e );
-		}
+			throw new SuppressionException ( "Impossible de supprimer le module " + m.getCode ( ) + " car il est présent dans une autre table" );
+        }
 	}
 
-	public void delete ( Intervenant i )
+	public void delete ( Intervenant i ) throws SuppressionException
 	{
 		String req = "DELETE FROM Intervenant where Id_Intervenant = ?";
+
 		try
 		{
-			ps = co.prepareStatement ( req );
-			ps.setInt ( 1, i.getId ( ) );
-			ps.executeUpdate ( );
+            ps = co.prepareStatement ( req );
+            ps.setInt ( 1, i.getId ( ) );
+            ps.executeUpdate ( );
 
 			ps.close ( );
-		}
-		catch ( SQLException e )
+        }
+		catch ( SQLException e ) 
 		{
-			System.out.println ( "Erreur delete ( Intervenant i ) : " + e );
-		}
+			throw new SuppressionException ( "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table" );
+        }
 	}
 
-	public void delete ( Intervient e )
+	public void delete ( Intervient e ) throws SuppressionException
 	{
 		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		
 		try
 		{
-			ps = co.prepareStatement ( req );
+            ps = co.prepareStatement ( req );
 			ps.setInt    ( 1, e.getIntervenant ( ).getId   ( ) );
 			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
 			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
-		}
-		catch ( SQLException x )
+        }
+		catch ( SQLException ex ) 
 		{
-			System.out.println ( "Erreur delete ( Intervient e ) : " + x );
-		}
+			throw new SuppressionException ( "Suppression de l'Intervient n'a po marché RIP" );
+        }
 	}
 
-	public boolean nouvelleAnnee (  )
-	{
-
-		try
-		{
-			String req = "SELECT f_deleteIntervient ( )";
-			ps = co.prepareStatement ( req );
-			ps.execute ( );
-
-			req = "SELECT f_updateAnneeSemestre ( )";
-			ps = co.prepareStatement ( req );
-			ps.execute ( );
-
-			ps.close ( );
-
-			return true;
-		}
-		catch ( SQLException x )
-		{
-			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
-			return false;
-		}
-	}
-
-	public boolean nouvelleAnneeZero (  )
-	{
-
-		try
-		{
-			String req = "SELECT f_deleteAll ( )";
-			ps = co.prepareStatement ( req );
-			ps.execute ( );
-
-			req = "SELECT f_updateAnneeSemestre ( )";
-			ps = co.prepareStatement ( req );
-			ps.execute ( );
-
-			ps.close ( );
-
-			return true;
-		}
-		catch ( SQLException x )
-		{
-			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x );
-			return false;
-		}
-	}
-
-	public void delete ( Horaire h )
+	public void delete ( Horaire h ) throws SuppressionException
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
+		
 		try
 		{
-			ps = co.prepareStatement ( req );
+            ps = co.prepareStatement ( req );
 			ps.setString ( 1, h.getHeure  ( ).getNom  ( ) );
 			ps.setString ( 2, h.getModule ( ).getCode ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
-		}
-		catch ( SQLException e )
+        }
+		catch ( SQLException e ) 
 		{
-			System.out.println ( "Erreur delete ( horaire h ) : " + e );
-		}
+			throw new SuppressionException ( "Suppression de l'Horaire n'a po marché RIP" );
+        }
 	}
 
 
@@ -1337,4 +1296,56 @@ public class BD
 		}
 	}
 
+
+	/*---------------------------------------*/
+	/*                Autres                 */
+	/*---------------------------------------*/
+
+	public boolean nouvelleAnnee (  )
+	{
+
+		try
+		{
+			String req = "SELECT f_deleteIntervient ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			ps.close ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
+			return false;
+		}
+	}
+
+	public boolean nouvelleAnneeZero (  )
+	{
+
+		try
+		{
+			String req = "SELECT f_deleteAll ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			req = "SELECT f_updateAnneeSemestre ( )";
+			ps = co.prepareStatement ( req );
+			ps.execute ( );
+
+			ps.close ( );
+
+			return true;
+		}
+		catch ( SQLException x )
+		{
+			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x );
+			return false;
+		}
+	}
 }
