@@ -15,8 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import astre.Controleur;
 import astre.modele.elements.*;
-import astre.modele.outils.SuppressionException;
 
 public class BD
 {
@@ -1032,7 +1032,7 @@ public class BD
 	/*                DELETE                 */
 	/*---------------------------------------*/
 
-	public void delete ( Contrat c ) throws SuppressionException
+	public void delete ( Contrat c )
 	{
 		String req = "DELETE FROM Contrat where Id_Contrat = ?";
 		
@@ -1046,11 +1046,11 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			throw new SuppressionException ( "Impossible de supprimer le contrat " + c.getNom ( ) + " car il est présent dans une autre table" );
+			Controleur.afficherErreur("Suppression impossible","Impossible de supprimer le contrat " + c.getNom ( ) + " car il est présent dans une autre table");
 		}
 	}
 
-	public void delete ( Heure h ) throws SuppressionException
+	public void delete ( Heure h )
 	{
 		String req = "DELETE FROM Heure where Id_Heure = ?";
 
@@ -1064,11 +1064,11 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			throw new SuppressionException ( "Impossible de supprimer l'heure " + h.getNom ( ) + " car elle est présente dans une autre table" );
+			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'heure " + h.getNom ( ) + " car elle est présente dans une autre table" );
 		}
 	}
 
-	public void delete ( ModuleIUT m ) throws SuppressionException
+	public void delete ( ModuleIUT m )
 	{
 		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
 		
@@ -1082,11 +1082,11 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			throw new SuppressionException ( "Impossible de supprimer le module " + m.getCode ( ) + " car il est présent dans une autre table" );
+			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer le module " + m.getCode ( ) + " car il est présent dans une autre table" );
         }
 	}
 
-	public void delete ( Intervenant i ) throws SuppressionException
+	public void delete ( Intervenant i )
 	{
 		String req = "DELETE FROM Intervenant where Id_Intervenant = ?";
 
@@ -1100,11 +1100,11 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			throw new SuppressionException ( "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table" );
+			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table" );
         }
 	}
 
-	public void delete ( Intervient e ) throws SuppressionException
+	public void delete ( Intervient e )
 	{
 		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
 		
@@ -1120,11 +1120,11 @@ public class BD
         }
 		catch ( SQLException ex ) 
 		{
-			throw new SuppressionException ( "Suppression de l'Intervient n'a po marché RIP" );
+			Controleur.afficherErreur("Suppression impossible", "Suppression de l'Intervient n'a po marché RIP" );
         }
 	}
 
-	public void delete ( Horaire h ) throws SuppressionException
+	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
 		
@@ -1139,7 +1139,7 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			throw new SuppressionException ( "Suppression de l'Horaire n'a po marché RIP" );
+			Controleur.afficherErreur("Suppression impossible", "Suppression de l'Horaire n'a po marché RIP" );
         }
 	}
 

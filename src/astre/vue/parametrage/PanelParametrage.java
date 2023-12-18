@@ -15,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
-import astre.modele.outils.SuppressionException;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
@@ -102,14 +101,7 @@ public class PanelParametrage extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			try
-			{
-				this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
-			}
-			catch ( SuppressionException exc )
-			{
-				Controleur.afficherErreur ( "Suppression impossible", exc.getMessage ( ) );
-			}
+			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
 		}
 			
 
