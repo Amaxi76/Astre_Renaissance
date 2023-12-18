@@ -2,11 +2,13 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
+import astre.modele.outils.SuppressionException;
 import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 
@@ -112,21 +114,27 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			if ( enregistrer ( this.tableau.getDonnees ( ) ) )
+			try
 			{
-				this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
+				enregistrer ( this.tableau.getDonnees ( ) );
+				this.tableau.ajusterTailleColonnes ( );
+			} 
+			catch ( SuppressionException exc )
+			{
+				Controleur.afficherErreur ( "Suppression impossible", exc.getMessage ( ) );
 			}
-			this.tableau.ajusterTailleColonnes ( );
+
+			this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
 		}
 		
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose();
-			new FrameAccueil(this.ctrl);
+			( ( JFrame ) ( this.getParent ( ).getParent ( ).getParent ( ).getParent ( ) ) ).dispose ( );
+			new FrameAccueil ( this.ctrl );
 		}
 	}
 
-	public boolean enregistrer ( Object[][] deuxieme )
+	public boolean enregistrer ( Object[][] deuxieme ) throws SuppressionException
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
 		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );

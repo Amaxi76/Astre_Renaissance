@@ -7,8 +7,10 @@ package astre;
   */
 
 import astre.modele.elements.*;
+import astre.modele.outils.SuppressionException;
 
 import java.awt.Component;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -45,10 +47,10 @@ public class Controleur
 
 	public void update ( Object o ) { this.metier.update ( o ); }
 	public void insert ( Object o ) { this.metier.insert ( o ); }
-	public void delete ( Object o ) { this.metier.delete ( o ); }
+	public void delete ( Object o ) throws SuppressionException { this.metier.delete ( o ); }
 
 	public void majSemestre  ( Semestre s                    ) { this.metier.majSemestre  ( s         ); }
-	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
+	public void majTableauBD ( Object[][] tab, Class<?> type ) throws SuppressionException { this.metier.majTableauBD ( tab, type ); }
 
 	public static void retour ( Component compo )
 	{

@@ -40,28 +40,29 @@ public class GenerateurFichier
 					s[j] = elem[i][j + 1].toString ( );
 				}
 
-				s[6] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[7] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[8] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[9] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[10] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 5) + "";
-				s[11] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 5) + "";
+				//deso pas reussi a faire mieux
+				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[ 9] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[10] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
+				s[11] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
 
-				s[12] = Double.parseDouble(s[6]) + Double.parseDouble(s[8]) + Double.parseDouble(s[10]) + "";
-				s[13] = Double.parseDouble(s[7]) + Double.parseDouble(s[9]) + Double.parseDouble(s[11]) + "";
+				s[12] = Double.parseDouble ( s[6] ) + Double.parseDouble ( s[8] ) + Double.parseDouble ( s[10] ) + "";
+				s[13] = Double.parseDouble ( s[7] ) + Double.parseDouble ( s[9] ) + Double.parseDouble ( s[11] ) + "";
 				
-				s[14] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[15] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 1) + "";
-				s[16] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[17] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 3) + "";
-				s[18] =  bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), 5) + "";
-				s[19] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), 5) + "";
+				s[14] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[15] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
+				s[16] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[17] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
+				s[18] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
+				s[19] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
 
-				s[20] = Double.parseDouble(s[14]) + Double.parseDouble(s[16]) + Double.parseDouble(s[18]) + "";
-				s[21] = Double.parseDouble(s[15]) + Double.parseDouble(s[17]) + Double.parseDouble(s[19]) + "";
+				s[20] = Double.parseDouble ( s[14] ) + Double.parseDouble ( s[16] ) + Double.parseDouble ( s[18] ) + "";
+				s[21] = Double.parseDouble ( s[15] ) + Double.parseDouble ( s[17] ) + Double.parseDouble ( s[19] ) + "";
 				
-				s[22] = Double.parseDouble(s[12]) + Double.parseDouble(s[20]) + "";
-				s[23] = Double.parseDouble(s[13]) + Double.parseDouble(s[21]) + "";
+				s[22] = Double.parseDouble ( s[12] ) + Double.parseDouble ( s[20] ) + "";
+				s[23] = Double.parseDouble ( s[13] ) + Double.parseDouble ( s[21] ) + "";
 
 				/*double ttsemT = 0;
 				double ttsemR = 0;
@@ -119,6 +120,9 @@ public class GenerateurFichier
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
+			// Accès à la base de données 
+			BD bd = BD.getInstance ( );
+
             // Ecriture de l'entête
 			String entete = 
 			"<!DOCTYPE html>\n"                                                           + 
@@ -128,61 +132,78 @@ public class GenerateurFichier
 				"\t<link href=\"./css/style.css\" rel=\"stylesheet\">\n"                  + 
 				"\t<title>Intervenant " + inter.getNom().toUpperCase() + " </title>\n"    + 
 			"</head>\n"                                                                   + 
-			"<body>\n"                                                                    + 
-				"\t<table>\n"                                                             ;
-
+			"<body>\n"                                                                    ; 
+			
+			// Ecriture du head et des paramètres
             ecrivain.write ( entete );
 			ecrivain.newLine ( );
 
-			ecrivain.write( "\t\t<tr>\n" + 
-			                "\t\t\t<th colspan=\"4\">" + inter.getPrenom ( ) + " - " + inter.getNom ( ).toUpperCase ( ) + "</th>\n" +
-							"\t</tr>\n"
-						  );
+			String header = "<header>\r\n" + 
+								"\t\t<h1>" + inter.getPrenom() + " " + inter.getNom().toUpperCase() + "</h1>\r\n" + 
+							"</header>";
+
+			// Ecriture du header de la page
+			ecrivain.write ( header );
 			ecrivain.newLine ( );
 
-			ecrivain.write ( "\t\t<tr>\n"                                                  + 
-								"\t\t\t<td class=\"first\">Numéro de ligne</td>\n"           +
-								"\t\t\t<td class=\"first\">Code de la matière et nom</td>\n" +
-								"\t\t\t<td class=\"first\">Heure dans la matière</td>\n"     +
-						   "\t\t</tr>"
-						   );
-			ecrivain.newLine ( );
-			
-			// Ecriture du corps du tableau
-			BD bd = BD.getInstance ( );
-			ArrayList<Intervient> lstInter = ( ArrayList<Intervient> ) bd.getTable ( Intervient.class );
+			String table = "<table>";
 
-			Intervient prec = null;
-			int compt = 1;
-			for ( Intervient intervient : lstInter )
+			int nombreHeure = bd.getTable ( Heure.class ).size ( );
+
+			// Ecriture de la première ligne
+			table += "<tr>" +
+						"<th rowspan='2'>Numéro de ligne</th>"           +
+						"<th rowspan='2'>Code de la matière et nom</th>" +
+						"<th colspan=" + (nombreHeure + 1) + ">Heure dans la matière</th>"     +
+		   			 "</tr>";
+
+			//Ecriture de la seconde entete de tableau
+
+			table += "<tr>" ;
+
+			for (Heure h : bd.getTable ( Heure.class ))
 			{
-				if ( intervient.getIntervenant ( ).getId ( ) == inter.getId ( ) )
-				{
-					if ( prec != null && prec.getModule ( ).getCode ( ).equals ( intervient.getModule ( ).getCode ( ) ) )
-					{
-						ecrivain.write ( " <br> " + intervient.getHeure ( ).getNom ( ) + " - " + ( intervient.getNbGroupe ( ) * intervient.getNbSemaine ( ) * intervient.getNbHeure ( ) ) + " heures ");
-						ecrivain.newLine ( );
-					}
-					else
-					{
-						if ( compt != 1 )
-						{
-							ecrivain.write ( "\t\t\t</td>\n " + 
-							               "\t\t</tr> "
-							               );
-							ecrivain.newLine ( );
-						}
-
-						ecrivain.write ( "\t\t<tr>\n" +
-										"\t\t\t<td class=\"num\">" + compt++ + "</td>\n" + 
-										"\t\t\t<td class=\"mod\">" + intervient.getModule ( ).getCode ( ) + " - " + intervient.getModule ( ).getLibLong ( ) + "</td>\n" +
-										"\t\t\t<td class=\"heure\"> " +  intervient.getHeure ( ).getNom ( ) + " - " + ( intervient.getNbGroupe() * intervient.getNbSemaine ( ) * intervient.getNbHeure ( ) ) + " heures "
-									  );
-						ecrivain.newLine ( );
-						prec = intervient;
-					}
-				}	
+				table += "<th>" + h.getNom() + "</th>";
 			}
+
+			table += "<th> Total </th> </tr>";
+			
+			//Ecriture des données de l'enseignants
+
+			ArrayList<String> ensDejaTraite = new ArrayList<String>();
+			int somme = 0;
+			int cpt = 1;
+			int nbHeure = 0;
+
+			for ( Intervient intervient : bd.getTable ( Intervient.class ) )
+			{
+				if (intervient.getIntervenant ( ).getId ( ) == inter.getId ( ) && !ensDejaTraite.contains ( intervient.getModule ( ).getCode ( ) ) )
+				{
+					
+					table += "<tr>";
+					table += "<td class='num'>" + cpt++ + "</td>";
+					table += "<td class='mod'>" + intervient.getModule ( ).getCode ( ) + " - " + intervient.getModule ( ).getLibLong ( ) + "</td>";
+
+					for (Heure h : bd.getTable ( Heure.class ) )
+					{
+						nbHeure = bd.getNBHeureParModule ( intervient.getModule( ).getCode( ), intervient.getIntervenant ( ).getId ( ), h.getId ( ) );
+						
+						table += "<td class = 'heure'>" + nbHeure + "</td>";
+						
+						somme += nbHeure;
+					}
+					
+					table += "<td class = 'heure'>" + somme + " heures </td>";
+					table += "</tr>";
+
+					somme = 0;
+					
+					ensDejaTraite.add ( intervient.getModule ( ).getCode ( ) );
+
+				}
+			}
+			
+			ecrivain.write(table);
 			
 			//Écriture fermant les balises html
 			String footer = 
@@ -224,7 +245,7 @@ public class GenerateurFichier
 			ecrivain.newLine ( );
 
 
-			ecrivain.write("\t<table id=\"centre\">\n" +
+			ecrivain.write("\t<table class=\"centre\">\n" +
 			"\t\t<tr>") ;
 
 			// Initialisation des variables à écrires
@@ -240,7 +261,7 @@ public class GenerateurFichier
 			
 			for ( Heure he : bd.getTable ( Heure.class ) )
 			{
-				int heureRecPN  = bd.getNBHeurePNParModule ( module.getCode ( ), he.getId ( ) );
+				int heureRecPN  = bd.getNBHeurePNParModule  ( module.getCode ( ), he.getId ( ) );
 				int heureRecRep = bd.getNBHeureRepParModule ( module.getCode ( ), he.getId ( ) );
 				
 				sommePN  += heureRecPN;
@@ -260,28 +281,26 @@ public class GenerateurFichier
 			ecrivain.write ( "<tr>"                           + heureAct + "</tr>" );
 			ecrivain.write ( "<tr>"                           + heurePN  + "</tr>" );
 
-			// Initialisation des variables changeant une fois sur deux pour l'HTML
-			// Si pair alors le tableau ira à gauche sinon il ira a droite
-			String cote = "";
-			int cpt = 0;
-
 			// On fait de l'économie de variables 
 			heureAct = "";
 			sommeAct =  0;
 			int nbHeure;
-			ArrayList<Intervenant> ensDejaTraite = new ArrayList<Intervenant>();
+			ArrayList<Integer> ensDejaTraite = new ArrayList<Integer>();
+
+			ecrivain.write( "\t<table class=\"intervenant\">\n"+
+					        "\t\t<tr>\n"+
+						    "\t\t\t<th colspan=2>\n &nbsp;</th>" + nomHeure + "\t\t</tr>\n");
 
 			for ( Intervient inter : bd.getTable ( Intervient.class ) )
 			{
-				if (inter.getModule ( ).getCode ( ).equals ( module.getCode( ) ) && !ensDejaTraite.contains(inter.getIntervenant()) )
+				System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom());
+
+				if (inter.getModule ( ).getCode ( ).equals ( module.getCode( ) ) && !ensDejaTraite.contains(inter.getIntervenant ( ).getId ( ) ) )
 				{
-					cote = cpt++ % 2 == 0 ? "gauche" : "droite" ;
-					
-					ecrivain.write( "\t<table class=" + cote +">\n"+
-					                "\t\t<tr>\n"+
-						            "\t\t\t<th rowspan=\"2\">\n" + inter.getIntervenant().getPrenom() + " " + inter.getIntervenant().getNom().toUpperCase() + "</th>" + nomHeure + "\t\t</tr>\n");
-					
+					System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom());
 					ecrivain.write("<tr>");
+					ecrivain.write("<td colspan=2>" + inter.getIntervenant().getPrenom() + " " + inter.getIntervenant().getNom().toUpperCase() + "</td>");
+
 					for (Heure h : bd.getTable ( Heure.class ) )
 					{
 						nbHeure = bd.getNBHeureParModule ( inter.getModule( ).getCode( ), inter.getIntervenant ( ).getId ( ), h.getId ( ) );
@@ -296,11 +315,9 @@ public class GenerateurFichier
 
 					sommeAct = 0;
 					
-					
+					ensDejaTraite.add(inter.getIntervenant().getId());
 				}
 
-				ensDejaTraite.add(inter.getIntervenant());
-				
 			}
 			
 			//Écriture fermant les balises html

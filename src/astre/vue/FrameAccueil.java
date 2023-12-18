@@ -8,6 +8,7 @@ package astre.vue;
 
 import astre.vue.previsionnel.FramePrevisionnel;
 import astre.vue.etats.FrameEtats;
+import astre.vue.historique.FrameHistorique;
 import astre.vue.intervenants.FrameIntervenants;
 import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
 import astre.vue.parametrage.FrameParametrage;
@@ -41,6 +42,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 	private JButton btnIntervenants;
 	private JButton btnEtat;
 	private JButton btnAnnee;
+	private JButton btnHistorique;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -89,7 +91,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 
 		JPanel panel         = new JPanel ( new BorderLayout (      )         );
 		JPanel panelTest     = new JPanel ( new GridLayout   ( 1, 3 )         );
-		JPanel panelButton   = new JPanel ( new GridLayout   ( 6, 1, 15, 15 ) );
+		JPanel panelButton   = new JPanel ( new GridLayout   ( 7, 1, 15, 15 ) );
 		JPanel panelInutile  = new JPanel (                                   );
 		JPanel panelInutile2 = new JPanel (                                   );
 
@@ -110,12 +112,14 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.btnIntervenants = new JButton ( "Intervenants"                 );
 		this.btnEtat         = new JButton ( "Etats"                        );
 		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
+		this.btnHistorique   = new JButton ( "Historique" );
 
 		panelButton.add ( this.btnParametre    );
 		panelButton.add ( this.btnPrevisionnel );
 		panelButton.add ( this.btnIntervenants );
 		panelButton.add ( this.btnEtat         );
 		panelButton.add ( this.btnAnnee        );
+		panelButton.add ( this.btnHistorique   );
 
 		panelTest.add ( panelInutile  );
 		panelTest.add ( panelButton   );
@@ -136,6 +140,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.btnIntervenants.addActionListener ( this );
 		this.btnEtat        .addActionListener ( this );
 		this.btnAnnee       .addActionListener ( this );
+		this.btnHistorique  .addActionListener ( this );
 
 		//this.setIconImage             ( icon          );
 		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
@@ -169,6 +174,11 @@ public class FrameAccueil extends JFrame implements ActionListener
 		{
 			new FrameNouvelleAnnee ( this.ctrl );
 			return;
+		}
+
+		if ( e.getSource ( ) == this.btnHistorique )
+		{
+			new FrameHistorique ( this.ctrl );
 		}
 
 		this.cacher ( );
