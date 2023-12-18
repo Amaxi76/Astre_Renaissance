@@ -44,9 +44,8 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 		/*           Option de la frame            */
 		/* --------------------------------------- */
 
-        this.setTitle( "Nouvelle Année" );
-        this.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE ); // Quitter la frame quand on appuie sur la croix
-        this.setSize ( 400, 300 );
+		this.setTitle( "Nouvelle Année" );
+		this.setSize ( 400, 300 );
 
 		/* --------------------------------------- */
 		/*         Création des composants         */
