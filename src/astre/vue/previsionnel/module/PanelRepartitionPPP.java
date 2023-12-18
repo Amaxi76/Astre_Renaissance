@@ -266,4 +266,10 @@ public class PanelRepartitionPPP extends JPanel
 		}
 		majSomme();
 	}
+
+	public int getCMRepartition   ( ) { return Integer.parseInt ( this.txtCM  .getText() ); }
+	public int getTDRepartition   ( ) { return Integer.parseInt ( this.txtTD  .getText() ); }
+	public int getTPRepartition   ( ) { return Integer.parseInt ( this.txtTP  .getText() ); }
+	public int getHTutRepartition ( ) { return Integer.parseInt ( this.txtHTut.getText() ); }
+	public int getHPRepartition   ( ) { return Integer.parseInt ( this.txtHP  .getText() ); }
 }

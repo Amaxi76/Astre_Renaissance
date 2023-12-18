@@ -149,4 +149,7 @@ public class PanelPNLocalBis extends JPanel
 
 		majSomme();
 	}
+
+	public int getSae() { return Integer.parseInt( this.txtHSae.getText() ); }
+	public int getTut() { return Integer.parseInt( this.txtHTut.getText() ); }
 }
