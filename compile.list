@@ -2,7 +2,6 @@ src/astre/Controleur.java
 
 src/astre/modele/outils/ModeleTableau.java
 src/astre/modele/outils/TableauUtilitaire.java
-src/astre/modele/outils/SuppressionException.java
 
 src/astre/modele/BD.java
 src/astre/modele/Astre.java

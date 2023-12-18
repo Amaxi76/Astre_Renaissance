@@ -1,6 +1,7 @@
 package astre.vue.outils;
 
 import astre.vue.outils.MenuBarAstre;
+import astre.vue.FrameAccueil;
 import astre.Controleur;
 import javax.swing.JFrame;
 import java.awt.Component;
@@ -63,6 +64,11 @@ public class AFrame extends JFrame
 			Frame parentFrame = ( Frame ) window;
 			parentFrame.dispose ( );
 		}
+	}
+	
+	public static void retourAccueil ( Controleur ctrl )
+	{
+		new FrameAccueil ( ctrl );
 	}
 	
 	/*public void allerVersPage ( Class c )
