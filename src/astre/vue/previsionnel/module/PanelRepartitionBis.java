@@ -146,12 +146,12 @@ public class PanelRepartitionBis extends JPanel
 
 			if (!txtHSae.getText().isEmpty() )
 			{
-				hSae = Integer.parseInt ( txtHSae.getText() );
+				hSae = getSaeRepartition();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = Integer.parseInt ( txtHTut.getText() );
+				hTut = getTutRepartition();
 			}
 
 			int somme = hSae + hTut;
@@ -183,7 +183,7 @@ public class PanelRepartitionBis extends JPanel
 		majSomme();
 	}
 
-	public int getSaeRepatition() { return Integer.parseInt ( this.txtHSae.getText() ); }
-	public int getTutRepatition() { return Integer.parseInt ( this.txtHTut.getText() ); }
+	public int getSaeRepartition() { return Integer.parseInt ( this.txtHSae.getText() ); }
+	public int getTutRepartition() { return Integer.parseInt ( this.txtHTut.getText() ); }
 
 }
