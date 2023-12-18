@@ -9,6 +9,12 @@ import javax.swing.JFrame;
   */
 public class AFrame extends JFrame
 {
+	private Controleur ctrl;
+	
+	public AFrame ( Controleur ctrl )
+	{
+		this.ctrl = ctrl;
+	}
 	//new menubar
 	//quitter()
 	//static getParent
