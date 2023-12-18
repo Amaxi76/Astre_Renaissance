@@ -2,7 +2,7 @@ package astre.modele;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
-  * @version : 1.0 - 15/12/2023
+  * @version : 1.0 - 18/12/2023
   * @date : 06/12/2023
   */
 
@@ -51,6 +51,7 @@ public class BD
 	// }
 
 	//TODO: à tester sur linux + mac + windows !
+
 	private BD ( )
 	{
 		try
@@ -571,6 +572,51 @@ public class BD
 		return somme;
 	}
 
+	// Utilisée dans panelAffectation.java
+	public int getNBHeureEQTD (String code, String nomHeure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureEQTD('" + code + "','" + nomHeure + "')" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e) 
+		{
+			System.out.println ( "getNBHeureEQTD (String code, String nomHeure) : " + e );
+		}
+
+		return somme;
+	}
+
+	// Utilisée dans générateur.java
+	public int getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestre(" + Id_Semestre + "," + Id_Intervenant + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant) : " + e );
+		}
+
+		return somme;
+	}
+
+	// Utilisée dans générateur.java
 	public int getNBHeurePNParModule (String code, int Id_Heure)
 	{
 		int somme = 0;
@@ -592,6 +638,7 @@ public class BD
 		return somme;
 	}
 
+	// Utilisée dans générateur.java
 	public int getNBHeureRepParModule (String code, int Id_Heure)
 	{
 		int somme = 0;

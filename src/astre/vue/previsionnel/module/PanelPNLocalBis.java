@@ -112,12 +112,12 @@ public class PanelPNLocalBis extends JPanel
 
 			if (!txtHSae.getText().isEmpty() )
 			{
-				hSae = Integer.parseInt ( txtHSae.getText() );
+				hSae = getSae();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = Integer.parseInt ( txtHTut.getText() );
+				hTut = getTut();
 			}
 
 			int somme = hSae + hTut;

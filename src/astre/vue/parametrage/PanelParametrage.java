@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
+import astre.vue.outils.AFrame;
 
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN
@@ -107,7 +108,8 @@ public class PanelParametrage extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			
+			AFrame.fermer        ( this );
+			AFrame.retourAccueil ( this.ctrl );
 		}
 	}
 

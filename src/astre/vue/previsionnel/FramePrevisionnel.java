@@ -10,18 +10,16 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 
 import astre.Controleur;
-import astre.vue.outils.MenuBarAstre;
+import astre.vue.outils.AFrame;
 import astre.vue.outils.ConstantesVue;
 
-public class FramePrevisionnel extends JFrame
+public class FramePrevisionnel extends AFrame
 {
 	/*-------------*/
 	/*--Attributs--*/
 	/*-------------*/
 
 	private static final int SEMESTRE_DEFAUT = 1;
-
-	private Controleur ctrl;
 
 	private PanelBouton pnlBouton;
 	private PanelEnsSemestre pnlEnsSemestre;
@@ -37,13 +35,11 @@ public class FramePrevisionnel extends JFrame
 
 	public FramePrevisionnel ( Controleur ctrl, int semestreDefaut )
 	{
-		this.ctrl = ctrl;
+		super ( ctrl );
 
 		this.setSize               ( 1000, 700      );
 		this.setTitle              ( "Prévisionnel" );
 		this.setLocationRelativeTo ( null           );
-
-		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
 			
 		/* ------------------------- */
 		/* Création des composants   */
@@ -59,7 +55,7 @@ public class FramePrevisionnel extends JFrame
 		panelBordure.add ( this.pnlBouton     , BorderLayout.SOUTH  );
 
 		this.add ( panelBordure );
-
+		
 		this.setVisible ( true );
 	}
 

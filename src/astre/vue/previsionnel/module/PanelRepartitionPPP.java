@@ -209,27 +209,27 @@ public class PanelRepartitionPPP extends JPanel
 
 			if (!txtCM.getText().isEmpty() )
 			{
-				hCM = Integer.parseInt ( txtCM.getText() );
+				hCM = getCMRepartition();
 			}
 
 			if ( !txtTD.getText().isEmpty() )
 			{
-				hTD = Integer.parseInt ( txtTD.getText() );
+				hTD = getTDRepartition();
 			}
 
 			if ( !txtTP.getText().isEmpty() )
 			{
-				hTP = Integer.parseInt ( txtTP.getText() );
+				hTP = getTPRepartition();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = Integer.parseInt ( txtHTut.getText() );
+				hTut = getHTutRepartition();
 			}
 
 			if ( !txtHP.getText().isEmpty() )
 			{
-				hPonct = Integer.parseInt ( txtHP.getText() );
+				hPonct = getHPRepartition();
 			}
 
 			int somme = hCM + hTD + hTP + hTut + hPonct;
