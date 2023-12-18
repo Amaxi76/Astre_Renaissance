@@ -295,6 +295,30 @@ public class BD
 		return semestre;
 	}
 
+	public Intervient getIntervient ( int c )
+	{
+		Intervient inter = null;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Intervient where Id_intervenant = " + c );
+			while ( rs.next ( ) )
+			{
+				inter = new Intervient ( getIntervenant( rs.getInt(1)), getHeure( rs.getInt(2) ), getModule ( rs.getString(3) ), rs.getInt(4), rs.getInt(5), rs.getInt(6), ""  );
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getIntervient(int c) : " + e );
+		}
+
+		return inter;
+	}
+
 	public Contrat getContrat ( int c )
 	{
 		Contrat contrat = null;
@@ -1147,19 +1171,20 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table" );
+			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table");
+			//Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table", "Retour", "Supprimer tout de meme", i );
         }
 	}
 
 	public void delete ( Intervient e )
 	{
-		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND nomHeure = ? AND Id_ModuleIUT = ?";
+		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND ID_Heure = ? AND code_ModuleIUT = ?";
 		
 		try
 		{
             ps = co.prepareStatement ( req );
 			ps.setInt    ( 1, e.getIntervenant ( ).getId   ( ) );
-			ps.setString ( 2, e.getHeure       ( ).getNom  ( ) );
+			ps.setInt    ( 2, e.getHeure       ( ).getId   ( ) );
 			ps.setString ( 3, e.getModule      ( ).getCode ( ) );
 			ps.executeUpdate ( );
 
@@ -1167,6 +1192,7 @@ public class BD
         }
 		catch ( SQLException ex ) 
 		{
+			System.out.println(ex.fillInStackTrace());
 			Controleur.afficherErreur("Suppression impossible", "Suppression de l'Intervient n'a po marché RIP" );
         }
 	}

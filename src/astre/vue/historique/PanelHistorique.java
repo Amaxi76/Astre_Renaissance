@@ -5,6 +5,12 @@ import javax.swing.JTextArea;
 
 import astre.Controleur;
 
+/** Classe PanelHistorique
+  * @author : Matéo Sa
+  * @version : 1.0 - 18/12/23
+  * @date : 18/12/2023
+  */
+
 public class PanelHistorique extends JPanel
 {
 	private JTextArea txtHistorique;

@@ -16,6 +16,7 @@ DROP TABLE ModuleIUT   CASCADE;
 DROP TABLE Intervenant CASCADE;
 DROP TABLE Intervient  CASCADE;
 DROP TABLE Horaire     CASCADE;
+DROP TABLE Historique  CASCADE;
 
 /* ---------------------------------------------------- */
 /*                  Création des tables                 */
@@ -109,3 +110,10 @@ CREATE TABLE Horaire
    FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) 
 );
 
+CREATE TABLE Historique
+(
+   Id_Historique      SERIAL,
+   dateModification   TIMESTAMP     NOT NULL,
+   String             VARCHAR(150)  NOT NULL,
+   PRIMARY KEY(Id_Historique)
+);
