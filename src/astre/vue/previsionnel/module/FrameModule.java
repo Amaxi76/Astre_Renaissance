@@ -30,8 +30,8 @@ public class FrameModule extends JFrame
 	private PanelPNLocalPPP	    panelPNLocalPPP;
 	private PanelRepartition    panelRepartition;
 	private PanelRepartitionBis panelRepartitionBis;
-	private PanelAffectation    panelAffectation;
 	private PanelRepartitionPPP panelRepartitionPPP;
+	private PanelAffectation    panelAffectation;
 
 	private JCheckBox           cbValidation;
 
