@@ -49,7 +49,7 @@ public class BD
 	// 	}
 	// }
 
-	TODO: à tester sur linux + mac + windows !
+	//TODO: à tester sur linux + mac + windows !
 	private BD ( )
 	{
 		try
