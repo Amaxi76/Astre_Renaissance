@@ -112,7 +112,14 @@ public class BD
 					if ( type.equals ( Intervenant.class )  )
 						lst.add ( type.cast ( new Intervenant( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 
-					// Ajouter d'autres conditions pour d'autres classes si nécessaire
+					if ( type.equals ( ModuleIUT.class )  )
+					lst.add ( type.cast ( new ModuleIUT(  getSemestre(rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(5), null, null ) ) );
+
+				if ( type.equals ( Horaire.class )  )
+					lst.add ( type.cast ( new Horaire( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
+			
+				
+				// Ajouter d'autres conditions pour d'autres classes si nécessaire
 				}
 				catch ( Exception e )
 				{
@@ -377,6 +384,41 @@ public class BD
 		return result;
 	}
 
+	//meme méthode qu'au dessus mais sans prendre en compte les coeff tp
+	public double getInterventionIntervenantTheo(int inter, int semes)
+	{
+		double result = 0;
+		double ligne;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
+					                         "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
+					                         "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
+				                             "Where  Id_Semestre      = "+ semes +" AND " +
+					                         "       i.Id_intervenant = " + inter);
+			while ( rs.next( ) )
+			{
+				ligne = 0;
+				ligne += rs.getInt(1) * rs.getInt(2) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
+
+				/*if( getHeure(rs.getInt(5)).getNom().equals("TP") )
+				{
+					ligne *= getIntervenant(rs.getInt(4)).getContrat().getRatioTP();
+				}*/
+
+				result += ligne;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e );
+		}
+
+		return result;
+	}
+
 	public Intervenant getIntervenant ( int i )
 	{
 		Intervenant intervenant = null;
@@ -480,11 +522,73 @@ public class BD
 		return module;
 	}
 
+	public int getNBHeureParModule (String code, int Id_Inter, int Id_Heure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			System.out.println("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur  getNBHeureParModule (String code, int Id_Inter, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
+	public int getNBHeurePNParModule (String code, int Id_Heure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeurePNParModule('" + code + "'," + Id_Heure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur getNBHeurePNParModule (String code, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
+	public int getNBHeureRepParModule (String code, int Id_Heure)
+	{
+		int somme = 0;
+
+		try 
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureRepParModule('" + code + "'," + Id_Heure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println ( "Erreur getNBHeureRepParModule (String code, int Id_Heure) : " + e );
+		}
+
+		return somme;
+	}
+
 	/*---------------------------------------*/
 	/*              RECUP TABLO              */
 	/*---------------------------------------*/
-
-	//TODO: Fonction SQL ?
 
 	public Object[][] getModulesTableau ( )
 	{

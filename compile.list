@@ -1,6 +1,7 @@
 src/astre/Controleur.java
 
-
+src/astre/modele/outils/ModeleTableau.java
+src/astre/modele/outils/TableauUtilitaire.java
 
 src/astre/modele/BD.java
 src/astre/modele/Astre.java
@@ -22,15 +23,14 @@ src/astre/vue/outils/AFrame.java
 src/astre/vue/outils/ConstantesVue.java
 src/astre/vue/outils/MenuBarAstre.java
 src/astre/vue/outils/PanelDiagramme.java
-src/astre/vue/outils/ModeleTableau.java
 src/astre/vue/outils/Tableau.java
 src/astre/vue/outils/PopUpErreur.java
+src/astre/vue/outils/FiltreTextFieldEntier.java
 
 src/astre/vue/parametrage/FrameParametrage.java
 src/astre/vue/parametrage/PanelBouton.java
-src/astre/vue/parametrage/PanelContrat.java
 src/astre/vue/parametrage/PanelEnsParametre.java
-src/astre/vue/parametrage/PanelTypeHeure.java
+src/astre/vue/parametrage/PanelParametrage.java
 
 src/astre/vue/previsionnel/FramePrevisionnel.java
 src/astre/vue/previsionnel/PanelBouton.java

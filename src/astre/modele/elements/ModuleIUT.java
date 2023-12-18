@@ -32,6 +32,18 @@ public class ModuleIUT
 		this.hmHeuresRepaties  = hmHeuresRepaties;
 	}
 
+	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide)
+	{
+		this.semestre          = semestre;
+		this.typeModule        = typeModule;
+		this.code              = code;
+		this.libLong           = libLong;
+		this.libCourt          = libCourt;
+		this.valide            = valide;
+		this.hmHeuresPn        = null;
+		this.hmHeuresRepaties  = null;
+	}
+
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
