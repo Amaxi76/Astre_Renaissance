@@ -81,11 +81,12 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		int      nbSem    = Character.getNumericValue ( sem.charAt ( 1 ) );
 		Semestre semestre = this.ctrl.getSemestre ( nbSem );
 
-		String code     = this.frm.getPanelModuleLabel().getCode();
-		String libLong  = this.frm.getPanelModuleLabel().getLibLong();
-		String libCourt = this.frm.getPanelModuleLabel().getLibCourt();
+		String  code     = this.frm.getPanelModuleLabel().getCode();
+		String  libLong  = this.frm.getPanelModuleLabel().getLibLong();
+		String  libCourt = this.frm.getPanelModuleLabel().getLibCourt();
+		boolean cbOk     = this.frm.getCbValidation();
 
-		ModuleIUT module = new ModuleIUT( semestre, typeModule, code, libLong, libCourt, this.frm.getCbValidation());
+		ModuleIUT module = new ModuleIUT( semestre, typeModule, code, libLong, libCourt, cbOk);
 		
 		if ( typeModule.equals( "Ressource" ) )
 		{
