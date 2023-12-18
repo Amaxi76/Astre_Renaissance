@@ -112,7 +112,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 			new Horaire ( TP, module, TPPN, nbSemTP, nbHTP );
 		}
 
-		if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
+		else if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
 		{
 			Heure SAE   = this.ctrl.getHeure ( "SAE" );
 			int   SAEPN = this.frm.getPanelPNLocal().getCM();
@@ -127,7 +127,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 			new Horaire ( TUT, module, TUTPN, 1, HTUT );
 		}
 
-		if ( typeModule.equals ( "PPP" ) )
+		else if ( typeModule.equals ( "PPP" ) )
 		{
 			Heure CM   = this.ctrl.getHeure ( "CM" );
 			int   CMPN = this.frm.getPanelPNLocalPPP().getCM();

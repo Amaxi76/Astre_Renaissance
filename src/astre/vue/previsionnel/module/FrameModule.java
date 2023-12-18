@@ -129,11 +129,6 @@ public class FrameModule extends JFrame
 
 		this.add ( this.panelModuleBouton, BorderLayout.SOUTH);
 
-
-		/* ------------------------- */
-		/* Activation des composants */
-		/* ------------------------- */
-
 		this.setVisible ( true );
 	}
 
