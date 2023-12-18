@@ -440,6 +440,7 @@ public class PanelRepartition extends JPanel
 		int somme = totalCM + totalTD + totalTP + heureP;
 		lblTotalSomme.setText ( String.valueOf ( somme ) );
 
+		majAffectation();
 		majTotalPromo(totalCM, totalTD, totalTP, heureP);
 	}
 
@@ -464,6 +465,27 @@ public class PanelRepartition extends JPanel
 
 		double sommePromo = totalCMProm + totalTDProm + totalTPProm + totalHeurePProm;
 		lblTotalSommeProm.setText ( String.valueOf ( sommePromo ) );
+	}
+
+	private void majAffectation ()
+	{
+		lblTotalCMAff    .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "CM"    ) ) );
+		lblTotalTDAff    .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TD"    ) ) );
+		lblTotalTPAff    .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TP"    ) ) );
+		lblTotalHeurePAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "PONCT" ) ) );
+
+		majAffectationSomme();
+	}
+
+	private void majAffectationSomme()
+	{
+		int CM = Integer.parseInt ( lblTotalCMAff.getText() );
+		int TD = Integer.parseInt ( lblTotalTDAff.getText() );
+		int TP = Integer.parseInt ( lblTotalTPAff.getText() );
+		int HP  = Integer.parseInt ( lblTotalHeurePAff.getText() );
+
+		int somme = CM + TD + TP + HP;
+		lblTotalSommeAff.setText ( String.valueOf ( somme ) );
 	}
 
 	private double coeffHeure ( String nomHeure )

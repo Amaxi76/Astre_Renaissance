@@ -113,7 +113,6 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-
 			enregistrer ( this.tableau.getDonnees ( ) );
 			this.tableau.ajusterTailleColonnes ( );
 

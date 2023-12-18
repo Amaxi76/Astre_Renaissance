@@ -62,8 +62,8 @@ public class FrameModule extends JFrame
 		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl       );
 		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl       );
 		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
-		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl       );
-		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl       );
+		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl, this );
+		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl, this );
 		this.panelAffectation    = new PanelAffectation    ( this.ctrl       );
 
 		this.cbValidation = new JCheckBox ( "Validation" );
