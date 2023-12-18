@@ -30,48 +30,48 @@ public class BD
 	Connection co;
 	PreparedStatement ps;
 
-	private BD ( )
-	{
-		try
-		{
-			Class.forName ( "org.postgresql.Driver" );
-
-			co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
-			//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
-		}
-		catch ( ClassNotFoundException e )
-		{
-			System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
-		}
-	}
-
-	// TODO: à tester sur linux + mac + windows !
 	// private BD ( )
 	// {
 	// 	try
 	// 	{
-	// 		Class.forName ( JDBC );
-	// 		co = DriverManager.getConnection ( URL_WOODY , LOGIN, PASSWORD );
-	// 	}
-	// 	catch ( ClassNotFoundException | SQLException e1 )
-	// 	{
-	// 		System.out.println( "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 );
+	// 		Class.forName ( "org.postgresql.Driver" );
 
-	// 		try
-	// 		{
-	// 			Class.forName ( "org.postgresql.Driver" );
-	// 			co = DriverManager.getConnection( URL_LOCAL, LOGIN, PASSWORD );
-	// 		}
-	// 		catch ( ClassNotFoundException | SQLException e2 )
-	// 		{
-	// 			System.out.println("Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 );
-	// 		}
+	// 		co = DriverManager.getConnection ( "jdbc:postgresql://localhost:7777/sm220306", "sm220306", "mateo2705" ); //Pour alizéa
+	// 		//co = DriverManager.getConnection ( "jdbc:postgresql://woody/sm220306", "sm220306", "mateo2705" );
+	// 	}
+	// 	catch ( ClassNotFoundException e )
+	// 	{
+	// 		System.out.println ( "Erreur 1 de connexion à la base de données : " + e );
+	// 	}
+	// 	catch ( SQLException e )
+	// 	{
+	// 		System.out.println ( "Erreur 2 de connexion à la base de données " +  e );
 	// 	}
 	// }
+
+	TODO: à tester sur linux + mac + windows !
+	private BD ( )
+	{
+		try
+		{
+			Class.forName ( JDBC );
+			co = DriverManager.getConnection ( URL_WOODY , LOGIN, PASSWORD );
+		}
+		catch ( ClassNotFoundException | SQLException e1 )
+		{
+			System.out.println( "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 );
+
+			try
+			{
+				Class.forName ( "org.postgresql.Driver" );
+				co = DriverManager.getConnection( URL_LOCAL, LOGIN, PASSWORD );
+			}
+			catch ( ClassNotFoundException | SQLException e2 )
+			{
+				System.out.println("Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 );
+			}
+		}
+	}
 
 	public static BD getInstance ( )
 	{
