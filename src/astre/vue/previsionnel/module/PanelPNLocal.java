@@ -82,8 +82,14 @@ public class PanelPNLocal extends JPanel
 		this.lblSomme   = new JLabel();
 
 		this.lblTotalCM    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalCM );
+
 		this.lblTotalTD    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalTD );
+
 		this.lblTotalTP    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalTP );
+		
 		this.lblTotalSomme = new JLabel();
 
 
@@ -201,8 +207,9 @@ public class PanelPNLocal extends JPanel
 			int somme = CM + TD + TP;
 
 			//TEST MODULABLE
-			for ( JTextField textField : lstTextFieldsHeures )
+			for (int i = 3; i < lstTextFieldsHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
 			{
+				JTextField textField = lstTextFieldsHeures.get(i);
 				if ( !textField.getText().isEmpty() )
 				{
 					nouvHeureValeur = Integer.parseInt(textField.getText());
@@ -238,8 +245,10 @@ public class PanelPNLocal extends JPanel
 			double totalSomme = totalCM + totalTD + totalTP;
 
 			//TEST MODULABLE
-			for ( JLabel labelTotalHeure : lstLabelsTotalHeures )
+			for (int i = 3; i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
 			{
+				JLabel labelTotalHeure = lstLabelsTotalHeures.get(i);
+
 				if ( !labelTotalHeure.getText().isEmpty() )
 				{
 					nouvTotalHeureValeur = Double.parseDouble ( labelTotalHeure.getText() );
@@ -293,10 +302,10 @@ public class PanelPNLocal extends JPanel
 			}
 			
 			//TEST MODULABLE
-			for ( int i = 3; i < lstTextFieldsHeures.size() && i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			for ( int i = 3; i < this.lstTextFieldsHeures.size() && i < this.lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
 			{
-				JTextField textField       = lstTextFieldsHeures .get(i);
-				JLabel     labelTotalHeure = lstLabelsTotalHeures.get(i);
+				JTextField textField       = this.lstTextFieldsHeures .get(i);
+				JLabel     labelTotalHeure = this.lstLabelsTotalHeures.get(i);
 	
 				if ( !textField.getText().isEmpty() )
 				{
@@ -308,7 +317,7 @@ public class PanelPNLocal extends JPanel
 		}
 		catch ( NumberFormatException ex )
 		{
-			lblTotalCM.setText( "Erreur" );
+			lblTotalSomme.setText( "Erreur" );
 			ex.printStackTrace();
 		}
 	}
@@ -373,7 +382,7 @@ public class PanelPNLocal extends JPanel
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 	
-		JLabel     labelHeure      = new JLabel ( nomHeure );
+		JLabel     labelNomHeure      = new JLabel ( nomHeure );
 
 		JTextField textFieldHeure  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( textFieldHeure );
@@ -383,14 +392,14 @@ public class PanelPNLocal extends JPanel
 		labelTotalHeure.setPreferredSize ( new Dimension ( 40, 15 ) );
 		labelTotalHeure.setOpaque( true );
 	
-		this.lstLabelsHeures     .add ( labelHeure      );
+		this.lstLabelsHeures     .add ( labelNomHeure   );
 		this.lstTextFieldsHeures .add ( textFieldHeure  );
 		this.lstLabelsTotalHeures.add ( labelTotalHeure );
 
 	
 		gbc.gridy = this.lstLabelsHeures.size();
 		gbc.gridx = 1;
-		this.add ( labelHeure, gbc );
+		this.add ( labelNomHeure, gbc );
 	
 		gbc.gridx = 2;
 		this.add ( textFieldHeure, gbc );
