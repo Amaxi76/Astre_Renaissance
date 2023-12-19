@@ -27,7 +27,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
-		Object premiereCelulleLigne = table.getModel ( ).getValueAt ( row, 0 );
+		Object premiereCelulleLigne = tbl.getModel ( ).getValueAt ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
 			char operation = (char) premiereCelulleLigne;
@@ -60,11 +60,11 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					// par défaut il y a une alternance de couleurs
 					if ( lig%2 == 0 ) { cellule.setBackground ( COULEUR_FOND_1 ); }
 					else              { cellule.setBackground ( COULEUR_FOND_2 ); }
-					cellule.setForeground ( table.getForeground ( ) );
+					cellule.setForeground ( tbl.getForeground ( ) );
 					break;
 			}
-
-			return this;
 		}
+
+		return this;
 	}
 }
