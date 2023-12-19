@@ -143,7 +143,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 			int nbSem  = Integer.parseInt ( this.txtNbSemaine.getText ( ) );
 			
 			// Mise à jour de la base de donnée
-			this.ctrl.majSemestre ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
+			this.ctrl.update ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
 
 			// Affichage du message d'enregistrement pendant 3 secondes
 			this.lblMessageEnregistrement.setText("Enregistré !");

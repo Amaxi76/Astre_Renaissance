@@ -6,15 +6,8 @@ package astre.modele.elements;
   * @date : 06/12/2023
   */
 
-// TODO: Faire en sorte que ça ne supprime pas toutes la base de donnée 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Heure
 {
-	private static List<Heure> ensHeure = new ArrayList<> ( );
-	
 	private int    id;
 	private String nom;
 	private double coefTd;
@@ -47,8 +40,7 @@ public class Heure
 		if ( nom.equals ( "" ) )
 			throw new IllegalArgumentException ( "Une des données est vide" );
 
-		//TODO: Demander confirmation au prof
-		if ( coefTD <= 0  )
+			if ( coefTD <= 0  )
 			throw new IllegalArgumentException ( "Le coef TP doit être supérieur à 0" );
 
 		return new Heure ( id, nom, coefTD );
@@ -57,8 +49,6 @@ public class Heure
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
-
-	public static List<Heure> getHeures ( ) { return Heure.ensHeure;  }
 
 	public int    getId     ( ) { return this.id;     }
 	public String getNom    ( ) { return this.nom;    }
@@ -71,16 +61,4 @@ public class Heure
 	public void setNom    ( String nom    ) { this.nom    = nom;    }
 	public void setCoefTd ( double coefTd ) { this.coefTd = coefTd; }
 
-	/*---------------------------------------*/
-	/*                METHODES               */
-	/*---------------------------------------*/
-
-	public boolean retirerListe ( )
-	{
-		if ( ! Heure.ensHeure.contains ( this ) ) return false;
-		
-		Heure.ensHeure.remove ( this );
-		return true;
-	}
-	
 }

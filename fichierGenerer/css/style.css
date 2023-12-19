@@ -4,11 +4,17 @@ html, body
 	padding: 0;
 }
 
-img
+header
 {
-	display: block;
-	margin: 0 auto;
-	margin-top: 3vh;
+	background-color: #1D2F47;
+	padding: 2vh;
+	color: aliceblue;
+}
+
+h1
+{
+	margin:0;
+	text-align: center;
 }
 
 table
@@ -38,24 +44,18 @@ tr:nth-child(even)
 	background-color: #f7c5bc;
 }
 
-.first
-{
-	text-align: center;
-	font-weight: bold;
-}
-
 .num
 {
-	width: 10%;
+	width: 5%;
 	text-align: center;
 }
 
 .mod
 {
-	width: 70%;
+	width: 55%;
 }
 
 .heure
 {
-	width: 20%;
+	text-align: center;
 }

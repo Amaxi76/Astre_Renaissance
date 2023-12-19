@@ -31,7 +31,7 @@ td, th
 	padding: 1vh;
 }
 
-#centre
+.centre
 {
 	margin: 0 auto;
 	margin-top: 2vh;
@@ -39,18 +39,18 @@ td, th
 	width: 40%;
 }
 
-#centre tr th
+.centre tr th
 {
 	background-color: #f7c5bc;
 }
 
-#centre tr th:first-child
+.centre tr th:first-child
 {
 	background-color: #1D2F47;
 	color: aliceblue;
 }
 
-#centre tr td:first-child
+.centre tr td:first-child
 {
 	background-color: #f7c5bc;
 }

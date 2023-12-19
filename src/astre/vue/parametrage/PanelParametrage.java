@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
+import astre.vue.outils.AFrame;
 
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN
@@ -47,7 +48,7 @@ public class PanelParametrage extends JPanel implements ActionListener
 		JPanel   pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
 		JPanel   pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
 		
-		this.tab     = Tableau.initialiserTableau ( enTete, tabObjects, true, 1, tabDonnee );
+		this.tab     = Tableau.initialiserTableau ( enTete, tabObjects, true, 0, tabDonnee );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
@@ -100,11 +101,17 @@ public class PanelParametrage extends JPanel implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
+		{
 			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
+			AFrame.fermer        ( this      );
+			new FrameParametrage ( this.ctrl );
+
+		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			
+			AFrame.fermer        ( this );
+			new FrameParametrage ( this.ctrl );
 		}
 	}
 

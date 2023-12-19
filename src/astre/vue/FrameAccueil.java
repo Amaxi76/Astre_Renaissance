@@ -8,6 +8,7 @@ package astre.vue;
 
 import astre.vue.previsionnel.FramePrevisionnel;
 import astre.vue.etats.FrameEtats;
+import astre.vue.historique.FrameHistorique;
 import astre.vue.intervenants.FrameIntervenants;
 import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
 import astre.vue.parametrage.FrameParametrage;
@@ -22,10 +23,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import astre.Controleur;
-import astre.vue.outils.MenuBarAstre;
+import astre.vue.outils.AFrame;
 
 
-public class FrameAccueil extends JFrame implements ActionListener
+public class FrameAccueil extends AFrame implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -34,13 +35,12 @@ public class FrameAccueil extends JFrame implements ActionListener
 	/** Un Controleur pour pouvoir accéder au controleur
 	 * 
 	 */
-	private Controleur  ctrl;
-
 	private JButton btnParametre;
 	private JButton btnPrevisionnel;
 	private JButton btnIntervenants;
 	private JButton btnEtat;
 	private JButton btnAnnee;
+	private JButton btnHistorique;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -52,36 +52,11 @@ public class FrameAccueil extends JFrame implements ActionListener
 	 */
 	public FrameAccueil ( Controleur ctrl )
 	{
-		this.ctrl = ctrl;
-		// Image
-		// Image  img = null;
-		// Image icon = null;
+		super( ctrl );
 
-
-		// try
-		// {
-		// 	img = new ImageIcon ( ImageIO.read ( Controleur.class.getResourceAsStream ( "/images/imgAccueil.png" ) ) ).getImage();
-		// }
-		// catch ( Exception e ) { }
-		
-		// try
-		// {
-		// 	icon = new ImageIcon ( ImageIO.read ( Controleur.class.getResourceAsStream ( "/images/icon.png" ) ) ).getImage();
-		// }
-		// catch ( Exception e ) { }
-
-		//Image scaledImg = img.getScaledInstance ( 1000, 700, Image.SCALE_SMOOTH );
-
-		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-
-		int l = ( tailleEcran.width  - 1000 ) / 2;
-		int h = ( tailleEcran.height -  700 ) / 2;
-
-		this.setSize     ( 1000, 700            );
-		this.setLocation (    l,   h            );
-		this.setTitle    ( "ASTRE"              );
-		
-		this.setJMenuBar ( new MenuBarAstre ( this.ctrl, this ) );
+		this.setSize               ( 1000, 700 );
+		this.setTitle              ( "ASTRE"   );
+		this.setLocationRelativeTo ( null      );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -89,7 +64,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 
 		JPanel panel         = new JPanel ( new BorderLayout (      )         );
 		JPanel panelTest     = new JPanel ( new GridLayout   ( 1, 3 )         );
-		JPanel panelButton   = new JPanel ( new GridLayout   ( 6, 1, 15, 15 ) );
+		JPanel panelButton   = new JPanel ( new GridLayout   ( 7, 1, 15, 15 ) );
 		JPanel panelInutile  = new JPanel (                                   );
 		JPanel panelInutile2 = new JPanel (                                   );
 
@@ -110,12 +85,14 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.btnIntervenants = new JButton ( "Intervenants"                 );
 		this.btnEtat         = new JButton ( "Etats"                        );
 		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
+		this.btnHistorique   = new JButton ( "Historique" );
 
 		panelButton.add ( this.btnParametre    );
 		panelButton.add ( this.btnPrevisionnel );
 		panelButton.add ( this.btnIntervenants );
 		panelButton.add ( this.btnEtat         );
 		panelButton.add ( this.btnAnnee        );
+		panelButton.add ( this.btnHistorique   );
 
 		panelTest.add ( panelInutile  );
 		panelTest.add ( panelButton   );
@@ -136,10 +113,9 @@ public class FrameAccueil extends JFrame implements ActionListener
 		this.btnIntervenants.addActionListener ( this );
 		this.btnEtat        .addActionListener ( this );
 		this.btnAnnee       .addActionListener ( this );
+		this.btnHistorique  .addActionListener ( this );
 
-		//this.setIconImage             ( icon          );
-		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
-		this.setVisible               ( true          );
+		this.setVisible ( true );
 	}
 
 	/* ActionListener */
@@ -171,9 +147,11 @@ public class FrameAccueil extends JFrame implements ActionListener
 			return;
 		}
 
-		this.cacher ( );
+		if ( e.getSource ( ) == this.btnHistorique )
+		{
+			new FrameHistorique ( this.ctrl );
+		}
+
+		this.dispose ( );
 	}
-
-	public void cacher ( ) { this.dispose ( ); }
-
 }

@@ -8,11 +8,7 @@ package astre;
 
 import astre.modele.elements.*;
 
-import java.awt.Component;
 import java.util.List;
-
-import javax.swing.JPanel;
-import javax.swing.JFrame;
 
 import astre.modele.*;
 import astre.vue.*;
@@ -31,39 +27,19 @@ public class Controleur
 
 	public <T> List<T>   getTable              ( Class<T> type   ) { return this.metier.getTable              ( type        ); }
 
-	public Semestre      getSemestre           ( int numSemestre ) { return this.metier.getSemestre           ( numSemestre ); }
-	public Object[][]    getTableauModule      ( int numSemestre ) { return this.metier.getTableauModule      ( numSemestre ); }
-	public Object[][]    getTableauIntervenant (                 ) { return this.metier.getTableauIntervenant (             ); }
-	public Object[][]    getTableauIntervient  (                 ) { return this.metier.getTableauIntervient  (             ); }
-	public Object[][]    getTableauContrat     (                 ) { return this.metier.getTableauContrat     (             ); }
-	public Object[][]    getTableauHeure       (                 ) { return this.metier.getTableauHeure       (             ); }
-	public Heure         getHeure              ( int nom         ) { return this.metier.getHeure              ( nom         ); }
-	public Heure         getHeure              ( String nom      ) { return this.metier.getHeure              ( nom         ); }
-
-	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
-	public ModuleIUT     getModule             ( String nom      ) { return this.metier.getModule             ( nom         ); }
+	public Semestre      getSemestre           ( int      numSemestre ) { return this.metier.getSemestre      ( numSemestre ); }
+	public Object[][]    getTableauModule      ( int      numSemestre ) { return this.metier.getTableauModule ( numSemestre ); } //TODO: à refaire / enlever
+	public Object[][]    getTableau            ( Class<?> type        ) { return this.metier.getTableau       ( type        ); }
+	public Heure         getHeure              ( int      nom         ) { return this.metier.getHeure         ( nom         ); }
+	public Heure         getHeure              ( String   nom         ) { return this.metier.getHeure         ( nom         ); }
+	public Contrat       getContrat            ( String   nom         ) { return this.metier.getContrat       ( nom         ); }
+	public ModuleIUT     getModule             ( String   nom         ) { return this.metier.getModule        ( nom         ); }
 
 	public void update ( Object o ) { this.metier.update ( o ); }
 	public void insert ( Object o ) { this.metier.insert ( o ); }
 	public void delete ( Object o ) { this.metier.delete ( o ); }
 
-	public void majSemestre  ( Semestre s                    ) { this.metier.majSemestre  ( s         ); }
 	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
-
-	public static void retour ( Component compo )
-	{
-		java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor ( compo );
-
-		if ( window instanceof JFrame )
-		{
-			JFrame parentFrame = ( JFrame ) window;
-			parentFrame.dispose();
-
-			//parentFrame.getClass().newInstance();
-
-		}
-	}
-
 
 	public static void afficherErreur ( String titre, String message )
 	{
@@ -75,7 +51,6 @@ public class Controleur
 
 	public static void main ( String[] args )
 	{
-		//afficherErreur ( "Erreur java", "petite fenetre de test pour afficher les erreurs" );
 		new Controleur ( );
 	}
 }

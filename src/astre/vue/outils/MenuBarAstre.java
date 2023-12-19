@@ -43,9 +43,9 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	
 	// Attributs
 	private Controleur ctrl;
-	private JFrame     parent; //TODO: à supprimer
+	private AFrame     parent;
 
-	public MenuBarAstre ( Controleur ctrl, JFrame parent )
+	public MenuBarAstre ( Controleur ctrl, AFrame parent )
 	{
 		//Initialisation
 		super ( );
@@ -159,7 +159,6 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 		if ( e.getSource ( ) instanceof JMenuItem )
 		{
 			String nom = ( ( JMenuItem ) e.getSource () ).getText ( );
-
 			this.allerVersPage ( nom );
 		}
 	}
@@ -180,7 +179,11 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 		if ( nom.equals( options[2] ) ) { new FramePrevisionnel ( this.ctrl );  }
 		if ( nom.equals( options[3] ) ) { new FrameIntervenants ( this.ctrl );  }
 		if ( nom.equals( options[4] ) ) { parent.dispose ( );                   }
-		if ( nom.equals( options[5] ) ) { new FrameNouvelleAnnee ( this.ctrl ); }
+		if ( nom.equals( options[5] ) )
+		{
+			new FrameAccueil       ( this.ctrl );
+			new FrameNouvelleAnnee ( this.ctrl );
+		}
 		
 		// cas des sous menus avec semestre
 		if ( nom.contains( options[6] ) ) { new FramePrevisionnel  ( this.ctrl, Integer.parseInt( nom.charAt ( 1 ) +"" )-1 ); }
@@ -191,24 +194,6 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			this.parent.dispose ( );
 		}
 	}
-	
-	/*private void allerVersPage ( Class c )
-	{
-		try
-		{
-			this.parent.dispose ( );
-			
-			// Obtenez le constructeur avec un paramètre de type Ctrl (ou le type approprié)
-        	java.lang.reflect.Constructor<?> constructor = c.getDeclaredConstructor(Controleur.class);
-
-	        // Instanciez la nouvelle classe en passant l'objet ctrl dans le constructeur
-    	    constructor.newInstance(this.ctrl);
-		}
-		catch ( Exception e )
-		{
-			System.out.println( "Erreur menubar : " + e );
-		}
-	}*/
 
 	/**
 	 * Méthode utilitaire permettant de convertir une chaine de caractère en KeyStroke pour les raccourcis

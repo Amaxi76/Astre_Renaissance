@@ -149,27 +149,27 @@ public class PanelPNLocalPPP extends JPanel
 
 			if (!txtCM.getText().isEmpty() )
 			{
-				hCM = Integer.parseInt ( txtCM.getText() );
+				hCM = getCM();
 			}
 
 			if ( !txtTD.getText().isEmpty() )
 			{
-				hTD = Integer.parseInt ( txtTD.getText() );
+				hTD = getTD();
 			}
 
 			if ( !txtTP.getText().isEmpty() )
 			{
-				hTP = Integer.parseInt ( txtTP.getText() );
+				hTP = getTP();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = Integer.parseInt ( txtHTut.getText() );
+				hTut = getTut();
 			}
 
 			if ( !txtHP.getText().isEmpty() )
 			{
-				hPonct = Integer.parseInt ( txtHP.getText() );
+				hPonct = getPonct();
 			}
 
 			int somme = hCM + hTD + hTP + hTut + hPonct;
@@ -208,4 +208,10 @@ public class PanelPNLocalPPP extends JPanel
 
 		majSomme();
 	}
+
+	public int getCM    ( ) { return Integer.parseInt( this.txtCM  .getText() ); }
+	public int getTD    ( ) { return Integer.parseInt( this.txtTD  .getText() ); }
+	public int getTP    ( ) { return Integer.parseInt( this.txtTP  .getText() ); }
+	public int getTut   ( ) { return Integer.parseInt( this.txtHTut.getText() ); }
+	public int getPonct ( ) { return Integer.parseInt( this.txtHP  .getText() ); }
 }

@@ -225,7 +225,7 @@ public class PanelPNLocal extends JPanel
 	
 			if ( !txtCM.getText().isEmpty() )
 			{
-				CM = Integer.parseInt ( txtCM.getText() );
+				CM = getCM();
 				double coeffCM = coeffHeure ( "CM" );
 				double totalCM = CM * coeffCM;
 	
@@ -234,8 +234,8 @@ public class PanelPNLocal extends JPanel
 
 			if (!txtTD.getText().isEmpty())
 			{
-				TD = Integer.parseInt(txtTD.getText());
-				int nbGpTD = Integer.parseInt(frm.getPanelModuleLabel().lblNbGpTD.getText());
+				TD = getTD();
+				int nbGpTD = frm.getPanelModuleLabel().getNbGpTD();
 				double coeffTD = coeffHeure("TD");
 				double totalTD = TD * coeffTD * nbGpTD;
 
@@ -244,8 +244,8 @@ public class PanelPNLocal extends JPanel
 
 			if ( !txtTP.getText().isEmpty() )
 			{
-				TP = Integer.parseInt ( txtTP.getText() );
-				int nbGpTP = Integer.parseInt ( frm.getPanelModuleLabel().lblNbGpTP.getText() );
+				TP = getTP();
+				int nbGpTP = frm.getPanelModuleLabel().getNbGpTP();
 				double coeffTP = coeffHeure ( "TP" );
 				double totalTP = TP * coeffTP * nbGpTP;
 	
@@ -307,4 +307,8 @@ public class PanelPNLocal extends JPanel
 		majSomme();
 		majTotalHeure();
 	}
+
+	public int getCM ( ) { return Integer.parseInt( this.txtCM.getText() ); }
+	public int getTD ( ) { return Integer.parseInt( this.txtTD.getText() ); }
+	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
 }

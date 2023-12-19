@@ -35,8 +35,8 @@ public class PanelModuleLabel  extends JPanel
 	private JTextField  txtLibCourt;
 
 	private JLabel      lblNbEtd;
-	public  JLabel      lblNbGpTD;
-	public  JLabel      lblNbGpTP;
+	private JLabel      lblNbGpTD;
+	private JLabel      lblNbGpTP;
 
 
 	/*----------------*/
@@ -230,7 +230,13 @@ public class PanelModuleLabel  extends JPanel
 		this.txtCode    .setText ( module.getCode     ( ) );
 	}
 	
-	public String getLblType ( ) { return this.lblType.getText ( ); }
+	public String getType     ( ) { return this.lblType    .getText ( );                     }
+	public String getSemestre ( ) { return this.lblSemestre.getText ( );                     }
+	public String getCode     ( ) { return this.txtCode    .getText ( );                     }
+	public String getLibLong  ( ) { return this.txtLibLong .getText ( );                     }
+	public String getLibCourt ( ) { return this.txtLibCourt.getText ( );                     }
+	public int    getNbGpTD   ( ) { return Integer.parseInt ( this.lblNbGpTD .getText ( ) ); }
+	public int    getNbGpTP   ( ) { return Integer.parseInt ( this.lblNbGpTP .getText ( ) ); }
 
 	public ModuleIUT getModule ( )
 	{

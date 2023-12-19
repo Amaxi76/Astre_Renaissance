@@ -1,18 +1,13 @@
 package astre.modele.elements;
 
 /** Classe Module 
-  * @author : Maximilien Lesterlin, Alizéa Lebaron
+  * @author : Maximilien Lesterlin
   * @version : 1.1.0 - 13/12/2023
   * @date : 06/12/2023
   */
 
-import java.util.Map;
-
 public class ModuleIUT
 {
-	Map<Heure, Integer> hmHeuresPn;
-	Map<Heure, Integer> hmHeuresRepaties;
-	
 	Semestre semestre;
 	String   typeModule;
 	String   code;
@@ -20,7 +15,7 @@ public class ModuleIUT
 	String   libCourt;
 	boolean  valide;
 
-	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide, Map<Heure, Integer> hmHeuresPn, Map<Heure, Integer> hmHeuresRepaties )
+	private ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide )
 	{
 		this.semestre          = semestre;
 		this.typeModule        = typeModule;
@@ -28,20 +23,50 @@ public class ModuleIUT
 		this.libLong           = libLong;
 		this.libCourt          = libCourt;
 		this.valide            = valide;
-		this.hmHeuresPn        = hmHeuresPn;
-		this.hmHeuresRepaties  = hmHeuresRepaties;
 	}
 
-	public ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide)
+	public static ModuleIUT creation ( Object[] contrat )
 	{
-		this.semestre          = semestre;
-		this.typeModule        = typeModule;
-		this.code              = code;
-		this.libLong           = libLong;
-		this.libCourt          = libCourt;
-		this.valide            = valide;
-		this.hmHeuresPn        = null;
-		this.hmHeuresRepaties  = null;
+		Object s  = contrat[0];
+		Object tm = contrat[1];
+		Object c  = contrat[2];
+		Object ll = contrat[3];
+		Object lc = contrat[4];
+		Object v  = contrat[5];
+
+		if ( ( s instanceof Semestre )  ||  !( tm instanceof String ) || !( c instanceof String ) || !( ll instanceof String ) ||
+		                                    !( ll instanceof String ) || !( c instanceof Boolean ) )
+			throw new IllegalArgumentException ( "Les données du moduleIUT ne sont pas du bon type" );
+		
+		Semestre semestre          = ( Semestre ) s;
+		String   typeModule        = tm.toString ( );
+		String   code              = c .toString ( );
+		String   libLong           = ll.toString ( );
+		String   libCourt          = lc.toString ( );
+		boolean  valide            = ( Boolean ) v;
+
+		return ModuleIUT.creation ( semestre, typeModule, code, libLong, libCourt, valide );
+	}
+
+	public static ModuleIUT creation ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide )
+	{
+		if ( typeModule.equals ( "" ) )
+			throw new IllegalArgumentException ( "Le typeModule n'est pas rempli" );
+
+		if ( code.equals ( "" ) )
+			throw new IllegalArgumentException ( "Le code n'est pas rempli" );
+
+		if ( libLong.equals ( "" ) )
+			throw new IllegalArgumentException ( "Le libellé long n'est pas rempli" );
+		
+		if ( libCourt.equals ( "" ) )
+			throw new IllegalArgumentException ( "Le libellé court n'est pas rempli" );
+
+		// Coef TD
+		if ( ( Boolean ) valide == null )
+			throw new IllegalArgumentException ( "Pas d'indication pour la validation" );
+		
+		return new ModuleIUT ( semestre, typeModule, code, libLong, libCourt, valide );
 	}
 
 	/*---------------------------------------*/
@@ -54,29 +79,6 @@ public class ModuleIUT
 	public String              getCode               ( ) { return this.code;              }
 	public String              getLibLong            ( ) { return this.libLong;           }
 	public String              getLibCourt           ( ) { return this.libCourt;          }
-	public Map<Heure, Integer> getHmHeureReparties   ( ) { return this.hmHeuresRepaties;  }
-	public Map<Heure, Integer> getHmHeurePn          ( ) { return this.hmHeuresPn;        }
-
-	public int getHeureReparties ( )
-	{
-		int somme = 0;
-		
-		for ( Heure h : this.hmHeuresRepaties.keySet ( ) )
-			somme += this.hmHeuresRepaties.get ( h );
-
-		return somme;
-	}
-
-	public int getHeurePn ( )
-	{
-		int somme = 0;
-		
-		for ( Heure h : this.hmHeuresPn.keySet ( ) )
-			somme += this.hmHeuresPn.get ( h );
-
-		return somme;
-	}
-
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
@@ -92,9 +94,8 @@ public class ModuleIUT
 	@Override
 	public String toString ( )
 	{
-		return "ModuleIUT [hmHeuresPn=" + hmHeuresPn + ", hmHeuresRepaties=" + hmHeuresRepaties + ", semestre="
-				+ semestre + ", typeModule=" + typeModule + ", code=" + code + ", libLong=" + libLong + ", libCourt="
-				+ libCourt + ", valide=" + valide + "]";
+		return "ModuleIUT [semestre=" + semestre + ", typeModule=" + typeModule + ", code=" + code + ", libLong="
+				+ libLong + ", libCourt=" + libCourt + ", valide=" + valide + "]";
 	}
 
 	
