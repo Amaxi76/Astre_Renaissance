@@ -46,6 +46,8 @@ public class Controleur
 	public Contrat       getContrat            ( String nom      ) { return this.metier.getContrat            ( nom         ); }
 	public ModuleIUT     getModule             ( String nom      ) { return this.metier.getModule             ( nom         ); }
 
+	public int           getNBHeureEQTD ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD ( code, nomHeure ); }
+
 	public void update ( Object o ) { this.metier.update ( o ); }
 	public void insert ( Object o ) { this.metier.insert ( o ); }
 	public void delete ( Object o ) { this.metier.delete ( o ); }

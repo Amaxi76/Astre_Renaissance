@@ -572,12 +572,12 @@ public class BD
 		return somme;
 	}
 
-	// Utilisée dans panelAffectation.java
+	// Utilisée dans panelRepartition.java
 	public int getNBHeureEQTD (String code, String nomHeure)
 	{
 		int somme = 0;
 
-		try 
+		try
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureEQTD('" + code + "','" + nomHeure + "')" );

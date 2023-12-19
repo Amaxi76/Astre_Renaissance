@@ -444,6 +444,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Update de l'historique
+
+CREATE OR REPLACE FUNCTION f_update_historique()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP);
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 
 /* ------------------------------------------ */
 /*                   DELETE                   */

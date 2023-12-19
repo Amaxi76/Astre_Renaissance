@@ -2,7 +2,7 @@ package astre.modele.elements;
 
 /** Classe Horaire
   * @author : Alizéa Lebaron
-  * @version : 1.0 - 12/12/2023
+  * @version : 1.1 - 19/12/2023
   * @date : 12/12/2023
   */
 
@@ -14,7 +14,7 @@ public class Horaire
 	private int       nbSemaine;
 	private int       nbHeure;
 
-	/**
+	/** Constructeur d'horaire
 	 * @param heure
 	 * @param module
 	 * @param nbHeurePN
@@ -34,27 +34,27 @@ public class Horaire
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	/**
+	/** Retourne l'heure d'une horaire
 	 * @return heure
 	 */
 	public Heure  getHeure     ( ) { return heure;     }
 
-	/**
+	/** Retourne le module d'une horaire
 	 * @return the module
 	 */
 	public ModuleIUT getModule    ( ) { return module;    }
 
-	/**
+	/** Retourne le nombre d'heure PN d'une horaire
 	 * @return the nbHeurePN
 	 */
 	public int    getNbHeurePN ( ) { return nbHeurePN; }
 
-	/**
+	/** Retourne le nombre de semaine d'une horaire
 	 * @return the nbSemaine
 	 */
 	public int    getNbSemaine ( ) { return nbSemaine; }
 
-	/**
+	/** Retourne le nombre d'heure répartie d'une horaire
 	 * @return the nbHeure
 	 */
 	public int    getNbHeure   ( ) { return nbHeure;   }
@@ -63,27 +63,27 @@ public class Horaire
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/**
+	/** Permet de modifier l'heure
 	 * @param heure the heure to set
 	 */
 	public void setHeure     ( Heure  heure        ) { this.heure     = heure;     }
 
-	/**
+	/** Permet de modifier le module
 	 * @param module the module to set
 	 */
 	public void setModule    ( ModuleIUT module    ) { this.module    = module;    }
 
-	/**
+	/** Permet de modifier le nombre d'heure PN
 	 * @param nbHeurePN the nbHeurePN to set
 	 */
 	public void setNbHeurePN ( int    nbHeurePN    ) { this.nbHeurePN = nbHeurePN; }
 
-	/**
+	/** Permet de modifier le nombre de semaine
 	 * @param nbSemaine the nbSemaine to set
 	 */
 	public void setNbSemaine ( int    nbSemaine    ) { this.nbSemaine = nbSemaine; }
 
-	/**
+	/** Permet de modifier le nombre d'heure répartie
 	 * @param nbHeure the nbHeure to set
 	 */
 	public void setNbHeure   ( int    nbHeure   ) { this.nbHeure = nbHeure;     }
@@ -92,6 +92,9 @@ public class Horaire
 	/*                METHODES               */
 	/*---------------------------------------*/
 
+	/** Renvoie la description et le contenu d'une horaire
+	 * @return Une description du contenue d'une horaire
+	 */
 	public String toString ()
 	{
 		String sRet = "";

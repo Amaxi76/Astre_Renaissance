@@ -57,6 +57,8 @@ public class Astre
 	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants (      ); }
 	public <T> List<T>       getTable          ( Class<T> type   ) { return this.bd.getTable        ( type ); }
 
+	public int               getNBHeureEQTD    ( String code, String nomHeure ) { return this.bd.getNBHeureEQTD ( code, nomHeure ); }
+
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
