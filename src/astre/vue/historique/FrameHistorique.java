@@ -1,14 +1,13 @@
 package astre.vue.historique;
 
-/** Page de gestion des intervenants
+/** Page de gestion de l'historique
   * @author : Matéo Sa
-  * @version : 1.0 - 11/12/2023
-  * @date : 06/12/2023
+  * @version : 1.0 - 18/12/2023
+  * @date : 18/12/2023
   */
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
-import javax.swing.*;
 
 public class FrameHistorique extends AFrame
 {

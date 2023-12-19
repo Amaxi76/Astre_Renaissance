@@ -10,7 +10,7 @@ import astre.modele.elements.*;
 
 /** Page de génération des fichiers
   * @author : Matéo Sa, Lebaron Alizéa
-  * @version : 1.0 - 11/12/2023
+  * @version : 1.0 - 18/12/2023
   * @date : 06/12/2023
   */
 
@@ -145,6 +145,45 @@ public class GenerateurFichier
 			// Ecriture du header de la page
 			ecrivain.write ( header );
 			ecrivain.newLine ( );
+
+			//Ecriture du récapitulatif
+
+			String recap = 	"<table id=\"recap\">"  + "<tr> <th colspan=\"6\"> Récapitulatif </th> </tr>";
+
+			recap += "<tr>" +
+						"<td>s1</td>" +
+						"<td>s3</td>" +
+						"<td>s5</td>" +
+						"<td>s2</td>" +
+						"<td>s4</td>" +
+						"<td>s6</td>" +
+					"</tr>" ;
+			
+			recap += "<tr>" +
+						"<td>" + bd.getNBHeureParSemestre ( 1, inter.getId ( ) ) + "</td>" +
+						"<td>" + bd.getNBHeureParSemestre ( 3, inter.getId ( ) ) + "</td>" +
+						"<td>" + bd.getNBHeureParSemestre ( 5, inter.getId ( ) ) + "</td>" +
+						"<td>" + bd.getNBHeureParSemestre ( 2, inter.getId ( ) ) + "</td>" +
+						"<td>" + bd.getNBHeureParSemestre ( 4, inter.getId ( ) ) + "</td>" +
+						"<td>" + bd.getNBHeureParSemestre ( 6, inter.getId ( ) ) + "</td>" +
+					"</tr>" ;
+			
+			int sommePaire   = bd.getNBHeureParSemestre ( 2, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 4, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 6, inter.getId ( ) );
+			int sommeImpaire = bd.getNBHeureParSemestre ( 1, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 3, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 5, inter.getId ( ) );
+
+			recap += "<tr>" +
+						"<td colspan='3'> Total semestre impaires : " + sommeImpaire + " heures</td>" +
+						"<td colspan='3'> Total semestre paires : "   + sommePaire   + " heures</td>" +
+					 "</tr> " ;
+
+			recap += "<tr>" + 
+						"<td colspan='6' class='total'> Total des heures réparties : " + (sommeImpaire + sommePaire) + " heures</td>" +
+					"</tr>";
+			
+			recap += "</table>";
+			ecrivain.write(recap);
+
+			// Ecriture de la table des données principales
 
 			String table = "<table>";
 
