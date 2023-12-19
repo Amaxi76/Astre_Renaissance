@@ -17,6 +17,8 @@ import java.awt.BorderLayout;
   * @date : 06/12/2023
   */
 
+  //TODO: Faire la fraction "2/3"
+
 public class PanelIntervenants extends JPanel implements ActionListener
 {
 	private Tableau     tableau;
