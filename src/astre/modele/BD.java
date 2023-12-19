@@ -785,7 +785,7 @@ public class BD
 
 		return intervenants;
 	}
-	
+
 
 	public Object[][] getIntervientsTableau( String module )
 	{
@@ -1147,7 +1147,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			JOptionPane.showConfirmDialog( null, "Le contrat " + c.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.OK_OPTION );
+			JOptionPane.showConfirmDialog( null, "Le contrat " + c.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.WARNING_MESSAGE );
 		}
 	}
 
@@ -1165,7 +1165,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			JOptionPane.showConfirmDialog( null, "L'Heure " + h.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.OK_OPTION );
+			JOptionPane.showConfirmDialog( null, "L'Heure " + h.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.WARNING_MESSAGE );
 		}
 	}
 
