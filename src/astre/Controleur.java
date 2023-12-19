@@ -11,6 +11,7 @@ import astre.modele.outils.TableauUtilitaire;
 
 import java.awt.Component;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -47,6 +48,8 @@ public class Controleur
 	public ModuleIUT     getModule             ( String nom      ) { return this.metier.getModule             ( nom         ); }
 
 	public int           getNBHeureEQTD ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD ( code, nomHeure ); }
+
+	public ArrayList<String> getHistorique ( ) { return this.metier.getHistorique ( ); }
 
 	public void update ( Object o ) { this.metier.update ( o ); }
 	public void insert ( Object o ) { this.metier.insert ( o ); }

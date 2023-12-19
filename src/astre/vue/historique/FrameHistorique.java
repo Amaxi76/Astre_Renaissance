@@ -8,7 +8,6 @@ package astre.vue.historique;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
-import javax.swing.*;
 
 public class FrameHistorique extends AFrame
 {
