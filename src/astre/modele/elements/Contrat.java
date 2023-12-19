@@ -2,7 +2,7 @@ package astre.modele.elements;
 
 /** Classe Contrat 
   * @author : Maximilien Lesterlin, Alizéa Lebaron
-  * @version : 1.0 - 12/12/2023
+  * @version : 1.0 - 19/12/2023
   * @date : 06/12/2023
   */
 
@@ -14,7 +14,7 @@ public class Contrat
 	private int    heureMaxContrat;
 	private double ratioTP;
 
-	/**
+	/** Constructeur unique de contrat
 	 * @param id
 	 * @param nom
 	 * @param heureServiceContrat
@@ -34,23 +34,27 @@ public class Contrat
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	/**
+	/** Retourne l'ID d'un contrat
 	 * @return
 	 */
 	public int    getId                  ( ) { return this.id;                  }
-	/**
+
+	/** Retourne le nom d'un contrat
 	 * @return
 	 */
 	public String getNom                 ( ) { return this.nom;                 }
-	/**
+
+	/** Retourne le nombre d'heure service d'un contrat
 	 * @return
 	 */
 	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
-	/**
+
+	/** Retourne le nombre d'heure Maximales d'un contrat
 	 * @return
 	 */
 	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
-	/**
+
+	/** Retourne le ratio TP d'un contrat
 	 * @return
 	 */
 	public double getRatioTP             ( ) { return this.ratioTP;             }
@@ -59,23 +63,27 @@ public class Contrat
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/**
+	/** Permet de modifier les heure de service d'un contrat
 	 * @param heureServiceContrat
 	 */
 	public void setHeureServiceContrat ( int    heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
-	/**
+
+	/** Permet de modifier le nom d'un contrat
 	 * @param nom
 	 */
 	public void setNom                 ( String nom                 ) { this.nom                 = nom;                 }
-	/**
+
+	/** Permet de modifier le nombre d'heure maximum d'un contrat
 	 * @param heureMaxContrat
 	 */
 	public void setHeureMaxContrat     ( int    heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
-	/**
+
+	/** Permet de modifier le ratio TP d'un contrat 
 	 * @param ratioTP
 	 */
 	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
-	/**
+
+	/** Permet de modifier l'ID
 	 * @param id
 	 */
 	public void setId                  ( int    id                  ) { this.id                  = id;                  }
@@ -84,6 +92,10 @@ public class Contrat
 	/*                METHODES               */
 	/*---------------------------------------*/
 
+	/** Fabrique de contrat à partir d'un tableau
+	 * @param contrat Prend un tableau d'objet définissant le contrat
+	 * @return Le contrat contenu dans le tableau d'objet
+	 */
 	public static Contrat creation ( Object[] contrat )
 	{
 		Object i   = contrat[0];
@@ -104,6 +116,14 @@ public class Contrat
 		return Contrat.creation ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
+	/** Fabrique de contrat prenant en paramètres toutes les données d'un contrat
+	 * @param id
+	 * @param nom
+	 * @param heureServiceContrat
+	 * @param heureMaxContrat
+	 * @param ratioTP
+	 * @return Le contrat en question
+	 */
 	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
 		if ( nom.equals ( "" ) )
@@ -124,7 +144,7 @@ public class Contrat
 		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
-	/**
+	/** Donne une description d'un contrat
 	 * @return
 	 */
 	public String toString ( )
