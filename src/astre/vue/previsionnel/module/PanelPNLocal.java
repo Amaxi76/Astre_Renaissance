@@ -19,10 +19,10 @@ import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelPNLocal
-  * @author : Clémentin Ly
-  * @version : 2.0 - 14/12/2023
-  * @date : 12/12/2023
-  */
+ * @author : Clémentin Ly
+* @version : 2.0 - 14/12/2023
+* @date : 12/12/2023
+*/
 
 public class PanelPNLocal extends JPanel
 {
@@ -44,8 +44,9 @@ public class PanelPNLocal extends JPanel
 	private JLabel lblTotalSomme;
 
 	//TEST MODULABLE
-	private List<JLabel>     lstLabelsHeures     = new ArrayList<>();
-	private List<JTextField> lstTextFieldsHeures = new ArrayList<>();
+	private List<JLabel>     lstLabelsHeures      = new ArrayList<>();
+	private List<JTextField> lstTextFieldsHeures  = new ArrayList<>();
+	private List<JLabel>     lstLabelsTotalHeures = new ArrayList<>();
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -216,6 +217,7 @@ public class PanelPNLocal extends JPanel
 			double totalTD = 0;
 			double totalTP = 0;
 
+			//TEST MODULABLE
 			double nouvTotalHeureValeur = 0;
 
 			if ( !lblTotalCM.getText().isEmpty() )
@@ -236,7 +238,7 @@ public class PanelPNLocal extends JPanel
 			double totalSomme = totalCM + totalTD + totalTP;
 
 			//TEST MODULABLE
-			for ( JLabel labelTotalHeure : lstLabelsHeures )
+			for ( JLabel labelTotalHeure : lstLabelsTotalHeures )
 			{
 				if ( !labelTotalHeure.getText().isEmpty() )
 				{
@@ -293,14 +295,14 @@ public class PanelPNLocal extends JPanel
 			//TEST MODULABLE
 			for ( int i = 0; i < lstTextFieldsHeures.size(); i++)
 			{
-				JTextField textField       = lstTextFieldsHeures.get(i);
-				JLabel     labelTotalHeure = lstLabelsHeures    .get(i);
+				JTextField textField       = lstTextFieldsHeures .get(i);
+				JLabel     labelTotalHeure = lstLabelsTotalHeures.get(i);
 	
 				if ( !textField.getText().isEmpty() )
 				{
 					//TODO: À MODIFIER CAR AUCUN COEFFICIENT ET AUCUNE MULTIPLICATION AUX ÉTUDIANTS
-					int    heureValeur = Integer.parseInt ( textField.getText() );
-					labelTotalHeure.setText(String.valueOf( heureValeur ) );
+					int heureValeur = Integer.parseInt ( textField.getText() );
+					labelTotalHeure.setText ( String.valueOf ( heureValeur ) );
 				}
 			}
 		}
@@ -365,7 +367,7 @@ public class PanelPNLocal extends JPanel
 	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
 
 
-	/* TEST MODULABLE */
+	//TEST MODULABLE
 	public void ajouterHeure ( String nomHeure )
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -381,8 +383,10 @@ public class PanelPNLocal extends JPanel
 		labelTotalHeure.setPreferredSize ( new Dimension ( 40, 15 ) );
 		labelTotalHeure.setOpaque( true );
 	
-		this.lstLabelsHeures    .add ( labelHeure     );
-		this.lstTextFieldsHeures.add ( textFieldHeure );
+		this.lstLabelsHeures     .add ( labelHeure      );
+		this.lstTextFieldsHeures .add ( textFieldHeure  );
+		this.lstLabelsTotalHeures.add ( labelTotalHeure );
+
 	
 		gbc.gridy = 3;
 		gbc.gridx = 1;
