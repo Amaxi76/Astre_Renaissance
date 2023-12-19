@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import astre.Controleur;
 import astre.modele.elements.*;
 
@@ -750,13 +752,16 @@ public class BD
 				double ttimp = s1 + s3 + s5;
 				double ttpair = s2 + s4 + s6;
 
-				intervenants[cpt][0]  = rs.getInt    (1);//Id
-				intervenants[cpt][1]  = rs.getString (2);//contrat
-				intervenants[cpt][2]  = rs.getString (3);//nom
-				intervenants[cpt][3]  = rs.getString (4);//prenom
-				intervenants[cpt][4]  = rs.getInt    (5);//hservice
-				intervenants[cpt][5]  = rs.getInt    (6);//hmax
-				intervenants[cpt][6]  = getContrat   (rs.getString(2)).getRatioTP();//coeff
+				
+
+
+				intervenants[cpt][0]  = rs.getInt    ( 1 );//Id
+				intervenants[cpt][1]  = rs.getString ( 2 );//contrat
+				intervenants[cpt][2]  = rs.getString ( 3 );//nom
+				intervenants[cpt][3]  = rs.getString ( 4 );//prenom
+				intervenants[cpt][4]  = rs.getInt    ( 5 );//hservice
+				intervenants[cpt][5]  = rs.getInt    ( 6 );//hmax
+				intervenants[cpt][6]  = getContrat ( rs.getString ( 2 ) ).getRatioTP ( );//coeff
 				intervenants[cpt][7]  = s1;
 				intervenants[cpt][8]  = s3;
 				intervenants[cpt][9]  = s5;
@@ -780,7 +785,7 @@ public class BD
 
 		return intervenants;
 	}
-
+	
 
 	public Object[][] getIntervientsTableau( String module )
 	{
@@ -1142,7 +1147,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			Controleur.afficherErreur("Suppression impossible","Impossible de supprimer le contrat " + c.getNom ( ) + " car il est présent dans une autre table");
+			JOptionPane.showConfirmDialog( null, "Le contrat " + c.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.OK_OPTION );
 		}
 	}
 
@@ -1160,7 +1165,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'heure " + h.getNom ( ) + " car elle est présente dans une autre table" );
+			JOptionPane.showConfirmDialog( null, "L'Heure " + h.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.OK_OPTION );
 		}
 	}
 
@@ -1178,7 +1183,14 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer le module " + m.getCode ( ) + " car il est présent dans une autre table" );
+			int test = JOptionPane.showInternalConfirmDialog ( null, "Le module " + m.getCode ( ) + " est présent sur une autre table, voulez-vous supprimer toutes ses relations ?", "Suppression impossible", JOptionPane.YES_NO_OPTION );
+			
+			if(test == 0)
+			{
+				deleteAllIntervient ( m.getCode ( ), "code_moduleIUT" );
+				deleteAllHoraire    ( m.getCode ( ), "code_moduleIUT" );
+				delete ( m ); 
+			}
         }
 	}
 
@@ -1196,8 +1208,13 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table");
-			//Controleur.afficherErreur("Suppression impossible", "Impossible de supprimer l'intervenant " + i.getNom ( ) + " car il est présent dans une autre table", "Retour", "Supprimer tout de meme", i );
+			int test = JOptionPane.showInternalConfirmDialog ( null, "L'intervenant " + i.getNom ( ) + " est présent sur une autre table, voulez-vous supprimer toutes ses relations ?", "Suppression impossible", JOptionPane.YES_NO_OPTION );
+			
+			if(test == 0)
+			{
+				deleteAllIntervient ( i.getId ( ) + "", "Id_Intervenant" );
+				delete ( i ); 
+			}
         }
 	}
 
@@ -1217,8 +1234,7 @@ public class BD
         }
 		catch ( SQLException ex ) 
 		{
-			System.out.println(ex.fillInStackTrace());
-			Controleur.afficherErreur("Suppression impossible", "Suppression de l'Intervient n'a po marché RIP" );
+			System.out.println ( ex );
         }
 	}
 
@@ -1237,10 +1253,43 @@ public class BD
         }
 		catch ( SQLException e ) 
 		{
-			Controleur.afficherErreur("Suppression impossible", "Suppression de l'Horaire n'a po marché RIP" );
+			System.out.println ( e );
         }
 	}
 
+	public void deleteAllIntervient ( String nb, String id )
+	{
+		String req = "DELETE FROM Intervient where " +  id + " = " + nb;
+		
+		try
+		{
+            ps = co.prepareStatement ( req );
+			ps.executeUpdate ( );
+
+			ps.close ( );
+        }
+		catch ( SQLException ex ) 
+		{
+			System.out.println ( ex );
+        }
+	}
+
+	public void deleteAllHoraire ( String nb, String id )
+	{
+		String req = "DELETE FROM Horaire where " +  id + " = " + nb;
+		
+		try
+		{
+            ps = co.prepareStatement ( req );
+			ps.executeUpdate ( );
+
+			ps.close ( );
+        }
+		catch ( SQLException ex ) 
+		{
+			System.out.println ( ex );
+        }
+	}
 
 	/*---------------------------------------*/
 	/*                UPDATE                 */

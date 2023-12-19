@@ -136,10 +136,29 @@ public class ModeleTableau extends AbstractTableModel
 	public void supprimerLigne ( int index )
 	{
 		// initialiser un nouveau tableau avec la taille pour une ligne en MOINS
-		Object[][] nouveauTableau = TableauUtilitaire.copier ( this.tabDonnees, 1 );
+		//Object[][] nouveauTableau = TableauUtilitaire.copier ( this.tabDonnees, 1 );
 
 		// mettre à jour les nouvelles valeurs
-		this.majDonnees ( nouveauTableau );
+		//this.majDonnees ( nouveauTableau );
+
+
+		//ancienne méthode
+		Object[][] nouveauTableau = new Object[tabDonnees.length - 1][tabDonnees[0].length];
+
+		for ( int i = 0, k = 0; i < tabDonnees.length; i++ )
+		{
+			if ( i != index )
+			{
+				for ( int j = 0; j < tabDonnees[0].length; j++ )
+				{
+					nouveauTableau[k][j] = tabDonnees[i][j];
+				}
+				k++;
+			}
+		}
+
+		tabDonnees = nouveauTableau;
+		fireTableDataChanged ( );
 	}
 
 	/**

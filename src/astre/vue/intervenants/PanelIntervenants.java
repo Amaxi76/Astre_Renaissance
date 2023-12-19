@@ -108,6 +108,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne ( );
+			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
 		

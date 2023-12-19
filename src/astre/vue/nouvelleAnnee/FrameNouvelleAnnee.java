@@ -1,12 +1,10 @@
 package astre.vue.nouvelleAnnee;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,14 +43,17 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 		/* --------------------------------------- */
 
 		this.setTitle( "Nouvelle Année" );
-		this.setSize ( 400, 300 );
+		this.setSize ( 500, 300 );
 
 		/* --------------------------------------- */
 		/*         Création des composants         */
 		/* --------------------------------------- */
 
         // Création d'un panel 
-		JPanel panel    = new JPanel ( new GridBagLayout ( ) ); //Permet de faire une grille sur le panel
+		JPanel panel    = new JPanel ( new GridLayout ( 4, 1, 10, 10 ) );
+
+		//Ajout d'un bordure
+		panel.setBorder ( BorderFactory.createEmptyBorder ( 10, 10, 10, 10 ) );
 
 		//Création d'un label
 		JLabel lbl      = new JLabel ("Choisissez une des options suivantes pour changer d'année :");
@@ -62,30 +63,13 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
         this.btnZero    = new JButton ( "Recommencer une année de zéro"  );
         this.btnAnnuler = new JButton ( "Annuler"                        );
 
-		// Gestion de la taille des boutons
-		this.btnZero   .setPreferredSize( new Dimension( 300, 30 ) );
-        this.btnNew    .setPreferredSize( new Dimension( 300, 30 ) );
-        this.btnAnnuler.setPreferredSize( new Dimension( 300, 30 ) );
-
-        // Création des contraintes de la grille
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 10, 0); // Espacement vertical
-
 		//Ajout du label au panel
-		panel.add ( lbl    , gbc );
+		panel.add ( lbl            );
 		
         // Ajout des boutons au panel
-
-		gbc.gridy++;
-		panel.add ( this.btnNew    , gbc );
-
-		gbc.gridy++;
-        panel.add ( this.btnZero   , gbc );
-
-        gbc.gridy++;
-        panel.add ( this.btnAnnuler, gbc );
+		panel.add ( this.btnNew    );
+        panel.add ( this.btnZero   );
+        panel.add ( this.btnAnnuler);
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -154,7 +138,6 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 						this.dispose();
 					}
 				}
-				
 			}
 		}
 
@@ -162,7 +145,5 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 		{
 			this.dispose();
 		}
-
-		
 	}
 }
