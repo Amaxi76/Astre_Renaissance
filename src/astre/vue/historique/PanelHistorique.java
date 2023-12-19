@@ -1,9 +1,14 @@
 package astre.vue.historique;
 
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import astre.Controleur;
+import astre.modele.BD;
 
 /** Classe PanelHistorique
   * @author : Matéo Sa
@@ -23,9 +28,18 @@ public class PanelHistorique extends JPanel
 		this.txtHistorique = new JTextArea ( 25, 50 );
 		this.txtHistorique.setEditable ( false );
 
-		this.txtHistorique.append("Hello world !");
+		JScrollPane bar = new JScrollPane(txtHistorique);
 
-		this.add ( this.txtHistorique );
+		this.add(bar);
+		//this.add ( this.txtHistorique );
+
+		ArrayList<String> lst = BD.getInstance().getHistorique();
+
+		for(String s : lst)
+		{
+			
+			this.txtHistorique.append(s + "\n");
+		}
 
 	}
 }

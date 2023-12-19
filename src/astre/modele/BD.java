@@ -970,6 +970,30 @@ public class BD
 		return heures;
 	}
 
+	public ArrayList<String> getHistorique ( )
+	{
+		ArrayList<String> lst = new ArrayList<String>(); 
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from Historique" );
+			while ( rs.next ( ) )
+			{
+				lst.add( rs.getString(2) + "  " + rs.getString(3));
+			}
+
+			rs.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getHistorique() : " + e );
+		}
+
+		return lst;
+	}
+
 	/*---------------------------------------*/
 	/*                INSERT                 */
 	/*---------------------------------------*/
