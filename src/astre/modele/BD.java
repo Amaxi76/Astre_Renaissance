@@ -980,7 +980,8 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Historique" );
 			while ( rs.next ( ) )
 			{
-				lst.add( rs.getString(2) + "  " + rs.getString(3));
+				String date[] = rs.getString(2).split(":");
+				lst.add( date[0] + ":" + date[1] + "  " + rs.getString(3) );
 			}
 
 			rs.close ( );
