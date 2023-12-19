@@ -29,9 +29,9 @@ public class BD
 	private static final String PASSWORD  = /* mot de passe ---> */																																					"mateo2705";
 	private static final String URL_WOODY = "jdbc:postgresql://woody/" + LOGIN;
 	private static final String URL_LOCAL = "jdbc:postgresql://localhost:7777/" + LOGIN;
-	
+
 	private static BD dbInstance;
-	
+
 	Connection co;
 	PreparedStatement ps;
 
@@ -92,7 +92,7 @@ public class BD
 
 					if ( type.equals ( Heure.class )        )
 						lst.add ( type.cast ( Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
-			
+
 					if ( type.equals ( Intervenant.class )  )
 						lst.add ( type.cast ( Intervenant.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 
@@ -105,14 +105,14 @@ public class BD
 					if ( type.equals ( Intervient.class )  )
 						lst.add ( type.cast ( new Intervient( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
 						// Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire
-				
+
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
 				}
 				catch ( Exception e )
 				{
 					e.printStackTrace ( );
 				}
-				
+
 			}
 
 		}
@@ -464,7 +464,7 @@ public class BD
 				{
 					e.printStackTrace ( );
 				}
-				
+
 			}
 		}
 		catch ( SQLException e )
@@ -493,7 +493,7 @@ public class BD
 				{
 					e.printStackTrace ( );
 				}
-				
+
 			}
 		}
 		catch ( SQLException e )
@@ -529,7 +529,7 @@ public class BD
 	{
 		int somme = 0;
 
-		try 
+		try
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
@@ -537,7 +537,7 @@ public class BD
 			rs.next ( );
 
 			somme = rs.getInt(1);
-		} 
+		}
 		catch (Exception e)
 		{
 			System.out.println ( "Erreur  getNBHeureParModule (String code, int Id_Inter, int Id_Heure) : " + e );
@@ -546,8 +546,6 @@ public class BD
 		return somme;
 	}
 
-	public int getNBHeurePNParModule ( String code, int Id_Heure )
-/*=======
 	// Utilisée dans panelRepartition.java
 	public int getNBHeureEQTD (String code, String nomHeure)
 	{
@@ -562,7 +560,7 @@ public class BD
 
 			somme = rs.getInt(1);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			System.out.println ( "getNBHeureEQTD (String code, String nomHeure) : " + e );
 		}
@@ -575,7 +573,7 @@ public class BD
 	{
 		int somme = 0;
 
-		try 
+		try
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestre(" + Id_Semestre + "," + Id_Intervenant + ")" );
@@ -584,7 +582,7 @@ public class BD
 
 			somme = rs.getInt(1);
 		}
-		catch (Exception e) 
+		catch (Exception e)
 		{
 			System.out.println ( "Erreur getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant) : " + e );
 		}
@@ -594,11 +592,10 @@ public class BD
 
 	// Utilisée dans générateur.java
 	public int getNBHeurePNParModule (String code, int Id_Heure)
->>>>>>> 8be902fe00d3e70a007c30a7b4f31377a9be4b6d*/
 	{
 		int somme = 0;
 
-		try 
+		try
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeurePNParModule('" + code + "'," + Id_Heure + ")" );
@@ -606,8 +603,8 @@ public class BD
 			rs.next ( );
 
 			somme = rs.getInt(1);
-		} 
-		catch (Exception e) 
+		}
+		catch (Exception e)
 		{
 			System.out.println ( "Erreur getNBHeurePNParModule (String code, int Id_Heure) : " + e );
 		}
@@ -621,7 +618,7 @@ public class BD
 	{
 		int somme = 0;
 
-		try 
+		try
 		{
 			Statement st = co.createStatement ( );
 			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureRepParModule('" + code + "'," + Id_Heure + ")" );
@@ -629,8 +626,8 @@ public class BD
 			rs.next ( );
 
 			somme = rs.getInt(1);
-		} 
-		catch (Exception e) 
+		}
+		catch (Exception e)
 		{
 			System.out.println ( "Erreur getNBHeureRepParModule (String code, int Id_Heure) : " + e );
 		}
@@ -684,9 +681,57 @@ public class BD
 		return object;
 	}
 
+	// Utilisé dans src\astre\vue\previsionnel\module\PanelAffectation.java
+	//TODO: regarder pour l'enlever
+	public Object[][] getIntervientsTableau( String module )
+	{
+		int nbIntervients = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select count(*) from Intervient where code_moduleIUT = '" + module + "'");
+			while ( rs.next ( ) )
+				nbIntervients = rs.getInt ( 1 );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		Object[][] intervients = new Object[nbIntervients][6];
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, Id_Heure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient where code_moduleIUT = '" + module + "'");
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
+				intervients[cpt][1] = getHeure(rs.getInt ( 2 )).getNom();//heure
+				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString ( 6 );//commentaire
+
+				if( intervients[cpt][5] == null )
+					intervients[cpt][5] = "";
+
+				cpt++;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 2 getIntervientsTableau ( ) : " +  e );
+		}
+
+	 	return intervients;
+	}
+
 	public ArrayList<String> getHistorique ( )
 	{
-		ArrayList<String> lst = new ArrayList<String>(); 
+		ArrayList<String> lst = new ArrayList<String>();
 
 		try
 		{
@@ -845,8 +890,8 @@ public class BD
 	public void delete ( Contrat c )
 	{
 		String req = "DELETE FROM Contrat where Id_Contrat = ?";
-		
-		try 
+
+		try
 		{
 			ps = co.prepareStatement ( req );
 			ps.setInt ( 1, c.getId ( ) );
@@ -864,7 +909,7 @@ public class BD
 	{
 		String req = "DELETE FROM Heure where Id_Heure = ?";
 
-		try 
+		try
 		{
 			ps = co.prepareStatement ( req );
 			ps.setInt ( 1, h.getId ( ) );
@@ -881,7 +926,7 @@ public class BD
 	public void delete ( ModuleIUT m )
 	{
 		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
-		
+
 		try
 		{
             ps = co.prepareStatement ( req );
@@ -890,15 +935,15 @@ public class BD
 
 			ps.close ( );
         }
-		catch ( SQLException e ) 
+		catch ( SQLException e )
 		{
 			int test = JOptionPane.showInternalConfirmDialog ( null, "Le module " + m.getCode ( ) + " est présent sur une autre table, voulez-vous supprimer toutes ses relations ?", "Suppression impossible", JOptionPane.YES_NO_OPTION );
-			
+
 			if(test == 0)
 			{
 				deleteAllIntervient ( m.getCode ( ), "code_moduleIUT" );
 				deleteAllHoraire    ( m.getCode ( ), "code_moduleIUT" );
-				delete ( m ); 
+				delete ( m );
 			}
         }
 	}
@@ -915,14 +960,14 @@ public class BD
 
 			ps.close ( );
         }
-		catch ( SQLException e ) 
+		catch ( SQLException e )
 		{
 			int test = JOptionPane.showInternalConfirmDialog ( null, "L'intervenant " + i.getNom ( ) + " est présent sur une autre table, voulez-vous supprimer toutes ses relations ?", "Suppression impossible", JOptionPane.YES_NO_OPTION );
-			
+
 			if(test == 0)
 			{
 				deleteAllIntervient ( i.getId ( ) + "", "Id_Intervenant" );
-				delete ( i ); 
+				delete ( i );
 			}
         }
 	}
@@ -930,7 +975,7 @@ public class BD
 	public void delete ( Intervient e )
 	{
 		String req = "DELETE FROM Intervient where Id_Intervenant = ? AND ID_Heure = ? AND code_ModuleIUT = ?";
-		
+
 		try
 		{
             ps = co.prepareStatement ( req );
@@ -941,7 +986,7 @@ public class BD
 
 			ps.close ( );
         }
-		catch ( SQLException ex ) 
+		catch ( SQLException ex )
 		{
 			System.out.println ( ex );
         }
@@ -950,7 +995,7 @@ public class BD
 	public void delete ( Horaire h )
 	{
 		String req = "DELETE FROM Horaire where nomHeure = ? AND Code_ModuleIUT = ?";
-		
+
 		try
 		{
             ps = co.prepareStatement ( req );
@@ -960,7 +1005,7 @@ public class BD
 
 			ps.close ( );
         }
-		catch ( SQLException e ) 
+		catch ( SQLException e )
 		{
 			System.out.println ( e );
         }
@@ -969,7 +1014,7 @@ public class BD
 	public void deleteAllIntervient ( String nb, String id )
 	{
 		String req = "DELETE FROM Intervient where " +  id + " = " + nb;
-		
+
 		try
 		{
             ps = co.prepareStatement ( req );
@@ -977,7 +1022,7 @@ public class BD
 
 			ps.close ( );
         }
-		catch ( SQLException ex ) 
+		catch ( SQLException ex )
 		{
 			System.out.println ( ex );
         }
@@ -986,7 +1031,7 @@ public class BD
 	public void deleteAllHoraire ( String nb, String id )
 	{
 		String req = "DELETE FROM Horaire where " +  id + " = " + nb;
-		
+
 		try
 		{
             ps = co.prepareStatement ( req );
@@ -994,7 +1039,7 @@ public class BD
 
 			ps.close ( );
         }
-		catch ( SQLException ex ) 
+		catch ( SQLException ex )
 		{
 			System.out.println ( ex );
         }
