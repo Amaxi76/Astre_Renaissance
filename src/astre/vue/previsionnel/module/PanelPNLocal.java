@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -42,6 +43,10 @@ public class PanelPNLocal extends JPanel
 	private JLabel lblTotalTP;
 	private JLabel lblTotalSomme;
 
+	//TEST MODULABLE
+	private List<JLabel>     lstLabelsHeures     = new ArrayList<>();
+	private List<JTextField> lstTextFieldsHeures = new ArrayList<>();
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -63,12 +68,15 @@ public class PanelPNLocal extends JPanel
 
 		this.txtCM      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtCM );
+		this.lstTextFieldsHeures.add ( txtCM );
 
 		this.txtTD      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTD );
+		this.lstTextFieldsHeures.add ( txtTD );
 
 		this.txtTP      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTP );
+		this.lstTextFieldsHeures.add ( txtTP );
 		
 		this.lblSomme   = new JLabel();
 
@@ -81,12 +89,15 @@ public class PanelPNLocal extends JPanel
 		gbc.gridy = 0;
 		gbc.gridx = 1;
 		this.add ( new JLabel ( "CM" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
 
 		gbc.gridx = 3;
 		this.add ( new JLabel ( "TP" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "Σ" ), gbc  );
@@ -168,6 +179,9 @@ public class PanelPNLocal extends JPanel
 			int TD    = 0;
 			int TP    = 0;
 			
+			//TEST MODULABLE
+			int nouvHeureValeur = 0;
+			
 			if (!txtCM.getText().isEmpty() )
 			{
 				CM = Integer.parseInt ( txtCM.getText() );
@@ -184,12 +198,25 @@ public class PanelPNLocal extends JPanel
 			}
 
 			int somme = CM + TD + TP;
+
+			//TEST MODULABLE
+			for ( JTextField textField : lstTextFieldsHeures )
+			{
+				if ( !textField.getText().isEmpty() )
+				{
+					nouvHeureValeur = Integer.parseInt(textField.getText());
+					somme += nouvHeureValeur;
+				}
+			}
+
 			lblSomme.setText ( String.valueOf ( somme ) );
 
 
 			double totalCM = 0;
 			double totalTD = 0;
 			double totalTP = 0;
+
+			double nouvTotalHeureValeur = 0;
 
 			if ( !lblTotalCM.getText().isEmpty() )
 			{
@@ -207,6 +234,17 @@ public class PanelPNLocal extends JPanel
 			}
 
 			double totalSomme = totalCM + totalTD + totalTP;
+
+			//TEST MODULABLE
+			for ( JLabel labelTotalHeure : lstLabelsHeures )
+			{
+				if ( !labelTotalHeure.getText().isEmpty() )
+				{
+					nouvTotalHeureValeur = Double.parseDouble ( labelTotalHeure.getText() );
+					totalSomme += nouvTotalHeureValeur;
+				}
+			}
+
 			lblTotalSomme.setText ( String.valueOf ( totalSomme ) );
 		}
 		catch ( NumberFormatException ex )
@@ -250,6 +288,20 @@ public class PanelPNLocal extends JPanel
 				double totalTP = TP * coeffTP * nbGpTP;
 	
 				lblTotalTP.setText ( String.valueOf ( totalTP ) );
+			}
+			
+			//TEST MODULABLE
+			for ( int i = 0; i < lstTextFieldsHeures.size(); i++)
+			{
+				JTextField textField       = lstTextFieldsHeures.get(i);
+				JLabel     labelTotalHeure = lstLabelsHeures    .get(i);
+	
+				if ( !textField.getText().isEmpty() )
+				{
+					//TODO: À MODIFIER CAR AUCUN COEFFICIENT ET AUCUNE MULTIPLICATION AUX ÉTUDIANTS
+					int    heureValeur = Integer.parseInt ( textField.getText() );
+					labelTotalHeure.setText(String.valueOf( heureValeur ) );
+				}
 			}
 		}
 		catch ( NumberFormatException ex )
@@ -311,4 +363,37 @@ public class PanelPNLocal extends JPanel
 	public int getCM ( ) { return Integer.parseInt( this.txtCM.getText() ); }
 	public int getTD ( ) { return Integer.parseInt( this.txtTD.getText() ); }
 	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
+
+
+	/* TEST MODULABLE */
+	public void ajouterHeure ( String nomHeure )
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+	
+		JLabel     labelHeure      = new JLabel ( nomHeure );
+
+		JTextField textFieldHeure  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( textFieldHeure );
+
+		JLabel     labelTotalHeure = new JLabel ( );
+		labelTotalHeure.setBackground ( Color.LIGHT_GRAY );
+		labelTotalHeure.setPreferredSize ( new Dimension ( 40, 15 ) );
+		labelTotalHeure.setOpaque( true );
+	
+		this.lstLabelsHeures    .add ( labelHeure     );
+		this.lstTextFieldsHeures.add ( textFieldHeure );
+	
+		gbc.gridy = 3;
+		gbc.gridx = 1;
+		this.add ( labelHeure, gbc );
+	
+		gbc.gridx = 2;
+		this.add ( textFieldHeure, gbc );
+
+		gbc.gridx = 3;
+		this.add ( labelTotalHeure, gbc );
+
+		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
+	}
 }
