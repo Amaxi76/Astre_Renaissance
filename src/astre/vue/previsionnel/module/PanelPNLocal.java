@@ -293,7 +293,7 @@ public class PanelPNLocal extends JPanel
 			}
 			
 			//TEST MODULABLE
-			for ( int i = 0; i < lstTextFieldsHeures.size(); i++)
+			for ( int i = 3; i < lstTextFieldsHeures.size() && i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
 			{
 				JTextField textField       = lstTextFieldsHeures .get(i);
 				JLabel     labelTotalHeure = lstLabelsTotalHeures.get(i);
@@ -388,7 +388,7 @@ public class PanelPNLocal extends JPanel
 		this.lstLabelsTotalHeures.add ( labelTotalHeure );
 
 	
-		gbc.gridy = 3;
+		gbc.gridy = this.lstLabelsHeures.size();
 		gbc.gridx = 1;
 		this.add ( labelHeure, gbc );
 	
