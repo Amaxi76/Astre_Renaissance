@@ -19,6 +19,12 @@ public class Heure
 	private String nom;
 	private double coefTd;
 
+	/** Constructeur d'horaire
+	 * @param id
+	 * @param nom
+	 * @param coefTd
+	 */
+
 	private Heure ( int id, String nom, double coefTd )
 	{
 		this.id     = id;
@@ -26,6 +32,9 @@ public class Heure
 		this.coefTd = coefTd;
 	}
 
+	/** Crée une heure en prenant en paramètre un tableau d'objet.
+	 * @return L'heure créée si les données du tableau sont correctes.
+	 */
 	public static Heure creation ( Object[] heure )
 	{
 		Object i = heure[0];
@@ -58,23 +67,47 @@ public class Heure
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	/** Retourne la liste des heures
+	 * @return ensHeure
+	 */
 	public static List<Heure> getHeures ( ) { return Heure.ensHeure;  }
 
+	/** Retourne l'id d'une heure
+	 * @return id
+	 */
 	public int    getId     ( ) { return this.id;     }
+
+	/** Retourne le nom d'une heure
+	 * @return nom
+	 */
 	public String getNom    ( ) { return this.nom;    }
+
+	/** Retourne le coefficient équivalent TD d'une heure
+	 * @return coefTd
+	 */
 	public double getCoefTd ( ) { return this.coefTd; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 	
+	/** Permet de modifier le nom
+	 * @param nom the nom to set
+	 */
 	public void setNom    ( String nom    ) { this.nom    = nom;    }
+
+	/** Permet de modifier le coefficient équivalent TD
+	 * @param coefTd the coefTd to set
+	 */
 	public void setCoefTd ( double coefTd ) { this.coefTd = coefTd; }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
 
+	/** Retire un élément de la liste heure
+	 * @return true si la liste contient l'élément, sinon false
+	 */
 	public boolean retirerListe ( )
 	{
 		if ( ! Heure.ensHeure.contains ( this ) ) return false;
