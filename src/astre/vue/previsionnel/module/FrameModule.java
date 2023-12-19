@@ -132,14 +132,44 @@ public class FrameModule extends JFrame
 		this.setVisible ( true );
 	}
 
+	/** Retourne si la checkbox est sélectionnée ou non
+	 * @return cbValidation
+	 */
 	public boolean getCbValidation ( ) { return this.cbValidation.isSelected ( ); }
 
+	/** Retourne le panelModuleLabel de FrameModule
+	 * @return panelModuleLabel
+	 */
 	public PanelModuleLabel    getPanelModuleLabel    ( ) { return this.panelModuleLabel;    }
+
+	/** Retourne le panelPNLocal de FrameModule
+	 * @return panelPNLocal
+	 */
 	public PanelPNLocal	       getPanelPNLocal        ( ) { return this.panelPNLocal;        }
+
+	/** Retourne le panelPNLocalBis de FrameModule
+	 * @return panelPNLocalBis
+	 */
 	public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
+
+	/** Retourne le panelPNLocalPPP de FrameModule
+	 * @return panelPNLocalPPP
+	 */
 	public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
+
+	/** Retourne le panelRepartition de FrameModule
+	 * @return panelRepartition
+	 */
 	public PanelRepartition    getPanelRepartition    ( ) { return this.panelRepartition;    }
+
+	/** Retourne le panelRepartitionBis de FrameModule
+	 * @return panelRepartitionBis
+	 */
 	public PanelRepartitionBis getPanelRepartitionBis ( ) { return this.panelRepartitionBis; }
+
+	/** Retourne le panelRepartitionPPP de FrameModule
+	 * @return panelRepartitionPPP
+	 */
 	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
 
 	public void setModule ( String code )
