@@ -2,7 +2,6 @@ package astre.vue.etats;
 
 import astre.Controleur;
 import astre.modele.GenerateurFichier;
-import astre.modele.elements.Contrat;
 import astre.modele.elements.Intervenant;
 import astre.modele.elements.ModuleIUT;
 
@@ -31,17 +30,15 @@ public class PanelEtats extends JPanel implements ActionListener
 	
 	/**
 	 * 	Panel pour la frame des Etats.
-	 * @author Matéo
 	 */
 	public PanelEtats ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
 
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.setLayout( new GridLayout( 6, 1, 10, 10) );
+		this.setLayout( new GridLayout( 4, 2, 10, 10) );
 
-		this.btnRecapInter   = new JButton ( "Intervenant individuel" );
-
+		//création des combobox
 		this.cbEdit = new JComboBox<> ( );
 		for ( Intervenant c : this.ctrl.getTable( Intervenant.class ) )
 		{
@@ -54,15 +51,21 @@ public class PanelEtats extends JPanel implements ActionListener
 			cbModule.addItem ( m.getCode ( ) + " - " + m.getLibCourt ( ) );
 		}
 
+		//création des boutons
 		this.btnRecapModule  = new JButton ( "Module Individuels"     );
 		this.btnRecapTtInter = new JButton ( "Tous les intervenants"  );
+		this.btnRecapInter   = new JButton ( "Intervenant individuel" );
 		
 		//Ajout des composants
 		this.add ( new JLabel ( "Générer un récapitulatif pour :" ) );
-		this.add ( this.cbEdit          );
+		this.add ( new JLabel ( )       );
+		
 		this.add ( this.btnRecapInter   );
-		this.add ( this.cbModule        );
+		this.add ( this.cbEdit          );
+
 		this.add ( this.btnRecapModule  );
+		this.add ( this.cbModule        );
+
 		this.add ( this.btnRecapTtInter );
 		
 		//met les actionListener
@@ -75,16 +78,19 @@ public class PanelEtats extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnRecapInter )
 		{
+			//Génération de l'html pour 1 intervenant
 			GenerateurFichier.GenererHTMLIntervenant( this.ctrl.getTable(Intervenant.class).get(this.cbEdit.getSelectedIndex()) );
 		}
 		
 		if ( e.getSource ( ) == this.btnRecapModule )
 		{
+			//Génération de l'html pour 1 module
 			GenerateurFichier.GenererHTMLModule( this.ctrl.getTable(ModuleIUT.class).get(this.cbModule.getSelectedIndex()) );
 		}
 		
 		if ( e.getSource ( ) == this.btnRecapTtInter )
 		{
+			//Génération d'un csv pour tous les intervenants
 			GenerateurFichier.recapTtInter();
 		}
 	}
