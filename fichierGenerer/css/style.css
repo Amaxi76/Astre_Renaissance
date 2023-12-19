@@ -24,6 +24,23 @@ table
 	margin: 0 auto;
 	margin-top: 10vh;
 	width: 80%;
+	text-align: center;
+}
+
+#recap
+{
+	width: 40%;
+	margin-top: 6vh;
+}
+
+#recap tr td, #recap tr th
+{
+	width: 16.6%;
+}
+
+.total
+{
+	background-color: #e49d92;
 }
 
 th 
@@ -46,13 +63,13 @@ tr:nth-child(even)
 
 .num
 {
-	width: 5%;
+	width: 10%;
 	text-align: center;
 }
 
 .mod
 {
-	width: 55%;
+	width: 50%;
 }
 
 .heure

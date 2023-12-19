@@ -24,6 +24,18 @@ table
 	margin: 0 auto;
 	margin-top: 10vh;
 	width: 80%;
+	text-align: center;
+}
+
+#recap
+{
+	width: 40%;
+	margin-top: 6vh;
+}
+
+.total
+{
+	background-color: #e49d92;
 }
 
 th 

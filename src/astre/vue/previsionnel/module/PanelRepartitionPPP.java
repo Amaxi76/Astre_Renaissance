@@ -29,6 +29,7 @@ public class PanelRepartitionPPP extends JPanel
 	/*-------------*/
 
 	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtCM;
 	private JTextField txtTD;
@@ -48,9 +49,10 @@ public class PanelRepartitionPPP extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelRepartitionPPP ( Controleur ctrl )
+	public PanelRepartitionPPP ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -209,27 +211,27 @@ public class PanelRepartitionPPP extends JPanel
 
 			if (!txtCM.getText().isEmpty() )
 			{
-				hCM = Integer.parseInt ( txtCM.getText() );
+				hCM = getCMRepartition();
 			}
 
 			if ( !txtTD.getText().isEmpty() )
 			{
-				hTD = Integer.parseInt ( txtTD.getText() );
+				hTD = getTDRepartition();
 			}
 
 			if ( !txtTP.getText().isEmpty() )
 			{
-				hTP = Integer.parseInt ( txtTP.getText() );
+				hTP = getTPRepartition();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = Integer.parseInt ( txtHTut.getText() );
+				hTut = getHTutRepartition();
 			}
 
 			if ( !txtHP.getText().isEmpty() )
 			{
-				hPonct = Integer.parseInt ( txtHP.getText() );
+				hPonct = getHPRepartition();
 			}
 
 			int somme = hCM + hTD + hTP + hTut + hPonct;
@@ -240,6 +242,31 @@ public class PanelRepartitionPPP extends JPanel
 		{
 			this.lblSomme.setText ( "Erreur" );
 		}
+
+		majAffectation();
+	}
+
+	private void majAffectation()
+	{
+		lblTotalCM  .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "CM") ) );
+		lblTotalTD  .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TD") ) );
+		lblTotalTP  .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TP") ) );
+		lblTotalHTut.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "Tut") ) );
+		lblTotalHP  .setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "PONCT") ) );
+
+		majAffectationSomme();
+	}
+
+	private void majAffectationSomme()
+	{
+		int CM   = Integer.parseInt ( lblTotalCM  .getText() );
+		int TD   = Integer.parseInt ( lblTotalTD  .getText() );
+		int TP   = Integer.parseInt ( lblTotalTP  .getText() );
+		int HTut = Integer.parseInt ( lblTotalHTut.getText() );
+		int HP   = Integer.parseInt ( lblTotalHP  .getText() );
+
+		int somme = CM + TD + TP + HTut + HP;
+		lblTotalSomme.setText ( String.valueOf ( somme ) );
 	}
 
 	public void setModule ( ModuleIUT module )

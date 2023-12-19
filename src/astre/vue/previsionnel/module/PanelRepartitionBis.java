@@ -29,6 +29,7 @@ public class PanelRepartitionBis extends JPanel
 	/*-------------*/
 
 	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtHSae;
 	private JTextField txtHTut;
@@ -42,9 +43,10 @@ public class PanelRepartitionBis extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelRepartitionBis ( Controleur ctrl )
+	public PanelRepartitionBis ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -146,12 +148,12 @@ public class PanelRepartitionBis extends JPanel
 
 			if (!txtHSae.getText().isEmpty() )
 			{
-				hSae = Integer.parseInt ( txtHSae.getText() );
+				hSae = getSaeRepartition();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = Integer.parseInt ( txtHTut.getText() );
+				hTut = getTutRepartition();
 			}
 
 			int somme = hSae + hTut;
@@ -161,6 +163,25 @@ public class PanelRepartitionBis extends JPanel
 		{
 			lblSomme.setText ( "Erreur" );
 		}
+
+		majAffectation();
+	}
+
+	private void majAffectation()
+	{
+		lblTotalHSaeAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "SAE") ) );
+		lblTotalHTutAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TUT") ) );
+
+		majAffectationSomme();
+	}
+
+	private void majAffectationSomme()
+	{
+		int SAE = Integer.parseInt( lblTotalHSaeAff.getText() );
+		int TUT = Integer.parseInt( lblTotalHTutAff.getText() );
+
+		int somme = SAE + TUT;
+		lblTotalSommeAff.setText ( String.valueOf ( somme ) );
 	}
 
 	public void setModule ( ModuleIUT module )
@@ -183,7 +204,7 @@ public class PanelRepartitionBis extends JPanel
 		majSomme();
 	}
 
-	public int getSaeRepatition() { return Integer.parseInt ( this.txtHSae.getText() ); }
-	public int getTutRepatition() { return Integer.parseInt ( this.txtHTut.getText() ); }
+	public int getSaeRepartition() { return Integer.parseInt ( this.txtHSae.getText() ); }
+	public int getTutRepartition() { return Integer.parseInt ( this.txtHTut.getText() ); }
 
 }
