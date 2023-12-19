@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -42,6 +43,10 @@ public class PanelPNLocal extends JPanel
 	private JLabel lblTotalTP;
 	private JLabel lblTotalSomme;
 
+	//Test pour rendre modulable
+	private List<JLabel>     labelsHeures     = new ArrayList<>();
+	private List<JTextField> textFieldsHeures = new ArrayList<>();
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -63,12 +68,15 @@ public class PanelPNLocal extends JPanel
 
 		this.txtCM      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtCM );
+		this.textFieldsHeures.add ( txtCM );
 
 		this.txtTD      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTD );
+		this.textFieldsHeures.add ( txtTD );
 
 		this.txtTP      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTP );
+		this.textFieldsHeures.add ( txtTP );
 		
 		this.lblSomme   = new JLabel();
 
@@ -81,12 +89,15 @@ public class PanelPNLocal extends JPanel
 		gbc.gridy = 0;
 		gbc.gridx = 1;
 		this.add ( new JLabel ( "CM" ), gbc );
+		this.labelsHeures.add ( new JLabel ( "CM" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
+		this.labelsHeures.add ( new JLabel ( "TD" ) );
 
 		gbc.gridx = 3;
 		this.add ( new JLabel ( "TP" ), gbc );
+		this.labelsHeures.add ( new JLabel ( "TP" ) );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "Σ" ), gbc  );
@@ -311,4 +322,28 @@ public class PanelPNLocal extends JPanel
 	public int getCM ( ) { return Integer.parseInt( this.txtCM.getText() ); }
 	public int getTD ( ) { return Integer.parseInt( this.txtTD.getText() ); }
 	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
+
+
+	public void ajouterHeure ( String nomHeure )
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+	
+		JLabel     labelHeure     = new JLabel ( nomHeure );
+		JTextField textFieldHeure = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer(textFieldHeure);
+	
+		this.labelsHeures    .add ( labelHeure     );
+		this.textFieldsHeures.add ( textFieldHeure );
+	
+		gbc.gridy = 3;
+		gbc.gridx = 1;
+		this.add ( labelHeure, gbc );
+	
+		gbc.gridx = 2;
+		this.add ( textFieldHeure, gbc );
+
+		/*majSomme();
+		majTotalHeure();*/
+	}
 }
