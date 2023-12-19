@@ -170,30 +170,7 @@ public class FrameModule extends JFrame
 	/** Retourne le panelRepartitionPPP de FrameModule
 	 * @return panelRepartitionPPP
 	 */
-	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
-
-
-
-	public void setModule ( String code )
-	{
-		ModuleIUT module = this.ctrl.getModule ( code );
-
-		this.panelModuleLabel.setModule ( module );
-		this.setVisiblePanels( module.getTypeModule ( ) );
-
-		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
-		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
-		if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
-		
-		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
-		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
-		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
-		
-		this.panelAffectation.setDonnee ( module );
-
-		this.cbValidation.setSelected( module.estValide( ) );
-	}
-		
+	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }		
 
 	/** Permet de rendre visible les panels en fonction du type de module.
 	 * Si le module est un SAE ou un Stage, on rend visible les panels Bis et on rend invisible le reste.
@@ -233,5 +210,31 @@ public class FrameModule extends JFrame
 			this.panelPNLocalBis	.setVisible ( false );
 			this.panelPNLocalPPP	.setVisible ( false );
 		}
+	}
+
+	/** Permet de modifier le module avec le code passé en paramètre.
+	 * On récupère le panel qui est visible grâce au code passé en paramètre afin de lui affecter les données du module en question.
+	 * On affecte les données dans le tableau du panelAffectation.
+	 * On valide la checkbox si le module est validé.
+	 * @param code
+	 */
+	public void setModule ( String code )
+	{
+		ModuleIUT module = this.ctrl.getModule ( code );
+
+		this.panelModuleLabel.setModule ( module );
+		this.setVisiblePanels( module.getTypeModule ( ) );
+
+		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
+		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
+		if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
+		
+		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
+		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
+		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
+		
+		this.panelAffectation.setDonnee ( module );
+
+		this.cbValidation.setSelected( module.estValide( ) );
 	}
 }
