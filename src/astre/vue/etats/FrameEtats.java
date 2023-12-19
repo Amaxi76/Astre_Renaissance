@@ -8,7 +8,6 @@ package astre.vue.etats;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
-import javax.swing.*;
 
 public class FrameEtats extends AFrame
 {
@@ -20,9 +19,9 @@ public class FrameEtats extends AFrame
 		
 		this.panel = new PanelEtats ( this.ctrl );
 		
-		this.setTitle              ( "Etats" );
+		this.setTitle              ( "Etats"        );
 		this.setSize               ( 500,250 );
-		this.setLocationRelativeTo ( null    );
+		this.setLocationRelativeTo ( null               );
 		
 		this.add ( this.panel );
 

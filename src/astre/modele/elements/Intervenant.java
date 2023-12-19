@@ -15,7 +15,7 @@ public class Intervenant
 	private int     heureMaximum;
 	private Contrat contrat;
 
-	/**
+	/** Constructeur d'intervenant
 	 * @param id
 	 * @param nom
 	 * @param prenom
@@ -79,28 +79,33 @@ public class Intervenant
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * @return
+	/** Retourne l'id de l'intervenant
+	 * @return id
 	 */
 	public int     getId           ( ) { return this.id;           }
-	/**
-	 * @return
+
+	/** Retourne le nom de l'intervenant
+	 * @return nom
 	 */
 	public String  getNom          ( ) { return this.nom;          }
-	/**
-	 * @return
+
+	/** Retourne le prénom de l'intervenant
+	 * @return prenom
 	 */
 	public String  getPrenom       ( ) { return this.prenom;       }
-	/**
-	 * @return
+
+	/** Retourne le contrat de l'intervenant
+	 * @return contrat
 	 */
 	public Contrat getContrat      ( ) { return this.contrat;      }
-	/**
-	 * @return
+
+	/** Retourne le nombre d'heure de service de l'intervenant
+	 * @return heureService
 	 */
 	public int     getheureService ( ) { return this.heureService; }
-	/**
-	 * @return
+
+	/** Retourne le nombre d'heure maximum de l'intervenant
+	 * @return heureMaximum
 	 */
 	public int     getHeureMaximum ( ) { return this.heureMaximum; }
 
@@ -108,28 +113,33 @@ public class Intervenant
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * @param id
+	/** Permet de modifier l'id
+	 * @param id the id to set
 	 */
 	public void setId           ( int     id           ) { this.id           = id;           }
-	/**
-	 * @param nom
+
+	/** Permet de modifier le nom
+	 * @param nom the nom to set
 	 */
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
-	/**
-	 * @param prenom
+
+	/** Permet de modifier le prénom
+	 * @param prenom the prenom to set
 	 */
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
-	/**
-	 * @param contrat
+
+	/** Permet de modifier le contrat
+	 * @param contrat the contrat to set
 	 */
 	public void setContrat      ( Contrat contrat      ) { this.contrat      = contrat;      }
-	/**
-	 * @param heureService
+
+	/** Permet de modifier le nombre d'heure de service
+	 * @param heureService the heureService to set
 	 */
 	public void setheureService ( int     heureService ) { this.heureService = heureService; }
-	/**
-	 * @param heureMaximum
+
+	/** Permet de modifier le nombre d'heure maximum
+	 * @param heureMaximum the heureMaximum to set
 	 */
 	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
 
@@ -137,7 +147,7 @@ public class Intervenant
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/**
+	/** Renvoie le descriptif des attributs d'intervenants
 	 * @return descriptif des attributs d'intervenants
 	 */
 	public String toString ( )
@@ -153,6 +163,9 @@ public class Intervenant
 	}
 
 	@Override
+	/** Compare l'égalité entre l'intervenant passé en paramètre et l'invernant passé par le constructeur
+	 * @return true si les deux intervenants sont égaux, sinon false
+	 */
 	public boolean equals ( Object o )
 	{
 		if ( o instanceof Intervenant )

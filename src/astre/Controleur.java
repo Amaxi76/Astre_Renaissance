@@ -7,12 +7,17 @@ package astre;
   */
 
 import astre.modele.elements.*;
+import astre.modele.outils.TableauUtilitaire;
 
+import java.awt.Component;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.*;
 import astre.vue.*;
 import astre.vue.outils.PopUpErreur;
+import astre.vue.outils.Tableau;
 
 public class Controleur
 {
@@ -44,6 +49,11 @@ public class Controleur
 	public static void afficherErreur ( String titre, String message )
 	{
 		new PopUpErreur ( titre, message );
+	}
+
+	public static void afficherErreur ( String titre, String message, String opt1, String opt2, Object o)
+	{
+		new PopUpErreur ( titre, message, opt1, opt2, o );
 	}
 
 	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee    (); }

@@ -48,9 +48,12 @@ public class Astre
 	public Contrat       getContrat  ( String nom         ) { return this.bd.getContrat  ( nom         ); }
 	public ModuleIUT     getModule   ( String nom         ) { return this.bd.getModule   ( nom         ); }
 
+	public ArrayList<String> getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }
 	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants (      ); }
 	public <T> List<T>       getTable          ( Class<T> type   ) { return this.bd.getTable        ( type ); }
+
+	public int               getNBHeureEQTD    ( String code, String nomHeure ) { return this.bd.getNBHeureEQTD ( code, nomHeure ); }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */

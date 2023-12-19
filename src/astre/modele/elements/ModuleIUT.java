@@ -73,30 +73,78 @@ public class ModuleIUT
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
+	/** Retourne la validité d'un module
+	 * @return valide
+	 */
 	public boolean             estValide             ( ) { return this.valide;            }
+
+	/** Retourne le semestre d'un module
+	 * @return semestre
+	 */
 	public Semestre            getSemestre           ( ) { return this.semestre;          }
+
+	/** Retourne le type d'un module
+	 * @return typeModule
+	 */
 	public String              getTypeModule         ( ) { return this.typeModule;        }
+
+	/** Retourne le code d'un module
+	 * @return code
+	 */
 	public String              getCode               ( ) { return this.code;              }
+
+	/** Retourne le libellé long d'un module
+	 * @return libLong
+	 */
 	public String              getLibLong            ( ) { return this.libLong;           }
+
+	/** Retourne le libellé court d'un module
+	 * @return libCourt
+	 */
 	public String              getLibCourt           ( ) { return this.libCourt;          }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
+	/** Permet de modifier le semestre
+	 * @param semestre the semestre to set
+	 */
 	public void setSemestre   ( Semestre   semestre   ) { this.semestre   = semestre;   }
+
+	/** Permet de modifier le type de module
+	 * @param typeModule the typeModule to set
+	 */
 	public void setTypeModule ( String     typeModule ) { this.typeModule = typeModule; }
+
+	/** Permet de modifier le code d'un module
+	 * @param code the code to set
+	 */
 	public void setCode       ( String     code       ) { this.code       = code;       }
+
+	/** Permet de modifier le libellé long d'un module
+	 * @param libLong the libLong to set
+	 */
 	public void setLibLong    ( String     libLong    ) { this.libLong    = libLong;    }
+
+	/** Permet de modifier le libellé court d'un module
+	 * @param libCourt the libCourt to set
+	 */
 	public void setLibCourt   ( String     libCourt   ) { this.libCourt   = libCourt;   }
+
+	/** Permet de modifier la validité d'un module
+	 * @param choix the choix to set
+	 */
 	public void setValide     ( boolean    choix      ) { this.valide     = choix;      }
 
+
+	/** Renvoie le descriptif des attributs d'un module
+	 * @return descriptif des attributs d'un module
+	 */
 	@Override
 	public String toString ( )
 	{
 		return "ModuleIUT [semestre=" + semestre + ", typeModule=" + typeModule + ", code=" + code + ", libLong="
 				+ libLong + ", libCourt=" + libCourt + ", valide=" + valide + "]";
 	}
-
-	
 }

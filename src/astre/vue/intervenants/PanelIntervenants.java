@@ -17,6 +17,8 @@ import java.awt.BorderLayout;
   * @date : 06/12/2023
   */
 
+  //TODO: Faire la fraction "2/3"
+
 public class PanelIntervenants extends JPanel implements ActionListener
 {
 	private Tableau     tableau;
@@ -59,7 +61,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
-		//this.tableau.setEditable ( new int[] { 0, 1, 2, 3, 4 } );
+		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO faire en sorte que le tablo soit modifiable mais pas partout
 		this.tableau.ajusterTailleColonnes ( );
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );
@@ -108,12 +110,12 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne ( );
+			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
 		
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-
 			enregistrer ( this.tableau.getDonnees ( ) );
 			this.tableau.ajusterTailleColonnes ( );
 

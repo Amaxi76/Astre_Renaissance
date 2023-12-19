@@ -29,6 +29,7 @@ public class PanelRepartitionBis extends JPanel
 	/*-------------*/
 
 	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtHSae;
 	private JTextField txtHTut;
@@ -42,9 +43,10 @@ public class PanelRepartitionBis extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelRepartitionBis ( Controleur ctrl )
+	public PanelRepartitionBis ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -161,6 +163,25 @@ public class PanelRepartitionBis extends JPanel
 		{
 			lblSomme.setText ( "Erreur" );
 		}
+
+		majAffectation();
+	}
+
+	private void majAffectation()
+	{
+		lblTotalHSaeAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "SAE") ) );
+		lblTotalHTutAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TUT") ) );
+
+		majAffectationSomme();
+	}
+
+	private void majAffectationSomme()
+	{
+		int SAE = Integer.parseInt( lblTotalHSaeAff.getText() );
+		int TUT = Integer.parseInt( lblTotalHTutAff.getText() );
+
+		int somme = SAE + TUT;
+		lblTotalSommeAff.setText ( String.valueOf ( somme ) );
 	}
 
 	public void setModule ( ModuleIUT module )
