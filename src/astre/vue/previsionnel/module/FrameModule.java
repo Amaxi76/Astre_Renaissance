@@ -172,6 +172,8 @@ public class FrameModule extends JFrame
 	 */
 	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
 
+
+
 	public void setModule ( String code )
 	{
 		ModuleIUT module = this.ctrl.getModule ( code );
@@ -193,6 +195,12 @@ public class FrameModule extends JFrame
 	}
 		
 
+	/** Permet de rendre visible les panels en fonction du type de module.
+	 * Si le module est un SAE ou un Stage, on rend visible les panels Bis et on rend invisible le reste.
+	 * Si le module est un PPP, on rend visible les panels PPP et on rend invisible le reste.
+	 * Si le module est un autre type, on rend visible les panels principaux et on rend invisible le reste.
+	 * @param typeModule
+	 */
 	public void setVisiblePanels ( String typeModule )
 	{
 		if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
