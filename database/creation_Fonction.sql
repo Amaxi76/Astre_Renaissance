@@ -444,17 +444,90 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Update de l'historique
+-- Update de l'historique d'intervenant
 
-CREATE OR REPLACE FUNCTION f_update_historique()
+DROP              FUNCTION f_update_historique_Intervenant();
+CREATE OR REPLACE FUNCTION f_update_historique_Intervenant()
 RETURNS TRIGGER AS $$
 BEGIN
       INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP);
+      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || NEW.nom);
       RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+-- Update de l'historique d'un contrat
+
+DROP              FUNCTION f_update_historique_Contrat();
+CREATE OR REPLACE FUNCTION f_update_historique_Contrat()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || NEW.nomContrat);
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update de l'historique d'un semestre
+
+DROP              FUNCTION f_update_historique_Semestre();
+CREATE OR REPLACE FUNCTION f_update_historique_Semestre()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || NEW.Id_Semestre);
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update de l'historique d'une heure
+
+DROP              FUNCTION f_update_historique_Heure();
+CREATE OR REPLACE FUNCTION f_update_historique_Heure()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || NEW.nomHeure);
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update de l'historique d'un moduleIUT
+
+DROP              FUNCTION f_update_historique_ModuleIUT();
+CREATE OR REPLACE FUNCTION f_update_historique_ModuleIUT()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || NEW.Code_ModuleIUT);
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update de l'historique d'intervient
+
+DROP              FUNCTION f_update_historique_Intervient();
+CREATE OR REPLACE FUNCTION f_update_historique_Intervient()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || NEW.Id_Intervenant ||
+                                 ', codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = '                      || NEW.Id_Heure || ')');
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update de l'historique d'horaire
+
+DROP              FUNCTION f_update_historique_Horaire();
+CREATE OR REPLACE FUNCTION f_update_historique_Horaire()
+RETURNS TRIGGER AS $$
+BEGIN
+      INSERT INTO Historique (dateModification, commentaire)
+      VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = ' || NEW.Id_Heure || ')');
+      RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 /* ------------------------------------------ */
 /*                   DELETE                   */
