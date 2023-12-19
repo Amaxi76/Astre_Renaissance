@@ -52,7 +52,7 @@ public class Heure
 	}
 
 	/** Crée une heure en prenant en paramètre un id, un nom et un coefficient équivalent TD.
-	 * @return L'heure créée si les données ont une valeur et que le coefficient TP est positif.
+	 * @return L'heure créée si les données ont une valeur et que le coefficient TD est positif.
 	 */
 	public static Heure creation ( int id, String nom, double coefTD )
 	{
