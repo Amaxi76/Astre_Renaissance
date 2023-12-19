@@ -216,6 +216,7 @@ public class PanelPNLocal extends JPanel
 			double totalTD = 0;
 			double totalTP = 0;
 
+			//TEST MODULABLE
 			double nouvTotalHeureValeur = 0;
 
 			if ( !lblTotalCM.getText().isEmpty() )
@@ -365,7 +366,7 @@ public class PanelPNLocal extends JPanel
 	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
 
 
-	/* TEST MODULABLE */
+	//TEST MODULABLE
 	public void ajouterHeure ( String nomHeure )
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
