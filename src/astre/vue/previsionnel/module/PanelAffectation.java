@@ -17,12 +17,13 @@ import astre.modele.elements.Intervenant;
 import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.Tableau;
 
-/** Classe PanelAffectation 
+/** Classe PanelAffectation
   * @author : Clémentin Ly
   * @version : 2.0 - 14/12/2023
   * @date : 13/12/2023
   */
 
+//TODO: séparer la partie ihm et partie métier (ex: utilisation de DB au lieu d'un appel vers le controleur puis métier)
 public class PanelAffectation extends JPanel implements ActionListener
 {
 	/*-------------*/
@@ -106,7 +107,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
-		
+
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne ( );
@@ -118,5 +119,5 @@ public class PanelAffectation extends JPanel implements ActionListener
 	public void setDonnee ( ModuleIUT module )
 	{
 		this.tableau.modifDonnees ( BD.getInstance ( ).getIntervientsTableau ( module.getCode ( ) ) );
-	}	
+	}
 }

@@ -34,7 +34,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
-	
+
 	public PanelModuleBouton ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
@@ -86,8 +86,8 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		String  libCourt = this.frm.getPanelModuleLabel().getLibCourt();
 		boolean cbOk     = this.frm.getCbValidation();
 
-		ModuleIUT module = new ModuleIUT( semestre, typeModule, code, libLong, libCourt, cbOk);
-		
+		ModuleIUT module = ModuleIUT.creation ( semestre, typeModule, code, libLong, libCourt, cbOk );
+
 		if ( typeModule.equals ( "Ressource" ) )
 		{
 			Heure CM      = this.ctrl.getHeure ( "CM" );
