@@ -129,6 +129,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		}
 	}
 
+	//TODO faire un camembert en bas a gauche
+
 	public boolean enregistrer ( Object[][] deuxieme )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );

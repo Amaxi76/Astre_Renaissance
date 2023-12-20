@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
+import astre.modele.elements.Contrat;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 import astre.vue.outils.AFrame;
@@ -66,7 +67,7 @@ public class PanelParametrage extends JPanel implements ActionListener
 
 		/* ----------------------------- */
 		/* Positionnement des composants */
-		/* -----------------------    -- */
+		/* ----------------------------- */
 
 		this.centrerTexte ( this.btnEnregistrer );
 		this.centrerTexte ( this.btnAnnuler     );
@@ -103,15 +104,16 @@ public class PanelParametrage extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
-			AFrame.fermer        ( this      );
-			new FrameParametrage ( this.ctrl );
-
+			this.tab.modifDonnees  ( this.ctrl.getTableau ( this.classe ) );
+			/*AFrame.fermer        ( this      );
+			new FrameParametrage ( this.ctrl );*/
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			AFrame.fermer        ( this );
-			new FrameParametrage ( this.ctrl );
+			/*AFrame.fermer        ( this );
+			new FrameParametrage ( this.ctrl );*/
+			this.tab.modifDonnees ( this.ctrl.getTableau ( this.classe ) );
 		}
 	}
 

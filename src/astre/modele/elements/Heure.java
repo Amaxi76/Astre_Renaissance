@@ -1,5 +1,7 @@
 package astre.modele.elements;
 
+import javax.swing.JOptionPane;
+
 /** Classe Heure 
   * @author : Maximilien Lesterlin
   * @version : 1.0 - 12/12/2023
@@ -35,7 +37,10 @@ public class Heure
 		Object c = heure[2];
 
 		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( c instanceof Number ) )
+		{
+			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les données de l'heure ne sont pas du bon type" );
+		}
 		
 		int    id   = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
 		double coef = Double.parseDouble ( c.toString ( ) );
@@ -50,11 +55,17 @@ public class Heure
 	public static Heure creation ( int id, String nom, double coefTD )
 	{
 		if ( nom.equals ( "" ) )
+		{
+			JOptionPane.showMessageDialog ( null, "Une des données est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Une des données est vide" );
-
-			if ( coefTD <= 0  )
+		}
+			
+		if ( coefTD <= 0  )
+		{
+			JOptionPane.showMessageDialog ( null, "Le coef TP doit être supérieur à 0.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Le coef TP doit être supérieur à 0" );
-
+		}
+			
 		return new Heure ( id, nom, coefTD );
 	}
 
