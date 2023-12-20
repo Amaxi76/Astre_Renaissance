@@ -70,6 +70,27 @@ public abstract class Utilitaire
 
 		return tableauTmp;
 	}
+	
+	/**
+	 * Copie profonde d'un tableau avec une nouveau nombre de colonnes (supprime les dernières ou en rajoute des vides)
+	 */
+	public static Object[][] formater ( Object[][] tableau, int nbColonnes )
+	{
+		Object[][] tableauTmp = new Object[tableau.length][nbColonnes];
+
+		for ( int lig = 0; lig < tableau.length; lig++ )
+		{
+			for ( int col = 0; col < tableau[lig].length; lig++ )
+			{
+				tableauTmp[lig][col] = tableau[lig][col];
+			}
+			
+		}
+		tableauTmp[tableauTmp.length-1] = Utilitaire.copier ( ligne );
+
+
+		return tableauTmp;
+	}
 
 	/**
 	 * Copie profonde d'un tableau
