@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -41,6 +42,8 @@ public class FrameModule extends JFrame implements ActionListener
 	private JCheckBox           cbValidation;
 	private JComboBox<String>	cbHeuresAjouter;
 	private JComboBox<String>	cbHeuresSupprimer;
+	private JButton             btnAjouter;
+	private JButton             btnSupprimer;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -76,18 +79,19 @@ public class FrameModule extends JFrame implements ActionListener
 		this.cbValidation      = new JCheckBox ( "Validation" );
 		
 		this.cbHeuresAjouter   = new JComboBox<>();
-
 		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
 			cbHeuresAjouter.addItem ( h.getNom ( ) );
 		}
 
 		this.cbHeuresSupprimer = new JComboBox<>();
-
 		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
 			cbHeuresSupprimer.addItem ( h.getNom ( ) );
 		}
+
+		this.btnAjouter   = new JButton ( "Ajouter"   );
+		this.btnSupprimer = new JButton ( "Supprimer" );
 
 		/*---------*/
 		/*  Nord   */
@@ -145,18 +149,24 @@ public class FrameModule extends JFrame implements ActionListener
 		panelOuest.add ( this.cbValidation, gbcO );
 
 		gbcO.gridy = 2;
-		gbcO.gridx = 0;
+		gbcO.gridx = 1;
 		panelOuest.add ( new JLabel ( "Ajouter Heure " ) );
 
-		gbcO.gridx = 1;
+		gbcO.gridx = 2;
 		panelOuest.add ( this.cbHeuresAjouter, gbcO );
 
+		gbcO.gridx = 3;
+		panelOuest.add ( this.btnAjouter );
+
 		gbcO.gridy = 3;
-		gbcO.gridx = 0;
+		gbcO.gridx = 1;
 		panelOuest.add ( new JLabel ( "Supprimer Heure " ) );
 		
-		gbcO.gridx = 1;
+		gbcO.gridx = 2;
 		panelOuest.add ( this.cbHeuresSupprimer, gbcO );
+
+		gbcO.gridx = 3;
+		panelOuest.add ( this.btnSupprimer );
 
 		/*-------*/
 		/*  Sud  */
@@ -170,8 +180,8 @@ public class FrameModule extends JFrame implements ActionListener
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.cbHeuresAjouter  .addActionListener ( this );
-		this.cbHeuresSupprimer.addActionListener( this );
+		this.btnAjouter  .addActionListener ( this );
+		this.btnSupprimer.addActionListener ( this );
 
 		/*this.panelPNLocal.ajouterHeure("TEST");
 		this.panelPNLocal.ajouterHeure("TEST2");*/
@@ -181,7 +191,7 @@ public class FrameModule extends JFrame implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource() == this.cbHeuresAjouter )
+		if ( e.getSource() == this.btnAjouter)
 		{
 			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
 
@@ -194,7 +204,7 @@ public class FrameModule extends JFrame implements ActionListener
 			//if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.ajouterHeure ( nomHeure );
 		}
 
-		if ( e.getSource() == this.cbHeuresSupprimer )
+		if ( e.getSource() == this.btnSupprimer )
 		{
 			String nomHeure = ( String ) this.cbHeuresSupprimer.getSelectedItem();
 
