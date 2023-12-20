@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -70,8 +71,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 
 		//JLabel lblAnneee     = new JLabel ("Année en cours "); //TODO: Affilier une année ?
 		
-		//JLabel j = new JLabel ( new ImageIcon ( scaledImg ) );
-		JLabel j = new JLabel ( );
+		JLabel j = new JLabel ( new ImageIcon ( Toolkit.getDefaultToolkit ( ).getImage ( "/images/astre.png" ) ) );
 		j.setLayout ( new BorderLayout ( ) );
 
 		panel        .setOpaque ( false );
@@ -85,7 +85,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 		this.btnIntervenants = new JButton ( "Intervenants"                 );
 		this.btnEtat         = new JButton ( "Etats"                        );
 		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
-		this.btnHistorique   = new JButton ( "Historique" );
+		this.btnHistorique   = new JButton ( "Historique"                   );
 
 		panelButton.add ( this.btnParametre    );
 		panelButton.add ( this.btnPrevisionnel );

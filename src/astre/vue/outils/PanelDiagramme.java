@@ -20,6 +20,10 @@ import java.awt.Font;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.*;
+
+import astre.modele.BD;
+import astre.modele.elements.Intervient;
+
 import org.jfree.chart.labels.*;
 
 /**
@@ -90,13 +94,28 @@ public class PanelDiagramme extends JPanel
 	{
 		// Donnees
 		Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
-		donnees.put ( "TP", 56+56+12+12+0.0 );
+
+
+		donnees.put("NA", BD.getInstance().getIntervenant(1).getContrat().getHeureMaxContrat() + 0.0 );
+
+		for( Intervient inter : BD.getInstance().getTable(Intervient.class) )
+		{
+			if( inter.getIntervenant().getId() == 1 )
+			{
+				double nombre = inter.getNbGroupe() * inter.getNbSemaine() * inter.getNbHeure() * inter.getHeure().getCoefTd();
+
+				donnees.put(inter.getHeure().getNom(), nombre );
+				donnees.put("NA", donnees.get("NA") - nombre);
+			}
+		}
+
+		/*donnees.put ( "TP", 56+56+12+12+0.0 );
 		donnees.put ( "TD", 28+28+9+9+19.5 );
-		donnees.put ( "CM", 28.0 );
+		donnees.put ( "CM", 28.0 );*/
 		/*donnees.put ( "A", 28.0 );
 		donnees.put ( "B", 28.0 );
 		donnees.put ( "C", 28.0 );*/
-		donnees.put ( "NA", 20.0 ); //((int)(165.5))-(heuresTP+heuresTD+heuresCM)
+		//donnees.put ( "NA", 20.0 ); //((int)(165.5))-(heuresTP+heuresTD+heuresCM)
 
 		// Generation
 		JFrame f = new JFrame ( );

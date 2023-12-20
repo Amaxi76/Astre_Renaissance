@@ -10,6 +10,8 @@ import javax.swing.*;
 import astre.modele.BD;
 import astre.modele.elements.*;
 
+//TODO supprimer cette classe
+
 /** Classe permettant d'afficher les erreurs.
  *  @author Maxime
  *  @version : 1.0 - 11/12/2023
