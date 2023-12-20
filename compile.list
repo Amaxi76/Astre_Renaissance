@@ -1,13 +1,12 @@
 src/astre/Controleur.java
 
 src/astre/modele/outils/ModeleTableau.java
-src/astre/modele/outils/TableauUtilitaire.java
+src/astre/modele/outils/Utilitaire.java
 
 src/astre/modele/BD.java
 src/astre/modele/Astre.java
 src/astre/modele/GenerateurFichier.java
 
-src/astre/modele/elements/IElement.java
 src/astre/modele/elements/Contrat.java
 src/astre/modele/elements/Heure.java
 src/astre/modele/elements/Horaire.java
@@ -26,6 +25,7 @@ src/astre/vue/outils/PanelDiagramme.java
 src/astre/vue/outils/Tableau.java
 src/astre/vue/outils/PopUpErreur.java
 src/astre/vue/outils/FiltreTextFieldEntier.java
+src/astre/vue/outils/OperationRenduTableau.java
 
 src/astre/vue/parametrage/FrameParametrage.java
 src/astre/vue/parametrage/PanelBouton.java

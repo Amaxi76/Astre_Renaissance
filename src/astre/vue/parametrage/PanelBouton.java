@@ -28,7 +28,7 @@ public class PanelBouton extends JPanel implements ActionListener
 	
 	private PanelParametrage pnl;
 
-	private JButton btnCreer;
+	private JButton btnAjouter;
 	private JButton btnSupprimer;
 
 	/*----------------*/
@@ -46,35 +46,35 @@ public class PanelBouton extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 		
-		this.btnCreer     = new JButton ( "Créer"     );
+		this.btnAjouter   = new JButton ( "Ajouter"     );
 		this.btnSupprimer = new JButton ( "Supprimer" );
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 		
-		this.centrerTexte ( this.btnCreer     );
+		this.centrerTexte ( this.btnAjouter     );
 		this.centrerTexte ( this.btnSupprimer );
 		
-		this.add ( this.btnCreer     );
+		this.add ( this.btnAjouter     );
 		this.add ( this.btnSupprimer );
 
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.btnCreer     .addActionListener ( this );
+		this.btnAjouter   .addActionListener ( this );
 		this.btnSupprimer .addActionListener ( this );
 	}
 
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.btnCreer )
+		if ( e.getSource ( ) == this.btnAjouter )
 			this.pnl.getTab ( ).ajouterLigne ( );
 
 		if ( e.getSource ( ) == this.btnSupprimer )
-			this.pnl .getTab ( ).supprimerLigne ( );
+			this.pnl.getTab ( ).supprimerLigne ( );
 	}
 
 	private void centrerTexte ( JButton btn )

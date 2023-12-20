@@ -23,7 +23,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 {
 	private Tableau     tableau;
 	private JScrollPane scrollPane;
-	
+
 	private JButton     btnAjouter;
 	private JButton     btnSupprimer;
 	private JButton     btnEnregistrer;
@@ -32,7 +32,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	private JPanel      panelCentre;
 
 	private Controleur  ctrl;
-	
+
 	/**
 	 * 	Panel pour la frame des intervenants.
 	 * @author Matéo
@@ -44,13 +44,13 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setLayout ( new BorderLayout ( ) );
 		int marginSize = 10;
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
-		
+
 		//création des composants
 		String[] noms    = { "Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
 		Object[] defauts = { "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
 
 		//Création du tableau
-		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableauIntervenant() );
+		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableau ( Intervenant.class ) );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
@@ -68,30 +68,30 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnSupprimer   = new JButton ( "Supprimer"   );
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
-		
+
 		this.panelCentre = new JPanel ( );
 		panelCentre.setLayout ( new BorderLayout ( ) );
 		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
-		
+
 		JPanel panelCentre2 = new JPanel ( );
 		JPanel panelSud     = new JPanel ( );
-		
+
 		this.scrollPane = new JScrollPane ( this.tableau );
-		
+
 		//Ajout des composants
 		panelCentre2.add ( this.btnAjouter   );
 		panelCentre2.add ( this.btnSupprimer );
-		
+
 		panelCentre.add ( panelCentre2, BorderLayout.SOUTH  );
 		panelCentre.add ( scrollPane  , BorderLayout.CENTER );
-		
+
 		panelSud.add ( this.btnEnregistrer );
 		panelSud.add ( this.btnAnnuler     );
-		
+
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
 		this.add ( panelCentre                                 , BorderLayout.CENTER );
 		this.add ( panelSud                                    , BorderLayout.SOUTH  );
-		
+
 		//met les actionListener
 		this.btnAjouter    .addActionListener ( this );
 		this.btnSupprimer  .addActionListener ( this );
@@ -106,22 +106,22 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			this.tableau.ajouterLigne ( );
 			this.repaint ( );
 		}
-		
+
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne ( );
 			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
-		
+
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			enregistrer ( this.tableau.getDonnees ( ) );
 			this.tableau.ajusterTailleColonnes ( );
 
-			this.tableau.modifDonnees ( this.ctrl.getTableauIntervenant ( ) );
+			this.tableau.modifDonnees ( this.ctrl.getTableau ( Intervenant.class ) );
 		}
-		
+
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
 			( ( JFrame ) ( this.getParent ( ).getParent ( ).getParent ( ).getParent ( ) ) ).dispose ( );
@@ -133,7 +133,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	{
 		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
 		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
-		
+
 		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
 		Intervenant inter = null;
 		for ( int i = 0; i < deuxieme.length; i++ )
@@ -161,15 +161,15 @@ public class PanelIntervenants extends JPanel implements ActionListener
 					Controleur.afficherErreur("Enregistrement impossible", "Les heures de services sont supérieur à ses heures max sur la ligne " + (i + 1) );
 					return false;
 				}
-					
+
 			}
 
 			//si pas ID creer une ID à 0
 			if ( deuxieme[i][0].toString ( ).equals ("" ) )
-				inter = new Intervenant ( 0, deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
+				inter = Intervenant.creation ( 0, deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
 			else
-				inter = new Intervenant ( Integer.parseInt ( deuxieme[i][0].toString ( ) ), deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
-			
+				inter = Intervenant.creation ( Integer.parseInt ( deuxieme[i][0].toString ( ) ), deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
+
 			//Ajout a une liste pour les suppression apres
 			lst.add ( inter );
 
