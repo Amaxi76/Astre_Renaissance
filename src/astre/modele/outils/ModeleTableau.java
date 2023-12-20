@@ -58,7 +58,7 @@ public class ModeleTableau extends AbstractTableModel
 	//@Override public TableCellRenderer getCellRenderer ( int row, int col ) { return new OperationRenduTableau ( );             }
 
 	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
-	public Object     getObjet      ( int lig, int col ) { return this.tabbDonnees[lig][col]; }
+	public Object     getObjet      ( int lig, int col ) { return this.tabDonnees[lig][col];  }
 	public Object[][] getDonnees    (                  ) { return this.tabDonnees;            }
 
 
