@@ -635,6 +635,72 @@ public class BD
 		return somme;
 	}
 
+	//Utilisée dans générateur.java
+	public int getHeureParSemestreImpair ( int id )
+	{
+		int somme = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestreImpair(" + id + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e)
+		{
+			System.out.println ( "Erreur getHeureParSemestreImpair ( int id ) : " + e );
+		}
+
+		return somme;
+	}
+
+	//Utilisée dans générateur.java
+	public int getHeureParSemestrePair ( int id )
+	{
+		int somme = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestrePair(" + id + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e)
+		{
+			System.out.println ( "Erreur getHeureParSemestrePair ( int id ) : " + e );
+		}
+
+		return somme;
+	}
+
+	//Utilisée dans générateur.java
+	public int getHeureParSemestreTotal ( int id )
+	{
+		int somme = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestreTot(" + id + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e)
+		{
+			System.out.println ( "Erreur getHeureParSemestreTotal ( int id ) : " + e );
+		}
+
+		return somme;
+	}
+
 	public int getNbTuple ( String table )
 	{
 		int nbTuple = 0;

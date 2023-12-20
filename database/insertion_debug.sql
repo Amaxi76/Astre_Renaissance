@@ -67,6 +67,7 @@ INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
 INSERT INTO Intervient (Id_Intervenant, Id_Heure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
 (1,  2, 'R5.03',    6,    2,    5, NULL         ),
 (1,  1, 'R1.01',    8,    1,    6, NULL         ),
+(1,  5, 'S6.01',    8,    1,    6, NULL         ),
 (1,  2, 'R1.01',    8,    1,    6, NULL         ),
 (4,  3, 'R1.01',    2,    1,    6, '3 CM 3H'    ),
 (2,  1, 'R1.01',    8,    1,    9, 'commentaire'),
