@@ -6,6 +6,8 @@ import astre.Controleur;
 import javax.swing.JFrame;
 import java.awt.Component;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 /** Classe principale pour la génération de fenetres dans l'application Astre
   * @author : Maxime Lemoine
@@ -22,25 +24,8 @@ public class AFrame extends JFrame
 	public AFrame ( Controleur ctrl )
 	{
 		// Image
-		// Image  img = null;
-		// Image icon = null;
-
-
-		// try
-		// {
-		// 	img = new ImageIcon ( ImageIO.read ( Controleur.class.getResourceAsStream ( "/images/imgAccueil.png" ) ) ).getImage();
-		// }
-		// catch ( Exception e ) { }
-		
-		// try
-		// {
-		// 	icon = new ImageIcon ( ImageIO.read ( Controleur.class.getResourceAsStream ( "/images/icon.png" ) ) ).getImage();
-		// }
-		// catch ( Exception e ) { }
-
-		//Image scaledImg = img.getScaledInstance ( 1000, 700, Image.SCALE_SMOOTH );
-	
-		//this.setIconImage             ( icon          );
+		Image icon = Toolkit.getDefaultToolkit().getImage("/images/astre_petit.png");  
+		this.setIconImage(icon); 
 	
 		// attributs
 		this.ctrl = ctrl;
