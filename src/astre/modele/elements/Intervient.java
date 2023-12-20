@@ -92,7 +92,7 @@ public class Intervient
 	/** Permet de modifier le module
 	 * @param module the module to set
 	 */
-	public void setModule      ( ModuleIUT      module      ) { this.module      = module;      }
+	public void setModule      ( ModuleIUT      module   ) { this.module      = module;      }
 
 	/** Permet de modifier le nombre de semaine
 	 * @param nbSemaine the nbSemaine to set

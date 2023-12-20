@@ -27,7 +27,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
-		Object premiereCelulleLigne = ( (ModeleTableau) (tbl.getModel ( )) ).getObjet ( lig, 0 );
+		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
 			char operation = (char) premiereCelulleLigne;
@@ -62,6 +62,17 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					else              { cellule.setBackground ( COULEUR_FOND_2 ); }
 					cellule.setForeground ( tbl.getForeground ( ) );
 					break;
+			}
+
+			// Aligner le texte à droite si la valeur est numérique
+			if (valeur instanceof Number)
+			{
+				setHorizontalAlignment(RIGHT);
+			}
+			else
+			{
+				// Rétablir l'alignement par défaut pour le texte
+				setHorizontalAlignment(LEFT);
 			}
 		}
 

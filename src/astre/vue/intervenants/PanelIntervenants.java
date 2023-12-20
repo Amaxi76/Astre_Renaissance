@@ -2,6 +2,7 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
+import astre.modele.outils.Utilitaire;
 import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 
@@ -9,7 +10,6 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
 import java.awt.event.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -36,6 +36,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	private JButton     btnAnnuler;
 
 	private JPanel      panelCentre;
+	private JPanel      panelSud;
 
 	private PanelDiagramme panelDiagramme;
 
@@ -54,23 +55,22 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
 		//création des composants
-		String[] noms    = { "Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		Object[] defauts = { "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+		String[] noms    = { "action", "Id","Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		Object[] defauts = { 'D', 0, "", "", "", 0, 0, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 		//Création du tableau
-		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableau ( Intervenant.class ) );
+		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 2, this.ctrl.getTableauParticulier ( "v_intervenant" ) );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
-		for ( Contrat c : this.ctrl.getTable( Contrat.class ) )
+		for ( Contrat c : this.ctrl.getTable ( Contrat.class ) )
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
 		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
-		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO faire en sorte que le tablo soit modifiable mais pas partout
-		this.tableau.ajusterTailleColonnes ( );
+		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO: faire en sorte que le tablo soit modifiable mais pas partout
 
 		this.scrollPane = new JScrollPane ( this.tableau );
 
@@ -82,7 +82,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.panelDiagramme = new PanelDiagramme ( );
 
 		this.panelCentre = new JPanel ( );
-		JPanel panelSud  = new JPanel ( new GridLayout(1, 2) );
+		this.panelSud  = new JPanel ( new GridLayout(1, 2) );
 		JPanel panelBtn  = new JPanel ( );
 
 		panelCentre.setLayout ( new BorderLayout ( ) );
@@ -117,12 +117,12 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		//Placement des composants
 		panelCentre.add ( scrollPane  , BorderLayout.CENTER );
 
-		panelSud.add ( panelBtn            );
-		panelSud.add ( this.panelDiagramme );
+		this.panelSud.add ( panelBtn            );
+		this.panelSud.add ( this.panelDiagramme );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
-		this.add ( panelCentre                                 , BorderLayout.CENTER );
-		this.add ( panelSud                                    , BorderLayout.SOUTH  );
+		this.add ( panelCentre                            , BorderLayout.CENTER );
+		this.add ( panelSud                               , BorderLayout.SOUTH  );
 
 		//met les actionListener
 		this.btnAjouter    .addActionListener ( this );
@@ -135,9 +135,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			@Override
 			public void mouseClicked ( MouseEvent e )
 			{
-				int row = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
+				int ligne = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
 
-				int idInter =  Integer.parseInt ( tableau.getDonnees ( )[row][0].toString ( ) );
+				int idInter =  Integer.parseInt ( tableau.getDonnees ( )[ligne][1].toString ( ) );
 				if ( idInter > 0  )
 					changerDiagramme ( idInter );
 				else
@@ -163,7 +163,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			enregistrer ( this.tableau.getDonnees ( ) );
+			Object[][] tab = this.preparerTableau ( this.tableau .getDonnees ( ) );
+
+			this.ctrl.majTableauBD ( tab, Intervenant.class );
 			this.tableau.ajusterTailleColonnes ( );
 
 			this.tableau.modifDonnees ( this.ctrl.getTableau ( Intervenant.class ) );
@@ -176,11 +178,37 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		}
 	}
 
-	//TODO faire un camembert en bas a gauche
-
-	public boolean enregistrer ( Object[][] deuxieme )
+	private Object[][] preparerTableau ( Object[][] tab  )
 	{
-		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
+		// Enlever les colonnes en trop
+		Object[][] tab2 = Utilitaire.formater ( tab, 7 );
+		
+		// Remplacer les noms de contrat par les objets contrat
+		int COLONNE_CONTRAT = 2;
+		
+		for ( int lig = 0; lig < tab.length; lig++ )
+			tab2[lig][COLONNE_CONTRAT] = this.ctrl.getContrat ( tab2[lig][COLONNE_CONTRAT].toString ( ) );
+		
+		// Replacer les objets dans le bon ordre pour le constructeur
+		for ( int lig = 0; lig < tab2.length; lig++ )
+		{
+			Object tmp = tab2[lig][2];
+			
+			tab2[lig][2] = tab[lig][3];
+			tab2[lig][3] = tab[lig][4];
+			tab2[lig][4] = tmp;
+		}
+			
+		
+
+		System.out.println(Utilitaire.afficherValeurs(tab2));
+		System.out.println(Utilitaire.afficherTypes(tab2));
+		return tab2;
+	}
+
+	/*public boolean enregistrer ( Object[][] deuxieme )
+	{
+		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
 
 		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
@@ -260,11 +288,19 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			}
 		}
 		return true;
-	}
+	}*/
 
 	public void changerDiagramme ( int idInter )
 	{
-		this.panelDiagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
+		PanelDiagramme diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
+		System.out.println("bbb");
+
+		this.panelSud.remove(this.panelDiagramme);
+		this.panelDiagramme = diagramme;
+		this.panelSud.add(this.panelDiagramme);
+
+		this.panelSud.repaint();
 		this.repaint ( );
+		//TODO voir repaint graphique
 	}
 }

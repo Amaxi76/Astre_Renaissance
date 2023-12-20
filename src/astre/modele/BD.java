@@ -9,6 +9,7 @@ package astre.modele;
 //TODO: Penser à fermer le rs et st
 //TODO: Refactoriser la métode UPDATE
 //TODO: Trier les méthodes utilisées ou non
+//TODO: Pour toutes les fonctions somme qui retourne un int faire une fonction générale qui a deux paramètre : la fonction et les paramètres 
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import astre.Controleur;
 import astre.modele.elements.*;
 import astre.modele.outils.ModeleTableau; // pour les constantes
 import astre.modele.outils.Utilitaire;
@@ -68,6 +68,7 @@ public class BD
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
 
+	//TODO: mettre les factories pour tous les types
 	/** Méthode générique pour la récupération de table
 	 * Exemple d'utilisation : ArrayList<Semestre> ensS= new ArrayList<> (getTable ( "Semestre", Semestre.class ) ) ;
 	 */
@@ -86,7 +87,7 @@ public class BD
 				try
 				{
 					if ( type.equals ( Semestre.class )     )
-						lst.add ( type.cast( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+						lst.add ( type.cast ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 
 					if ( type.equals ( Contrat.class )      )
 						lst.add ( type.cast ( Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) ) );
@@ -101,10 +102,10 @@ public class BD
 						lst.add ( type.cast ( ModuleIUT.creation ( getSemestre ( rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), rs.getBoolean ( 5 ) ) ) );
 
 					if ( type.equals ( Horaire.class )  )
-						lst.add ( type.cast ( new Horaire( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
+						lst.add ( type.cast ( new Horaire ( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
 
 					if ( type.equals ( Intervient.class )  )
-						lst.add ( type.cast ( new Intervient( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
+						lst.add ( type.cast ( new Intervient ( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
 						// Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire
 
 				// Ajouter d'autres conditions pour d'autres classes si nécessaire
@@ -154,8 +155,8 @@ public class BD
 				int iS = 6;
 				int iM = 1;
 
-				Semestre  semestre   = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
-				ModuleIUT moduleIUT =  ModuleIUT.creation ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), rs.getBoolean ( 5 ) );
+				Semestre  semestre  = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
+				ModuleIUT moduleIUT = ModuleIUT.creation ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), rs.getBoolean ( 5 ) );
 
 				ensModules.add ( moduleIUT );
 			}
@@ -357,7 +358,7 @@ public class BD
 		return contrat;
 	}
 
-	public double getInterventionIntervenant(int inter, int semes)
+	public double getInterventionIntervenant ( int inter, int semes )
 	{
 		double result = 0;
 		double ligne;
@@ -373,7 +374,7 @@ public class BD
 			while ( rs.next( ) )
 			{
 				ligne = 0;
-				ligne += rs.getInt(1) * rs.getInt(2) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
+				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
 
 				if( getHeure(rs.getInt(5)).getNom().equals("TP") )
 				{
@@ -738,7 +739,7 @@ public class BD
 		{
 			object[lig][0] = ModeleTableau.DEFAUT;
 			Object[] tmp = Utilitaire.toArray ( lst.get ( lig ) );
-
+			
 			for ( int col = 0 ; col < nbAttributs; col ++ )
 			{
 				object[lig][col+1] = tmp[col];
@@ -750,7 +751,7 @@ public class BD
 
 	// Utilisé dans src\astre\vue\previsionnel\module\PanelAffectation.java
 	//TODO: regarder pour l'enlever
-	public Object[][] getIntervientsTableau( String module )
+	public Object[][] getIntervientsTableau ( String module )
 	{
 		int nbIntervients = 0;
 
@@ -796,9 +797,67 @@ public class BD
 	 	return intervients;
 	}
 
+	public Object[][] getTableauParticulier ( String nomRecherche )
+	{
+		Object[][] tabObjet = null;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "select * from " + nomRecherche );
+			ResultSetMetaData rsmd = rs.getMetaData ( );
+
+			int nbAttributs = rsmd.getColumnCount ( );
+			tabObjet = new Object[this.getNbTuple ( nomRecherche )][nbAttributs + 1];
+
+			System.out.println("est null : " + rs.wasNull());
+			System.out.println("nb attributs : " + nbAttributs);
+			System.out.println("nb lignes : " + this.getNbTuple ( nomRecherche ));
+
+			int cpt = 0;
+			while ( rs.next ( ) )
+			{
+				tabObjet[cpt][0] = ModeleTableau.DEFAUT;
+				for ( int i = 1; i < tabObjet[cpt].length; i++ )
+				{
+					try
+					{
+						//System.out.println( rsmd.getColumnTypeName ( i ) );
+						//tabObjet[cpt][i] = Class.forName ( rsmd.getColumnTypeName ( i ) ).cast ( rs.getArray ( i ) );
+
+						Object valeur = rs.getObject ( i );
+
+						tabObjet[cpt][i] = switch ( rsmd.getColumnType ( i ))
+						{
+							case Types.INTEGER -> ( Integer ) ( valeur );
+							case Types.VARCHAR -> ( String  ) ( valeur );
+							case Types.DOUBLE  -> ( Double  ) ( valeur );
+							default-> valeur.toString();
+						};
+					}
+					catch ( Exception e )
+					{
+						System.out.println( "Ptit problème de converstion : getTableauParticulier()" );
+					}
+					
+	
+				}
+				cpt++;
+			}
+
+			System.out.println(tabObjet[0][8]);
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+		}
+
+		return tabObjet;
+	}
+
 	public ArrayList<String> getHistorique ( )
 	{
-		ArrayList<String> lst = new ArrayList<String>();
+		ArrayList<String> lst = new ArrayList<>();
 
 		try
 		{
@@ -820,6 +879,8 @@ public class BD
 
 		return lst;
 	}
+
+	
 
 	/*---------------------------------------*/
 	/*                INSERT                 */

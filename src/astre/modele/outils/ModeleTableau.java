@@ -51,11 +51,10 @@ public class ModeleTableau extends AbstractTableModel
 	/*---------------------------------------*/
 
 	@Override public int               getColumnCount  (                  ) { return this.ensEntete.length - decalage;          }
-	@Override public int               getRowCount     (                  ) { return this.tabDonnees.length;                    }
+	@Override public int               getRowCount     (                  ) { return this.tabDonnees.length; }
 	@Override public Object            getValueAt      ( int row, int col ) { return this.tabDonnees[row][col + decalage];      }
 	@Override public Class<?>          getColumnClass  ( int c            ) { return this.ensDefaut[c + decalage].getClass ( ); }
 	@Override public String            getColumnName   ( int c            ) { return this.ensEntete[c + decalage];              }
-	//@Override public TableCellRenderer getCellRenderer ( int row, int col ) { return new OperationRenduTableau ( );             }
 
 	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
 	public Object     getObjet      ( int lig, int col ) { return this.tabDonnees[lig][col];  }
@@ -73,6 +72,11 @@ public class ModeleTableau extends AbstractTableModel
 	public boolean isCellEditable ( int row, int col )
 	{
 		return this.ensModifiable[col+decalage];
+	}
+
+	public boolean estVide ( )
+	{
+		return this.tabDonnees == null || this.tabDonnees.length == 0;
 	}
 
 	/*---------------------------------------*/
