@@ -207,7 +207,7 @@ public abstract class Utilitaire
 		//Object[][] copie = copier ( test, lign );
 		//System.out.println ( test[1].length + " = " + copie[1].length );
 		
-		System.out.println ( afficherTableau ( test ) );
+		System.out.println ( afficherValeurs ( test ) );
 		Object[][] formatage = formater ( test, 10 );
 		System.out.println ( afficherValeurs ( formatage ) );
 		System.out.println ( afficherTypes ( formatage ) );

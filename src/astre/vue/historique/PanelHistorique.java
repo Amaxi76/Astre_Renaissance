@@ -1,13 +1,14 @@
 package astre.vue.historique;
 
+import astre.Controleur;
+import astre.modele.BD;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import astre.Controleur;
-import astre.modele.BD;
 
 /** Classe PanelHistorique
   * @author : Matéo Sa
@@ -33,7 +34,7 @@ public class PanelHistorique extends JPanel
 		this.add(bar);
 
 		//récupération de la table historique
-		ArrayList<String> lst = this.ctrl.getHistorique();
+		List<String> lst = this.ctrl.getHistorique();
 
 		//Ajout du texte dans la zone dédiée
 		for(String s : lst)
