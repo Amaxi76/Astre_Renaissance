@@ -82,6 +82,11 @@ public class FrameModule extends JFrame implements ActionListener
 			cbHeuresAjouter.addItem ( h.getNom ( ) );
 		}
 
+		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
+		{
+			cbHeuresSupprimer.addItem ( h.getNom ( ) );
+		}
+
 		/*---------*/
 		/*  Nord   */
 		/*---------*/
