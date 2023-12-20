@@ -8,6 +8,7 @@ package astre.modele;
 
 //TODO: Penser à fermer le rs et st
 //TODO: Refactoriser la métode UPDATE
+//TODO: Trier les méthodes utilisées ou non
 
 import java.sql.*;
 import java.util.ArrayList;
