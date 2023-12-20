@@ -29,17 +29,17 @@ public class PanelEnsParametre extends JTabbedPane
 		this.setPreferredSize   ( ConstantesVue.DIMENSION_TAB );
 
 		// Creation et positionnement des composants
-		String[] enTeteContrat   = { "id", "Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
-		String[] enTeteTypeHeure = { "id_Heure" , "Nom Heure"            , " Coeff TD" };
+		String[] enTeteContrat   = { "action", "id", "Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
+		String[] enTeteTypeHeure = { "action", "id_Heure" , "Nom Heure"            , " Coeff TD" };
 
-		Object[] tabObjectsContrat   = { 0, "Nom du contrat", 0, 0, 0.0 };
-		Object[] tabObjectsTypeHeure = { 0, "Nom de l'heure", 0.0 };
+		Object[] tabObjectsContrat   = { ' ', 0, "Nom du contrat", 0, 0, 0.0 };
+		Object[] tabObjectsTypeHeure = { ' ', 0, "Nom de l'heure", 0.0       };
 
 		String   nomTabContrat   = "Liste des contrats";
 		String   nomTabTypeHeure = "Liste des types d'heures";
 
-		this.pnlContrat   = new PanelParametrage ( this.ctrl, enTeteContrat  , tabObjectsContrat  , this.ctrl.getTableauContrat ( ), nomTabContrat  , Contrat.class );
-		this.pnlTypeHeure = new PanelParametrage ( this.ctrl, enTeteTypeHeure, tabObjectsTypeHeure, this.ctrl.getTableauHeure   ( ), nomTabTypeHeure, Heure.class   );
+		this.pnlContrat   = new PanelParametrage ( this.ctrl, enTeteContrat  , tabObjectsContrat  , this.ctrl.getTableau ( Contrat.class ), nomTabContrat  , Contrat.class );
+		this.pnlTypeHeure = new PanelParametrage ( this.ctrl, enTeteTypeHeure, tabObjectsTypeHeure, this.ctrl.getTableau ( Heure  .class ), nomTabTypeHeure, Heure  .class );
 
 		// Positionnement des composants
 		this.add ( "Contrat"   , this.pnlContrat   );

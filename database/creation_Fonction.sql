@@ -446,85 +446,134 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'intervenant
 
-DROP              FUNCTION f_update_historique_Intervenant();
+DROP              FUNCTION f_update_historique_Intervenant() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Intervenant()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || NEW.nom);
-      RETURN NEW;
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || NEW.nom);
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || OLD.nom);
+    END IF;
+
+    RETURN NEW;
+
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'un contrat
 
-DROP              FUNCTION f_update_historique_Contrat();
+DROP              FUNCTION f_update_historique_Contrat() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Contrat()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || NEW.nomContrat);
-      RETURN NEW;
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || NEW.nomContrat);
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || OLD.nomContrat);
+    END IF;
+
+    RETURN NEW;
+      
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'un semestre
 
-DROP              FUNCTION f_update_historique_Semestre();
+DROP              FUNCTION f_update_historique_Semestre() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Semestre()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || NEW.Id_Semestre);
-      RETURN NEW;
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || NEW.Id_Semestre);
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || OLD.Id_Semestre);
+    END IF;
+
+    RETURN NEW;
+      
+
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'une heure
 
-DROP              FUNCTION f_update_historique_Heure();
+DROP              FUNCTION f_update_historique_Heure() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Heure()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || NEW.nomHeure);
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || NEW.nomHeure);
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || OLD.nomHeure);
+    END IF;
+      
       RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'un moduleIUT
 
-DROP              FUNCTION f_update_historique_ModuleIUT();
+DROP              FUNCTION f_update_historique_ModuleIUT() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_ModuleIUT()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || NEW.Code_ModuleIUT);
-      RETURN NEW;
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || NEW.Code_ModuleIUT);
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || OLD.Code_ModuleIUT);
+    END IF;
+      
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'intervient
 
-DROP              FUNCTION f_update_historique_Intervient();
+DROP              FUNCTION f_update_historique_Intervient() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Intervient()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || NEW.Id_Intervenant ||
-                                 ', codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = '                      || NEW.Id_Heure || ')');
-      RETURN NEW;
+
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || NEW.Id_Intervenant ||
+                                   ', codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = '                      || NEW.Id_Heure || ')');
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || OLD.Id_Intervenant ||
+                                   ', codeModule = ' || OLD.Code_ModuleIUT || ', idHeure = '                      || OLD.Id_Heure || ')');
+    END IF;
+      
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'horaire
 
-DROP              FUNCTION f_update_historique_Horaire();
+DROP              FUNCTION f_update_historique_Horaire() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Horaire()
 RETURNS TRIGGER AS $$
 BEGIN
-      INSERT INTO Historique (dateModification, commentaire)
-      VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = ' || NEW.Id_Heure || ')');
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = ' || NEW.Id_Heure || ')');
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO Historique (dateModification, commentaire)
+        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || OLD.Code_ModuleIUT || ', idHeure = ' || OLD.Id_Heure || ')');
+    END IF;
+
+      
       RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

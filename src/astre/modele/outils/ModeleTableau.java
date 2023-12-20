@@ -3,6 +3,9 @@ package astre.modele.outils;
 import java.util.Arrays;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import astre.vue.outils.OperationRenduTableau;
 
 /**
  * Classe des données et d'affichage du tableau.
@@ -11,16 +14,21 @@ import javax.swing.table.AbstractTableModel;
 
 public class ModeleTableau extends AbstractTableModel
 {
+	public static final char IGNORER   = 'I';
+	public static final char MODIFIER  = 'M';
+	public static final char SUPPRIMER = 'S';
+	public static final char AJOUTER   = 'A';
+	public static final char DEFAUT    = 'D';
+
 	private String[]   ensEntete;
 	private Object[]   ensDefaut;
 	private boolean[]  ensModifiable;
 	private Object[][] tabDonnees;
 	private int        decalage;
 
-
 	/*---------------------------------------*/
 	/*              CONSTRUCTEUR             */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	 * Constructeur par défaut
@@ -34,25 +42,24 @@ public class ModeleTableau extends AbstractTableModel
 		this.decalage      = decalage;
 		this.tabDonnees    = tabDonnees;
 
-		// mettre à jour les nouvelles valeurs
-		this.majDonnees ( tabDonnees );
-
 		// affichage des tableaux pour les tests
 		// System.out.println(this.toString());
 	}
-	
+
 	/*---------------------------------------*/
 	/*                GETTEUR                */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
-	@Override public int      getColumnCount (                  ) { return this.ensEntete.length - decalage;          }
-	@Override public int      getRowCount    (                  ) { return this.tabDonnees.length;                    }
-	@Override public Object   getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage];      }
-	@Override public Class<?> getColumnClass ( int c            ) { return this.ensDefaut[c + decalage].getClass ( ); }
-	@Override public String   getColumnName  ( int c            ) { return this.ensEntete[c + decalage];              }
+	@Override public int               getColumnCount  (                  ) { return this.ensEntete.length - decalage;          }
+	@Override public int               getRowCount     (                  ) { return this.tabDonnees.length;                    }
+	@Override public Object            getValueAt      ( int row, int col ) { return this.tabDonnees[row][col + decalage];      }
+	@Override public Class<?>          getColumnClass  ( int c            ) { return this.ensDefaut[c + decalage].getClass ( ); }
+	@Override public String            getColumnName   ( int c            ) { return this.ensEntete[c + decalage];              }
+	//@Override public TableCellRenderer getCellRenderer ( int row, int col ) { return new OperationRenduTableau ( );             }
 
-	public String     getNomColonne ( int col          ) { return this.ensEntete[col]; }
-	public Object[][] getDonnees    (                  ) { return this.tabDonnees;     }
+	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
+	public Object     getObjet      ( int lig, int col ) { return this.tabDonnees[lig][col];  }
+	public Object[][] getDonnees    (                  ) { return this.tabDonnees;            }
 
 
 	/*---------------------------------------*/
@@ -65,7 +72,7 @@ public class ModeleTableau extends AbstractTableModel
 	@Override
 	public boolean isCellEditable ( int row, int col )
 	{
-		return this.ensModifiable[col+decalage] == true;
+		return this.ensModifiable[col+decalage];
 	}
 
 	/*---------------------------------------*/
@@ -88,7 +95,7 @@ public class ModeleTableau extends AbstractTableModel
 	{
 		this.ensModifiable = ensModifiable;
 	}
-	
+
 	/**
 	 * Ajoute une valeur dans une case.
 	 */
@@ -96,7 +103,9 @@ public class ModeleTableau extends AbstractTableModel
 	public void setValueAt ( Object value, int row, int col )
 	{
 		this.tabDonnees[row][col + decalage] = value;
-		this.fireTableDataChanged ( );
+
+		this.modifierLigne        ( row );
+		this.fireTableDataChanged (     );
 	}
 
 	/**
@@ -110,20 +119,22 @@ public class ModeleTableau extends AbstractTableModel
 
 	/*---------------------------------------*/
 	/*                METHODES               */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	 * Ajoute une ligne vide au tableau.
 	 */
 	public void ajouterLigne ( )
 	{
-		int nbLignes   = this.tabDonnees.length;
+		int nbLignes = this.tabDonnees.length;
 
 		// tester si la ligne précédente n'est pas déjà vide
 		if ( this.tabDonnees.length == 0 || ! Arrays.equals ( this.tabDonnees[nbLignes-1], this.ensDefaut ) )
 		{
 			// initialiser un nouveau tableau avec la taille pour une ligne en PLUS
-			Object[][] nouveauTableau = TableauUtilitaire.copier ( this.tabDonnees, this.ensDefaut );
+
+			this.ensDefaut[0] = AJOUTER;
+			Object[][] nouveauTableau = Utilitaire.copier ( this.tabDonnees, this.ensDefaut );
 
 			// mettre à jour les nouvelles valeurs
 			this.majDonnees ( nouveauTableau );
@@ -131,15 +142,35 @@ public class ModeleTableau extends AbstractTableModel
 	}
 
 	/**
+	 * Modiie la ligne sélectionnée.
+	 */
+	public void modifierLigne ( int index )
+	{
+		char action = ( char ) this.tabDonnees[index][0];
+
+		// changer le type de donnée
+		if ( action != AJOUTER && action !=  SUPPRIMER )
+			this.tabDonnees[index][0] = MODIFIER;
+
+		// mettre à jour les nouvelles valeurs
+		this.majDonnees ( this.tabDonnees );
+	}
+
+	/**
 	 * Supprime la ligne sélectionnée.
 	 */
 	public void supprimerLigne ( int index )
 	{
-		// initialiser un nouveau tableau avec la taille pour une ligne en MOINS
-		Object[][] nouveauTableau = TableauUtilitaire.copier ( this.tabDonnees, 1 );
+		char action = ( char ) this.tabDonnees[index][0];
+
+		// changer le type de donnée
+		if ( action != AJOUTER && action != IGNORER )
+			this.tabDonnees[index][0] = SUPPRIMER;
+		else
+			this.tabDonnees[index][0] = IGNORER;
 
 		// mettre à jour les nouvelles valeurs
-		this.majDonnees ( nouveauTableau );
+		this.majDonnees ( this.tabDonnees );
 	}
 
 	/**
@@ -158,7 +189,7 @@ public class ModeleTableau extends AbstractTableModel
 
 		for ( int i=0; i<tabDonnees.length; i++ )
 		{
-			for ( int j=0; j<tabDonnees[0].length; j++ )
+			for ( int j=0; j < tabDonnees[0].length; j++ )
 				sRet += tabDonnees[i][j] + " ";
 
 			sRet += "\n";
@@ -166,4 +197,6 @@ public class ModeleTableau extends AbstractTableModel
 
 		return sRet;
 	}
+
+
 }

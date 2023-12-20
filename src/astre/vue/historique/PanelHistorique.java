@@ -25,7 +25,7 @@ public class PanelHistorique extends JPanel
 		this.ctrl = ctrl;
 
 		//création du textArea
-		this.txtHistorique = new JTextArea ( 25, 50 );
+		this.txtHistorique = new JTextArea ( 30, 80 );
 		this.txtHistorique.setEditable ( false );
 
 		//création de la scrollbar

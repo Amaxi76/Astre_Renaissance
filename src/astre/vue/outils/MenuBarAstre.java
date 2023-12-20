@@ -1,6 +1,7 @@
 package astre.vue.outils;
 
 import javax.swing.*;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.*;
 
@@ -16,16 +17,10 @@ import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
   * @version : 2.0 - 14/12/2023
   * @date : 06/12/2023
   */
-
-//TODO : désactiver les détections via le JMenu car une fois cliqué, la souris peut rester et glisser sur les différents boutons et quitter sans cliquer
-// ou probablement supprimer les MenuListener pour mettre un ActionListener sur les JMenu
-
-//TODO : ajouter les sous-menus
-
 public class MenuBarAstre extends JMenuBar implements ActionListener
 {
 	private static final String REPERTOIRE = "../data/images/";
-	
+
 	// Identifiants des éléments du menu
 	private static final String MENU			= "M";
 	private static final String ITEM			= "I";
@@ -33,30 +28,30 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	private static final String SOUS_MENU		= "m";
 	private static final String ITEM_SM			= "i";
 	private static final String SEPARATEUR_SM	= "s";
-	
+
 	// Position des éléments du menu dans le "modeleBar"
 	private static final int TYPE = 0;
 	private static final int NAME = 1;
 	private static final int ICON = 2;
 	private static final int CHAR = 3;
 	private static final int KEYS = 4;
-	
+
 	// Attributs
 	private Controleur ctrl;
-	private AFrame     parent;
+	private Frame      parent;
 
-	public MenuBarAstre ( Controleur ctrl, AFrame parent )
+	public MenuBarAstre ( Controleur ctrl, Frame parent )
 	{
 		//Initialisation
 		super ( );
 		//TODO: ne fonctionne pas encore : this.setMargin​ ( new Insets ( 2,20,2,20 ) );
-		
+
 		this.ctrl             = ctrl;
 		this.parent           = parent;
-		
+
 		this.initComposants();
 	}
-	
+
 	/**
 	 * Initialisation des composants de la barre
 	 */
@@ -68,12 +63,12 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 
 		// Format du MenuBar
 		String[][] modeleBar = MenuBarAstre.getModeleBar ( );
-		
+
 		// Générer les composants
 		for ( int cptLig = 0; cptLig < modeleBar.length; cptLig++ )
 		{
 			String[] ligne = modeleBar[cptLig];
-		
+
 			switch ( ligne[TYPE] )
 			{
 				case MENU:
@@ -173,7 +168,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 		// TODO: récupérer la chaine "options" d'une autre manière qu'en dur dans le code (chercher dans le modèle du tableau ou créer une hashmap)
 		String[] options = {"Accueil", "Paramètres", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année", "S"};
 		System.out.println( "selectionné : " + nom ); // TODO: à supprimer
-		
+
 		if ( nom.equals( options[0] ) ) { new FrameAccueil      ( this.ctrl );  }
 		if ( nom.equals( options[1] ) ) { new FrameParametrage  ( this.ctrl );  }
 		if ( nom.equals( options[2] ) ) { new FramePrevisionnel ( this.ctrl );  }
@@ -184,10 +179,10 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			new FrameAccueil       ( this.ctrl );
 			new FrameNouvelleAnnee ( this.ctrl );
 		}
-		
+
 		// cas des sous menus avec semestre
 		if ( nom.contains( options[6] ) ) { new FramePrevisionnel  ( this.ctrl, Integer.parseInt( nom.charAt ( 1 ) +"" )-1 ); }
-		
+
 		// femermer la fenetre existante
 		if ( java.util.Arrays.asList ( options ).contains ( nom ) || nom.contains ( "S" ) )
 		{
@@ -223,17 +218,17 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	}
 
 	/**
-	 * Méthodes modifiable très facilement pour ajuster les éléments du MenuBar
+	 * Méthodes très facilement modifiable pour ajuster les éléments du MenuBar
 	 */
 	public static String[][] getModeleBar ( )
 	{
 		return new String[][] {
 			{	MENU, 				"Fichier",			"",					"F"				},
 			{		ITEM, 			"Accueil",			"accueil.png",		"A", "CTRL+H"	},
-			{		SEPARATEUR																},
-			{		SOUS_MENU, 		"Exporter...",		"exporter.png",		"E", "CTRL+P"	},
-			{			ITEM_SM,	"Format PDF",		"pdf.png",			"P" 			},
-			{			ITEM_SM,	"Format HTML",		"html.png",			"H" 			},
+		//	{		SEPARATEUR																},
+		//	{		SOUS_MENU, 		"Exporter...",		"exporter.png",		"E", "CTRL+P"	},
+		//	{			ITEM_SM,	"Format PDF",		"pdf.png",			"P" 			},
+		//	{			ITEM_SM,	"Format HTML",		"html.png",			"H" 			},
 			{		SEPARATEUR																},
 			{		ITEM, 			"Quitter",			"quitter.png",		"Q", "CTRL+Q"	},
 			{	MENU, 				"Edition",			"",					"E", "CTRL+E"	},
@@ -249,27 +244,8 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			{		ITEM, 			"Intervenants",		"enseignants.png",	"I"				},
 			{		ITEM, 			"Nouvelle année",	"parametres.png",	"N"				},
 			{	MENU, 				"Affichage",		"",					"A"				},
-			{		ITEM, 			"Etats",			"apercu.png",		"E"				}
+			{		ITEM, 			"Etats",			"apercu.png",		"E", "CTRL+P"	}
 								};
-								
-		/* //Première version (fonctionne)
-		return new String[][] {
-			{ "M", "Retour Accueil","",					"A", "CTRL+H"	},
-
-			{ "M", "Saisies",		"",					"S"				},
-			{ "I", "Paramètre",		"",					""				},
-			{ "S"														},
-			{ "I", "Prévisionnel" ,	"modules.png",		""				},
-			{ "I", "Intervenants",	"enseignants.png",	""				},
-			
-			{ "M", "Etats",			"apercu.png",		"A"				},
-
-			{ "M", "Exportation",	"exportation.png",	"E"				},
-			{ "I", "Format PDF",	"pdf.png",			"P", "CTRL+P"	},
-			{ "I", "Format HTML" ,	"html.png",			"H"				},
-			
-			{ "M", "Quitter",		"",					"Q", "CTRL+Q"	},
-								};*/
 	}
 
 }

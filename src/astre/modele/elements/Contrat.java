@@ -147,13 +147,29 @@ public class Contrat
 	/** Donne une description d'un contrat
 	 * @return
 	 */
+	@Override
+	public boolean equals ( Object o )
+	{
+		if ( o == null ) return false;
+		if ( o == this ) return true;
+
+		if ( !( o instanceof Contrat ) ) return false;
+
+		Contrat c = ( Contrat ) o;
+
+		return this.id == c.id && this.nom.equals ( c.nom ) && this.heureServiceContrat == c.heureServiceContrat && this.heureMaxContrat == c.heureMaxContrat && this.ratioTP == c.ratioTP;
+	}
+
+	/** Donne une description d'un contrat
+	 * @return
+	 */
+	@Override
 	public String toString ( )
 	{
-		return String.format ( "Nom : %-20s - "                 , this.nom                 ) +
+		return String.format ( "Nom : %-22s - "                 , this.nom                 ) +
 		       String.format ( "Heure Service Contrat : %02d - ", this.heureServiceContrat ) +
 		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
 		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             );
-
 	}
 	
 }
