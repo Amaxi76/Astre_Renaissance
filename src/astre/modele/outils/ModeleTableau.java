@@ -106,10 +106,14 @@ public class ModeleTableau extends AbstractTableModel
 	@Override
 	public void setValueAt ( Object value, int row, int col )
 	{
-		this.tabDonnees[row][col + decalage] = value;
+		// vérifier qu'il y a bien eu une modif
+		if ( !this.tabDonnees[row][col + decalage].equals ( value ) )
+		{
+			this.tabDonnees[row][col + decalage] = value;
 
-		this.modifierLigne        ( row );
-		this.fireTableDataChanged (     );
+			this.modifierLigne        ( row );
+			this.fireTableDataChanged (     );
+		}
 	}
 
 	/**
