@@ -19,7 +19,7 @@ public class ModeleTableau extends AbstractTableModel
 	public static final char SUPPRIMER = 'S';
 	public static final char AJOUTER   = 'A';
 	public static final char DEFAUT    = 'D';
-	
+
 	private String[]   ensEntete;
 	private Object[]   ensDefaut;
 	private boolean[]  ensModifiable;
@@ -28,7 +28,7 @@ public class ModeleTableau extends AbstractTableModel
 
 	/*---------------------------------------*/
 	/*              CONSTRUCTEUR             */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	 * Constructeur par défaut
@@ -45,10 +45,10 @@ public class ModeleTableau extends AbstractTableModel
 		// affichage des tableaux pour les tests
 		// System.out.println(this.toString());
 	}
-	
+
 	/*---------------------------------------*/
 	/*                GETTEUR                */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	@Override public int               getColumnCount  (                  ) { return this.ensEntete.length - decalage;          }
 	@Override public int               getRowCount     (                  ) { return this.tabDonnees.length;                    }
@@ -57,8 +57,9 @@ public class ModeleTableau extends AbstractTableModel
 	@Override public String            getColumnName   ( int c            ) { return this.ensEntete[c + decalage];              }
 	//@Override public TableCellRenderer getCellRenderer ( int row, int col ) { return new OperationRenduTableau ( );             }
 
-	public String     getNomColonne ( int col          ) { return this.ensEntete[col]; }
-	public Object[][] getDonnees    (                  ) { return this.tabDonnees;     }
+	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
+	public Object     getObjet      ( int lig, int col ) { return this.tabbDonnees[lig][col]; }
+	public Object[][] getDonnees    (                  ) { return this.tabDonnees;            }
 
 
 	/*---------------------------------------*/
@@ -94,7 +95,7 @@ public class ModeleTableau extends AbstractTableModel
 	{
 		this.ensModifiable = ensModifiable;
 	}
-	
+
 	/**
 	 * Ajoute une valeur dans une case.
 	 */
@@ -131,7 +132,7 @@ public class ModeleTableau extends AbstractTableModel
 		if ( this.tabDonnees.length == 0 || ! Arrays.equals ( this.tabDonnees[nbLignes-1], this.ensDefaut ) )
 		{
 			// initialiser un nouveau tableau avec la taille pour une ligne en PLUS
-			
+
 			this.ensDefaut[0] = AJOUTER;
 			Object[][] nouveauTableau = Utilitaire.copier ( this.tabDonnees, this.ensDefaut );
 
@@ -197,5 +198,5 @@ public class ModeleTableau extends AbstractTableModel
 		return sRet;
 	}
 
-	
+
 }
