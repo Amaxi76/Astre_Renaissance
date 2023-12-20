@@ -129,40 +129,65 @@ public class FrameModule extends JFrame
 
 		this.add ( this.panelModuleBouton, BorderLayout.SOUTH);
 
+
+
+		//TEST MODULABLE
+		this.panelPNLocal.ajouterHeure("TEST");
+		this.panelPNLocal.ajouterHeure("TEST2");
+
+
+
+
+
 		this.setVisible ( true );
 	}
 
+	/** Retourne si la checkbox est sélectionnée ou non
+	 * @return cbValidation
+	 */
 	public boolean getCbValidation ( ) { return this.cbValidation.isSelected ( ); }
 
+	/** Retourne le panelModuleLabel de FrameModule
+	 * @return panelModuleLabel
+	 */
 	public PanelModuleLabel    getPanelModuleLabel    ( ) { return this.panelModuleLabel;    }
+
+	/** Retourne le panelPNLocal de FrameModule
+	 * @return panelPNLocal
+	 */
 	public PanelPNLocal	       getPanelPNLocal        ( ) { return this.panelPNLocal;        }
+
+	/** Retourne le panelPNLocalBis de FrameModule
+	 * @return panelPNLocalBis
+	 */
 	public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
+
+	/** Retourne le panelPNLocalPPP de FrameModule
+	 * @return panelPNLocalPPP
+	 */
 	public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
+
+	/** Retourne le panelRepartition de FrameModule
+	 * @return panelRepartition
+	 */
 	public PanelRepartition    getPanelRepartition    ( ) { return this.panelRepartition;    }
+
+	/** Retourne le panelRepartitionBis de FrameModule
+	 * @return panelRepartitionBis
+	 */
 	public PanelRepartitionBis getPanelRepartitionBis ( ) { return this.panelRepartitionBis; }
-	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
 
-	public void setModule ( String code )
-	{
-		ModuleIUT module = this.ctrl.getModule ( code );
+	/** Retourne le panelRepartitionPPP de FrameModule
+	 * @return panelRepartitionPPP
+	 */
+	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }		
 
-		this.panelModuleLabel.setModule ( module );
-		this.setVisiblePanels( module.getTypeModule ( ) );
-
-		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
-		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
-		if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
-		
-		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
-		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
-		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
-		
-		this.panelAffectation.setDonnee ( module );
-
-		this.cbValidation.setSelected( module.estValide( ) );
-	}
-		
-
+	/** Permet de rendre visible les panels en fonction du type de module.
+	 * Si le module est un SAE ou un Stage, on rend visible les panels Bis et on rend invisible le reste.
+	 * Si le module est un PPP, on rend visible les panels PPP et on rend invisible le reste.
+	 * Si le module est un autre type, on rend visible les panels principaux et on rend invisible le reste.
+	 * @param typeModule
+	 */
 	public void setVisiblePanels ( String typeModule )
 	{
 		if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
@@ -195,5 +220,31 @@ public class FrameModule extends JFrame
 			this.panelPNLocalBis	.setVisible ( false );
 			this.panelPNLocalPPP	.setVisible ( false );
 		}
+	}
+
+	/** Permet de modifier le module avec le code passé en paramètre.
+	 * On récupère le panel qui est visible grâce au code passé en paramètre afin de lui affecter les données du module en question.
+	 * On affecte les données dans le tableau du panelAffectation.
+	 * On valide la checkbox si le module est validé.
+	 * @param code
+	 */
+	public void setModule ( String code )
+	{
+		ModuleIUT module = this.ctrl.getModule ( code );
+
+		this.panelModuleLabel.setModule ( module );
+		this.setVisiblePanels( module.getTypeModule ( ) );
+
+		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
+		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
+		if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
+		
+		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
+		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
+		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
+		
+		this.panelAffectation.setDonnee ( module );
+
+		this.cbValidation.setSelected( module.estValide( ) );
 	}
 }

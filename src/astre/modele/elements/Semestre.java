@@ -18,7 +18,7 @@ public class Semestre
 	/*             CONSTRUCTEUR              */
 	/*---------------------------------------*/ 
 
-	/**
+	/** Constructeur d'un semestre
 	 * @param idSemestre
 	 * @param nbGroupeTP
 	 * @param nbGroupeTD
@@ -38,28 +38,28 @@ public class Semestre
 	/*                GETTEUR                */
 	/*---------------------------------------*/ 
 
-	/**
-	 * @return the idSemestre
+	/** Retourne l'id d'un semestre
+	 * @return idSemestre
 	 */
 	public int getIdSemestre ( ) { return this.idSemestre; }
 
-	/**
-	 * @return the nbGroupeTP
+	/** Retourne le nombre de groupe TP
+	 * @return nbGroupeTP
 	 */
 	public int getNbGroupeTP ( ) { return this.nbGroupeTP; }
 
-	/**
-	 * @return the nbGroupeTD
+	/** Retourne le nombre de groupe TD
+	 * @return nbGroupeTD
 	 */
 	public int getNbGroupeTD ( ) { return this.nbGroupeTD; }
 
-	/**
-	 * @return the nbEtudiant
+	/** Retourne le nombre d'étudiant
+	 * @return nbEtudiant
 	 */
 	public int getNbEtudiant ( ) { return this.nbEtudiant; }
 
-	/**
-	 * @return the nbSemaine
+	/** Retourne le nombre de Semaine
+	 * @return nbSemaine
 	 */
 	public int getNbSemaine ( ) { return this.nbSemaine; }
 
@@ -67,28 +67,28 @@ public class Semestre
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * @param idSemestre the idSemestre to set
+	/** Permet de modifier l'Id du semestre
+	 * @param idSemestre idSemestre
 	 */
 	public void setIdSemestre ( int idSemestre ) { this.idSemestre = idSemestre; }
 
-	/**
-	 * @param nbGroupeTP the nbGroupeTP to set
+	/** Permet de modifier le nombre de groupe TP
+	 * @param nbGroupeTP nbGroupeTP
 	 */
 	public void setNbGroupeTP ( int nbGroupeTP ) { this.nbGroupeTP = nbGroupeTP; }
 
-	/**
-	 * @param nbGroupeTD the nbGroupeTD to set
+	/** Permet de modifier le nombre de groupe TD
+	 * @param nbGroupeTD nbGroupeTD
 	 */
 	public void setNbGroupeTD ( int nbGroupeTD ) { this.nbGroupeTD = nbGroupeTD; }
 
-	/**
-	 * @param nbEtudiant the nbEtudiant to set
+	/** Permet de modifer le nombre d'étudiant 
+	 * @param nbEtudiant nbEtudiant
 	 */
 	public void setNbEtudiant ( int nbEtudiant ) { this.nbEtudiant = nbEtudiant; }
 
-	/**
-	 * @param nbSemaine the nbSemaine to set
+	/** Permet de modifier le nombre de semaine
+	 * @param nbSemaine nbSemaine
 	 */
 	public void setNbSemaine ( int nbSemaine ) { this.nbSemaine = nbSemaine; }
 
@@ -96,7 +96,7 @@ public class Semestre
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/**
+	/** Renvoie une description d'un semestre
 	 * @return descriptif des attributs de semestre
 	 */
 	public String toString ( )

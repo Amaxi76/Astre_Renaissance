@@ -1,6 +1,5 @@
 package astre.vue.parametrage;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
@@ -35,8 +34,7 @@ public class FrameParametrage extends AFrame
 
 		this.add ( panelBordure                   , BorderLayout.CENTER );
 
-		this.requestFocus ();
-		
-		this.setVisible ( true );
+		this.requestFocus (      );
+		this.setVisible   ( true );
 	}
 }

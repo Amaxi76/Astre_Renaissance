@@ -15,7 +15,7 @@ public class Intervenant
 	private int     heureMaximum;
 	private Contrat contrat;
 
-	/**
+	/** Constructeur d'intervenant
 	 * @param id
 	 * @param nom
 	 * @param prenom
@@ -23,7 +23,7 @@ public class Intervenant
 	 * @param heureService
 	 * @param heureMaximum
 	 */
-	public Intervenant (int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
+	private Intervenant ( int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
 	{
 		this.id           = id;
 		this.nom          = nom;
@@ -33,32 +33,79 @@ public class Intervenant
 		this.heureMaximum = heureMaximum;
 	}
 
+	public static Intervenant creation ( Object[] intervenant )
+	{
+		Object i  = intervenant[0];
+		Object n  = intervenant[1];
+		Object p  = intervenant[2];
+		Object c  = intervenant[3];
+		Object hs = intervenant[4];
+		Object hm = intervenant[5];
+
+		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( p instanceof String ) || !( c instanceof Contrat ) || !( hs instanceof Integer ) || !( hm instanceof Integer ))
+			throw new IllegalArgumentException ( "Les données de l'invervenant intervenant ne sont pas du bon type" );
+		
+		int    id           = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
+		int    heureService = Integer.parseInt ( hs.toString ( ) );
+		int    heureMaximum = Integer.parseInt ( hm.toString ( ) );
+		String nom          = n.toString ( );
+		String prenom       = p.toString ( );
+		Contrat contrat     = (Contrat)c;
+
+		return Intervenant.creation ( id, nom, prenom, contrat, heureService, heureMaximum );
+	}
+
+	public static Intervenant creation ( int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
+	{
+		if ( nom.equals ( "" ) || prenom.equals ( "" ) )
+			throw new IllegalArgumentException ( "Veuillez renseigner le nom et le prenom" );
+
+		// Il n'a pas de contrat
+		if ( contrat == null )
+			throw new IllegalArgumentException ( "Veuillez renseigner un contrat pour l'intervenant" );
+
+		//hserv > hmax
+		if ( heureService > heureMaximum )
+			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+
+		//hserv < 0 ou hmax < 0
+		if ( heureService < 0 || heureMaximum < 0 )
+			throw new IllegalArgumentException ( "Les heures de services ou maximums sont nuls" );
+		
+		return new Intervenant ( id, nom, prenom, contrat, heureService, heureMaximum );
+	}
+
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * @return
+	/** Retourne l'id de l'intervenant
+	 * @return id
 	 */
 	public int     getId           ( ) { return this.id;           }
-	/**
-	 * @return
+
+	/** Retourne le nom de l'intervenant
+	 * @return nom
 	 */
 	public String  getNom          ( ) { return this.nom;          }
-	/**
-	 * @return
+
+	/** Retourne le prénom de l'intervenant
+	 * @return prenom
 	 */
 	public String  getPrenom       ( ) { return this.prenom;       }
-	/**
-	 * @return
+
+	/** Retourne le contrat de l'intervenant
+	 * @return contrat
 	 */
 	public Contrat getContrat      ( ) { return this.contrat;      }
-	/**
-	 * @return
+
+	/** Retourne le nombre d'heure de service de l'intervenant
+	 * @return heureService
 	 */
 	public int     getheureService ( ) { return this.heureService; }
-	/**
-	 * @return
+
+	/** Retourne le nombre d'heure maximum de l'intervenant
+	 * @return heureMaximum
 	 */
 	public int     getHeureMaximum ( ) { return this.heureMaximum; }
 
@@ -66,28 +113,33 @@ public class Intervenant
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * @param id
+	/** Permet de modifier l'id
+	 * @param id the id to set
 	 */
 	public void setId           ( int     id           ) { this.id           = id;           }
-	/**
-	 * @param nom
+
+	/** Permet de modifier le nom
+	 * @param nom the nom to set
 	 */
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
-	/**
-	 * @param prenom
+
+	/** Permet de modifier le prénom
+	 * @param prenom the prenom to set
 	 */
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
-	/**
-	 * @param contrat
+
+	/** Permet de modifier le contrat
+	 * @param contrat the contrat to set
 	 */
 	public void setContrat      ( Contrat contrat      ) { this.contrat      = contrat;      }
-	/**
-	 * @param heureService
+
+	/** Permet de modifier le nombre d'heure de service
+	 * @param heureService the heureService to set
 	 */
 	public void setheureService ( int     heureService ) { this.heureService = heureService; }
-	/**
-	 * @param heureMaximum
+
+	/** Permet de modifier le nombre d'heure maximum
+	 * @param heureMaximum the heureMaximum to set
 	 */
 	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
 
@@ -95,7 +147,7 @@ public class Intervenant
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/**
+	/** Renvoie le descriptif des attributs d'intervenants
 	 * @return descriptif des attributs d'intervenants
 	 */
 	public String toString ( )
@@ -110,10 +162,19 @@ public class Intervenant
 		return sRet;
 	}
 
-	public boolean equals( Intervenant i )
+	@Override
+	/** Compare l'égalité entre l'intervenant passé en paramètre et l'invernant passé par le constructeur
+	 * @return true si les deux intervenants sont égaux, sinon false
+	 */
+	public boolean equals ( Object o )
 	{
-		if( this.id == i.getId() && this.nom.equals( i.getNom() ) && this.prenom.equals( i.getPrenom() ) && this.heureService == i.getheureService() && this.heureMaximum == i.getHeureMaximum() )
-			return true;
+		if ( o instanceof Intervenant )
+		{
+			Intervenant i = ( Intervenant ) o;
+
+			if ( this.id == i.getId ( ) && this.nom.equals ( i.getNom ( ) ) && this.prenom.equals ( i.getPrenom ( ) ) && this.heureService == i.getheureService ( ) && this.heureMaximum == i.getHeureMaximum ( ) )
+				return true;
+		}
 		
 		return false;
 	}

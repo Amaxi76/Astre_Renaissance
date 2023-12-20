@@ -1,17 +1,19 @@
 package astre.modele;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import astre.modele.elements.*;
-import astre.modele.outils.ModeleTableau;
+import astre.modele.outils.TableauUtilitaire;
 
 public class Astre
 {
 	private BD bd;
+	private static final char AJOUTER   = 'a';
+	private static final char MODIFIER  = 'm';
+	private static final char SUPPRIMER = 's';
 
 	public Astre ( )
 	{
@@ -20,6 +22,10 @@ public class Astre
 
 	public Object[][] getTableauModule ( int numeroSemestre )
 	{
+		//à remplacer par une commande de BD
+		/*Object[][] tableau = { {"R1.01", "Initia", "437/465", "V"}, {"R2.02", "Dev", "374/374", "V"} };
+		return tableau;*/
+		
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( this.bd.getModules ( numeroSemestre ) ) ;
 
 		Object[][] tabObjet = new Object[ensModules.size ( ) ][4];
@@ -30,7 +36,7 @@ public class Astre
 			
 			tabObjet[cpt][0] = module.getCode    ( );
 			tabObjet[cpt][1] = module.getLibLong ( );
-			tabObjet[cpt][2] = "" + this.sommeHeure ( module.getCode ( ), 'R' ) + "/" + this.sommeHeure ( module.getCode ( ), 'P' );
+			tabObjet[cpt][2] = "" + this.sommeHeure ( module.getCode ( ), 'R' ) + "/" + this.sommeHeure ( module.getCode ( ), 'P');
 			tabObjet[cpt][3] = module.estValide  ( );
 		}
 		
@@ -41,31 +47,32 @@ public class Astre
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Object[][]    getTableau  ( Class<?>  type     ) { return this.bd.getTableau  ( type        ); }
-	public Semestre      getSemestre ( int    numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
-	public Heure 	     getHeure    ( int    nom         ) { return this.bd.getHeure    ( nom         ); } //TODO: nom de variable à retravailler
-	public Heure 	     getHeure    ( String nom         ) { return this.bd.getHeure    ( nom         ); }
-	public Contrat       getContrat  ( String nom         ) { return this.bd.getContrat  ( nom         ); }
-	public ModuleIUT     getModule   ( String nom         ) { return this.bd.getModule   ( nom         ); }
+	public Object[][]    getTableauIntervenant (                 ) { return this.bd.getIntervenantsTableau  ( ); }
+	public Object[][]    getTableauIntervient  (                 ) { return this.bd.getIntervientsTableau   ( ); }
+	public Object[][]    getTableauContrat     (                 ) { return this.bd.getContratsTableau      ( ); }
+	public Object[][]    getTableauHeure       (                 ) { return this.bd.getHeureTableau         ( ); }
+	public Semestre      getSemestre           ( int numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
+	public Heure 	     getHeure              ( int nom         ) { return this.bd.getHeure            ( nom ); }
+	public Heure 	     getHeure              ( String nom      ) { return this.bd.getHeure            ( nom ); }
 
-	public ArrayList<String> getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
+	public Contrat       getContrat            ( String nom      ) { return this.bd.getContrat          ( nom ); }
+	public ModuleIUT     getModule             ( String nom      ) { return this.bd.getModule           ( nom ); }
+
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }
 	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants (      ); }
 	public <T> List<T>       getTable          ( Class<T> type   ) { return this.bd.getTable        ( type ); }
 
-	public int               getNBHeureEQTD    ( String code, String nomHeure ) { return this.bd.getNBHeureEQTD ( code, nomHeure ); }
-
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
-	
+
 	public void update ( Object o ) { this.modification ( o, "update" ); }
 	public void insert ( Object o ) { this.modification ( o, "insert" ); }
 	public void delete ( Object o ) { this.modification ( o, "delete" ); }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	public int sommeHeure ( String code, char typeHeure )
 	{
@@ -78,30 +85,23 @@ public class Astre
 		return somme;
 	}
 
-
-	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
+	public void majTableauBD ( Object[] tuple, Class<?> type, char action )
 	{
-		for ( int i = 0; i < tabDonneeBD.length; i++ )
+		try
 		{
-			try
+			Object objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null,  tuple );
+			
+			switch ( action )
 			{
-				Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
-				
-				Object objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) sousTab );
-
-				switch ( ( char ) tabDonneeBD[i][0] )
-				{
-					case ModeleTableau.AJOUTER   -> this.insert ( objet );
-					case ModeleTableau.MODIFIER  -> this.update ( objet );
-					case ModeleTableau.SUPPRIMER -> this.delete ( objet );
-				
-					default  -> { break; } // ModeleTableau.DEFAUT et ModeleTableau.IGNORER
-				}
+				case AJOUTER   -> this.insert ( objet );
+				case SUPPRIMER -> this.delete ( objet );
+				case MODIFIER  -> this.update ( objet );
+				default -> throw new Exception ( "Action non reconnue" );
 			}
-			catch ( Exception e )
-			{
-				e.printStackTrace ( );
-			}
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace ( );
 		}
 	}
 
@@ -114,10 +114,10 @@ public class Astre
 		}
 		catch ( NoSuchMethodException  | IllegalAccessException | InvocationTargetException e )
 		{
-			e.printStackTrace ( );
+			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
 	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
 }

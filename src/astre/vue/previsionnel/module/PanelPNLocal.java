@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -18,10 +19,10 @@ import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelPNLocal
-  * @author : Clémentin Ly
-  * @version : 2.0 - 14/12/2023
-  * @date : 12/12/2023
-  */
+ * @author : Clémentin Ly
+* @version : 2.0 - 14/12/2023
+* @date : 12/12/2023
+*/
 
 public class PanelPNLocal extends JPanel
 {
@@ -41,6 +42,11 @@ public class PanelPNLocal extends JPanel
 	private JLabel lblTotalTD;
 	private JLabel lblTotalTP;
 	private JLabel lblTotalSomme;
+
+	//TEST MODULABLE
+	private List<JLabel>     lstLabelsHeures      = new ArrayList<>();
+	private List<JTextField> lstTextFieldsHeures  = new ArrayList<>();
+	private List<JLabel>     lstLabelsTotalHeures = new ArrayList<>();
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -63,30 +69,42 @@ public class PanelPNLocal extends JPanel
 
 		this.txtCM      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtCM );
+		this.lstTextFieldsHeures.add ( txtCM );
 
 		this.txtTD      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTD );
+		this.lstTextFieldsHeures.add ( txtTD );
 
 		this.txtTP      = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTP );
+		this.lstTextFieldsHeures.add ( txtTP );
 		
 		this.lblSomme   = new JLabel();
 
 		this.lblTotalCM    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalCM );
+
 		this.lblTotalTD    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalTD );
+
 		this.lblTotalTP    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalTP );
+		
 		this.lblTotalSomme = new JLabel();
 
 
 		gbc.gridy = 0;
 		gbc.gridx = 1;
 		this.add ( new JLabel ( "CM" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
 
 		gbc.gridx = 3;
 		this.add ( new JLabel ( "TP" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "Σ" ), gbc  );
@@ -168,6 +186,9 @@ public class PanelPNLocal extends JPanel
 			int TD    = 0;
 			int TP    = 0;
 			
+			//TEST MODULABLE
+			int nouvHeureValeur = 0;
+			
 			if (!txtCM.getText().isEmpty() )
 			{
 				CM = Integer.parseInt ( txtCM.getText() );
@@ -184,12 +205,27 @@ public class PanelPNLocal extends JPanel
 			}
 
 			int somme = CM + TD + TP;
+
+			//TEST MODULABLE
+			for (int i = 3; i < lstTextFieldsHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			{
+				JTextField textField = lstTextFieldsHeures.get(i);
+				if ( !textField.getText().isEmpty() )
+				{
+					nouvHeureValeur = Integer.parseInt(textField.getText());
+					somme += nouvHeureValeur;
+				}
+			}
+
 			lblSomme.setText ( String.valueOf ( somme ) );
 
 
 			double totalCM = 0;
 			double totalTD = 0;
 			double totalTP = 0;
+
+			//TEST MODULABLE
+			double nouvTotalHeureValeur = 0;
 
 			if ( !lblTotalCM.getText().isEmpty() )
 			{
@@ -207,6 +243,19 @@ public class PanelPNLocal extends JPanel
 			}
 
 			double totalSomme = totalCM + totalTD + totalTP;
+
+			//TEST MODULABLE
+			for (int i = 3; i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			{
+				JLabel labelTotalHeure = lstLabelsTotalHeures.get(i);
+
+				if ( !labelTotalHeure.getText().isEmpty() )
+				{
+					nouvTotalHeureValeur = Double.parseDouble ( labelTotalHeure.getText() );
+					totalSomme += nouvTotalHeureValeur;
+				}
+			}
+
 			lblTotalSomme.setText ( String.valueOf ( totalSomme ) );
 		}
 		catch ( NumberFormatException ex )
@@ -251,10 +300,24 @@ public class PanelPNLocal extends JPanel
 	
 				lblTotalTP.setText ( String.valueOf ( totalTP ) );
 			}
+			
+			//TEST MODULABLE
+			for ( int i = 3; i < this.lstTextFieldsHeures.size() && i < this.lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			{
+				JTextField textField       = this.lstTextFieldsHeures .get(i);
+				JLabel     labelTotalHeure = this.lstLabelsTotalHeures.get(i);
+	
+				if ( !textField.getText().isEmpty() )
+				{
+					//TODO: À MODIFIER CAR AUCUN COEFFICIENT ET AUCUNE MULTIPLICATION AUX ÉTUDIANTS
+					int heureValeur = Integer.parseInt ( textField.getText() );
+					labelTotalHeure.setText ( String.valueOf ( heureValeur ) );
+				}
+			}
 		}
 		catch ( NumberFormatException ex )
 		{
-			lblTotalCM.setText( "Erreur" );
+			lblTotalSomme.setText( "Erreur" );
 			ex.printStackTrace();
 		}
 	}
@@ -311,4 +374,39 @@ public class PanelPNLocal extends JPanel
 	public int getCM ( ) { return Integer.parseInt( this.txtCM.getText() ); }
 	public int getTD ( ) { return Integer.parseInt( this.txtTD.getText() ); }
 	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
+
+
+	//TEST MODULABLE
+	public void ajouterHeure ( String nomHeure )
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+	
+		JLabel     labelNomHeure      = new JLabel ( nomHeure );
+
+		JTextField textFieldHeure  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( textFieldHeure );
+
+		JLabel     labelTotalHeure = new JLabel ( );
+		labelTotalHeure.setBackground ( Color.LIGHT_GRAY );
+		labelTotalHeure.setPreferredSize ( new Dimension ( 40, 15 ) );
+		labelTotalHeure.setOpaque( true );
+	
+		this.lstLabelsHeures     .add ( labelNomHeure   );
+		this.lstTextFieldsHeures .add ( textFieldHeure  );
+		this.lstLabelsTotalHeures.add ( labelTotalHeure );
+
+	
+		gbc.gridy = this.lstLabelsHeures.size();
+		gbc.gridx = 1;
+		this.add ( labelNomHeure, gbc );
+	
+		gbc.gridx = 2;
+		this.add ( textFieldHeure, gbc );
+
+		gbc.gridx = 3;
+		this.add ( labelTotalHeure, gbc );
+
+		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
+	}
 }
