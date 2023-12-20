@@ -107,7 +107,7 @@ public class ModeleTableau extends AbstractTableModel
 	public void setValueAt ( Object value, int row, int col )
 	{
 		// vérifier qu'il y a bien eu une modif
-		if ( !this.tabDonnees[row][col + decalage].equals ( value ) )
+		if ( this.tabDonnees[row][col + decalage] != null && !this.tabDonnees[row][col + decalage].equals ( value ) )
 		{
 			this.tabDonnees[row][col + decalage] = value;
 

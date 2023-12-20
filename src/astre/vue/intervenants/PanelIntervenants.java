@@ -163,12 +163,19 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			Object[][] tab = this.preparerTableau ( this.tableau .getDonnees ( ) );
+			System.out.println ( "=== preparerTableau" );
+			Object[][] tab = this.preparerTableau ( this.tableau.getDonnees ( ) );
 
+			System.out.println ( "=== majTableauBD" );
 			this.ctrl.majTableauBD ( tab, Intervenant.class );
+			
+			System.out.println ( "=== ajusterTailleColonnes" );
 			this.tableau.ajusterTailleColonnes ( );
 
-			this.tableau.modifDonnees ( this.ctrl.getTableau ( Intervenant.class ) );
+			System.out.println ( "=== modifDonnees" );
+			this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( "v_Intervenant" ) );
+			
+			System.out.println ( Utilitaire.afficherValeurs ( this.ctrl.getTableauParticulier ( "v_Intervenant" ) ) );
 		}
 
 		if ( e.getSource (  ) == this.btnAnnuler )
@@ -176,10 +183,12 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			( ( JFrame ) ( this.getParent ( ).getParent ( ).getParent ( ).getParent ( ) ) ).dispose ( );
 			new FrameAccueil ( this.ctrl );
 		}
+		System.out.println ( "<<< Fin actionPerformed" );
 	}
 
 	private Object[][] preparerTableau ( Object[][] tab  )
 	{
+		System.out.println ( ">>> Début preparerTableau" );
 		// Enlever les colonnes en trop
 		Object[][] tab2 = Utilitaire.formater ( tab, 7 );
 		
@@ -187,7 +196,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		int COLONNE_CONTRAT = 2;
 		
 		for ( int lig = 0; lig < tab.length; lig++ )
+		{
 			tab2[lig][COLONNE_CONTRAT] = this.ctrl.getContrat ( tab2[lig][COLONNE_CONTRAT].toString ( ) );
+		}
 		
 		// Replacer les objets dans le bon ordre pour le constructeur
 		for ( int lig = 0; lig < tab2.length; lig++ )
@@ -198,11 +209,12 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			tab2[lig][3] = tab[lig][4];
 			tab2[lig][4] = tmp;
 		}
-			
-		
 
 		System.out.println(Utilitaire.afficherValeurs(tab2));
 		System.out.println(Utilitaire.afficherTypes(tab2));
+		
+		System.out.println ( "<<< Fin preparerTableau" );
+		
 		return tab2;
 	}
 

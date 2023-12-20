@@ -34,7 +34,10 @@ public abstract class Utilitaire
 		String s="";
 		
 		for ( Object o : liste )
-			s += o.toString ( ) + "\n";
+			if( o == null )
+				s += "null\n";
+			else
+				s += o.toString ( ) + "\n";
 		
 		return s;
 	}
@@ -47,7 +50,10 @@ public abstract class Utilitaire
 		String s="";
 		
 		for ( Object o : liste )
-			s += o.toString ( ) + "\n";
+			if( o == null )
+				s += "null\n";
+			else
+				s += o.toString ( ) + "\n";
 		
 		return s;
 	}
@@ -63,7 +69,10 @@ public abstract class Utilitaire
 		{
 			for ( int cptCol = 0; cptCol < tableau[cptLig].length; cptCol++ )
 			{
-				s += tableau[cptLig][cptCol].toString ( ) + " ";
+				if( tableau[cptLig][cptCol] == null )
+					s += "null ";
+				else
+					s += tableau[cptLig][cptCol].toString ( ) + " ";
 			}
 			s+="\n";
 		}
@@ -82,7 +91,10 @@ public abstract class Utilitaire
 		{
 			for ( int cptCol = 0; cptCol < tableau[cptLig].length; cptCol++ )
 			{
-				s += tableau[cptLig][cptCol].getClass().toString ( ) + " ";
+				if( tableau[cptLig][cptCol] == null )
+					s += "null ";
+				else
+					s += tableau[cptLig][cptCol].getClass().toString ( ) + " ";
 			}
 			s+="\n";
 		}
