@@ -27,15 +27,17 @@ public class Controleur
 
 	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
-	public Semestre          getSemestre       ( int      numSemestre         ) { return this.metier.getSemestre      ( numSemestre    ); }
-	public Object[][]        getTableauModule  ( int      numSemestre         ) { return this.metier.getTableauModule ( numSemestre    ); } //TODO: à refaire / enlever
-	public Object[][]        getTableau        ( Class<?> type                ) { return this.metier.getTableau       ( type           ); }
-	public Heure             getHeure          ( int      nom                 ) { return this.metier.getHeure         ( nom            ); }
-	public Heure             getHeure          ( String   nom                 ) { return this.metier.getHeure         ( nom            ); }
-	public Contrat           getContrat        ( String   nom                 ) { return this.metier.getContrat       ( nom            ); }
-	public ModuleIUT         getModule         ( String   nom                 ) { return this.metier.getModule        ( nom            ); }
-	public int               getNBHeureEQTD    ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD   ( code, nomHeure ); }
-	public ArrayList<String> getHistorique     (                              ) { return this.metier.getHistorique    (                ); }
+	public Semestre          getSemestre           ( int      numSemestre         ) { return this.metier.getSemestre           ( numSemestre    ); }
+	public Object[][]        getTableauModule      ( int      numSemestre         ) { return this.metier.getTableauModule      ( numSemestre    ); } //TODO: à refaire / enlever
+	public Heure             getHeure              ( int      nom                 ) { return this.metier.getHeure              ( nom            ); }
+	public Heure             getHeure              ( String   nom                 ) { return this.metier.getHeure              ( nom            ); }
+	public Contrat           getContrat            ( String   nom                 ) { return this.metier.getContrat            ( nom            ); }
+	public ModuleIUT         getModule             ( String   nom                 ) { return this.metier.getModule             ( nom            ); }
+	public int               getNBHeureEQTD        ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD        ( code, nomHeure ); }
+	public List<String>      getHistorique         (                              ) { return this.metier.getHistorique         (                ); }
+
+	public Object[][]        getTableau            ( Class<?> type                ) { return this.metier.getTableau            ( type           ); }
+	public Object[][]        getTableauParticulier ( String nomRecherche          ) { return this.metier.getTableauParticulier ( nomRecherche   ); }
 
 	public void update ( Object o ) { this.metier.update ( o ); }
 	public void insert ( Object o ) { this.metier.insert ( o ); }

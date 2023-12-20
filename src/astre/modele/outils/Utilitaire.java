@@ -139,6 +139,33 @@ public abstract class Utilitaire
 	}
 
 	/**
+	 * Copie profonde d'un tableau avec un nouveau nombre de colonnes (conserve les colonnes de indDeb à indFin)
+	 */
+	/*public static Object[][] formater ( Object[][] tableau, int indDeb, int indFin )
+	{
+		int taille = indFin - indDeb + 1;
+		Object[][] tableauTmp = new Object[tableau.length][taille];
+
+		for ( int lig = 0; lig < tableau.length; lig++ )
+		{
+			for ( int col = 0; col <  ; col++ )
+			{
+				if ( col < tableau[lig].length )
+				{
+					tableauTmp[lig][col] = tableau[lig][col];
+				}
+				else
+				{
+					// Ajoutez une valeur vide pour les nouvelles colonnes
+					tableauTmp[lig][col] = "X"; //TODO: remplacer la valeur par Null
+				}
+			}
+		}
+
+		return tableauTmp;
+	}*/
+
+	/**
 	 * Copie profonde d'un tableau
 	 */
 	public static Object[][] copier ( Object[][] tableau )
@@ -224,4 +251,19 @@ public abstract class Utilitaire
 	
 		System.out.println ( afficherTableau(attributs) );
 	}*/
+
+
+	/*---------------------------------------*/
+	/*             METHODES AUTRES           */
+	/*---------------------------------------*/
+
+	/**
+	 * Methode permettant d'inverser deux objets d'un tableau
+	 */
+	public static void inverser( Object[] liste, int ind1, int ind2 )
+	{
+		Object tmp = liste[ind1];
+		liste[ind1] = liste[ind2];
+		liste[ind2] = tmp;
+	}
 }

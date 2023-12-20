@@ -41,12 +41,13 @@ public class Astre
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Object[][]    getTableau  ( Class<?>  type     ) { return this.bd.getTableau  ( type        ); }
-	public Semestre      getSemestre ( int    numSemestre ) { return this.bd.getSemestre ( numSemestre ); }
-	public Heure 	     getHeure    ( int    nom         ) { return this.bd.getHeure    ( nom         ); } //TODO: nom de variable à retravailler
-	public Heure 	     getHeure    ( String nom         ) { return this.bd.getHeure    ( nom         ); }
-	public Contrat       getContrat  ( String nom         ) { return this.bd.getContrat  ( nom         ); }
-	public ModuleIUT     getModule   ( String nom         ) { return this.bd.getModule   ( nom         ); }
+	public Object[][]    getTableau            ( Class<?>  type      ) { return this.bd.getTableau            ( type         ); }
+	public Object[][]    getTableauParticulier ( String nomRecherche ) { return this.bd.getTableauParticulier ( nomRecherche ); }
+	public Semestre      getSemestre           ( int    numSemestre  ) { return this.bd.getSemestre           ( numSemestre  ); }
+	public Heure         getHeure              ( int    nom          ) { return this.bd.getHeure              ( nom          ); } //TODO: nom de variable à retravailler
+	public Heure         getHeure              ( String nom          ) { return this.bd.getHeure              ( nom          ); }
+	public Contrat       getContrat            ( String nom          ) { return this.bd.getContrat            ( nom          ); }
+	public ModuleIUT     getModule             ( String nom          ) { return this.bd.getModule             ( nom          ); }
 
 	public ArrayList<String> getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }

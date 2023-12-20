@@ -45,11 +45,11 @@ public class Intervenant
 		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( p instanceof String ) || !( c instanceof Contrat ) || !( hs instanceof Integer ) || !( hm instanceof Integer ))
 			throw new IllegalArgumentException ( "Les données de l'invervenant intervenant ne sont pas du bon type" );
 		
-		int    id           = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
-		int    heureService = Integer.parseInt ( hs.toString ( ) );
-		int    heureMaximum = Integer.parseInt ( hm.toString ( ) );
-		String nom          = n.toString ( );
-		String prenom       = p.toString ( );
+		int     id           = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
+		int     heureService = Integer.parseInt ( hs.toString ( ) );
+		int     heureMaximum = Integer.parseInt ( hm.toString ( ) );
+		String  nom          = n.toString ( );
+		String  prenom       = p.toString ( );
 		Contrat contrat     = (Contrat)c;
 
 		return Intervenant.creation ( id, nom, prenom, contrat, heureService, heureMaximum );

@@ -51,11 +51,7 @@ public class ModeleTableau extends AbstractTableModel
 	/*---------------------------------------*/
 
 	@Override public int               getColumnCount  (                  ) { return this.ensEntete.length - decalage;          }
-	@Override public int               getRowCount     (                  )
-	{
-		//if ( this.tabDonnees == null )
-		return this.tabDonnees.length;
-	}
+	@Override public int               getRowCount     (                  ) { return this.tabDonnees.length; }
 	@Override public Object            getValueAt      ( int row, int col ) { return this.tabDonnees[row][col + decalage];      }
 	@Override public Class<?>          getColumnClass  ( int c            ) { return this.ensDefaut[c + decalage].getClass ( ); }
 	@Override public String            getColumnName   ( int c            ) { return this.ensEntete[c + decalage];              }

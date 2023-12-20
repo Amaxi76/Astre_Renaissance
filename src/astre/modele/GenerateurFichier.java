@@ -168,8 +168,9 @@ public class GenerateurFichier
 						"<td>" + bd.getNBHeureParSemestre ( 6, inter.getId ( ) ) + "</td>" +
 					"</tr>" ;
 
-			int sommePaire   = bd.getNBHeureParSemestre ( 2, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 4, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 6, inter.getId ( ) );
-			int sommeImpaire = bd.getNBHeureParSemestre ( 1, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 3, inter.getId ( ) ) + bd.getNBHeureParSemestre ( 5, inter.getId ( ) );
+			int sommePaire   = bd.getHeureParSemestrePair   ( inter.getId ( ) );
+			int sommeImpaire = bd.getHeureParSemestreImpair ( inter.getId ( ) );
+			int sommeTot     = bd.getHeureParSemestreTotal  ( inter.getId ( ) );
 
 			recap += "<tr>" +
 						"<td colspan='3'> Total semestre impaires : " + sommeImpaire + " heures</td>" +
@@ -177,7 +178,7 @@ public class GenerateurFichier
 					 "</tr> " ;
 
 			recap += "<tr>" +
-						"<td colspan='6' class='total'> Total des heures réparties : " + (sommeImpaire + sommePaire) + " heures</td>" +
+						"<td colspan='6' class='total'> Total des heures réparties : " + sommeTot + " heures</td>" +
 					"</tr>";
 
 			recap += "</table>";

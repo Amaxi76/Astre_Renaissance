@@ -58,7 +58,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 		this.tableau = Tableau.initialiserTableau ( noms, typeDefaut, true, 1, null );
 		if ( this.tableau == null ){ System.out.println( "tableau de panel affectation est null ");}
 
-		/*//Ajout d'une JComboBox pour les intervenants au tableau
+		//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditInter = new JComboBox<> ( );
 		for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
 		{
@@ -72,7 +72,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 		{
 			cbEditHeure.addItem ( h.getNom ( ) );
 		}
-		this.tableau.getColumnModel ( ).getColumn ( 1 ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );*/
+		this.tableau.getColumnModel ( ).getColumn ( 1 ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );
 
 		this.scrollPane = new JScrollPane ( this.tableau );
 

@@ -46,13 +46,11 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
 		//création des composants
-		String[] noms    = { "action","Id", "Nom", "Prénom", "hServ", "hMax", "Catégorie", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		Object[] defauts = { ' ', 0, "", "", 0, 0, "", 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-		Object[][] tabTmp = Utilitaire.formater ( this.ctrl.getTableau ( Intervenant.class ), 17 );
+		String[] noms    = { "action", "Id","Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		Object[] defauts = { 'D', 0, "", "", "", 0, 0, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 		//Création du tableau
-		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 2, tabTmp );
+		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 2, this.ctrl.getTableauParticulier ( "v_intervenant" ) );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
@@ -60,7 +58,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
-		this.tableau.getColumnModel ( ).getColumn ( 4 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
+		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
 		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO: faire en sorte que le tablo soit modifiable mais pas partout
@@ -117,7 +115,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			enregistrer ( this.tableau.getDonnees ( ) );
+			Object[][] tab = this.preparerTableau ( this.tableau .getDonnees ( ) );
+
+			this.ctrl.majTableauBD ( tab, Intervenant.class );
 			this.tableau.ajusterTailleColonnes ( );
 
 			this.tableau.modifDonnees ( this.ctrl.getTableau ( Intervenant.class ) );
@@ -130,7 +130,35 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		}
 	}
 
-	public boolean enregistrer ( Object[][] deuxieme )
+	private Object[][] preparerTableau ( Object[][] tab  )
+	{
+		// Enlever les colonnes en trop
+		Object[][] tab2 = Utilitaire.formater ( tab, 7 );
+		
+		// Remplacer les noms de contrat par les objets contrat
+		int COLONNE_CONTRAT = 2;
+		
+		for ( int lig = 0; lig < tab.length; lig++ )
+			tab2[lig][COLONNE_CONTRAT] = this.ctrl.getContrat ( tab2[lig][COLONNE_CONTRAT].toString ( ) );
+		
+		// Replacer les objets dans le bon ordre pour le constructeur
+		for ( int lig = 0; lig < tab2.length; lig++ )
+		{
+			Object tmp = tab2[lig][2];
+			
+			tab2[lig][2] = tab[lig][3];
+			tab2[lig][3] = tab[lig][4];
+			tab2[lig][4] = tmp;
+		}
+			
+		
+
+		System.out.println(Utilitaire.afficherValeurs(tab2));
+		System.out.println(Utilitaire.afficherTypes(tab2));
+		return tab2;
+	}
+
+	/*public boolean enregistrer ( Object[][] deuxieme )
 	{
 		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
@@ -212,5 +240,5 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			}
 		}
 		return true;
-	}
+	}*/
 }

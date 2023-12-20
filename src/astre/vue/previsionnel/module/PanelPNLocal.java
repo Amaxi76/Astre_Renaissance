@@ -409,4 +409,23 @@ public class PanelPNLocal extends JPanel
 
 		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
 	}
+
+	public void supprimerHeure ( String nomHeure )
+	{
+		for ( int i = 0; !nomHeure.equals(lstLabelsHeures.get(i).getText()); i++)
+		{
+			//Supprimer de la liste
+			lstLabelsHeures     .remove(i);
+			lstTextFieldsHeures .remove(i);
+			lstLabelsTotalHeures.remove(i);
+
+			//Supprimer du Panel
+			this.remove ( lstLabelsHeures     .get(i) );
+            this.remove ( lstTextFieldsHeures .get(i) );
+            this.remove ( lstLabelsTotalHeures.get(i) );
+
+			this.repaint();
+
+		}
+	}
 }
