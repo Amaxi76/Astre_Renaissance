@@ -130,6 +130,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		}
 	}
 
+	//TODO faire un camembert en bas a gauche
+
 	private Object[][] preparerTableau ( Object[][] tab  )
 	{
 		// Enlever les colonnes en trop

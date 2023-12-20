@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import astre.modele.elements.*;
 
@@ -40,7 +41,7 @@ public class GenerateurFichier
 					s[j] = elem[i][j + 1].toString ( );
 				}
 
-				//deso pas reussi a faire mieux
+				//TODO faire avec la requete d'Alizéa
 				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
 				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
 				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
@@ -112,6 +113,40 @@ public class GenerateurFichier
 		{
             e.printStackTrace ( );
         }
+	}
+
+	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt )
+	{
+		try 
+		{
+			for (Intervenant i : ensInt)
+			{
+				GenererHTMLIntervenant(i);
+			}
+
+			System.out.println("Tous les intervenants on été exportés sous format HTML");
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Erreur lors de la création d'un fichier HTML");
+		}
+	}
+
+	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod )
+	{
+		try 
+		{
+			for (ModuleIUT m : ensMod)
+			{
+				GenererHTMLModule(m);
+			}
+
+			System.out.println("Tous les modules on été exportés sous format HTML");
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Erreur lors de la création d'un fichier HTML");
+		}
 	}
 
 	public static void GenererHTMLIntervenant ( Intervenant inter )

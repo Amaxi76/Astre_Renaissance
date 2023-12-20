@@ -34,8 +34,8 @@ public class ModuleIUT
 		Object lc = contrat[4];
 		Object v  = contrat[5];
 
-		if ( ( s instanceof Semestre )  ||  !( tm instanceof String ) || !( c instanceof String ) || !( ll instanceof String ) ||
-		                                    !( ll instanceof String ) || !( c instanceof Boolean ) )
+		if ( ( s instanceof Semestre )  ||  ! ( tm instanceof String ) || ! ( c instanceof String ) || ! ( ll instanceof String ) ||
+		                                    ! ( ll instanceof String ) || ! ( c instanceof Boolean ) )
 			throw new IllegalArgumentException ( "Les données du moduleIUT ne sont pas du bon type" );
 		
 		Semestre semestre          = ( Semestre ) s;
@@ -144,7 +144,7 @@ public class ModuleIUT
 	@Override
 	public String toString ( )
 	{
-		return "ModuleIUT [semestre=" + semestre + ", typeModule=" + typeModule + ", code=" + code + ", libLong="
-				+ libLong + ", libCourt=" + libCourt + ", valide=" + valide + "]";
+		return "ModuleIUT [semestre=" + this.semestre + ", typeModule=" + this.typeModule + ", code=" + this.code + ", libLong="
+				+ this.libLong + ", libCourt=" + this.libCourt + ", valide=" + valide + "]";
 	}
 }

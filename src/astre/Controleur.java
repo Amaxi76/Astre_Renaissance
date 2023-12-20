@@ -50,11 +50,6 @@ public class Controleur
 		new PopUpErreur ( titre, message );
 	}
 
-	public static void afficherErreur ( String titre, String message, String opt1, String opt2, Object o)
-	{
-		new PopUpErreur ( titre, message, opt1, opt2, o );
-	}
-
 	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee    (); }
 	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero(); }
 
