@@ -1,13 +1,18 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import astre.Controleur;
 import astre.modele.elements.ModuleIUT;
+import astre.modele.elements.Heure;
 
 /** Classe FrameModule
  * @author : Clémentin Ly
@@ -15,7 +20,7 @@ import astre.modele.elements.ModuleIUT;
 * @date : 11/12/2023
 */
 
-public class FrameModule extends JFrame
+public class FrameModule extends JFrame implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -34,6 +39,8 @@ public class FrameModule extends JFrame
 	private PanelAffectation    panelAffectation;
 
 	private JCheckBox           cbValidation;
+	private JComboBox<String>	cbHeuresAjouter;
+	private JComboBox<String>	cbHeuresSupprimer;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -66,7 +73,14 @@ public class FrameModule extends JFrame
 		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl, this );
 		this.panelAffectation    = new PanelAffectation    ( this.ctrl       );
 
-		this.cbValidation = new JCheckBox ( "Validation" );
+		this.cbValidation      = new JCheckBox ( "Validation" );
+		this.cbHeuresAjouter   = new JComboBox<>();
+		this.cbHeuresSupprimer = new JComboBox<>();
+
+		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
+		{
+			cbHeuresAjouter.addItem ( h.getNom ( ) );
+		}
 
 		/*---------*/
 		/*  Nord   */
@@ -123,6 +137,20 @@ public class FrameModule extends JFrame
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation, gbcO );
 
+		gbcO.gridy = 2;
+		gbcO.gridx = 0;
+		panelOuest.add ( new JLabel ( "Ajouter Heure " ) );
+
+		gbcO.gridx = 1;
+		panelOuest.add ( this.cbHeuresAjouter, gbcO );
+
+		gbcO.gridy = 3;
+		gbcO.gridx = 0;
+		panelOuest.add ( new JLabel ( "Supprimer Heure " ) );
+		
+		gbcO.gridx = 1;
+		panelOuest.add ( this.cbHeuresSupprimer, gbcO );
+
 		/*-------*/
 		/*  Sud  */
 		/*-------*/
@@ -131,15 +159,46 @@ public class FrameModule extends JFrame
 
 
 
-		//TEST MODULABLE
-		this.panelPNLocal.ajouterHeure("TEST");
-		this.panelPNLocal.ajouterHeure("TEST2");
+		/* ------------------------- */
+		/* Activation des composants */
+		/* ------------------------- */
 
+		this.cbHeuresAjouter  .addActionListener ( this );
+		this.cbHeuresSupprimer.addActionListener( this );
 
-
-
+		/*this.panelPNLocal.ajouterHeure("TEST");
+		this.panelPNLocal.ajouterHeure("TEST2");*/
 
 		this.setVisible ( true );
+	}
+
+	public void actionPerformed ( ActionEvent e )
+	{
+		if ( e.getSource() == this.cbHeuresAjouter )
+		{
+			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
+
+			if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .ajouterHeure ( nomHeure );
+			//if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.ajouterHeure ( nomHeure );
+			//if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.ajouterHeure ( nomHeure );
+
+			//if( this.panelRepartition   .isVisible() ) this.panelRepartition   .ajouterHeure ( nomHeure );
+			//if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.ajouterHeure ( nomHeure );
+			//if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.ajouterHeure ( nomHeure );
+		}
+
+		if ( e.getSource() == this.cbHeuresSupprimer )
+		{
+			String nomHeure = ( String ) this.cbHeuresSupprimer.getSelectedItem();
+
+			if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .supprimerHeure(nomHeure);
+			//if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.supprimerHeure ( nomHeure );
+			//if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.supprimerHeure ( nomHeure );
+
+			//if( this.panelRepartition   .isVisible() ) this.panelRepartition   .supprimerHeure ( nomHeure );
+			//if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.supprimerHeure ( nomHeure );
+			//if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.supprimerHeure ( nomHeure );
+		}
 	}
 
 	/** Retourne si la checkbox est sélectionnée ou non
