@@ -8,7 +8,7 @@ import astre.modele.outils.ModeleTableau;
 
 /** Classe représentant un tableau personnalisable.
  *  @author Matéo Sa, Maxime Lemoine et Maximilien Lesterlin
- *  @version : 1.0 - 11/12/2023
+ *  @version : 2.0 - 19/12/2023
  *  @date : 06/12/2023
 */
 
@@ -18,12 +18,12 @@ import astre.modele.outils.ModeleTableau;
 public class Tableau extends JTable
 {
 	private static final int DECALAGE_DEFAUT = 0;
-	
+
 	private ModeleTableau modele;
-	
+
 	/*---------------------------------------*/
 	/*             CONSTRUCTEUR              */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	 * @param ensEntete : entête des colonnes (facultatif)
@@ -36,10 +36,10 @@ public class Tableau extends JTable
 	private Tableau ( String[] ensEntete, Object[] ensDefaut, boolean[] ensModifiable, int decalage, Object[][] tabDonnees )
 	{
 		this.modele = new ModeleTableau ( ensEntete, ensDefaut, ensModifiable, decalage, tabDonnees );
-		
+
 		this.setModel         ( this.modele                         );
 		this.setSelectionMode ( ListSelectionModel.SINGLE_SELECTION );
-		
+
 		this.getTableHeader ( ).setReorderingAllowed ( false );
 		//Permet au tableau de prendre toute la frame
 		this.setAutoResizeMode ( JTable.AUTO_RESIZE_ALL_COLUMNS     );
@@ -56,27 +56,27 @@ public class Tableau extends JTable
 			this.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableau ( ) );
 
 		if ( !contientEntete ) this.setTableHeader ( null );
-		
+
 		this.ajusterTailleColonnes ( );
 	}
 
 
 	/*---------------------------------------*/
 	/*                FACTORY                */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	public static Tableau initialiserTableau ( String[] ensEntete, Object[] ensDefaut, boolean[] ensModifiable, int decalage, Object[][] tabDonnees )
 	{
 		// ensDefaut est le seul paramètre obligatoire
 		if ( ensDefaut == null ) return null;
-		
+
 		int nbColonnes = ensDefaut.length;
-		
+
 		// initialisation des entetes si null
 		if ( ensEntete == null )
 		{
 			ensEntete = new String[nbColonnes];
-			
+
 			for ( int i = 0; i < nbColonnes; i++ )
 				ensEntete[i] = "";
 		}
@@ -103,8 +103,8 @@ public class Tableau extends JTable
 	{
 		int nbColonnes = ensDefaut.length;
 
-		if ( decalage < 0 || decalage > nbColonnes ) decalage = DECALAGE_DEFAUT; 
-		
+		if ( decalage < 0 || decalage > nbColonnes ) decalage = DECALAGE_DEFAUT;
+
 		boolean[] ensModifiable = new boolean[nbColonnes];
 		for ( int i = 0; i < nbColonnes; i++ )
 			ensModifiable[i] = estModifiable;
@@ -116,7 +116,7 @@ public class Tableau extends JTable
 	{
 		return Tableau.initialiserTableau ( null, ensDefaut, true, DECALAGE_DEFAUT, null );
 	}
-	
+
 
 	/*---------------------------------------*/
 	/*                METHODES               */
@@ -141,7 +141,7 @@ public class Tableau extends JTable
 			columnModel.getColumn ( i ).setPreferredWidth ( maxWidth - 30 );
 		}
 	}
-	
+
 	/**
 	* Ajoute une ligne vide au tableau.
 	*/
@@ -151,7 +151,7 @@ public class Tableau extends JTable
 
 		this.ajusterTailleColonnes ( );
 	}
-	
+
 	/**
 	* Supprime la ligne sélectionnée du tableau.
 	*/
@@ -167,7 +167,7 @@ public class Tableau extends JTable
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	* Permet de récupérer les données du modele
