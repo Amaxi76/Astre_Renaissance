@@ -20,7 +20,7 @@ public class FrameIntervenants extends AFrame
 		this.panel = new PanelIntervenants ( this.ctrl );
 		
 		this.setTitle              ( "Intervenants" );
-		this.setSize               ( 1000,500       );
+		this.setSize               ( 1000,600       );
 		this.setLocationRelativeTo ( null           );
 		
 		this.add ( this.panel );
