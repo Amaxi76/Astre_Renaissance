@@ -12,8 +12,11 @@ import astre.modele.elements.ModuleIUT;
   */
 
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
@@ -22,8 +25,10 @@ public class PanelEtats extends JPanel implements ActionListener
 	private JButton btnRecapInter;
 	private JButton btnRecapModule;
 	private JButton btnRecapTtInter;
+	private JButton btnRecapTtModule;
+	private JButton btnCsv;
 
-	JComboBox<String> cbEdit;
+	JComboBox<String> cbInter;
 	JComboBox<String> cbModule;
 
 	private Controleur ctrl;
@@ -36,13 +41,15 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.setLayout( new GridLayout( 4, 2, 10, 10) );
 
+		this.setLayout(new BorderLayout(10, 10));
+
+		
 		//création des combobox
-		this.cbEdit = new JComboBox<> ( );
+		this.cbInter = new JComboBox<> ( );
 		for ( Intervenant c : this.ctrl.getTable( Intervenant.class ) )
 		{
-			cbEdit.addItem ( c.getNom ( ) );
+			cbInter.addItem ( c.getNom ( ) );
 		}
 
 		this.cbModule = new JComboBox<> ( );
@@ -52,26 +59,63 @@ public class PanelEtats extends JPanel implements ActionListener
 		}
 
 		//création des boutons
-		this.btnRecapModule  = new JButton ( "Module Individuels"     );
-		this.btnRecapTtInter = new JButton ( "Tous les intervenants"  );
-		this.btnRecapInter   = new JButton ( "Intervenant individuel" );
+		this.btnRecapModule   = new JButton ( "Module individuel"      );
+		this.btnRecapInter    = new JButton ( "Intervenant individuel" );
+		this.btnRecapTtModule = new JButton ( "Tous les Modules"       );
+		this.btnRecapTtInter  = new JButton ( "Tous les Intervenants"  );
+		this.btnCsv           = new JButton ( "Fichier CSV"            );
 		
-		//Ajout des composants
-		this.add ( new JLabel ( "Générer un récapitulatif pour :" ) );
-		this.add ( new JLabel ( )       );
+		JPanel panel = new JPanel ( );
+
+		//Placer les boutons de facon bien mis
+		GroupLayout layout = new GroupLayout ( panel );
+		panel.setLayout ( layout );
+
+		layout.setAutoCreateGaps ( true );
+		layout.setAutoCreateContainerGaps ( true );
+
+		//placer horizontalement les boutons
+		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup ( );
+
+		hGroup.addGroup ( layout.createParallelGroup ( Alignment.CENTER, true ).addComponent ( this.cbInter  ).addComponent ( this.btnRecapInter  ).addComponent ( this.btnRecapTtInter  ) );
+		hGroup.addGap ( 50 );
+		hGroup.addGroup ( layout.createParallelGroup ( Alignment.CENTER, true ).addComponent ( this.cbModule ).addComponent ( this.btnRecapModule ).addComponent ( this.btnRecapTtModule ) );
+		layout.setHorizontalGroup ( hGroup );
+
+		//placer verticalement les boutons
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.cbInter         ).addComponent ( this.cbModule         ) );
+		vGroup.addGap ( 20 ); //ajouter d'un espacement
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnRecapInter   ).addComponent ( this.btnRecapModule   ) );
+		vGroup.addGap ( 20 ); //ajouter d'un espacement
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnRecapTtInter ).addComponent ( this.btnRecapTtModule ) );
+		layout.setVerticalGroup ( vGroup );
+
+		//Mettre touts les boutons à la meme taille
+		this.btnRecapInter.setPreferredSize ( new Dimension ( 200, 30 ) );
+		layout.linkSize ( this.btnRecapInter, this.btnRecapModule, this.btnRecapTtInter, this.btnRecapTtModule, this.cbInter, this.cbModule );
+
+		JPanel panelNord = new JPanel(new GridLayout(2, 1));
 		
-		this.add ( this.btnRecapInter   );
-		this.add ( this.cbEdit          );
+		panelNord.add ( new JLabel ( "HTML" ) );
+		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 
-		this.add ( this.btnRecapModule  );
-		this.add ( this.cbModule        );
+		JPanel panelSud = new JPanel(new GridLayout(3, 1));
+		panelSud.add ( new JLabel ( "CSV" ) );
+		panelSud.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
+		panelSud.add ( this.btnCsv );
 
-		this.add ( this.btnRecapTtInter );
+		this.add ( panelNord  , BorderLayout.NORTH  );
+		this.add ( panel      , BorderLayout.CENTER );
+		this.add ( panelSud   , BorderLayout.SOUTH  );
 		
 		//met les actionListener
-		this.btnRecapInter  .addActionListener ( this );
-		this.btnRecapModule .addActionListener ( this );
-		this.btnRecapTtInter.addActionListener ( this );
+		this.btnRecapInter   .addActionListener ( this );
+		this.btnRecapModule  .addActionListener ( this );
+		this.btnRecapTtInter .addActionListener ( this );
+		this.btnRecapTtModule.addActionListener ( this );
+		this.btnCsv          .addActionListener ( this );
 	}
 
 	public void actionPerformed ( ActionEvent e )
@@ -79,7 +123,7 @@ public class PanelEtats extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnRecapInter )
 		{
 			//Génération de l'html pour 1 intervenant
-			GenerateurFichier.GenererHTMLIntervenant( this.ctrl.getTable(Intervenant.class).get(this.cbEdit.getSelectedIndex()) );
+			GenerateurFichier.GenererHTMLIntervenant( this.ctrl.getTable(Intervenant.class).get(this.cbInter.getSelectedIndex()) );
 		}
 		
 		if ( e.getSource ( ) == this.btnRecapModule )
@@ -88,10 +132,28 @@ public class PanelEtats extends JPanel implements ActionListener
 			GenerateurFichier.GenererHTMLModule( this.ctrl.getTable(ModuleIUT.class).get(this.cbModule.getSelectedIndex()) );
 		}
 		
-		if ( e.getSource ( ) == this.btnRecapTtInter )
+		if ( e.getSource ( ) == this.btnCsv )
 		{
 			//Génération d'un csv pour tous les intervenants
 			GenerateurFichier.recapTtInter();
+		}
+
+		if ( e.getSource ( ) == this.btnRecapTtInter )
+		{
+			//Génération du html pour tous les intervenants
+			for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
+			{
+				GenerateurFichier.GenererHTMLIntervenant ( i );
+			}
+		}
+
+		if ( e.getSource ( ) == this.btnRecapTtModule )
+		{
+			//Génération du html pour tous les modules
+			for ( ModuleIUT m : this.ctrl.getTable ( ModuleIUT.class ) )
+			{
+				GenerateurFichier.GenererHTMLModule ( m );
+			}
 		}
 	}
 }

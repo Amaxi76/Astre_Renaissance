@@ -25,6 +25,8 @@ import java.awt.GridLayout;
 
 public class PanelIntervenants extends JPanel implements ActionListener
 {
+	private static final int TAILLE_DIAG = 150;
+	
 	private Tableau     tableau;
 	private JScrollPane scrollPane;
 
@@ -56,19 +58,19 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		Object[] defauts = { "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
 
 		//Création du tableau
-		//this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableau ( Intervenant.class ) );
+		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableau ( Intervenant.class ) );
 
 		//Ajout d'une JComboBox au tableau
-		/*JComboBox<String> cbEdit = new JComboBox<> ( );
+		JComboBox<String> cbEdit = new JComboBox<> ( );
 		for ( Contrat c : this.ctrl.getTable( Contrat.class ) )
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
-		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );*/
+		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
 		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO faire en sorte que le tablo soit modifiable mais pas partout
-		//this.tableau.ajusterTailleColonnes ( );
+		this.tableau.ajusterTailleColonnes ( );
 
 		this.scrollPane = new JScrollPane ( this.tableau );
 
@@ -77,7 +79,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
-		this.panelDiagramme = PanelDiagramme.genererCamembert(1, 150);
+		this.panelDiagramme = new PanelDiagramme ( );
 
 		this.panelCentre = new JPanel ( );
 		JPanel panelSud  = new JPanel ( new GridLayout(1, 2) );
@@ -87,36 +89,36 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
 		//Placer les boutons de facon bien mis
-		GroupLayout layout = new GroupLayout(panelBtn);
-		panelBtn.setLayout(layout);
+		GroupLayout layout = new GroupLayout ( panelBtn );
+		panelBtn.setLayout ( layout );
 
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps ( true );
+		layout.setAutoCreateContainerGaps ( true );
 
 		//placer horizontalement les boutons
-		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup ( );
 
-		hGroup.addGroup(layout.createParallelGroup(Alignment.LEADING, true).	addComponent(this.btnAjouter).addComponent(this.btnEnregistrer));
-		hGroup.addGroup(layout.createParallelGroup(Alignment.LEADING, true).addComponent(this.btnSupprimer).addComponent(this.btnAnnuler));
-		layout.setHorizontalGroup(hGroup);
+		hGroup.addGroup ( layout.createParallelGroup ( Alignment.LEADING, true ).addComponent ( this.btnAjouter   ).addComponent ( this.btnEnregistrer ) );
+		hGroup.addGroup ( layout.createParallelGroup ( Alignment.LEADING, true ).addComponent ( this.btnSupprimer ).addComponent ( this.btnAnnuler     ) );
+		layout.setHorizontalGroup( hGroup );
 
 		//placer verticalement les boutons
-		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup ( );
 
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE, true).addComponent(this.btnAjouter).addComponent(this.btnSupprimer));
-		vGroup.addGap(50); //ajouter d'un espacement
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE, true).addComponent(this.btnEnregistrer).addComponent(this.btnAnnuler));
-		layout.setVerticalGroup(vGroup);
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnAjouter     ).addComponent ( this.btnSupprimer ) );
+		vGroup.addGap ( 50 ); //ajouter d'un espacement
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnEnregistrer ).addComponent ( this.btnAnnuler   ) );
+		layout.setVerticalGroup ( vGroup );
 
 		//Mettre touts les boutons à la meme taille
-		this.btnAjouter.setPreferredSize(new Dimension(150, 30));
-		layout.linkSize(this.btnAjouter, this.btnSupprimer, this.btnEnregistrer, this.btnAnnuler);
+		this.btnAjouter.setPreferredSize ( new Dimension ( 150, 30 ) );
+		layout.linkSize ( this.btnAjouter, this.btnSupprimer, this.btnEnregistrer, this.btnAnnuler );
 
 		//Placement des composants
 		panelCentre.add ( scrollPane  , BorderLayout.CENTER );
 
-		panelSud.add(panelBtn);
-		panelSud.add(this.panelDiagramme);
+		panelSud.add ( panelBtn            );
+		panelSud.add ( this.panelDiagramme );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
 		this.add ( panelCentre                                 , BorderLayout.CENTER );
@@ -127,6 +129,21 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnSupprimer  .addActionListener ( this );
 		this.btnEnregistrer.addActionListener ( this );
 		this.btnAnnuler    .addActionListener ( this );
+
+		this.tableau.addMouseListener( new MouseAdapter ( )
+		{
+			@Override
+			public void mouseClicked ( MouseEvent e )
+			{
+				int row = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
+
+				int idInter =  Integer.parseInt ( tableau.getDonnees ( )[row][0].toString ( ) );
+				if ( idInter > 0  )
+					changerDiagramme ( idInter );
+				else
+					PanelIntervenants.this.panelDiagramme = new PanelDiagramme ( );
+			}
+		});
 	}
 
 	public void actionPerformed ( ActionEvent e )
@@ -243,5 +260,11 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			}
 		}
 		return true;
+	}
+
+	public void changerDiagramme ( int idInter )
+	{
+		this.panelDiagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
+		this.repaint ( );
 	}
 }

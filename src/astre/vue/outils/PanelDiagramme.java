@@ -36,6 +36,11 @@ public class PanelDiagramme extends JPanel
 
 	private Map donnees;
 
+	public PanelDiagramme ( )
+	{
+
+	}
+
 	public PanelDiagramme ( Map donnees, Color couleurMin, Color couleurMax, String titre, int taille )
 	{
 		this.donnees = donnees;

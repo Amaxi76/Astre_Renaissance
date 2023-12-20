@@ -53,7 +53,7 @@ public class Intervient
 	/** Retourne le module d'intervient
 	 * @return module
 	 */
-	public ModuleIUT      getModule      ( ) { return module;      }
+	public ModuleIUT   getModule      ( ) { return module;      }
 
 	/** Retourne le nombre de semaine d'intervient
 	 * @return nbSemaine
@@ -126,8 +126,8 @@ public class Intervient
 	{
 		String sRet = "";
 
-		sRet += "L'intervenant " + this.intervenant.getNom() + " intervient en "  + this.heure.getNom() + " dans la matière "   + this.module.getLibLong() +
-		        " pendant "      + this.nbSemaine            + " pour "           + this.nbGroupe       + " groupe(s) durant "  + this.nbHeure             + " heures. ";
+		sRet += "L'intervenant " + this.intervenant.getNom ( ) + " intervient en "  + this.heure.getNom ( ) + " dans la matière "   + this.module.getLibLong ( ) +
+		        " pendant "      + this.nbSemaine              + " pour "           + this.nbGroupe         + " groupe(s) durant "  + this.nbHeure               + " heures. ";
 
 		return sRet;
 	}
