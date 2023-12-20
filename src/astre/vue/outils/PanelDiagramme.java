@@ -93,21 +93,7 @@ public class PanelDiagramme extends JPanel
 	public static void main ( String[] args )
 	{
 		// Donnees
-		Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
-
-
-		donnees.put("NA", BD.getInstance().getIntervenant(1).getContrat().getHeureMaxContrat() + 0.0 );
-
-		for( Intervient inter : BD.getInstance().getTable(Intervient.class) )
-		{
-			if( inter.getIntervenant().getId() == 1 )
-			{
-				double nombre = inter.getNbGroupe() * inter.getNbSemaine() * inter.getNbHeure() * inter.getHeure().getCoefTd();
-
-				donnees.put(inter.getHeure().getNom(), nombre );
-				donnees.put("NA", donnees.get("NA") - nombre);
-			}
-		}
+		//Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
 
 		/*donnees.put ( "TP", 56+56+12+12+0.0 );
 		donnees.put ( "TD", 28+28+9+9+19.5 );
@@ -116,6 +102,34 @@ public class PanelDiagramme extends JPanel
 		donnees.put ( "B", 28.0 );
 		donnees.put ( "C", 28.0 );*/
 		//donnees.put ( "NA", 20.0 ); //((int)(165.5))-(heuresTP+heuresTD+heuresCM)
+
+		// Generation
+		/*JFrame f = new JFrame ( );
+		f.setVisible ( true );
+		System.out.println ( "Diagramme généré" );
+		f.add ( new PanelDiagramme ( donnees, new Color ( 255,99,71 ), new Color ( 255,192,124 ) ) );
+		f.pack ( );*/
+
+		PanelDiagramme.genererCamembert(1);
+	}
+
+	public static void genererCamembert ( int idIntervenant )
+	{
+		// Donnees
+		Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
+
+		donnees.put ( "NA", BD.getInstance ( ).getIntervenant ( idIntervenant ).getContrat ( ).getHeureMaxContrat ( ) + 0.0 );
+
+		for ( Intervient inter : BD.getInstance ( ).getTable ( Intervient.class ) )
+		{
+			if ( inter.getIntervenant ( ).getId ( ) == idIntervenant )
+			{
+				double nombre = inter.getNbGroupe ( ) * inter.getNbSemaine ( ) * inter.getNbHeure ( ) * inter.getHeure ( ).getCoefTd ( );
+
+				donnees.put ( inter.getHeure ( ).getNom ( ), nombre );
+				donnees.put ( "NA", donnees.get ( "NA" ) - nombre );
+			}
+		}
 
 		// Generation
 		JFrame f = new JFrame ( );

@@ -19,7 +19,7 @@ import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
   */
 public class MenuBarAstre extends JMenuBar implements ActionListener
 {
-	private static final String REPERTOIRE = "../data/images/";
+	private static final String REPERTOIRE = "./data/images/";
 
 	// Identifiants des éléments du menu
 	private static final String MENU			= "M";

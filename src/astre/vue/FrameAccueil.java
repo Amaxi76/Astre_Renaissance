@@ -71,8 +71,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 
 		//JLabel lblAnneee     = new JLabel ("Année en cours "); //TODO: Affilier une année ?
 		
-		JLabel j = new JLabel ( new ImageIcon ( Toolkit.getDefaultToolkit ( ).getImage ( "/images/astre.png" ) ) );
-		j.setLayout ( new BorderLayout ( ) );
+		JLabel j = new JLabel ( new ImageIcon ( Toolkit.getDefaultToolkit ( ).getImage ( "./data/images/astre.png" ) ) );
 
 		panel        .setOpaque ( false );
 		panelTest    .setOpaque ( false );
@@ -100,9 +99,12 @@ public class FrameAccueil extends AFrame implements ActionListener
 
 		panel.add ( panelTest, BorderLayout.SOUTH );
 		
-		j.add ( panel, BorderLayout.CENTER );
+		JPanel test = new JPanel(new GridLayout(2,1));
+		test.add(j);
+		test.add(panel);
+		this.add(test);
 
-		this.getContentPane ( ).add ( j );
+		//this.getContentPane ( ).add ( j );
 
 		/* ------------------------- */
 		/* Activation des composants */

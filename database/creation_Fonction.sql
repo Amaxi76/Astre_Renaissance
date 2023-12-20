@@ -167,6 +167,76 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Sélection du nombre d'heure pour une enseignant et un semestre
+-- Utilisé dans la génération de HTML Intervenant
+
+DROP              FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER );
+CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER := 0;
+BEGIN
+
+    -- Semestre 2
+    totalHeures := totalHeures + f_selectNBHeureParSemestre(2, s_Id_Intervenant);
+
+    -- Semestre 4
+    totalHeures := totalHeures + f_selectNBHeureParSemestre(4, s_Id_Intervenant);
+
+    -- Semestre 6
+    totalHeures := totalHeures + f_selectNBHeureParSemestre(6, s_Id_Intervenant);
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sélection du nombre d'heure pour une enseignant et un semestre
+-- Utilisé dans la génération de HTML Intervenant
+
+DROP              FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER );
+CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER := 0;
+BEGIN
+
+    -- Semestre 1
+    totalHeures := totalHeures + f_selectNBHeureParSemestre(1, s_Id_Intervenant);
+
+    -- Semestre 3
+    totalHeures := totalHeures + f_selectNBHeureParSemestre(3, s_Id_Intervenant);
+
+    -- Semestre 5
+    totalHeures := totalHeures + f_selectNBHeureParSemestre(5, s_Id_Intervenant);
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sélection du nombre d'heure pour une enseignant et un semestre
+-- Utilisé dans la génération de HTML Intervenant
+
+DROP              FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER );
+CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER := 0;
+BEGIN
+
+    -- Impair
+    totalHeures := totalHeures +  f_selectNBHeureParSemestreImpair (s_Id_Intervenant);
+
+    -- Pair
+    totalHeures := totalHeures +  f_selectNBHeureParSemestrePair   (s_Id_Intervenant);
+
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
 -- Sélection du nombre d'heure etqd
 -- Utilisé dans l'affectation et la répartition
 
