@@ -27,7 +27,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
-		Object premiereCelulleLigne = ( (ModeleTableau) (tbl.getModel ( )) ).getObjet ( lig, 0 );
+		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
 			char operation = (char) premiereCelulleLigne;

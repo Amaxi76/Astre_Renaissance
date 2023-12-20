@@ -48,7 +48,7 @@ public class PanelParametrage extends JPanel implements ActionListener
 		JPanel   pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
 		JPanel   pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
 		
-		this.tab     = Tableau.initialiserTableau ( enTete, tabObjects, true, 0, tabDonnee );
+		this.tab     = Tableau.initialiserTableau ( enTete, tabObjects, true, 2, tabDonnee );
 
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );

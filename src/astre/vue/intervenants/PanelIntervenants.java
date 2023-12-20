@@ -7,7 +7,6 @@ import astre.vue.outils.*;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 
@@ -46,8 +45,13 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
 		//création des composants
-		String[] noms    = { "Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		Object[] defauts = { "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+		String[] noms    = { "action","Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		Object[] defauts = { ' ', "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+
+		System.out.println( noms.length +" | " + defauts.length);
+		System.out.println(this.ctrl.getTableau ( Intervenant.class )[0].length);
+
+		//this.tableau = Tableau.
 
 		//Création du tableau
 		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableau ( Intervenant.class ) );
@@ -89,8 +93,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		panelSud.add ( this.btnAnnuler     );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
-		this.add ( panelCentre                                 , BorderLayout.CENTER );
-		this.add ( panelSud                                    , BorderLayout.SOUTH  );
+		this.add ( panelCentre                            , BorderLayout.CENTER );
+		this.add ( panelSud                               , BorderLayout.SOUTH  );
 
 		//met les actionListener
 		this.btnAjouter    .addActionListener ( this );
@@ -131,7 +135,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 	public boolean enregistrer ( Object[][] deuxieme )
 	{
-		ArrayList<Intervenant> lst = new ArrayList<Intervenant> ( );
+		ArrayList<Intervenant> lst = new ArrayList<> ( );
 		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
 
 		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
