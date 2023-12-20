@@ -74,13 +74,15 @@ public class FrameModule extends JFrame implements ActionListener
 		this.panelAffectation    = new PanelAffectation    ( this.ctrl       );
 
 		this.cbValidation      = new JCheckBox ( "Validation" );
+		
 		this.cbHeuresAjouter   = new JComboBox<>();
-		this.cbHeuresSupprimer = new JComboBox<>();
 
 		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
 			cbHeuresAjouter.addItem ( h.getNom ( ) );
 		}
+
+		this.cbHeuresSupprimer = new JComboBox<>();
 
 		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
