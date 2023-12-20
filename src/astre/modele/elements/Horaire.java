@@ -42,7 +42,7 @@ public class Horaire
 	/** Retourne le module d'une horaire
 	 * @return the module
 	 */
-	public ModuleIUT getModule    ( ) { return module;    }
+	public ModuleIUT getModule ( ) { return module;    }
 
 	/** Retourne le nombre d'heure PN d'une horaire
 	 * @return the nbHeurePN
@@ -86,7 +86,7 @@ public class Horaire
 	/** Permet de modifier le nombre d'heure répartie
 	 * @param nbHeure the nbHeure to set
 	 */
-	public void setNbHeure   ( int    nbHeure   ) { this.nbHeure = nbHeure;     }
+	public void setNbHeure   ( int    nbHeure      ) { this.nbHeure = nbHeure;     }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
@@ -95,11 +95,11 @@ public class Horaire
 	/** Renvoie la description et le contenu d'une horaire
 	 * @return Une description du contenue d'une horaire
 	 */
-	public String toString ()
+	public String toString ( )
 	{
 		String sRet = "";
 
-		sRet += "("                       + this.heure.getNom() + ") "             + this.module.getLibLong() + " | NB Heure PN : " + this.nbHeurePN +
+		sRet += "("                       + this.heure.getNom ( ) + ") "             + this.module.getLibLong ( ) + " | NB Heure PN : " + this.nbHeurePN +
 		        " | Nombre de semaine : " + this.nbSemaine      + " | NB Heure : " + this.nbHeure;
 
 		return sRet;

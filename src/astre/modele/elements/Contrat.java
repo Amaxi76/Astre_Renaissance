@@ -106,7 +106,7 @@ public class Contrat
 		Object hmc = contrat[3];
 		Object rt  = contrat[4];
 
-		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( hsc instanceof Integer ) || !( hmc instanceof Integer ) || !( rt instanceof Number ) )
+		if ( ( i != null && ! ( i instanceof Integer ) ) ||  ! ( n instanceof String ) || ! ( hsc instanceof Integer ) || ! ( hmc instanceof Integer ) || ! ( rt instanceof Number ) )
 		{
 			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les données du contrat ne sont pas du bon type" );
@@ -186,7 +186,7 @@ public class Contrat
 		return String.format ( "Nom : %-22s - "                 , this.nom                 ) +
 		       String.format ( "Heure Service Contrat : %02d - ", this.heureServiceContrat ) +
 		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
-		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             );
+		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             ) ;
 	}
 	
 }
