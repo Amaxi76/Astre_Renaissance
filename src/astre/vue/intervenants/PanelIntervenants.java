@@ -2,6 +2,7 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
+import astre.modele.outils.Utilitaire;
 import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 
@@ -45,28 +46,24 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
 		//création des composants
-		String[] noms    = { "action","Id", "Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		Object[] defauts = { ' ', "0", "", "", "", "0", "0", "0.0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+		String[] noms    = { "action","Id", "Nom", "Prénom", "hServ", "hMax", "Catégorie", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
+		Object[] defauts = { ' ', 0, "", "", 0, 0, "", 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-		System.out.println( noms.length +" | " + defauts.length);
-		System.out.println(this.ctrl.getTableau ( Intervenant.class )[0].length);
-
-		//this.tableau = Tableau.
+		Object[][] tabTmp = Utilitaire.formater ( this.ctrl.getTableau ( Intervenant.class ), 17 );
 
 		//Création du tableau
-		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 1, this.ctrl.getTableau ( Intervenant.class ) );
+		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 2, tabTmp );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
-		for ( Contrat c : this.ctrl.getTable( Contrat.class ) )
+		for ( Contrat c : this.ctrl.getTable ( Contrat.class ) )
 		{
 			cbEdit.addItem ( c.getNom ( ) );
 		}
-		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
+		this.tableau.getColumnModel ( ).getColumn ( 4 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
 		//Parametres du tableau
-		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO faire en sorte que le tablo soit modifiable mais pas partout
-		this.tableau.ajusterTailleColonnes ( );
+		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO: faire en sorte que le tablo soit modifiable mais pas partout
 
 		this.btnAjouter     = new JButton ( "Ajouter"     );
 		this.btnSupprimer   = new JButton ( "Supprimer"   );

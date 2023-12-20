@@ -671,7 +671,7 @@ public class BD
 		{
 			object[lig][0] = ModeleTableau.DEFAUT;
 			Object[] tmp = Utilitaire.toArray ( lst.get ( lig ) );
-
+			
 			for ( int col = 0 ; col < nbAttributs; col ++ )
 			{
 				object[lig][col+1] = tmp[col];

@@ -52,14 +52,13 @@ public class PanelAffectation extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String[] noms = { "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
-		Object[] typeDefaut = { "", "", 0, 0, 0, "..." };
+		String[] noms = { "action", "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
+		Object[] typeDefaut = { 'A', "", "", 0, 0, 0, "..." };
 
-		this.tableau = Tableau.initialiserTableau( noms, typeDefaut, true, 0, null );
-		this.tableau.setEditable ( true );
-		this.tableau.ajusterTailleColonnes ( );
+		this.tableau = Tableau.initialiserTableau ( noms, typeDefaut, true, 1, null );
+		if ( this.tableau == null ){ System.out.println( "tableau de panel affectation est null ");}
 
-		//Ajout d'une JComboBox pour les intervenants au tableau
+		/*//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditInter = new JComboBox<> ( );
 		for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
 		{
@@ -73,8 +72,7 @@ public class PanelAffectation extends JPanel implements ActionListener
 		{
 			cbEditHeure.addItem ( h.getNom ( ) );
 		}
-		this.tableau.getColumnModel ( ).getColumn ( 1 ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );
-
+		this.tableau.getColumnModel ( ).getColumn ( 1 ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );*/
 
 		this.scrollPane = new JScrollPane ( this.tableau );
 
@@ -104,14 +102,12 @@ public class PanelAffectation extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnAjouter )
 		{
 			this.tableau.ajouterLigne ( );
-			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
 
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne ( );
-			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
 	}

@@ -7,17 +7,12 @@ package astre;
   */
 
 import astre.modele.elements.*;
-import astre.modele.outils.Utilitaire;
-
-import java.awt.Component;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.*;
 import astre.vue.*;
 import astre.vue.outils.PopUpErreur;
-import astre.vue.outils.Tableau;
 
 public class Controleur
 {
@@ -30,7 +25,7 @@ public class Controleur
 		this.metier = new Astre        (      );
 	}
 
-	public <T> List<T>   getTable          ( Class<T> type   ) { return this.metier.getTable              ( type        ); }
+	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
 	public Semestre          getSemestre       ( int      numSemestre         ) { return this.metier.getSemestre      ( numSemestre    ); }
 	public Object[][]        getTableauModule  ( int      numSemestre         ) { return this.metier.getTableauModule ( numSemestre    ); } //TODO: à refaire / enlever

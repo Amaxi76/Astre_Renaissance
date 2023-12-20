@@ -63,6 +63,17 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					cellule.setForeground ( tbl.getForeground ( ) );
 					break;
 			}
+
+			// Aligner le texte à droite si la valeur est numérique
+			if (valeur instanceof Number)
+			{
+				setHorizontalAlignment(RIGHT);
+			}
+			else
+			{
+				// Rétablir l'alignement par défaut pour le texte
+				setHorizontalAlignment(LEFT);
+			}
 		}
 
 		return this;

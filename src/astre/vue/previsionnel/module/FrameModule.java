@@ -48,9 +48,9 @@ public class FrameModule extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setSize   ( 1300, 1000       );
-		this.setTitle  ( "Prévisionnel : Module" );
-		this.setLocationRelativeTo ( null            );
+		this.setSize               ( 1300, 1000              );
+		this.setTitle              ( "Prévisionnel : Module" );
+		this.setLocationRelativeTo ( null                    );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -196,9 +196,9 @@ public class FrameModule extends JFrame
 			this.panelRepartitionBis.setVisible ( true  );
 			this.panelRepartitionPPP.setVisible ( false );
 
-			this.panelPNLocal		.setVisible ( false );
-			this.panelPNLocalBis	.setVisible ( true  );
-			this.panelPNLocalPPP	.setVisible ( false );
+			this.panelPNLocal    .setVisible ( false );
+			this.panelPNLocalBis .setVisible ( true  );
+			this.panelPNLocalPPP .setVisible ( false );
 		}
 		else if ( typeModule.equals ( "PPP" ) )
 		{
@@ -206,9 +206,9 @@ public class FrameModule extends JFrame
 			this.panelRepartitionBis.setVisible ( false );
 			this.panelRepartitionPPP.setVisible ( true  );
 
-			this.panelPNLocal		.setVisible ( false );
-			this.panelPNLocalBis	.setVisible ( false );
-			this.panelPNLocalPPP	.setVisible ( true  );
+			this.panelPNLocal    .setVisible ( false );
+			this.panelPNLocalBis .setVisible ( false );
+			this.panelPNLocalPPP .setVisible ( true  );
 		}
 		else
 		{
@@ -216,9 +216,9 @@ public class FrameModule extends JFrame
 			this.panelRepartitionBis.setVisible ( false );
 			this.panelRepartitionPPP.setVisible ( false );
 
-			this.panelPNLocal		.setVisible ( true  );
-			this.panelPNLocalBis	.setVisible ( false );
-			this.panelPNLocalPPP	.setVisible ( false );
+			this.panelPNLocal    .setVisible ( true  );
+			this.panelPNLocalBis .setVisible ( false );
+			this.panelPNLocalPPP .setVisible ( false );
 		}
 	}
 
@@ -233,18 +233,18 @@ public class FrameModule extends JFrame
 		ModuleIUT module = this.ctrl.getModule ( code );
 
 		this.panelModuleLabel.setModule ( module );
-		this.setVisiblePanels( module.getTypeModule ( ) );
+		this.setVisiblePanels ( module.getTypeModule ( ) );
 
-		if( this.panelPNLocal   .isVisible() ) this.panelPNLocal   .setModule ( module );
-		if( this.panelPNLocalBis.isVisible() ) this.panelPNLocalBis.setModule ( module );
-		if( this.panelPNLocalPPP.isVisible() ) this.panelPNLocalPPP.setModule ( module );
+		if ( this.panelPNLocal   .isVisible ( ) ) this.panelPNLocal   .setModule ( module );
+		if ( this.panelPNLocalBis.isVisible ( ) ) this.panelPNLocalBis.setModule ( module );
+		if ( this.panelPNLocalPPP.isVisible ( ) ) this.panelPNLocalPPP.setModule ( module );
 		
-		if( this.panelRepartition   .isVisible() ) this.panelRepartition   .setModule ( module );
-		if( this.panelRepartitionBis.isVisible() ) this.panelRepartitionBis.setModule ( module );
-		if( this.panelRepartitionPPP.isVisible() ) this.panelRepartitionPPP.setModule ( module );
+		if ( this.panelRepartition   .isVisible ( ) ) this.panelRepartition   .setModule ( module );
+		if ( this.panelRepartitionBis.isVisible ( ) ) this.panelRepartitionBis.setModule ( module );
+		if ( this.panelRepartitionPPP.isVisible ( ) ) this.panelRepartitionPPP.setModule ( module );
 		
 		this.panelAffectation.setDonnee ( module );
 
-		this.cbValidation.setSelected( module.estValide( ) );
+		this.cbValidation.setSelected ( module.estValide( ) );
 	}
 }
