@@ -408,6 +408,8 @@ public class PanelPNLocal extends JPanel
 		this.add ( labelTotalHeure, gbc );
 
 		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
+
+		this.revalidate();
 	}
 
 	public void supprimerHeure ( String nomHeure )
@@ -424,7 +426,6 @@ public class PanelPNLocal extends JPanel
             this.remove ( lstTextFieldsHeures .get(i) );
             this.remove ( lstLabelsTotalHeures.get(i) );
 
-			this.repaint();
 			this.revalidate();
 		}
 	}
