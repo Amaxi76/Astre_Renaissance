@@ -1,10 +1,14 @@
 package astre.vue.previsionnel.module;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import astre.Controleur;
 import astre.modele.elements.ModuleIUT;
@@ -36,6 +40,9 @@ public class FrameModule extends JFrame
 
 	private JCheckBox           cbValidation;
 
+	private JLabel              lblMessageErreur;
+	private Timer               timerMessageErreur;
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -49,9 +56,9 @@ public class FrameModule extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setSize               ( 1600, 1080              );
+		this.setSize               ( 1600, 1080       );
 		this.setTitle              ( "Prévisionnel : Module" );
-		this.setLocationRelativeTo ( null                    );
+		this.setLocationRelativeTo ( null                        );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -69,6 +76,18 @@ public class FrameModule extends JFrame
 		this.panelAffectation    = new PanelAffectation    ( this.ctrl       );
 
 		this.cbValidation      = new JCheckBox ( "Validation" );
+
+		this.lblMessageErreur = new JLabel ( "" );
+
+		//Met un délai de 3 secondes sur le message d'erreur
+		this.timerMessageErreur = new Timer(3000, new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				lblMessageErreur.setText("");
+				timerMessageErreur.stop();
+			}
+		});
 		
 
 		/*---------*/
@@ -129,6 +148,10 @@ public class FrameModule extends JFrame
 		gbcO.gridy = 2;
 		gbcO.gridx = 0;
 		panelOuest.add ( this.panelModuleHeure, gbcO );
+
+		gbcO.gridy = 3;
+		gbcO.gridx = 0;
+		panelOuest.add ( this.lblMessageErreur, gbcO );
 
 
 		/*-------*/
@@ -250,5 +273,17 @@ public class FrameModule extends JFrame
 		this.panelAffectation.setDonnee ( module );
 
 		this.cbValidation.setSelected ( module.estValide( ) );
+	}
+
+	public void messageErreurAjouter ( )
+	{
+		this.lblMessageErreur.setText( "L'heure existe déjà" );
+		timerMessageErreur.start();
+	}
+
+	public void messageErreurSupprimer ( )
+	{
+		this.lblMessageErreur.setText( "On ne peut pas supprimer une heure principale" );
+		timerMessageErreur.start();
 	}
 }

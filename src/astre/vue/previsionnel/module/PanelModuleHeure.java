@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import astre.Controleur;
 import astre.modele.elements.Heure;
@@ -27,9 +26,6 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 	private JComboBox<String>	cbHeuresSupprimer;
 	private JButton             btnAjouter;
 	private JButton             btnSupprimer;
-
-	private JLabel              lblMessageErreur;
-	private Timer               timerMessageErreur;
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -65,18 +61,6 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 		this.btnAjouter   = new JButton ( "Ajouter"   );
 		this.btnSupprimer = new JButton ( "Supprimer" );
 
-		this.lblMessageErreur = new JLabel ( "" );
-
-		//Met un délai de 3 secondes sur le message d'erreur
-		this.timerMessageErreur = new Timer(3000, new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				lblMessageErreur.setText("");
-				timerMessageErreur.stop();
-			}
-		});
-
 
 		gbc.gridy = 0;
 		gbc.gridx = 0;
@@ -100,11 +84,6 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 
 		gbc.gridx = 1;
 		this.add ( this.btnSupprimer, gbc );
-
-		gbc.gridy = 3;
-		gbc.gridx = 0;
-		this.add ( this.lblMessageErreur, gbc );
-
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -141,17 +120,5 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 			if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().supprimerHeure ( nomHeure );
 			if( this.frm.getPanelRepartitionPPP().isVisible() ) this.frm.getPanelRepartitionPPP().supprimerHeure ( nomHeure );
 		}
-	}
-
-	public void messageErreurAjouter ( )
-	{
-		this.lblMessageErreur.setText( "L'heure existe déjà" );
-		timerMessageErreur.start();
-	}
-
-	public void messageErreurSupprimer ( )
-	{
-		this.lblMessageErreur.setText( "On ne peut pas supprimer une heure principale" );
-		timerMessageErreur.start();
 	}
 }
