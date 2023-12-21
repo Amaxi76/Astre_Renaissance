@@ -101,13 +101,13 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 		{
 			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
 
-			if( this.frm.getPanelPNLocal().isVisible() ) this.frm.getPanelPNLocal().ajouterHeure ( nomHeure );
+			if( this.frm.getPanelPNLocal()   .isVisible() ) this.frm.getPanelPNLocal().ajouterHeure ( nomHeure );
 			if( this.frm.getPanelPNLocalBis().isVisible() ) this.frm.getPanelPNLocalBis().ajouterHeure ( nomHeure );
 			if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().ajouterHeure ( nomHeure );
 
 			if( this.frm.getPanelRepartition()   .isVisible() ) this.frm.getPanelRepartition()   .ajouterHeure ( nomHeure );
-			//if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().ajouterHeure ( nomHeure );
-			//if( this.frm.getPanelRepartitionPPP().isVisible() ) this.frm.getPanelRepartitionPPP().ajouterHeure ( nomHeure );
+			if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().ajouterHeure ( nomHeure );
+			if( this.frm.getPanelRepartitionPPP().isVisible() ) this.frm.getPanelRepartitionPPP().ajouterHeure ( nomHeure );
 		}
 
 		if ( e.getSource() == this.btnSupprimer )
@@ -119,8 +119,8 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 			if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().supprimerHeure ( nomHeure );
 
 			if( this.frm.getPanelRepartition()   .isVisible() ) this.frm.getPanelRepartition()   .supprimerHeure ( nomHeure );
-			//if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().supprimerHeure ( nomHeure );
-			//if( this.frm.getPanelRepartitionPPP().isVisible() ) this.frm.getPanelRepartitionPPP().supprimerHeure ( nomHeure );
+			if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().supprimerHeure ( nomHeure );
+			if( this.frm.getPanelRepartitionPPP().isVisible() ) this.frm.getPanelRepartitionPPP().supprimerHeure ( nomHeure );
 		}
 	}
 }
