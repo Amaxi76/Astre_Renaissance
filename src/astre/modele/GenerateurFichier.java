@@ -82,13 +82,13 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt )
+	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt, String theme )
 	{
 		try 
 		{
 			for ( Intervenant i : ensInt )
 			{
-				GenererHTMLIntervenant ( i );
+				GenererHTMLIntervenant ( i, theme );
 			}
 
 			System.out.println ( "Tous les intervenants on été exportés sous format HTML" );
@@ -116,7 +116,7 @@ public class GenerateurFichier
 		}
 	}
 
-	public static void GenererHTMLIntervenant ( Intervenant inter )
+	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
 	{
 		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
 
@@ -131,7 +131,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                          +
 			"<head>\n"                                                                    +
 				"\t<meta charset=\"UTF-8\">\n"                                            +
-				"\t<link href=\"./css/style.css\" rel=\"stylesheet\">\n"                  +
+				"\t<link href=\"./css/styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n"       +
 				"\t<title>Intervenant " + inter.getNom ( ).toUpperCase ( ) + " </title>\n"    +
 			"</head>\n"                                                                   +
 			"<body>\n"                                                                    ;
