@@ -117,22 +117,22 @@ public class PanelEtats extends JPanel implements ActionListener
 		panelHtml.add ( new JLabel ( "HTML" ) );
 		panelHtml.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 
-		JPanel panelok = new JPanel( new BorderLayout());
-		panelok.add(panelHtml, BorderLayout.NORTH);
-		panelok.add(panel, BorderLayout.CENTER);
+		JPanel panelCentre = new JPanel( new BorderLayout());
+		panelCentre.add(panelHtml, BorderLayout.NORTH);
+		panelCentre.add(panel, BorderLayout.CENTER);
 
-		JPanel panelSud = new JPanel ( new GridLayout ( 3, 1 ) );
-		panelSud.add ( new JLabel ( "CSV" ) );
-		panelSud.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
-		panelSud.add ( this.btnCsv );
+		JPanel panelNord = new JPanel ( new GridLayout ( 3, 1 ) );
+		panelNord.add ( new JLabel ( "CSV" ) );
+		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
+		panelNord.add ( this.btnCsv );
 
-		JPanel panelStyle = new JPanel(new BorderLayout(10,10));
-		panelStyle.add(new JLabel("Choix du style :"), BorderLayout.NORTH);
-		panelStyle.add(this.cbStyle, BorderLayout.CENTER);
+		JPanel panelSud = new JPanel(new BorderLayout(10,10));
+		panelSud.add(new JLabel("Choix du style :"), BorderLayout.NORTH);
+		panelSud.add(this.cbStyle, BorderLayout.CENTER);
 
-		this.add ( panelSud  , BorderLayout.NORTH  );
-		this.add ( panelok      , BorderLayout.CENTER );
-		this.add ( panelStyle   , BorderLayout.SOUTH  );
+		this.add ( panelNord  , BorderLayout.NORTH  );
+		this.add ( panelCentre, BorderLayout.CENTER );
+		this.add ( panelSud   , BorderLayout.SOUTH  );
 		
 		//met les actionListener
 		this.btnRecapInter   .addActionListener ( this );
