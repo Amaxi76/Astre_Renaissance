@@ -425,7 +425,7 @@ public class PanelPNLocal extends JPanel
             this.remove ( lstLabelsTotalHeures.get(i) );
 
 			this.repaint();
-
+			this.revalidate();
 		}
 	}
 }
