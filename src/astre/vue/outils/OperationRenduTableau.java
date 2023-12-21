@@ -29,14 +29,31 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
+		// Mettre les cases à cocher
+		if ( valeur instanceof Boolean )
+		{
+			JCheckBox checkBox = new JCheckBox ( );
+			checkBox.setSelected            ( ( Boolean ) valeur );
+			checkBox.setHorizontalAlignment ( JCheckBox.CENTER   );
+
+			cellule = checkBox;
+		}
+
+		// Aligner le texte à droite si la valeur est numérique
+		if ( valeur instanceof Number )
+			setHorizontalAlignment ( RIGHT );
+		else
+			setHorizontalAlignment ( LEFT ); // Rétablir l'alignement par défaut pour le texte
+
 		// par défaut il y a une alternance de couleurs
-		if ( lig%2 == 0 ) { cellule.setBackground ( COULEUR_FOND_1 ); }
-		else              { cellule.setBackground ( COULEUR_FOND_2 ); }
+		if ( lig % 2 == 0 )
+			cellule.setBackground ( COULEUR_FOND_1 );
+		else
+			cellule.setBackground ( COULEUR_FOND_2 );
+		
 		cellule.setForeground ( tbl.getForeground ( ) );
 
 		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
-
-		
 		
 		if ( premiereCelulleLigne instanceof Character )
 		{
@@ -67,25 +84,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					break;
 			}
 		}
-			
-		// Aligner le texte à droite si la valeur est numérique
-		if ( valeur instanceof Number )
-		{
-			setHorizontalAlignment ( RIGHT );
-		}
-		else
-		{
-			// Rétablir l'alignement par défaut pour le texte
-			setHorizontalAlignment ( LEFT );
-		}
-		
-		// Mettre les cases à cocher
-		if ( valeur instanceof Boolean )
-		{
-			setHorizontalAlignment(SwingConstants.CENTER);
-			setSelected((Boolean) value);
-		}
 
-		return this;
+		return cellule;
 	}
 }
