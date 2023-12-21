@@ -24,8 +24,8 @@ public class AFrame extends JFrame
 	public AFrame ( Controleur ctrl )
 	{
 		// Image
-		Image icon = Toolkit.getDefaultToolkit().getImage("./data/images/astre_petit.png");  
-		this.setIconImage(icon); 
+		Image icon = Toolkit.getDefaultToolkit ( ).getImage ( "./data/images/astre_petit.png" );  
+		this.setIconImage ( icon ); 
 	
 		// attributs
 		this.ctrl = ctrl;

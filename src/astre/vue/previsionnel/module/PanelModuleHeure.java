@@ -102,8 +102,8 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
 
 			if( this.frm.getPanelPNLocal().isVisible() ) this.frm.getPanelPNLocal().ajouterHeure ( nomHeure );
-			//if( this.frm.getPanelPNLocalBis().isVisible() ) this.frm.getPanelPNLocalBis().ajouterHeure ( nomHeure );
-			//if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().ajouterHeure ( nomHeure );
+			if( this.frm.getPanelPNLocalBis().isVisible() ) this.frm.getPanelPNLocalBis().ajouterHeure ( nomHeure );
+			if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().ajouterHeure ( nomHeure );
 
 			//if( this.frm.getPanelRepartition()   .isVisible() ) this.frm.getPanelRepartition()   .ajouterHeure ( nomHeure );
 			//if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().ajouterHeure ( nomHeure );
@@ -115,8 +115,8 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 			String nomHeure = ( String ) this.cbHeuresSupprimer.getSelectedItem();
 
 			if( this.frm.getPanelPNLocal()   .isVisible() ) this.frm.getPanelPNLocal()   .supprimerHeure(nomHeure);
-			//if( this.frm.getPanelPNLocalBis().isVisible() ) this.frm.getPanelPNLocalBis().supprimerHeure ( nomHeure );
-			//if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().supprimerHeure ( nomHeure );
+			if( this.frm.getPanelPNLocalBis().isVisible() ) this.frm.getPanelPNLocalBis().supprimerHeure ( nomHeure );
+			if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().supprimerHeure ( nomHeure );
 
 			//if( this.frm.getPanelRepartition()   .isVisible() ) this.frm.getPanelRepartition()   .supprimerHeure ( nomHeure );
 			//if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().supprimerHeure ( nomHeure );

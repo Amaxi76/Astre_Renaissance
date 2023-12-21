@@ -41,7 +41,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	private JLabel     lblMessageEnregistrement;
 	
-	private Tableau tableauEnsembleModule;
+	private Tableau    tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
