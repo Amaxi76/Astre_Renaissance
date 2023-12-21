@@ -38,11 +38,6 @@ table
 	width: 16.6%;
 }
 
-.total
-{
-	background-color: #e49d92;
-}
-
 th 
 {
 	background-color: #1D2F47;
@@ -75,4 +70,9 @@ tr:nth-child(even)
 .heure
 {
 	text-align: center;
+}
+
+.total
+{
+	background-color: #e49d92;
 }

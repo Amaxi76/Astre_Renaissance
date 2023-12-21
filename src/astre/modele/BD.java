@@ -704,6 +704,28 @@ public class BD
 		return somme;
 	}
 
+	//Utilisée dans générateur.java
+	public int getTotalHeureParInter ( int idInter, int idHeure )
+	{
+		int somme = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectTotHeureInter(" + idInter + "," + idHeure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e)
+		{
+			System.out.println ( "Erreur getTotalHeureParInter ( int idInter, int idHeure ) : " + e );
+		}
+
+		return somme;
+	}
+
 	public int getNbTuple ( String table )
 	{
 		int nbTuple = 0;
