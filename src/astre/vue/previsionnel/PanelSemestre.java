@@ -41,7 +41,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	private JLabel     lblMessageEnregistrement;
 	
-	private Tableau tableauEnsembleModule;
+	private Tableau    tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
@@ -90,8 +90,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		Object[] typeDefaut = new Object[]{"", "", "", false};
-		this.tableauEnsembleModule = Tableau.initialiserTableau( null, typeDefaut, false, 0, this.ctrl.getTableauModule ( numSemestre ) );
+		Object[] typeDefaut = { "", "", "", false };
+		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 0, this.ctrl.getTableauModule ( numSemestre ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 

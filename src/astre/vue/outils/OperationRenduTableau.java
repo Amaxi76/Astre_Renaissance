@@ -4,6 +4,8 @@ import astre.modele.outils.ModeleTableau;
 
 import java.awt.Color;
 import java.awt.Component;
+
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -27,10 +29,35 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
-		Object premiereCelulleLigne = ( (ModeleTableau) (tbl.getModel ( )) ).getObjet ( lig, 0 );
+		// Mettre les cases à cocher
+		if ( valeur instanceof Boolean )
+		{
+			JCheckBox checkBox = new JCheckBox ( );
+			checkBox.setSelected            ( ( Boolean ) valeur );
+			checkBox.setHorizontalAlignment ( JCheckBox.CENTER   );
+
+			cellule = checkBox;
+		}
+
+		// Aligner le texte à droite si la valeur est numérique
+		if ( valeur instanceof Number )
+			setHorizontalAlignment ( RIGHT );
+		else
+			setHorizontalAlignment ( LEFT ); // Rétablir l'alignement par défaut pour le texte
+
+		// par défaut il y a une alternance de couleurs
+		if ( lig % 2 == 0 )
+			cellule.setBackground ( COULEUR_FOND_1 );
+		else
+			cellule.setBackground ( COULEUR_FOND_2 );
+		
+		cellule.setForeground ( tbl.getForeground ( ) );
+
+		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
+		
 		if ( premiereCelulleLigne instanceof Character )
 		{
-			char operation = (char) premiereCelulleLigne;
+			char operation = ( char ) premiereCelulleLigne;
 
 			/*
 			 * Ajouter des actions à réaliser sur la ligne en fonction de l'opération donnée
@@ -54,17 +81,10 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					break;
 
 				default :
-					/*// Par défaut, utiliser les couleurs par défaut de la table
-					cellule.setBackground ( table.getBackground ( ) );*/
-
-					// par défaut il y a une alternance de couleurs
-					if ( lig%2 == 0 ) { cellule.setBackground ( COULEUR_FOND_1 ); }
-					else              { cellule.setBackground ( COULEUR_FOND_2 ); }
-					cellule.setForeground ( tbl.getForeground ( ) );
 					break;
 			}
 		}
 
-		return this;
+		return cellule;
 	}
 }

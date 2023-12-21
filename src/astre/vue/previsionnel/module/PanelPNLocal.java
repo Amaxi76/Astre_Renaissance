@@ -379,6 +379,14 @@ public class PanelPNLocal extends JPanel
 	//TEST MODULABLE
 	public void ajouterHeure ( String nomHeure )
 	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				return;
+			}
+		}
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 	
@@ -408,24 +416,28 @@ public class PanelPNLocal extends JPanel
 		this.add ( labelTotalHeure, gbc );
 
 		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
+
+		this.revalidate();
 	}
 
 	public void supprimerHeure ( String nomHeure )
 	{
-		for ( int i = 0; !nomHeure.equals(lstLabelsHeures.get(i).getText()); i++)
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
-			//Supprimer de la liste
-			lstLabelsHeures     .remove(i);
-			lstTextFieldsHeures .remove(i);
-			lstLabelsTotalHeures.remove(i);
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				//Supprimer du Panel
+				this.remove ( lstLabelsHeures     .get(i) );
+				this.remove ( lstTextFieldsHeures .get(i) );
+				this.remove ( lstLabelsTotalHeures.get(i) );
 
-			//Supprimer du Panel
-			this.remove ( lstLabelsHeures     .get(i) );
-            this.remove ( lstTextFieldsHeures .get(i) );
-            this.remove ( lstLabelsTotalHeures.get(i) );
+				//Supprimer de la liste
+				lstLabelsHeures     .remove(i);
+				lstTextFieldsHeures .remove(i);
+				lstLabelsTotalHeures.remove(i);
 
-			this.repaint();
-
+				this.revalidate();
+			}
 		}
 	}
 }

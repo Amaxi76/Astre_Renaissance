@@ -36,10 +36,16 @@ public class PanelDiagramme extends JPanel
 
 	private Map donnees;
 
-	public PanelDiagramme ( Map donnees, Color couleurMin, Color couleurMax )
+	public PanelDiagramme ( )
+	{
+
+	}
+
+	public PanelDiagramme ( Map donnees, Color couleurMin, Color couleurMax, String titre, int taille )
 	{
 		this.donnees = donnees;
-		this.setSize( new Dimension ( 800,500 ) );
+		//this.setSize( new Dimension ( 200,50 ) );
+		//this.setPreferredSize(new Dimension(200,100));
 
 		//Ajout des données
 		final DefaultPieDataset pieDataset = new DefaultPieDataset ( );
@@ -51,8 +57,9 @@ public class PanelDiagramme extends JPanel
 			pieDataset.setValue ( ( String ) mapentry.getKey ( ), ( Double ) mapentry.getValue ( ) );
 		}
 
-		final JFreeChart pieChart = ChartFactory.createPieChart ( "Répartitions des heures de l'enseignant X", pieDataset, true, true, true );
+		final JFreeChart pieChart = ChartFactory.createPieChart ( null, pieDataset, true, true, true );
 		final ChartPanel cPanel = new ChartPanel ( pieChart );
+		cPanel.setPreferredSize ( new Dimension(taille + 60, taille ) );
 
 		// Ajout des couleurs
 		PiePlot plot = ( PiePlot ) pieChart.getPlot ( );
@@ -74,14 +81,14 @@ public class PanelDiagramme extends JPanel
 		}
 
 		plot.setShadowPaint          ( null );
-		plot.setBackgroundAlpha      ( 0.0f ) ;
+		plot.setBackgroundAlpha      ( 0.0f );
 		plot.setSimpleLabels         ( true );
 		plot.setLabelBackgroundPaint ( null );
 		plot.setLabelOutlinePaint    ( null );
 		plot.setLabelShadowPaint     ( null );
 		plot.setLabelPaint           ( Color.WHITE );
 
-		Font font = new Font ( "Arial", Font.BOLD, 14 );
+		Font font = new Font   ( "Arial", Font.BOLD, 14 );
 		plot.setLabelFont      ( font );
 		plot.setLabelGenerator ( new StandardPieSectionLabelGenerator ( "{1}h" ) );
 
@@ -110,15 +117,16 @@ public class PanelDiagramme extends JPanel
 		f.add ( new PanelDiagramme ( donnees, new Color ( 255,99,71 ), new Color ( 255,192,124 ) ) );
 		f.pack ( );*/
 
-		PanelDiagramme.genererCamembert(1);
+		PanelDiagramme.genererCamembert( 1, 250 );
+		System.out.println( "mauvais main mec" );
 	}
 
-	public static void genererCamembert ( int idIntervenant )
+	public static PanelDiagramme genererCamembert ( int idIntervenant, int taille )
 	{
 		// Donnees
 		Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
 
-		donnees.put ( "NA", BD.getInstance ( ).getIntervenant ( idIntervenant ).getContrat ( ).getHeureMaxContrat ( ) + 0.0 );
+		donnees.put ( "NA", BD.getInstance ( ).getIntervenant ( idIntervenant ).getHeureMaximum ( ) + 0.0 );
 
 		for ( Intervient inter : BD.getInstance ( ).getTable ( Intervient.class ) )
 		{
@@ -131,12 +139,7 @@ public class PanelDiagramme extends JPanel
 			}
 		}
 
-		// Generation
-		JFrame f = new JFrame ( );
-		f.setVisible ( true );
-		System.out.println ( "Diagramme généré" );
-		f.add ( new PanelDiagramme ( donnees, new Color ( 255,99,71 ), new Color ( 255,192,124 ) ) );
-		f.pack ( );
+		return new PanelDiagramme ( donnees, new Color ( 255,99,71 ), new Color ( 255,192,124 ), "Répartitions des heures de " + BD.getInstance ( ).getIntervenant ( idIntervenant ).getNom ( ), taille );
 	}
 
 	public static List<Color> generateGradientColors ( Color startColor, Color endColor, int steps )

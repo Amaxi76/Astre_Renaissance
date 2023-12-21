@@ -36,7 +36,7 @@ public class Heure
 		Object n = heure[1];
 		Object c = heure[2];
 
-		if ( ( i != null && !( i instanceof Integer ) ) ||  !( n instanceof String ) || !( c instanceof Number ) )
+		if ( ( i != null && ! ( i instanceof Integer ) ) ||  ! ( n instanceof String ) || ! ( c instanceof Number ) )
 		{
 			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les données de l'heure ne sont pas du bon type" );

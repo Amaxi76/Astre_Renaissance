@@ -7,17 +7,12 @@ package astre;
   */
 
 import astre.modele.elements.*;
-import astre.modele.outils.Utilitaire;
-
-import java.awt.Component;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.*;
 import astre.vue.*;
 import astre.vue.outils.PopUpErreur;
-import astre.vue.outils.Tableau;
 
 public class Controleur
 {
@@ -30,17 +25,19 @@ public class Controleur
 		this.metier = new Astre        (      );
 	}
 
-	public <T> List<T>   getTable          ( Class<T> type   ) { return this.metier.getTable              ( type        ); }
+	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
-	public Semestre          getSemestre       ( int      numSemestre         ) { return this.metier.getSemestre      ( numSemestre    ); }
-	public Object[][]        getTableauModule  ( int      numSemestre         ) { return this.metier.getTableauModule ( numSemestre    ); } //TODO: à refaire / enlever
-	public Object[][]        getTableau        ( Class<?> type                ) { return this.metier.getTableau       ( type           ); }
-	public Heure             getHeure          ( int      nom                 ) { return this.metier.getHeure         ( nom            ); }
-	public Heure             getHeure          ( String   nom                 ) { return this.metier.getHeure         ( nom            ); }
-	public Contrat           getContrat        ( String   nom                 ) { return this.metier.getContrat       ( nom            ); }
-	public ModuleIUT         getModule         ( String   nom                 ) { return this.metier.getModule        ( nom            ); }
-	public int               getNBHeureEQTD    ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD   ( code, nomHeure ); }
-	public ArrayList<String> getHistorique     (                              ) { return this.metier.getHistorique    (                ); }
+	public Semestre          getSemestre           ( int      numSemestre         ) { return this.metier.getSemestre           ( numSemestre    ); }
+	public Object[][]        getTableauModule      ( int      numSemestre         ) { return this.metier.getTableauModule      ( numSemestre    ); } //TODO: à refaire / enlever
+	public Heure             getHeure              ( int      nom                 ) { return this.metier.getHeure              ( nom            ); }
+	public Heure             getHeure              ( String   nom                 ) { return this.metier.getHeure              ( nom            ); }
+	public Contrat           getContrat            ( String   nom                 ) { return this.metier.getContrat            ( nom            ); }
+	public ModuleIUT         getModule             ( String   nom                 ) { return this.metier.getModule             ( nom            ); }
+	public int               getNBHeureEQTD        ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD        ( code, nomHeure ); }
+	public List<String>      getHistorique         (                              ) { return this.metier.getHistorique         (                ); }
+
+	public Object[][]        getTableau            ( Class<?> type                ) { return this.metier.getTableau            ( type           ); }
+	public Object[][]        getTableauParticulier ( String nomRecherche          ) { return this.metier.getTableauParticulier ( nomRecherche   ); }
 
 	public void update ( Object o ) { this.metier.update ( o ); }
 	public void insert ( Object o ) { this.metier.insert ( o ); }

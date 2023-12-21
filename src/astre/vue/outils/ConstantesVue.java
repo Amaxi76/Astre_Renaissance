@@ -13,10 +13,10 @@ import java.awt.Dimension;
 
 public abstract class ConstantesVue
 {
-	private ConstantesVue (){ /*Constructeur privé pour empêcher l'instanciation de la classe*/ }
+	private ConstantesVue ( ) { /*Constructeur privé pour empêcher l'instanciation de la classe*/ }
 
 	public static final int    LARGEUR_COLONNE_NOMBRE     = 3;
-	public static final Border MARGE_INTERIEURE_FENETRE   =  new EmptyBorder ( 20,20,20,20 );
+	public static final Border MARGE_INTERIEURE_FENETRE   = new EmptyBorder ( 20,20,20,20 );
 	public static final int    MARGE_EXTERIEURE_COMPOSANT = 20;
 	public static final int    ESPACE_BOUTONS             = 10;
 

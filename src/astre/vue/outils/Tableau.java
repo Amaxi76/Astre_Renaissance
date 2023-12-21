@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.Component;
 import javax.swing.table.*;
 import astre.modele.outils.ModeleTableau;
+import astre.modele.outils.Utilitaire;
 
 /** Classe représentant un tableau personnalisable.
  *  @author Matéo Sa, Maxime Lemoine et Maximilien Lesterlin
@@ -14,6 +15,7 @@ import astre.modele.outils.ModeleTableau;
 
 //TODO: ajouter un booleen pour le constructeur sans titre de colonnes
 //TODO: adapter les largeurs des colonnes en fonction des tailles des cellules et des entetes
+//TODO: ajouter des throws exceptions lors des erreurs dans les factory
 
 public class Tableau extends JTable
 {
@@ -53,7 +55,9 @@ public class Tableau extends JTable
 		}
 
 		for ( int i = 0; i < this.getColumnCount ( ); i++ )
+		{
 			this.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableau ( ) );
+		}
 
 		if ( !contientEntete ) this.setTableHeader ( null );
 
@@ -90,10 +94,15 @@ public class Tableau extends JTable
 		}
 
 		// initialisation des données à vide
-		tabDonnees = ( tabDonnees == null ) ? new Object[0][ nbColonnes ] : tabDonnees;
+		if ( tabDonnees == null || tabDonnees.length == 0 )
+			tabDonnees = new Object[0][nbColonnes];
 
 		// vérifier que les tableaux ont les mêmes longueurs
-		if ( !( ensEntete.length == nbColonnes && ensModifiable.length == nbColonnes && tabDonnees[0].length == nbColonnes ) ) return null;
+		boolean enteteOk     = ensEntete.length     == nbColonnes;
+		boolean modifiableOk = ensModifiable.length == nbColonnes;
+		boolean donneesOk    = tabDonnees != null && (tabDonnees.length == 0 || tabDonnees[0].length == nbColonnes); //pas changer condition pcq la galère sinon
+
+		if ( ! ( enteteOk && modifiableOk && donneesOk ) ) return null;
 
 		// construction du tableau
 		return new Tableau ( ensEntete, ensDefaut, ensModifiable, decalage , tabDonnees );
@@ -127,6 +136,8 @@ public class Tableau extends JTable
 	*/
 	public void ajusterTailleColonnes ( )
 	{
+		if ( this.estVide ( ) ) return;
+		
 		TableColumnModel columnModel = this.getColumnModel ( );
 		for ( int i = 0; i < columnModel.getColumnCount ( ); i++ )
 		{
@@ -147,6 +158,7 @@ public class Tableau extends JTable
 	*/
 	public void ajouterLigne ( )
 	{
+		System.out.println ( "oui" );
 		this.modele.ajouterLigne ( );
 
 		this.ajusterTailleColonnes ( );
@@ -160,7 +172,7 @@ public class Tableau extends JTable
 		int selection = this.getSelectedRow ( );
 		if ( selection != -1 )
 		{
-			this.modele.supprimerLigne(selection);
+			this.modele.supprimerLigne ( selection );
 		}
 		this.ajusterTailleColonnes ( );
 	}
@@ -168,6 +180,11 @@ public class Tableau extends JTable
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
+
+	/**
+	 * Test si le tableau est vide
+	 */
+	public boolean estVide ( ) { return this.modele.estVide(); }
 
 	/**
 	* Permet de récupérer les données du modele
@@ -195,7 +212,7 @@ public class Tableau extends JTable
 	/**
 	* Permet d'éditer ou non toutes les colonnes.
 	*/
-	public void setEditable ( boolean editable ) { this.modele.setEditable(editable); }
+	public void setEditable ( boolean editable ) { this.modele.setEditable ( editable ); }
 
 	/**
 	* Permet de modifier la liste des cellules éditables avec les numéros de colonne choisi.

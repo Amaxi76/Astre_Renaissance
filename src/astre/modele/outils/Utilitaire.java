@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 /**
  * Classe des données et d'affichage du tableau.
  * @author Maxime Lemoine
+ * @version 2.0 20/12/23
  */
 
 public abstract class Utilitaire
@@ -20,21 +21,23 @@ public abstract class Utilitaire
 	 */
 	private Utilitaire () {}
 
+
 	/*---------------------------------------*/
-	/*           METHODES TABLEAUX           */
+	/*      METHODES TOSTRING TABLEAUX       */
 	/*---------------------------------------*/ 
 
 	/**
 	 * toString
 	 */
-	public static String afficherTableau ( List<?> liste )
+	public static String afficherValeurs ( List<?> liste )
 	{
 		String s="";
 		
 		for ( Object o : liste )
-		{
-			s += o.toString ( ) + "\n";
-		}
+			if( o == null )
+				s += "null\n";
+			else
+				s += o.toString ( ) + "\n";
 		
 		return s;
 	}
@@ -42,17 +45,67 @@ public abstract class Utilitaire
 	/**
 	 * toString
 	 */
-	public static String afficherTableau ( Object[] liste )
+	public static String afficherValeurs ( Object[] liste )
 	{
 		String s="";
 		
 		for ( Object o : liste )
+			if( o == null )
+				s += "null\n";
+			else
+				s += o.toString ( ) + "\n";
+		
+		return s;
+	}
+	
+	/**
+	 * toString
+	 */
+	public static String afficherValeurs ( Object[][] tableau )
+	{
+		String s="";
+		
+		for ( int cptLig = 0; cptLig < tableau.length; cptLig++ )
 		{
-			s += o.toString ( ) + "\n";
+			for ( int cptCol = 0; cptCol < tableau[cptLig].length; cptCol++ )
+			{
+				if( tableau[cptLig][cptCol] == null )
+					s += "null ";
+				else
+					s += tableau[cptLig][cptCol].toString ( ) + " ";
+			}
+			s+="\n";
 		}
 		
 		return s;
 	}
+
+	/**
+	 * toString des types
+	 */
+	public static String afficherTypes ( Object[][] tableau )
+	{
+		String s="";
+		
+		for ( int cptLig = 0; cptLig < tableau.length; cptLig++ )
+		{
+			for ( int cptCol = 0; cptCol < tableau[cptLig].length; cptCol++ )
+			{
+				if( tableau[cptLig][cptCol] == null )
+					s += "null ";
+				else
+					s += tableau[cptLig][cptCol].getClass().toString ( ) + " ";
+			}
+			s+="\n";
+		}
+		
+		return s;
+	}
+
+
+	/*---------------------------------------*/
+	/*       METHODES COPIES TABLEAUX        */
+	/*---------------------------------------*/ 
 
 	/**
 	 * Copie profonde d'un tableau avec ajout d'une copie d'une nouvelle ligne
@@ -80,17 +133,49 @@ public abstract class Utilitaire
 
 		for ( int lig = 0; lig < tableau.length; lig++ )
 		{
-			for ( int col = 0; col < tableau[lig].length; lig++ )
+			for ( int col = 0; col < nbColonnes; col++ )
 			{
-				tableauTmp[lig][col] = tableau[lig][col];
+				if ( col < tableau[lig].length )
+				{
+					tableauTmp[lig][col] = tableau[lig][col];
+				}
+				else
+				{
+					// Ajoutez une valeur vide pour les nouvelles colonnes
+					tableauTmp[lig][col] = "X"; //TODO: remplacer la valeur par Null
+				}
 			}
-			
 		}
-		tableauTmp[tableauTmp.length-1] = Utilitaire.copier ( ligne );
-
 
 		return tableauTmp;
 	}
+
+	/**
+	 * Copie profonde d'un tableau avec un nouveau nombre de colonnes (conserve les colonnes de indDeb à indFin)
+	 */
+	/*public static Object[][] formater ( Object[][] tableau, int indDeb, int indFin )
+	{
+		int taille = indFin - indDeb + 1;
+		Object[][] tableauTmp = new Object[tableau.length][taille];
+
+		for ( int lig = 0; lig < tableau.length; lig++ )
+		{
+			for ( int col = 0; col <  ; col++ )
+			{
+				if ( col < tableau[lig].length )
+				{
+					tableauTmp[lig][col] = tableau[lig][col];
+				}
+				else
+				{
+					// Ajoutez une valeur vide pour les nouvelles colonnes
+					tableauTmp[lig][col] = "X"; //TODO: remplacer la valeur par Null
+				}
+			}
+		}
+
+		return tableauTmp;
+	}*/
 
 	/**
 	 * Copie profonde d'un tableau
@@ -127,12 +212,19 @@ public abstract class Utilitaire
 		return Arrays.copyOf( ensemble, ensemble.length );
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		Object[][] test = { {5, 5}, {5, 6}, {7, 3} };
 		Object[]   lign = { 5, 6 };
-		Object[][] copie = copier ( test, lign );
-		System.out.println ( test[1].length + " = " + copie[1].length );
-	}*/
+		
+		//Object[][] copie = copier ( test, lign );
+		//System.out.println ( test[1].length + " = " + copie[1].length );
+		
+		System.out.println ( afficherValeurs ( test ) );
+		Object[][] formatage = formater ( test, 10 );
+		System.out.println ( afficherValeurs ( formatage ) );
+		System.out.println ( afficherTypes ( formatage ) );
+	}
+
 
 	/*---------------------------------------*/
 	/*          METHODES CONVERSIONS         */
@@ -171,4 +263,19 @@ public abstract class Utilitaire
 	
 		System.out.println ( afficherTableau(attributs) );
 	}*/
+
+
+	/*---------------------------------------*/
+	/*             METHODES AUTRES           */
+	/*---------------------------------------*/
+
+	/**
+	 * Methode permettant d'inverser deux objets d'un tableau
+	 */
+	public static void inverser( Object[] liste, int ind1, int ind2 )
+	{
+		Object tmp = liste[ind1];
+		liste[ind1] = liste[ind2];
+		liste[ind2] = tmp;
+	}
 }

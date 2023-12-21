@@ -49,8 +49,8 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 		this.ctrl             = ctrl;
 		this.parent           = parent;
 
-		this.initComposants();
-	}
+		this.initComposants ( );
+	} 
 
 	/**
 	 * Initialisation des composants de la barre
@@ -137,7 +137,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			menui.setMnemonic ( mnemo.charAt ( 0 ) );
 		}
 
-		if( hotkey != null )
+		if ( hotkey != null )
 		{
 			menui.setAccelerator( getEquivalentKeyStroke ( hotkey ) );
 		}

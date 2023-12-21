@@ -31,8 +31,10 @@ public class PopUpErreur extends JDialog
 	public PopUpErreur ( String titre, String message )
 	{
 		super.setTitle ( titre );
-		JPanel panel = new JPanel ( );
+
+		JPanel panel   = new JPanel ( );
 		this.lblErreur = new JLabel ( message );
+		
 		panel.add ( this.lblErreur );
 		this.setContentPane ( panel );
 
