@@ -7,20 +7,36 @@ import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
 
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 /** Page de gestion des intervenants
-  * @author : Matéo Sa
-  * @version : 1.0 - 11/12/2023
+  * @author : Matéo Sa, Maxime Lemoine, Maximilien Lesterlin
+  * @version : 2.0 - 21/12/23
   * @date : 06/12/2023
   */
 
-  //TODO: Faire la fraction "2/3"
+  //TODO: Faire la fraction "2/3" - jcrois pas non
 
 public class PanelIntervenants extends JPanel implements ActionListener
 {
+	// paramètres du tableau
+	private static final String[]  NOMS_COL   = { "action", "Id" ,"Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1" , "S3" , "S5" , "sTot", "S2" , "S4" , "S6" , "sTot", "Total" };
+	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , 0.0      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0       };
+	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , true     , false, false, false, false , false, false, false, false , false   };
+	private static final int       DECALAGE   = 2;
+	
+	// requetes
+	private static final String REQUETE = "v_intervenant";
+
+	// paramètre du graphique
+	private static final int TAILLE_DIAG = 150;
+	
 	private Tableau     tableau;
 	private JScrollPane scrollPane;
 
@@ -30,27 +46,34 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	private JButton     btnAnnuler;
 
 	private JPanel      panelCentre;
+	private JPanel      panelSud;
+
+	private PanelDiagramme panelDiagramme;
 
 	private Controleur  ctrl;
 
 	/**
-	 * 	Panel pour la frame des intervenants.
-	 * @author Matéo
+	 * Panel pour la frame des intervenants.
+	 * @author Matéo, Maxime, Maximilien
 	 */
 	public PanelIntervenants ( Controleur ctrl )
 	{
+		/*-------------*/
+		/*--Attributs--*/
+		/*-------------*/
+		
 		this.ctrl = ctrl;
-
 		this.setLayout ( new BorderLayout ( ) );
 		int marginSize = 10;
 		this.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
-		//création des composants
-		String[] noms    = { "action", "Id","Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1", "S3", "S5", "sTot", "S2", "S4", "S6", "sTot", "Total" };
-		Object[] defauts = { 'D', 0, "", "", "", 0, 0, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+		/* ------------------------- */
+		/* Création des composants   */
+		/* ------------------------- */
 
 		//Création du tableau
-		this.tableau = Tableau.initialiserTableau ( noms, defauts, true, 2, this.ctrl.getTableauParticulier ( "v_intervenant" ) );
+		this.tableau = Tableau.initialiserTableau ( NOMS_COL, DEFAUT_COL, MODIF_COL, DECALAGE, this.ctrl.getTableauParticulier ( REQUETE ) );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
@@ -60,44 +83,101 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		}
 		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
 
-		//Parametres du tableau
-		//this.tableau.setEditable ( new boolean[] { true, true, true, true, true } ); TODO: faire en sorte que le tablo soit modifiable mais pas partout
+		//Ajout de la barre de scroll
+		this.scrollPane = new JScrollPane ( this.tableau );
 
+		//Ajout des boutons
 		this.btnAjouter     = new JButton ( "Ajouter"     );
 		this.btnSupprimer   = new JButton ( "Supprimer"   );
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
+		//Ajout du diagramme
+		this.panelDiagramme = new PanelDiagramme ( );
+
+
+		/* ------------------------- */
+		/* Placement des composants  */
+		/* ------------------------- */
+
+		//Placement des panels
 		this.panelCentre = new JPanel ( );
+		this.panelSud    = new JPanel ( new GridLayout(1, 2) );
+		JPanel panelBtn  = new JPanel ( );
+
 		panelCentre.setLayout ( new BorderLayout ( ) );
 		panelCentre.setBorder ( BorderFactory.createEmptyBorder ( marginSize, marginSize, marginSize, marginSize ) );
 
-		JPanel panelCentre2 = new JPanel ( );
-		JPanel panelSud     = new JPanel ( );
+		//Préparation du placement des boutons
+		GroupLayout layout = new GroupLayout ( panelBtn );
+		panelBtn.setLayout ( layout );
 
-		this.scrollPane = new JScrollPane ( this.tableau );
+		layout.setAutoCreateGaps ( true );
+		layout.setAutoCreateContainerGaps ( true );
 
-		//Ajout des composants
-		panelCentre2.add ( this.btnAjouter   );
-		panelCentre2.add ( this.btnSupprimer );
+		//placer horizontalement les boutons
+		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup ( );
 
-		panelCentre.add ( panelCentre2, BorderLayout.SOUTH  );
+		hGroup.addGroup ( layout.createParallelGroup ( Alignment.LEADING, true ).addComponent ( this.btnAjouter   ).addComponent ( this.btnEnregistrer ) );
+		hGroup.addGroup ( layout.createParallelGroup ( Alignment.LEADING, true ).addComponent ( this.btnSupprimer ).addComponent ( this.btnAnnuler     ) );
+		layout.setHorizontalGroup( hGroup );
+
+		//placer verticalement les boutons
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup ( );
+
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnAjouter     ).addComponent ( this.btnSupprimer ) );
+		vGroup.addGap   ( 50 ); //ajouter d'un espacement
+		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnEnregistrer ).addComponent ( this.btnAnnuler   ) );
+		layout.setVerticalGroup ( vGroup );
+
+		//Mettre touts les boutons à la meme taille
+		this.btnAjouter.setPreferredSize ( new Dimension ( 150, 30 ) );
+		layout.linkSize ( this.btnAjouter, this.btnSupprimer, this.btnEnregistrer, this.btnAnnuler );
+
+		//Placement des composants
 		panelCentre.add ( scrollPane  , BorderLayout.CENTER );
 
-		panelSud.add ( this.btnEnregistrer );
-		panelSud.add ( this.btnAnnuler     );
+		this.panelSud.add ( panelBtn            );
+		this.panelSud.add ( this.panelDiagramme );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
 		this.add ( panelCentre                            , BorderLayout.CENTER );
 		this.add ( panelSud                               , BorderLayout.SOUTH  );
 
-		//met les actionListener
+
+		/* ------------------------- */
+		/* Activation des composants */
+		/* ------------------------- */
+
+		//ajout des actionListener
 		this.btnAjouter    .addActionListener ( this );
 		this.btnSupprimer  .addActionListener ( this );
 		this.btnEnregistrer.addActionListener ( this );
 		this.btnAnnuler    .addActionListener ( this );
+
+		
+		MouseAdapter adapter = 	new MouseAdapter ( )
+		{
+			@Override
+			public void mouseClicked ( MouseEvent e )
+			{
+				int ligne = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
+
+				int idInter =  Integer.parseInt ( tableau.getDonnees ( )[ligne][1].toString ( ) );
+				if ( idInter > 0  )
+					changerDiagramme ( idInter );
+				else
+					changerDiagramme ( -1 );
+			}
+		};
+
+		cbEdit      .addMouseListener ( adapter );
+		this.tableau.addMouseListener ( adapter );
 	}
 
+	/**
+	 * Actions sur les boutons ajouter, supprimer, enregistrer, annuler
+	 */
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnAjouter )
@@ -115,23 +195,25 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			Object[][] tab = this.preparerTableau ( this.tableau .getDonnees ( ) );
+			Object[][] tab = this.preparerTableau ( this.tableau.getDonnees ( ) );
 
 			this.ctrl.majTableauBD ( tab, Intervenant.class );
+			
 			this.tableau.ajusterTailleColonnes ( );
 
-			this.tableau.modifDonnees ( this.ctrl.getTableau ( Intervenant.class ) );
+			this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
 		}
 
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			( ( JFrame ) ( this.getParent ( ).getParent ( ).getParent ( ).getParent ( ) ) ).dispose ( );
-			new FrameAccueil ( this.ctrl );
+			//( ( JFrame ) ( this.getParent ( ).getParent ( ).getParent ( ).getParent ( ) ) ).dispose ( );
+			this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
 		}
 	}
 
-	//TODO faire un camembert en bas a gauche
-
+	/**
+	 * Raccourcir le tableau de l'affichage pour mettre à jour la base de données
+	 */
 	private Object[][] preparerTableau ( Object[][] tab  )
 	{
 		// Enlever les colonnes en trop
@@ -141,7 +223,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		int COLONNE_CONTRAT = 2;
 		
 		for ( int lig = 0; lig < tab.length; lig++ )
+		{
 			tab2[lig][COLONNE_CONTRAT] = this.ctrl.getContrat ( tab2[lig][COLONNE_CONTRAT].toString ( ) );
+		}
 		
 		// Replacer les objets dans le bon ordre pour le constructeur
 		for ( int lig = 0; lig < tab2.length; lig++ )
@@ -152,95 +236,25 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			tab2[lig][3] = tab[lig][4];
 			tab2[lig][4] = tmp;
 		}
-			
 		
-
-		System.out.println(Utilitaire.afficherValeurs(tab2));
-		System.out.println(Utilitaire.afficherTypes(tab2));
 		return tab2;
 	}
 
-	/*public boolean enregistrer ( Object[][] deuxieme )
+	/**
+	 * Maj du diagramme en fonction de la ligne cliquée
+	 */
+	public void changerDiagramme ( int idInter )
 	{
-		ArrayList<Intervenant> lst = new ArrayList<> ( );
-		ArrayList<Intervenant> lstBD = ( ArrayList<Intervenant> ) this.ctrl.getTable ( Intervenant.class );
+		PanelDiagramme diagramme;
+		if ( idInter == -1 )
+			diagramme = new PanelDiagramme ( );
+		else
+			diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
 
-		//Pour tout intervenant dans le nouveau tab, si ID existe dans BD alors update la ligne sinon insert la ligne
-		Intervenant inter = null;
-		for ( int i = 0; i < deuxieme.length; i++ )
-		{
-			//verif des erreurs
-			for ( int cpt=1; cpt < deuxieme[0].length; cpt++ )
-			{
-				//cases vides
-				if ( deuxieme[i][cpt].toString ( ).equals ( "" ) )
-				{
-					Controleur.afficherErreur("Enregistrement impossible", "La colonne " + cpt + " de la ligne " + (i + 1) + " est vide");
-					return false;
-				}
+		this.panelSud.remove ( this.panelDiagramme );
+		this.panelDiagramme = diagramme;
+		this.panelSud.add    ( this.panelDiagramme );
 
-				//hserv < 0 ou hmax < 0
-				if ( Integer.parseInt ( deuxieme[i][4].toString ( ) ) < 0 || Integer.parseInt ( deuxieme[i][5].toString ( ) ) < 0 )
-				{
-					Controleur.afficherErreur("Enregistrement impossible", "Les heures de services et heures max doivent etre touts 2 supérieur à 0 sur la ligne " + (i + 1) );
-					return false;
-				}
-
-				//hserv > hmax
-				if ( Integer.parseInt ( deuxieme[i][4].toString ( ) ) > Integer.parseInt ( deuxieme[i][5].toString ( ) ) )
-				{
-					Controleur.afficherErreur("Enregistrement impossible", "Les heures de services sont supérieur à ses heures max sur la ligne " + (i + 1) );
-					return false;
-				}
-
-			}
-
-			//si pas ID creer une ID à 0
-			if ( deuxieme[i][0].toString ( ).equals ("" ) )
-				inter = Intervenant.creation ( 0, deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
-			else
-				inter = Intervenant.creation ( Integer.parseInt ( deuxieme[i][0].toString ( ) ), deuxieme[i][2].toString ( ), deuxieme[i][3].toString ( ), this.ctrl.getContrat ( deuxieme[i][1].toString ( ) ), Integer.parseInt ( deuxieme[i][4].toString ( ) ), Integer.parseInt ( deuxieme[i][5].toString ( ) ) );
-
-			//Ajout a une liste pour les suppression apres
-			lst.add ( inter );
-
-			boolean up = false;
-			for ( Intervenant venant : lstBD )
-			{
-				if ( inter.getId ( ) == venant.getId ( ) )
-				{
-					up = true;
-				}
-			}
-
-			if ( up )
-			{
-				this.ctrl.update(inter);
-			}
-			else
-			{
-				this.ctrl.insert(inter);
-			}
-		}
-
-		//Pour tout intervenant dans BD, si ID dans nouveau tab alors garder l'intervenant
-		for ( Intervenant venant : lstBD )
-		{
-			boolean del = true;
-			for ( Intervenant venant2 : lst )
-			{
-				if ( venant2.getId ( ) == venant.getId ( ) )
-				{
-					del = false;
-					break;
-				}
-			}
-
-			if ( del )
-			{
-				this.ctrl.delete(venant);
-			}
-		}
-		return true;
-	}*/
+		revalidate ( );
+	}
 }
