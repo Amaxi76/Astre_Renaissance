@@ -53,7 +53,7 @@ th, td
 
 tr:nth-child(even)
 {
-	background-color: #F288A4;
+	background-color: #A1C231;
 }
 
 .num
@@ -74,5 +74,5 @@ tr:nth-child(even)
 
 tr.total, .total
 {
-    background-color: #A1C231;
+    background-color:  #F288A4;
 }
