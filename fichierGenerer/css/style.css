@@ -72,7 +72,7 @@ tr:nth-child(even)
 	text-align: center;
 }
 
-.total
+tr.total, .total
 {
-	background-color: #e49d92;
+    background-color: #e49d92;
 }
