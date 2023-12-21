@@ -379,6 +379,14 @@ public class PanelPNLocal extends JPanel
 	//TEST MODULABLE
 	public void ajouterHeure ( String nomHeure )
 	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				return;
+			}
+		}
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 	
