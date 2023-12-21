@@ -32,16 +32,16 @@ public class PanelHistorique extends JPanel
 		this.txtHistorique.setEditable ( false );
 
 		//création de la scrollbar
-		JScrollPane bar = new JScrollPane(txtHistorique);
-		this.add(bar);
+		JScrollPane bar = new JScrollPane ( txtHistorique );
+		this.add ( bar) ;
 
 		//récupération de la table historique
-		List<String> lst = this.ctrl.getHistorique();
+		List<String> lst = this.ctrl.getHistorique ( );
 
 		//Ajout du texte dans la zone dédiée
-		for(String s : lst)
+		for ( String s : lst )
 		{
-			this.txtHistorique.append(s + "\n");
+			this.txtHistorique.append ( s + "\n" );
 		}
 	}
 }

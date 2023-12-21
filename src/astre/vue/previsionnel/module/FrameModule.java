@@ -49,7 +49,7 @@ public class FrameModule extends JFrame
 	{
 		this.ctrl = ctrl;
 
-		this.setSize               ( 1300, 1000              );
+		this.setSize               ( 1600, 1080              );
 		this.setTitle              ( "Prévisionnel : Module" );
 		this.setLocationRelativeTo ( null                    );
 
@@ -108,7 +108,6 @@ public class FrameModule extends JFrame
 		/*---------*/
 
 		JPanel panelOuest = new JPanel ( new GridBagLayout ( ) );
-		//panelOuest.setPreferredSize ( new Dimension ( 300, 500 ) );
 
 		GridBagConstraints gbcO = new GridBagConstraints();
 		gbcO.insets = new Insets ( 5, 10, 15, 10 );

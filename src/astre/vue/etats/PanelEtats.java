@@ -40,20 +40,20 @@ public class PanelEtats extends JPanel implements ActionListener
 	{
 		this.ctrl = ctrl;
 
-		this.setBorder(new EmptyBorder(10, 10, 10, 10));
+		this.setBorder ( new EmptyBorder  ( 10, 10, 10, 10 ) );
 
-		this.setLayout(new BorderLayout(10, 10));
+		this.setLayout ( new BorderLayout ( 10, 10         ) );
 
 		
 		//création des combobox
 		this.cbInter = new JComboBox<> ( );
-		for ( Intervenant c : this.ctrl.getTable( Intervenant.class ) )
+		for ( Intervenant c : this.ctrl.getTable ( Intervenant.class ) )
 		{
 			cbInter.addItem ( c.getNom ( ) );
 		}
 
 		this.cbModule = new JComboBox<> ( );
-		for ( ModuleIUT m : this.ctrl.getTable( ModuleIUT.class ) )
+		for ( ModuleIUT m : this.ctrl.getTable ( ModuleIUT.class ) )
 		{
 			cbModule.addItem ( m.getCode ( ) + " - " + m.getLibCourt ( ) );
 		}
@@ -78,17 +78,17 @@ public class PanelEtats extends JPanel implements ActionListener
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup ( );
 
 		hGroup.addGroup ( layout.createParallelGroup ( Alignment.CENTER, true ).addComponent ( this.cbInter  ).addComponent ( this.btnRecapInter  ).addComponent ( this.btnRecapTtInter  ) );
-		hGroup.addGap ( 50 );
+		hGroup.addGap   ( 50 );
 		hGroup.addGroup ( layout.createParallelGroup ( Alignment.CENTER, true ).addComponent ( this.cbModule ).addComponent ( this.btnRecapModule ).addComponent ( this.btnRecapTtModule ) );
 		layout.setHorizontalGroup ( hGroup );
 
 		//placer verticalement les boutons
-		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup ( );
 
 		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.cbInter         ).addComponent ( this.cbModule         ) );
-		vGroup.addGap ( 20 ); //ajouter d'un espacement
+		vGroup.addGap   ( 20 ); //ajouter d'un espacement
 		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnRecapInter   ).addComponent ( this.btnRecapModule   ) );
-		vGroup.addGap ( 20 ); //ajouter d'un espacement
+		vGroup.addGap   ( 20 ); //ajouter d'un espacement
 		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnRecapTtInter ).addComponent ( this.btnRecapTtModule ) );
 		layout.setVerticalGroup ( vGroup );
 
@@ -96,12 +96,12 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.btnRecapInter.setPreferredSize ( new Dimension ( 200, 30 ) );
 		layout.linkSize ( this.btnRecapInter, this.btnRecapModule, this.btnRecapTtInter, this.btnRecapTtModule, this.cbInter, this.cbModule );
 
-		JPanel panelNord = new JPanel(new GridLayout(2, 1));
+		JPanel panelNord = new JPanel ( new GridLayout ( 2, 1 ) );
 		
 		panelNord.add ( new JLabel ( "HTML" ) );
 		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 
-		JPanel panelSud = new JPanel(new GridLayout(3, 1));
+		JPanel panelSud = new JPanel ( new GridLayout ( 3, 1 ) );
 		panelSud.add ( new JLabel ( "CSV" ) );
 		panelSud.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 		panelSud.add ( this.btnCsv );
@@ -123,19 +123,19 @@ public class PanelEtats extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnRecapInter )
 		{
 			//Génération de l'html pour 1 intervenant
-			GenerateurFichier.GenererHTMLIntervenant( this.ctrl.getTable(Intervenant.class).get(this.cbInter.getSelectedIndex()) );
+			GenerateurFichier.GenererHTMLIntervenant ( this.ctrl.getTable ( Intervenant.class ).get ( this.cbInter.getSelectedIndex ( ) ) );
 		}
 		
 		if ( e.getSource ( ) == this.btnRecapModule )
 		{
 			//Génération de l'html pour 1 module
-			GenerateurFichier.GenererHTMLModule( this.ctrl.getTable(ModuleIUT.class).get(this.cbModule.getSelectedIndex()) );
+			GenerateurFichier.GenererHTMLModule ( this.ctrl.getTable ( ModuleIUT.class ).get ( this.cbModule.getSelectedIndex ( ) ) );
 		}
 		
 		if ( e.getSource ( ) == this.btnCsv )
 		{
 			//Génération d'un csv pour tous les intervenants
-			GenerateurFichier.recapTtInter();
+			GenerateurFichier.recapTtInter ( );
 		}
 
 		if ( e.getSource ( ) == this.btnRecapTtInter )

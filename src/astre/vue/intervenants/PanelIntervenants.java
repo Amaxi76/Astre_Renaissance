@@ -102,7 +102,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Placement des panels
 		this.panelCentre = new JPanel ( );
-		this.panelSud  = new JPanel ( new GridLayout(1, 2) );
+		this.panelSud    = new JPanel ( new GridLayout(1, 2) );
 		JPanel panelBtn  = new JPanel ( );
 
 		panelCentre.setLayout ( new BorderLayout ( ) );
@@ -126,7 +126,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup ( );
 
 		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnAjouter     ).addComponent ( this.btnSupprimer ) );
-		vGroup.addGap ( 50 ); //ajouter d'un espacement
+		vGroup.addGap   ( 50 ); //ajouter d'un espacement
 		vGroup.addGroup ( layout.createParallelGroup ( Alignment.BASELINE, true ).addComponent ( this.btnEnregistrer ).addComponent ( this.btnAnnuler   ) );
 		layout.setVerticalGroup ( vGroup );
 
