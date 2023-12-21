@@ -130,7 +130,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnEnregistrer.addActionListener ( this );
 		this.btnAnnuler    .addActionListener ( this );
 
-		this.tableau.addMouseListener( new MouseAdapter ( )
+		
+		MouseAdapter adapter = 	new MouseAdapter ( )
 		{
 			@Override
 			public void mouseClicked ( MouseEvent e )
@@ -143,7 +144,10 @@ public class PanelIntervenants extends JPanel implements ActionListener
 				else
 					changerDiagramme ( -1 );
 			}
-		});
+		};
+
+		cbEdit      .addMouseListener ( adapter );
+		this.tableau.addMouseListener ( adapter );
 	}
 
 	public void actionPerformed ( ActionEvent e )
@@ -305,17 +309,15 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	public void changerDiagramme ( int idInter )
 	{
 		PanelDiagramme diagramme;
-		if(idInter == -1)
-			diagramme = new PanelDiagramme();
+		if ( idInter == -1 )
+			diagramme = new PanelDiagramme ( );
 		else
 			diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
-		
-		System.out.println(idInter);
 
-		this.panelSud.remove(this.panelDiagramme);
+		this.panelSud.remove ( this.panelDiagramme );
 		this.panelDiagramme = diagramme;
-		this.panelSud.add(this.panelDiagramme);
+		this.panelSud.add    ( this.panelDiagramme );
 
-		revalidate();
+		revalidate ( );
 	}
 }
