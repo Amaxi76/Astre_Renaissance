@@ -129,7 +129,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure Répartie pour un module et une heure donnée
 -- Utilisée dans la génération HTML des modules
 
-DROP              FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER );
+DROP              FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -150,7 +150,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER );
+DROP              FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -170,7 +170,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER );
+DROP              FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -194,7 +194,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER );
+DROP              FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -218,7 +218,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER );
+DROP              FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -256,6 +256,45 @@ BEGIN
     RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
+
+-- Sélection de la somme des heures réparties dans un module
+-- Utilisée dans l'affichage du tableau des modules
+
+DROP              FUNCTION f_selectTotHeureRep ( s_code VARCHAR(5) ) CASCADE;
+CREATE OR REPLACE FUNCTION f_selectTotHeureRep ( s_code VARCHAR(5) ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER;
+BEGIN
+    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+    SELECT  SUM (nbHeureRepartie) INTO totalHeures
+    FROM    Horaire
+    WHERE   Code_ModuleIUT = s_code;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sélection de la somme des heures PN dans un module
+-- Utilisée dans l'affichage du tableau des modules
+
+DROP              FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) CASCADE;
+CREATE OR REPLACE FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER;
+BEGIN
+    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+    SELECT  SUM (nbHeurePN) INTO totalHeures
+    FROM    Horaire
+    WHERE   Code_ModuleIUT = s_code;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
 
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 

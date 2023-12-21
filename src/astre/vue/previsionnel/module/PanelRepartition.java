@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -57,6 +58,11 @@ public class PanelRepartition extends JPanel
 	private JLabel     lblTotalHeurePAff;
 	private JLabel     lblTotalSommeAff;
 
+	private List<JLabel>     lstLabelsHeures        = new ArrayList<>();
+	private List<JTextField> lstTextFieldsNbSem     = new ArrayList<>();
+	private List<JTextField> lstTextFieldsNbHeures  = new ArrayList<>();
+	private List<JLabel>     lstLabelsTotalHeures   = new ArrayList<>();
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -78,26 +84,41 @@ public class PanelRepartition extends JPanel
 
 		this.txtNbSemCM = new JTextField ("", 2);
 		FiltreTextFieldEntier.appliquer ( txtNbSemCM );
+		this.lstTextFieldsNbSem.add ( txtNbSemCM );
 
 		this.txtNbHCM   = new JTextField ("", 2);
 		FiltreTextFieldEntier.appliquer ( txtNbHCM );
+		this.lstTextFieldsNbHeures.add ( txtNbHCM );
 
 		this.txtNbSemTD = new JTextField ("", 2);
 		FiltreTextFieldEntier.appliquer ( txtNbSemTD );
+		this.lstTextFieldsNbSem.add ( txtNbSemTD );
 
 		this.txtNbHTD   = new JTextField ("", 2);
 		FiltreTextFieldEntier.appliquer ( txtNbHTD );
+		this.lstTextFieldsNbHeures.add ( txtNbHTD );
+		
 
 		this.txtNbSemTP = new JTextField ("", 2);
 		FiltreTextFieldEntier.appliquer ( txtNbSemTP );
+		this.lstTextFieldsNbSem.add ( txtNbSemTP );
 
 		this.txtNbHTP   = new JTextField ("", 2);
 		FiltreTextFieldEntier.appliquer ( txtNbHTP );
+		this.lstTextFieldsNbHeures.add ( txtNbHTP );
 
 		this.lblTotalCM    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalCM );
+
 		this.lblTotalTD    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalTD );
+
 		this.lblTotalTP    = new JLabel();
+		this.lstLabelsTotalHeures.add ( lblTotalTP );
+
 		this.txtHeureP     = new JTextField("", 2);
+		FiltreTextFieldEntier.appliquer ( txtHeureP );
+
 		this.lblTotalSomme = new JLabel();
 
 		this.lblTotalCMProm     = new JLabel();
@@ -116,12 +137,15 @@ public class PanelRepartition extends JPanel
 		gbc.gridy = 0;
 		gbc.gridx = 0;
 		this.add ( new JLabel ( "CM" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "TP" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
 
 
 		gbc.gridy = 1;
@@ -410,12 +434,38 @@ public class PanelRepartition extends JPanel
 		lblTotalTP.setText ( String.valueOf ( totalTP ) );
 	}
 
+	private void majTotalNouvHeure()
+	{
+		int nouvSemaine = 0;
+		int nouvHeure   = 0;
+
+		for (int i = 3; i < this.lstTextFieldsNbHeures.size(); i++)
+		{
+			JTextField textFieldSem = this.lstTextFieldsNbSem   .get(i);
+			JTextField textFieldH   = this.lstTextFieldsNbHeures.get(i);
+
+			if ( !textFieldSem.getText().isEmpty() )
+			{
+				nouvSemaine = Integer.parseInt ( textFieldSem.getText() );
+			}
+			if ( !textFieldH.getText().isEmpty() )
+			{
+				nouvHeure = Integer.parseInt ( textFieldH.getText() );
+			}
+
+			int totalNouvHeure = nouvSemaine * nouvHeure;
+			this.lstLabelsTotalHeures.get(i).setText ( String.valueOf ( totalNouvHeure ) );
+		}
+	}
+
 	private void majTotalHeure()
 	{
 		int totalCM = 0;
 		int totalTD = 0;
 		int totalTP = 0;
 		int heureP  = 0;
+
+		int nouvHeure = 0;
 
 		if (!lblTotalCM.getText().isEmpty() )
 		{
@@ -437,7 +487,17 @@ public class PanelRepartition extends JPanel
 			heureP = Integer.parseInt ( txtHeureP.getText() );
 		}
 
-		int somme = totalCM + totalTD + totalTP + heureP;
+		for ( int i = 5; i < this.lstLabelsTotalHeures.size(); i++)
+		{
+			JLabel labelTotalHeure = this.lstLabelsTotalHeures.get(i);
+
+			if ( !labelTotalHeure.getText().isEmpty() )
+			{
+				nouvHeure = Integer.parseInt ( labelTotalHeure.getText() );
+			}
+		}
+
+		int somme = totalCM + totalTD + totalTP + heureP + nouvHeure;
 		lblTotalSomme.setText ( String.valueOf ( somme ) );
 
 		majAffectation();
@@ -553,4 +613,91 @@ public class PanelRepartition extends JPanel
 	public int getNbHTD()   { return Integer.parseInt ( this.txtNbHTD  .getText() ); }
 	public int getNbSemTP() { return Integer.parseInt ( this.txtNbSemTP.getText() ); }
 	public int getNbHTP()   { return Integer.parseInt ( this.txtNbHTP  .getText() ); }
+
+	public void ajouterHeure ( String nomHeure )
+	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				return;
+			}
+		}
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+	
+		JLabel     labelNomHeure      = new JLabel ( nomHeure );
+
+		JTextField textFieldNbSem  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( textFieldNbSem);
+
+		JTextField textFieldNbHeure  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( textFieldNbHeure );
+
+		JLabel     labelTotalHeure = new JLabel ( );
+		labelTotalHeure.setBackground ( Color.LIGHT_GRAY );
+		labelTotalHeure.setPreferredSize ( new Dimension ( 40, 15 ) );
+		labelTotalHeure.setOpaque( true );
+	
+		this.lstLabelsHeures       .add ( labelNomHeure     );
+		this.lstTextFieldsNbSem	   .add ( textFieldNbSem    );
+		this.lstTextFieldsNbHeures .add ( textFieldNbHeure  );
+		this.lstLabelsTotalHeures  .add ( labelTotalHeure   );
+
+	
+		gbc.gridy = this.lstLabelsHeures.size();
+		gbc.gridx = 1;
+		this.add ( labelNomHeure, gbc );
+	
+		gbc.gridx = 2;
+		this.add ( textFieldNbSem, gbc );
+
+		gbc.gridx = 3;
+		this.add ( textFieldNbHeure, gbc );
+
+		gbc.gridx = 4;
+		this.add ( labelTotalHeure, gbc );
+
+		textFieldNbSem.addKeyListener ( new KeyListener()
+		{
+			public void keyTyped    ( KeyEvent e ) { majTotalNouvHeure();
+													 majTotalHeure(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
+		});
+
+		textFieldNbHeure.addKeyListener ( new KeyListener()
+		{
+			public void keyTyped    ( KeyEvent e ) { majTotalNouvHeure();
+													 majTotalHeure(); }
+			public void keyPressed  ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) {}
+		});
+
+		this.revalidate();
+	}
+
+	public void supprimerHeure ( String nomHeure )
+	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				//Supprimer du Panel
+				this.remove ( lstLabelsHeures       .get(i) );
+				this.remove ( lstTextFieldsNbSem    .get(i) );
+				this.remove ( lstTextFieldsNbHeures .get(i) );
+				this.remove ( lstLabelsTotalHeures  .get(i) );
+
+				//Supprimer de la liste
+				lstLabelsHeures       .remove(i);
+				lstTextFieldsNbSem    .remove(i);
+				lstTextFieldsNbHeures .remove(i);
+				lstLabelsTotalHeures  .remove(i);
+
+				this.revalidate();
+			}
+		}
+	}
 }

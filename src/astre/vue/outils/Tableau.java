@@ -55,7 +55,9 @@ public class Tableau extends JTable
 		}
 
 		for ( int i = 0; i < this.getColumnCount ( ); i++ )
+		{
 			this.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableau ( ) );
+		}
 
 		if ( !contientEntete ) this.setTableHeader ( null );
 

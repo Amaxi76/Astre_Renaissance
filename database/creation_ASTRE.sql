@@ -172,6 +172,7 @@ EXECUTE FUNCTION f_update_historique_Horaire();
 
 /* Création de vue */
 
+-- Vue intervenant
 CREATE VIEW v_Intervenant AS
 SELECT
       Id_Intervenant,
@@ -195,3 +196,9 @@ FROM
       JOIN Contrat c ON i.Id_Contrat = c.Id_Contrat
 ORDER BY
       Id_intervenant ASC;
+
+-- Vue des modules
+CREATE VIEW v_Module AS
+SELECT Code_ModuleIUT, libLong, f_selectTotHeureRep(Code_ModuleIUT) AS totHeureRep, f_selectTotHeurePN(Code_ModuleIUT) AS totHeurePN, valide
+FROM   ModuleIUT;
+

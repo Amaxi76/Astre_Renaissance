@@ -70,7 +70,6 @@ public class Astre
 
 	public int sommeHeure ( String code, char typeHeure )
 	{
-		
 		int somme = 0;
 		
 		for ( Heure h : this.bd.getHeures ( code, typeHeure ).keySet (  ) )
