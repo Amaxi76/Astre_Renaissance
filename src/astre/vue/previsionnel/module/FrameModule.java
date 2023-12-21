@@ -67,8 +67,8 @@ public class FrameModule extends JFrame
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
 		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
-		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl       );
-		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl       );
+		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl, this );
+		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl, this );
 		this.panelModuleHeure    = new PanelModuleHeure    ( this.ctrl, this );
 		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
 		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl, this );
