@@ -127,8 +127,8 @@ public class PanelEtats extends JPanel implements ActionListener
 		panelNord.add ( this.btnCsv );
 
 		JPanel panelSud = new JPanel(new BorderLayout(10,10));
-		panelSud.add(new JLabel("Choix du style :"), BorderLayout.NORTH);
-		panelSud.add(this.cbStyle, BorderLayout.CENTER);
+		panelSud.add ( new JLabel ( "Choix du style :" ), BorderLayout.NORTH  );
+		panelSud.add ( this.cbStyle                          , BorderLayout.CENTER );
 
 		this.add ( panelNord  , BorderLayout.NORTH  );
 		this.add ( panelCentre, BorderLayout.CENTER );
