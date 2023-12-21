@@ -368,7 +368,7 @@ public class GenerateurFichier
 
 			for ( Intervient inter : bd.getTable ( Intervient.class ) )
 			{
-				System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom());
+				//System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom()); //debug
 
 				if (inter.getModule ( ).getCode ( ).equals ( module.getCode( ) ) && !ensDejaTraite.contains(inter.getIntervenant ( ).getId ( ) ) )
 				{
