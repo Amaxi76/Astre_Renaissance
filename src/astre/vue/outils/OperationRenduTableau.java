@@ -79,8 +79,6 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				// Rétablir l'alignement par défaut pour le texte
 				setHorizontalAlignment(LEFT);
 			}
-
-			
 		}
 
 		return this;
