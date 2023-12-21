@@ -101,7 +101,7 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 		{
 			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
 
-			if( this.frm.getPanelPNLocal().isVisible() ) this.frm.getPanelPNLocal().ajouterHeure ( nomHeure );
+			if( this.frm.getPanelPNLocal()   .isVisible() ) this.frm.getPanelPNLocal().ajouterHeure ( nomHeure );
 			if( this.frm.getPanelPNLocalBis().isVisible() ) this.frm.getPanelPNLocalBis().ajouterHeure ( nomHeure );
 			if( this.frm.getPanelPNLocalPPP().isVisible() ) this.frm.getPanelPNLocalPPP().ajouterHeure ( nomHeure );
 
