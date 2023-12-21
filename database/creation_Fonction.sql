@@ -31,6 +31,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Sélection de tous les modules (vue particulière) d'un semestre
+DROP              FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER );
+CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( id_semestre INTEGER, code_moduleiut VARCHAR, liblong VARCHAR, recap TEXT, valide boolean ) AS
+/*CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( result_row RECORD ) AS*/
+
+$$
+BEGIN
+	RETURN QUERY
+        SELECT *
+        FROM   v_Module v
+        WHERE  v.Id_Semestre = $1;
+
+END;
+$$ LANGUAGE plpgsql;
+
 -- Sélectionner un semestre en particulier
 DROP              FUNCTION f_selectUnSemestre ( numSemestre INTEGER );
 CREATE OR REPLACE FUNCTION f_selectUnSemestre ( numSemestre INTEGER ) RETURNS TABLE ( result_row RECORD ) AS

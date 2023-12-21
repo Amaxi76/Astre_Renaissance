@@ -15,7 +15,8 @@ import javax.swing.*;
  * @date : 06/12/2023
  */
 
-public class PanelEnsSemestre extends JTabbedPane {
+public class PanelEnsSemestre extends JTabbedPane
+{
 	private Controleur ctrl;
 
 	private ArrayList<PanelSemestre> lstSemestre;

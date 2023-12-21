@@ -550,7 +550,7 @@ public class BD
 	}
 
 	// Utilisée dans panelRepartition.java
-	public int getNBHeureEQTD (String code, String nomHeure)
+	public int getNBHeureEQTD ( String code, String nomHeure )
 	{
 		int somme = 0;
 
@@ -572,7 +572,7 @@ public class BD
 	}
 
 	// Utilisée dans générateur.java
-	public int getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant)
+	public int getNBHeureParSemestre ( int Id_Semestre, int Id_Intervenant )
 	{
 		int somme = 0;
 
@@ -594,7 +594,7 @@ public class BD
 	}
 
 	// Utilisée dans générateur.java
-	public int getNBHeurePNParModule (String code, int Id_Heure)
+	public int getNBHeurePNParModule ( String code, int Id_Heure )
 	{
 		int somme = 0;
 
@@ -615,9 +615,8 @@ public class BD
 		return somme;
 	}
 
-
 	// Utilisée dans générateur.java
-	public int getNBHeureRepParModule (String code, int Id_Heure)
+	public int getNBHeureRepParModule ( String code, int Id_Heure )
 	{
 		int somme = 0;
 
@@ -774,6 +773,7 @@ public class BD
 
 	// Utilisé dans src\astre\vue\previsionnel\module\PanelAffectation.java
 	//TODO: regarder pour l'enlever
+	//TODO: Utiliser la fonction getTableauParticulier 
 	public Object[][] getIntervientsTableau ( String module )
 	{
 		int nbIntervients = 0;
@@ -841,8 +841,6 @@ public class BD
 				{
 					try
 					{
-						
-
 						Object valeur = rs.getObject ( i );
 
 						tabObjet[cpt][i] = switch ( rsmd.getColumnType ( i ))
@@ -850,12 +848,12 @@ public class BD
 							case Types.INTEGER -> ( Integer ) ( valeur );
 							case Types.VARCHAR -> ( String  ) ( valeur );
 							case Types.DOUBLE  -> ( Double  ) ( valeur );
-							default-> valeur.toString();
+							default-> valeur.toString ( );
 						};
 					}
 					catch ( Exception e )
 					{
-						System.out.println( "Ptit problème de converstion : getTableauParticulier()" );
+						System.out.println ( "Ptit problème de converstion : getTableauParticulier()" );
 					}
 
 
@@ -1188,6 +1186,13 @@ public class BD
 			System.out.println ( ex );
         }
 	}
+
+	//Tentative de généralisation de la méthode delete
+	public void delete ( String table, Object[] parametres )
+	{
+		final String  REQ = "DELETE FROM " + table + " WHERE ";
+	}
+
 	/*---------------------------------------*/
 	/*                UPDATE                 */
 	/*---------------------------------------*/
