@@ -278,6 +278,25 @@ public class GenerateurFichier
 				}
 			}
 
+			table += "<tr class = 'total'>" +
+						"<td class='num'>Total</td>" +
+						"<td class='mod'>&nbsp;</td>" ;
+			
+			nbHeure = 0;
+			somme = 0;
+			for ( Heure h : bd.getTable ( Heure.class ) )
+			{
+				nbHeure = bd.getTotalHeureParInter ( inter.getId ( ), h.getId ( ) );
+
+				table += "<td class = 'heure'>" + nbHeure + "</td>";
+
+				somme += nbHeure;
+			}			
+			
+						
+			table += "<td class='heure'>" + somme + " heures</td>"    +
+					 "</tr>" ;
+
 			ecrivain.write ( table );
 
 			//Écriture fermant les balises html
