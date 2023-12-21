@@ -181,6 +181,11 @@ public class FrameModule extends JFrame
 	 */
 	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }		
 
+	/** Retourne le panelModuleHeure de FrameModule
+	 * @return panelModuleHeure
+	 */
+	public PanelModuleHeure    getPanelModuleHeure    ( ) { return this.panelModuleHeure;    }
+
 	/** Permet de rendre visible les panels en fonction du type de module.
 	 * Si le module est un SAE ou un Stage, on rend visible les panels Bis et on rend invisible le reste.
 	 * Si le module est un PPP, on rend visible les panels PPP et on rend invisible le reste.
