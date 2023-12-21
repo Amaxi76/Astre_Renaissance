@@ -6,13 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.Timer;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
@@ -63,14 +57,14 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 
 		//Met un délai de 3 secondes sur le message d'enregistrement
-		this.timerMessageEnregistrement = new Timer(3000, new ActionListener()
+		this.timerMessageEnregistrement = new Timer ( 3000, new ActionListener ( )
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed ( ActionEvent e )
 			{
-				lblMessageEnregistrement.setText("");
-				timerMessageEnregistrement.stop();
+				lblMessageEnregistrement.setText ( "" );
+				timerMessageEnregistrement.stop ( );
 			}
-		});
+		} );
 
 		this.lblMessageEnregistrement = new JLabel ( "" );
 
@@ -90,8 +84,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		Object[] typeDefaut = { "", "", "", false };
-		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 0, this.ctrl.getTableauModule ( numSemestre ) );
+		Object[] typeDefaut = { "",0,"", "", "", false };
+		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
@@ -151,11 +145,11 @@ public class PanelSemestre extends JPanel implements ActionListener
 		}
 	}
 
-	public String getModuleSelection()
+	public String getModuleSelection ( )
 	{
-		if( this.tableauEnsembleModule.getSelectedRow() != -1)
+		if ( this.tableauEnsembleModule.getSelectedRow ( ) != -1)
 		{
-			return this.tableauEnsembleModule.getValueAt(this.tableauEnsembleModule.getSelectedRow(), 0).toString();
+			return this.tableauEnsembleModule.getValueAt ( this.tableauEnsembleModule.getSelectedRow ( ), 0 ).toString ( );
 		}
 		return "pas de selection";
 	}
