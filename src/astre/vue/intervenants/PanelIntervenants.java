@@ -141,7 +141,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 				if ( idInter > 0  )
 					changerDiagramme ( idInter );
 				else
-					PanelIntervenants.this.panelDiagramme = new PanelDiagramme ( );
+					changerDiagramme ( -1 );
 			}
 		});
 	}
@@ -304,15 +304,18 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 	public void changerDiagramme ( int idInter )
 	{
-		PanelDiagramme diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
-		System.out.println("bbb");
+		PanelDiagramme diagramme;
+		if(idInter == -1)
+			diagramme = new PanelDiagramme();
+		else
+			diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
+		
+		System.out.println(idInter);
 
 		this.panelSud.remove(this.panelDiagramme);
 		this.panelDiagramme = diagramme;
 		this.panelSud.add(this.panelDiagramme);
 
-		this.panelSud.repaint();
-		this.repaint ( );
-		//TODO voir repaint graphique
+		revalidate();
 	}
 }
