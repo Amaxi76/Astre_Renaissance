@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -39,6 +40,9 @@ public class PanelRepartitionBis extends JPanel
 	private JLabel     lblTotalHTutAff;
 	private JLabel     lblTotalSommeAff;
 
+	private List<JLabel>     lstLabelsHeures      = new ArrayList<>();
+	private List<JTextField> lstTextFieldsHeures  = new ArrayList<>();
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -60,9 +64,11 @@ public class PanelRepartitionBis extends JPanel
 
 		this.txtHSae  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtHSae );
+		this.lstTextFieldsHeures.add ( txtHSae );
 
 		this.txtHTut  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtHTut );
+		this.lstTextFieldsHeures.add ( txtHTut );
 		
 		this.lblSomme = new JLabel();
 
@@ -73,9 +79,11 @@ public class PanelRepartitionBis extends JPanel
 		gbc.gridy = 0;
 		gbc.gridx = 1;
 		this.add ( new JLabel ( "h Sae" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "SAE" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "h Tut" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "Tut" ) );
 
 		gbc.gridx = 3;
 		this.add ( new JLabel ( "Σ" ), gbc      );
@@ -146,6 +154,8 @@ public class PanelRepartitionBis extends JPanel
 			int hSae    = 0;
 			int hTut    = 0;
 
+			int nouvHeureValeur = 0;
+
 			if (!txtHSae.getText().isEmpty() )
 			{
 				hSae = getSaeRepartition();
@@ -157,6 +167,17 @@ public class PanelRepartitionBis extends JPanel
 			}
 
 			int somme = hSae + hTut;
+
+			for (int i = 2; i < lstTextFieldsHeures.size(); i++)
+			{
+				JTextField textField = lstTextFieldsHeures.get(i);
+				if ( !textField.getText().isEmpty() )
+				{
+					nouvHeureValeur = Integer.parseInt(textField.getText());
+					somme += nouvHeureValeur;
+				}
+			}
+
 			lblSomme.setText ( String.valueOf ( somme ) );
 		}
 		catch ( NumberFormatException ex )
@@ -207,4 +228,56 @@ public class PanelRepartitionBis extends JPanel
 	public int getSaeRepartition() { return Integer.parseInt ( this.txtHSae.getText() ); }
 	public int getTutRepartition() { return Integer.parseInt ( this.txtHTut.getText() ); }
 
+	public void ajouterHeure ( String nomHeure )
+	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				return;
+			}
+		}
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+	
+		JLabel     labelNomHeure      = new JLabel ( nomHeure );
+
+		JTextField textFieldHeure  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( textFieldHeure );
+	
+		this.lstLabelsHeures     .add ( labelNomHeure   );
+		this.lstTextFieldsHeures .add ( textFieldHeure  );
+
+	
+		gbc.gridy = this.lstLabelsHeures.size();
+		gbc.gridx = 1;
+		this.add ( labelNomHeure, gbc );
+	
+		gbc.gridx = 2;
+		this.add ( textFieldHeure, gbc );
+
+		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
+
+		this.revalidate();
+	}
+
+	public void supprimerHeure ( String nomHeure )
+	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				//Supprimer du Panel
+				this.remove ( lstLabelsHeures     .get(i) );
+				this.remove ( lstTextFieldsHeures .get(i) );
+
+				//Supprimer de la liste
+				lstLabelsHeures     .remove(i);
+				lstTextFieldsHeures .remove(i);
+
+				this.revalidate();
+			}
+		}
+	}
 }
