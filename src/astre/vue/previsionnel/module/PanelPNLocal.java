@@ -383,7 +383,7 @@ public class PanelPNLocal extends JPanel
 		{
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
-				this.frm.getPanelModuleHeure().messageErreurAjouter();
+				this.frm.messageErreurAjouter();
 				return;
 			}
 		}
@@ -427,7 +427,7 @@ public class PanelPNLocal extends JPanel
 		{
 			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) )
 			{
-				this.frm.getPanelModuleHeure().messageErreurSupprimer();
+				this.frm.messageErreurSupprimer();
 			}
 			else if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
