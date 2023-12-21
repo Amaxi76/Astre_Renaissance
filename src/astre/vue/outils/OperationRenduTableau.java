@@ -4,6 +4,8 @@ import astre.modele.outils.ModeleTableau;
 
 import java.awt.Color;
 import java.awt.Component;
+
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -28,6 +30,9 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
 		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
+
+		
+		
 		if ( premiereCelulleLigne instanceof Character )
 		{
 			char operation = (char) premiereCelulleLigne;
@@ -74,6 +79,8 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				// Rétablir l'alignement par défaut pour le texte
 				setHorizontalAlignment(LEFT);
 			}
+
+			
 		}
 
 		return this;
