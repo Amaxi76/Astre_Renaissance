@@ -29,7 +29,6 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
-		// Mettre les cases à cocher
 		if ( valeur instanceof Boolean )
 		{
 			JCheckBox checkBox = new JCheckBox ( );

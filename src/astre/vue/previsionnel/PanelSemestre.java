@@ -84,7 +84,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		Object[] typeDefaut = { "",0,"", "", "", false };
+		Object[] typeDefaut = { "", 0,"", "", "", false };
 		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
@@ -140,8 +140,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 			this.ctrl.update ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
 
 			// Affichage du message d'enregistrement pendant 3 secondes
-			this.lblMessageEnregistrement.setText("Enregistré !");
-			timerMessageEnregistrement.start();
+			this.lblMessageEnregistrement.setText ( "Enregistré !" );
+			timerMessageEnregistrement.start ( );
 		}
 	}
 
