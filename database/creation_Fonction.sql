@@ -31,6 +31,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Sélection de tous les modules (vue particulière) d'un semestre
+DROP              FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER );
+CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( id_semestre INTEGER, code_moduleiut VARCHAR, liblong VARCHAR, recap TEXT, valide boolean ) AS
+/*CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( result_row RECORD ) AS*/
+
+$$
+BEGIN
+	RETURN QUERY
+        SELECT *
+        FROM   v_Module v
+        WHERE  v.Id_Semestre = $1;
+
+END;
+$$ LANGUAGE plpgsql;
+
 -- Sélectionner un semestre en particulier
 DROP              FUNCTION f_selectUnSemestre ( numSemestre INTEGER );
 CREATE OR REPLACE FUNCTION f_selectUnSemestre ( numSemestre INTEGER ) RETURNS TABLE ( result_row RECORD ) AS
@@ -289,6 +304,26 @@ BEGIN
     SELECT  SUM (nbHeurePN) INTO totalHeures
     FROM    Horaire
     WHERE   Code_ModuleIUT = s_code;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sélectionner le total d'heure d'un enseignant pour un type d'heure
+-- Utilisé dans la génération de fichier
+
+DROP              FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) CASCADE;
+CREATE OR REPLACE FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER;
+BEGIN
+    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+    SELECT  SUM (nbSemaine * nbGroupe * nbHeure) INTO totalHeures
+    FROM    Intervient
+    WHERE   Id_Intervenant = s_Id_Intervenant AND 
+            Id_Heure = s_Id_Heure ;
 
     -- Retourner le résultat et si la requête est nulle, on renvoie 0
     RETURN COALESCE(totalHeures, 0);

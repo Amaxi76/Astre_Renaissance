@@ -1,6 +1,5 @@
 package astre.vue.outils;
 
-import astre.vue.outils.MenuBarAstre;
 import astre.vue.FrameAccueil;
 import astre.Controleur;
 import javax.swing.JFrame;

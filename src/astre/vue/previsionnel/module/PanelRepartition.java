@@ -118,6 +118,8 @@ public class PanelRepartition extends JPanel
 
 		this.txtHeureP     = new JTextField("", 2);
 		FiltreTextFieldEntier.appliquer ( txtHeureP );
+		this.lstTextFieldsNbSem   .add ( txtHeureP );
+		this.lstTextFieldsNbHeures.add ( txtHeureP );
 
 		this.lblTotalSomme = new JLabel();
 
@@ -178,6 +180,8 @@ public class PanelRepartition extends JPanel
 
 		gbc.gridx = 9;
 		this.add ( new JLabel ( "heures ponctuelles" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "PONCT" ) );
+		this.lstLabelsTotalHeures.add ( new JLabel ( String.valueOf( txtHeureP ) ) );
 
 		gbc.gridx = 10;
 		this.add ( new JLabel ( "Σ" ), gbc );
@@ -439,7 +443,7 @@ public class PanelRepartition extends JPanel
 		int nouvSemaine = 0;
 		int nouvHeure   = 0;
 
-		for (int i = 3; i < this.lstTextFieldsNbHeures.size(); i++)
+		for (int i = 4; i < this.lstTextFieldsNbHeures.size(); i++)
 		{
 			JTextField textFieldSem = this.lstTextFieldsNbSem   .get(i);
 			JTextField textFieldH   = this.lstTextFieldsNbHeures.get(i);
@@ -487,7 +491,7 @@ public class PanelRepartition extends JPanel
 			heureP = Integer.parseInt ( txtHeureP.getText() );
 		}
 
-		for ( int i = 5; i < this.lstLabelsTotalHeures.size(); i++)
+		for ( int i = 4; i < this.lstLabelsTotalHeures.size(); i++)
 		{
 			JLabel labelTotalHeure = this.lstLabelsTotalHeures.get(i);
 

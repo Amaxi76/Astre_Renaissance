@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -45,6 +46,9 @@ public class PanelRepartitionPPP extends JPanel
 	private JLabel lblTotalHP;
 	private JLabel lblTotalSomme;
 
+	private List<JLabel>     lstLabelsHeures      = new ArrayList<>();
+	private List<JTextField> lstTextFieldsHeures  = new ArrayList<>();
+
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
@@ -66,43 +70,53 @@ public class PanelRepartitionPPP extends JPanel
 
 		this.txtCM	  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtCM );
+		this.lstTextFieldsHeures.add ( txtCM );
 
 		this.txtTD	  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTD );
+		this.lstTextFieldsHeures.add ( txtTD );
 
 		this.txtTP	  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtTP );
+		this.lstTextFieldsHeures.add ( txtTP );
 
 		this.txtHTut  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtHTut );
+		this.lstTextFieldsHeures.add ( txtHTut );
 
 		this.txtHP    = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtHP );
+		this.lstTextFieldsHeures.add ( txtHP );
 		
 		this.lblSomme = new JLabel();
 
-		this.lblTotalCM   = new JLabel();
-		this.lblTotalTD   = new JLabel();
-		this.lblTotalTP   = new JLabel();
-		this.lblTotalHTut = new JLabel();
-		this.lblTotalHP   = new JLabel();
+		this.lblTotalCM    = new JLabel();
+		this.lblTotalTD    = new JLabel();
+		this.lblTotalTP    = new JLabel();
+		this.lblTotalHTut  = new JLabel();
+		this.lblTotalHP    = new JLabel();
 		this.lblTotalSomme = new JLabel();
 
 		gbc.gridy = 0;
 		gbc.gridx = 1;
 		this.add ( new JLabel ( "CM" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
 		
 		gbc.gridx = 3;
 		this.add ( new JLabel ( "TP" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "h Tut" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "Tut" ) );
 
 		gbc.gridx = 5;
 		this.add ( new JLabel ( "h Ponct" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "PONCT" ) );
 
 		gbc.gridx = 6;
 		this.add ( new JLabel ( "Σ" ), gbc  );
@@ -209,6 +223,8 @@ public class PanelRepartitionPPP extends JPanel
 			int hTut    = 0;
 			int hPonct  = 0;
 
+			int nouvHeureValeur = 0;
+
 			if (!txtCM.getText().isEmpty() )
 			{
 				hCM = getCMRepartition();
@@ -235,6 +251,16 @@ public class PanelRepartitionPPP extends JPanel
 			}
 
 			int somme = hCM + hTD + hTP + hTut + hPonct;
+
+			for (int i = 5; i < lstTextFieldsHeures.size(); i++)
+			{
+				JTextField textField = lstTextFieldsHeures.get(i);
+				if ( !textField.getText().isEmpty() )
+				{
+					nouvHeureValeur = Integer.parseInt(textField.getText());
+					somme += nouvHeureValeur;
+				}
+			}
 
 			this.lblSomme.setText ( Integer.toString ( somme ) );
 		}
@@ -299,4 +325,57 @@ public class PanelRepartitionPPP extends JPanel
 	public int getTPRepartition   ( ) { return Integer.parseInt ( this.txtTP  .getText() ); }
 	public int getHTutRepartition ( ) { return Integer.parseInt ( this.txtHTut.getText() ); }
 	public int getHPRepartition   ( ) { return Integer.parseInt ( this.txtHP  .getText() ); }
+
+	public void ajouterHeure ( String nomHeure )
+	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				return;
+			}
+		}
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+	
+		JLabel     labelNomHeure      = new JLabel ( nomHeure );
+
+		JTextField textFieldHeure  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( textFieldHeure );
+	
+		this.lstLabelsHeures     .add ( labelNomHeure   );
+		this.lstTextFieldsHeures .add ( textFieldHeure  );
+
+	
+		gbc.gridy = this.lstLabelsHeures.size();
+		gbc.gridx = 1;
+		this.add ( labelNomHeure, gbc );
+	
+		gbc.gridx = 2;
+		this.add ( textFieldHeure, gbc );
+
+		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
+
+		this.revalidate();
+	}
+
+	public void supprimerHeure ( String nomHeure )
+	{
+		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		{
+			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			{
+				//Supprimer du Panel
+				this.remove ( lstLabelsHeures     .get(i) );
+				this.remove ( lstTextFieldsHeures .get(i) );
+
+				//Supprimer de la liste
+				lstLabelsHeures     .remove(i);
+				lstTextFieldsHeures .remove(i);
+
+				this.revalidate();
+			}
+		}
+	}
 }
