@@ -811,10 +811,6 @@ public class BD
 			int nbAttributs = rsmd.getColumnCount ( );
 			tabObjet = new Object[this.getNbTuple ( nomRecherche )][nbAttributs + 1];
 
-			System.out.println("est null : " + rs.wasNull());
-			System.out.println("nb attributs : " + nbAttributs);
-			System.out.println("nb lignes : " + this.getNbTuple ( nomRecherche ));
-
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
@@ -823,8 +819,7 @@ public class BD
 				{
 					try
 					{
-						//System.out.println( rsmd.getColumnTypeName ( i ) );
-						//tabObjet[cpt][i] = Class.forName ( rsmd.getColumnTypeName ( i ) ).cast ( rs.getArray ( i ) );
+						
 
 						Object valeur = rs.getObject ( i );
 
@@ -845,8 +840,6 @@ public class BD
 				}
 				cpt++;
 			}
-
-			System.out.println(tabObjet[0][8]);
 		}
 		catch ( SQLException e )
 		{

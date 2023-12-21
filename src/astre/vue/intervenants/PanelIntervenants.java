@@ -28,7 +28,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	// paramètres du tableau
 	private static final String[]  NOMS_COL   = { "action", "Id" ,"Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1" , "S3" , "S5" , "sTot", "S2" , "S4" , "S6" , "sTot", "Total" };
 	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , 0.0      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0       };
-	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , true     , false, false, false, false , false, false, false, false , false   };
+	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , false    , false, false, false, false , false, false, false, false , false   };
 	private static final int       DECALAGE   = 2;
 	
 	// requetes
@@ -102,7 +102,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Placement des panels
 		this.panelCentre = new JPanel ( );
-		this.panelSud    = new JPanel ( new GridLayout(1, 2) );
+		this.panelSud    = new JPanel ( new GridLayout ( 1, 2 ) );
 		JPanel panelBtn  = new JPanel ( );
 
 		panelCentre.setLayout ( new BorderLayout ( ) );
@@ -112,7 +112,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		GroupLayout layout = new GroupLayout ( panelBtn );
 		panelBtn.setLayout ( layout );
 
-		layout.setAutoCreateGaps ( true );
+		layout.setAutoCreateGaps          ( true );
 		layout.setAutoCreateContainerGaps ( true );
 
 		//placer horizontalement les boutons
@@ -155,7 +155,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnEnregistrer.addActionListener ( this );
 		this.btnAnnuler    .addActionListener ( this );
 
-		
+		//ajout du mouseListener
 		MouseAdapter adapter = 	new MouseAdapter ( )
 		{
 			@Override
@@ -206,7 +206,6 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			//( ( JFrame ) ( this.getParent ( ).getParent ( ).getParent ( ).getParent ( ) ) ).dispose ( );
 			this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
 		}
 	}
