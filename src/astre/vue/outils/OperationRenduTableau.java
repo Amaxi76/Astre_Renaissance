@@ -27,6 +27,11 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
 
+		// par défaut il y a une alternance de couleurs
+		if ( lig%2 == 0 ) { cellule.setBackground ( COULEUR_FOND_1 ); }
+		else              { cellule.setBackground ( COULEUR_FOND_2 ); }
+		cellule.setForeground ( tbl.getForeground ( ) );
+
 		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
@@ -54,26 +59,26 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					break;
 
 				default :
-					/*// Par défaut, utiliser les couleurs par défaut de la table
-					cellule.setBackground ( table.getBackground ( ) );*/
-
-					// par défaut il y a une alternance de couleurs
-					if ( lig%2 == 0 ) { cellule.setBackground ( COULEUR_FOND_1 ); }
-					else              { cellule.setBackground ( COULEUR_FOND_2 ); }
-					cellule.setForeground ( tbl.getForeground ( ) );
 					break;
 			}
-
-			// Aligner le texte à droite si la valeur est numérique
-			if (valeur instanceof Number)
-			{
-				setHorizontalAlignment(RIGHT);
-			}
-			else
-			{
-				// Rétablir l'alignement par défaut pour le texte
-				setHorizontalAlignment(LEFT);
-			}
+		}
+			
+		// Aligner le texte à droite si la valeur est numérique
+		if ( valeur instanceof Number )
+		{
+			setHorizontalAlignment ( RIGHT );
+		}
+		else
+		{
+			// Rétablir l'alignement par défaut pour le texte
+			setHorizontalAlignment ( LEFT );
+		}
+		
+		// Mettre les cases à cocher
+		if ( valeur instanceof Boolean )
+		{
+			setHorizontalAlignment(SwingConstants.CENTER);
+			setSelected((Boolean) value);
 		}
 
 		return this;

@@ -41,7 +41,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	private JLabel     lblMessageEnregistrement;
 	
-	private Tableau tableauEnsembleModule;
+	private Tableau    tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
 	{
@@ -91,9 +91,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
 		Object[] typeDefaut = new Object[]{"", "", "", false};
+		System.out.println ( "gen tab panelSemestre" );
 		this.tableauEnsembleModule = Tableau.initialiserTableau( null, typeDefaut, false, 0, this.ctrl.getTableauModule ( numSemestre ) );
-		this.tableauEnsembleModule.setShowGrid ( false );
-		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
+		//this.tableauEnsembleModule.setShowGrid ( false );
+		//this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
 		// Ajout du titre et rend la liste défilable
 		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );
