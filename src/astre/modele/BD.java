@@ -843,20 +843,21 @@ public class BD
 					{
 						Object valeur = rs.getObject ( i );
 
-						tabObjet[cpt][i] = switch ( rsmd.getColumnType ( i ))
+						tabObjet[cpt][i] = valeur;
+						// CA MARCHE SANS FAIRE CA
+						/*switch ( rsmd.getColumnType ( i ) )
 						{
 							case Types.INTEGER -> ( Integer ) ( valeur );
 							case Types.VARCHAR -> ( String  ) ( valeur );
 							case Types.DOUBLE  -> ( Double  ) ( valeur );
+							case Types.BOOLEAN -> ( Boolean ) ( valeur );
 							default-> valeur.toString ( );
-						};
+						};*/
 					}
 					catch ( Exception e )
 					{
-						System.out.println ( "Ptit problème de converstion : getTableauParticulier()" );
+						System.out.println ( "Ptit problème de conversion : getTableauParticulier ( +)" );
 					}
-
-
 				}
 				cpt++;
 			}
