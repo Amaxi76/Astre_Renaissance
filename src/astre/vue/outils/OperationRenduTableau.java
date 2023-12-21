@@ -88,33 +88,30 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			}
 		}
 
-		//zone test
-
-		//recupe entete de modeleTablo
-		//verif si entete ou taille
-
-
+		//Récupération des données
 		ModeleTableau modele = ( ModeleTableau ) ( tbl.getModel ( ) );
-		Object[][] donnees = modele.getDonnees();
+		Object[][] donnees   = modele.getDonnees ( );
 
+		//changement des couleurs de bordure pour alertes
 		if ( donnees.length != 0 )
 		{
-			JComponent jcellule = (JComponent) cellule;
-			jcellule.setBorder(null);
+			JComponent jcellule = ( JComponent ) cellule;
+			jcellule.setBorder ( null );
 
-			if( donnees[0].length == 17 && col == 14)//nbcolonne de tablo intervenant
+			//Pour le tableau d'intervenant
+			if ( donnees[0].length == 17 && col == 14 )//nbcolonne de tablo intervenant et seulement la derniere colonne
 			{
-				int hmin = Integer.parseInt(donnees[lig][5].toString());
-				int hmax = Integer.parseInt(donnees[lig][6].toString());
-				int total = Integer.parseInt(donnees[lig][16].toString());
+				int hmin  = Integer.parseInt ( donnees[lig][ 5].toString ( ) );
+				int hmax  = Integer.parseInt ( donnees[lig][ 6].toString ( ) );
+				int total = Integer.parseInt ( donnees[lig][16].toString ( ) );
 
-				if( hmin > total || hmax < total )
+				if ( hmin > total || hmax < total )
 				{
-					jcellule.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.RED));
+					jcellule.setBorder ( BorderFactory.createMatteBorder ( 1,1,1,1,Color.RED ) );
 				}
 			}
 
-			if( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
+			if ( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
 			{
 
 			}
