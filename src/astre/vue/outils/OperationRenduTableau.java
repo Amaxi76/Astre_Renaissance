@@ -4,6 +4,9 @@ import astre.modele.outils.ModeleTableau;
 
 import java.awt.Color;
 import java.awt.Component;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -30,7 +33,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
-			char operation = (char) premiereCelulleLigne;
+			char operation = ( char ) premiereCelulleLigne;
 
 			/*
 			 * Ajouter des actions à réaliser sur la ligne en fonction de l'opération donnée
@@ -65,16 +68,20 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			}
 
 			// Aligner le texte à droite si la valeur est numérique
-			if (valeur instanceof Number)
+			if ( valeur instanceof Number )
 			{
-				setHorizontalAlignment(RIGHT);
+				setHorizontalAlignment ( RIGHT );
 			}
 			else
 			{
 				// Rétablir l'alignement par défaut pour le texte
-				setHorizontalAlignment(LEFT);
+				setHorizontalAlignment ( LEFT );
 			}
 		}
+
+		JComponent jcellule = (JComponent) cellule;
+		if(estSelectionne)
+			jcellule.setBorder(BorderFactory.createLineBorder(Color.RED));
 
 		return this;
 	}

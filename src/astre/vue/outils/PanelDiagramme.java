@@ -59,7 +59,7 @@ public class PanelDiagramme extends JPanel
 
 		final JFreeChart pieChart = ChartFactory.createPieChart ( null, pieDataset, true, true, true );
 		final ChartPanel cPanel = new ChartPanel ( pieChart );
-		cPanel.setPreferredSize( new Dimension(taille + 60, taille));
+		cPanel.setPreferredSize ( new Dimension(taille + 60, taille ) );
 
 		// Ajout des couleurs
 		PiePlot plot = ( PiePlot ) pieChart.getPlot ( );
@@ -81,14 +81,14 @@ public class PanelDiagramme extends JPanel
 		}
 
 		plot.setShadowPaint          ( null );
-		plot.setBackgroundAlpha      ( 0.0f ) ;
+		plot.setBackgroundAlpha      ( 0.0f );
 		plot.setSimpleLabels         ( true );
 		plot.setLabelBackgroundPaint ( null );
 		plot.setLabelOutlinePaint    ( null );
 		plot.setLabelShadowPaint     ( null );
 		plot.setLabelPaint           ( Color.WHITE );
 
-		Font font = new Font ( "Arial", Font.BOLD, 14 );
+		Font font = new Font   ( "Arial", Font.BOLD, 14 );
 		plot.setLabelFont      ( font );
 		plot.setLabelGenerator ( new StandardPieSectionLabelGenerator ( "{1}h" ) );
 
@@ -117,8 +117,8 @@ public class PanelDiagramme extends JPanel
 		f.add ( new PanelDiagramme ( donnees, new Color ( 255,99,71 ), new Color ( 255,192,124 ) ) );
 		f.pack ( );*/
 
-		PanelDiagramme.genererCamembert(1, 250);
-		System.out.println("mauvais main mec");
+		PanelDiagramme.genererCamembert( 1, 250 );
+		System.out.println( "mauvais main mec" );
 	}
 
 	public static PanelDiagramme genererCamembert ( int idIntervenant, int taille )

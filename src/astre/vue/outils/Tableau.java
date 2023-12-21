@@ -100,7 +100,7 @@ public class Tableau extends JTable
 		boolean modifiableOk = ensModifiable.length == nbColonnes;
 		boolean donneesOk    = tabDonnees != null && (tabDonnees.length == 0 || tabDonnees[0].length == nbColonnes); //pas changer condition pcq la galère sinon
 
-		if ( !( enteteOk && modifiableOk && donneesOk ) ) return null;
+		if ( ! ( enteteOk && modifiableOk && donneesOk ) ) return null;
 
 		// construction du tableau
 		return new Tableau ( ensEntete, ensDefaut, ensModifiable, decalage , tabDonnees );
@@ -156,7 +156,7 @@ public class Tableau extends JTable
 	*/
 	public void ajouterLigne ( )
 	{
-		System.out.println("oui");
+		System.out.println ( "oui" );
 		this.modele.ajouterLigne ( );
 
 		this.ajusterTailleColonnes ( );
@@ -170,7 +170,7 @@ public class Tableau extends JTable
 		int selection = this.getSelectedRow ( );
 		if ( selection != -1 )
 		{
-			this.modele.supprimerLigne(selection);
+			this.modele.supprimerLigne ( selection );
 		}
 		this.ajusterTailleColonnes ( );
 	}
@@ -210,7 +210,7 @@ public class Tableau extends JTable
 	/**
 	* Permet d'éditer ou non toutes les colonnes.
 	*/
-	public void setEditable ( boolean editable ) { this.modele.setEditable(editable); }
+	public void setEditable ( boolean editable ) { this.modele.setEditable ( editable ); }
 
 	/**
 	* Permet de modifier la liste des cellules éditables avec les numéros de colonne choisi.

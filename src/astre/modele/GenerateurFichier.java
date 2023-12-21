@@ -30,8 +30,11 @@ public class GenerateurFichier
             ecrivain.write ( entete );
             ecrivain.newLine ( );
 
-			BD bd = BD.getInstance ( ); //A changer ??
+			BD bd = BD.getInstance ( );
+
+			//Object[][] elem = bd.getTableauParticulier ( "v_intervenant" );
 			Object[][] elem = bd.getTableau ( Intervenant.class );
+
 			for ( int i = 0; i < elem.length; i++ )
 			{
 				String[] s = new String[24];
@@ -41,7 +44,7 @@ public class GenerateurFichier
 					s[j] = elem[i][j + 1].toString ( );
 				}
 
-				//TODO faire avec la requete d'Alizéa
+				//TODO faire avec la requete d'Alizéa mais risque d'etre compliquer
 				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
 				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
 				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
@@ -65,49 +68,13 @@ public class GenerateurFichier
 				s[22] = Double.parseDouble ( s[12] ) + Double.parseDouble ( s[20] ) + "";
 				s[23] = Double.parseDouble ( s[13] ) + Double.parseDouble ( s[21] ) + "";
 
-				/*double ttsemT = 0;
-				double ttsemR = 0;
-				int testT = 1;
-				int testR = 2;
-				for( int j = 6; j < s.length; j++)
-				{
-					if( j == 14 || j == 22)
-					{
-						s[j] = ttsemT + "";
-						s[j+1] = ttsemR + "";
-
-						ttsemT= 0;
-						ttsemR=0;
-					}
-					else
-					{
-						if(j%2==0)
-						{
-							s[j] = bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), testT) + "";
-							ttsemT+=bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), testT);
-							testT += 2;
-						}
-						else
-						{
-							s[j] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), testR) + "";
-							ttsemR+=bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), testR);
-							testR += 2;
-						}
-
-					}
-				}*/
-
-
 				for( int cpt = 0; cpt < s.length; cpt++ )
 				{
-					//System.out.println( cpt + " " + s[cpt] + " ");
 					ecrivain.write ( s[cpt] + "," );
 				}
 
-
             	ecrivain.newLine ( );
 			}
-
             System.out.println ( "Fichier CSV créé avec succès." );
         } catch ( IOException e )
 		{

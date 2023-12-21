@@ -137,10 +137,6 @@ public class FrameModule extends JFrame
 
 		this.add ( this.panelModuleBouton, BorderLayout.SOUTH);
 
-
-		/*this.panelPNLocal.ajouterHeure("TEST");
-		this.panelPNLocal.ajouterHeure("TEST2");*/
-
 		this.setVisible ( true );
 	}
 
