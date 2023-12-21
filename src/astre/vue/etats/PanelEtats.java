@@ -53,7 +53,7 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.style.put("Champs Fleuri    (Rouge et Rose)   ", "Rose");
 		this.style.put("Film d'Antan     (Noir et Blanc)   ", "Noir");
 		this.style.put("Vague & Marée    (Marine et Corail)", "Bleu");
-		this.style.put("Cadeaux de Noël  (Vert et Rouge)   ", "Noel");
+		this.style.put("Sapin de Noël    (Vert et Marron)  ", "Noel");
 		
 		//création des combobox
 		this.cbInter = new JComboBox<> ( );
@@ -113,12 +113,12 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.btnRecapInter.setPreferredSize ( new Dimension ( 200, 30 ) );
 		layout.linkSize ( this.btnRecapInter, this.btnRecapModule, this.btnRecapTtInter, this.btnRecapTtModule, this.cbInter, this.cbModule );
 
-		JPanel panelNord = new JPanel ( new GridLayout ( 2, 1 ) );
-		panelNord.add ( new JLabel ( "HTML" ) );
-		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
+		JPanel panelHtml = new JPanel ( new GridLayout ( 2, 1 ) );
+		panelHtml.add ( new JLabel ( "HTML" ) );
+		panelHtml.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 
 		JPanel panelok = new JPanel( new BorderLayout());
-		panelok.add(panelNord, BorderLayout.NORTH);
+		panelok.add(panelHtml, BorderLayout.NORTH);
 		panelok.add(panel, BorderLayout.CENTER);
 
 		JPanel panelSud = new JPanel ( new GridLayout ( 3, 1 ) );
