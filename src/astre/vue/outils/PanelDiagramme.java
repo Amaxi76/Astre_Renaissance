@@ -118,6 +118,7 @@ public class PanelDiagramme extends JPanel
 		f.pack ( );*/
 
 		PanelDiagramme.genererCamembert(1, 250);
+		System.out.println("mauvais main mec");
 	}
 
 	public static PanelDiagramme genererCamembert ( int idIntervenant, int taille )
@@ -125,7 +126,7 @@ public class PanelDiagramme extends JPanel
 		// Donnees
 		Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
 
-		donnees.put ( "NA", BD.getInstance ( ).getIntervenant ( idIntervenant ).getContrat ( ).getHeureMaxContrat ( ) + 0.0 );
+		donnees.put ( "NA", BD.getInstance ( ).getIntervenant ( idIntervenant ).getHeureMaximum ( ) + 0.0 );
 
 		for ( Intervient inter : BD.getInstance ( ).getTable ( Intervient.class ) )
 		{
