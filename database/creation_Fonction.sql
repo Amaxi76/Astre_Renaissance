@@ -295,6 +295,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Sélectionner le total d'heure d'un enseignant pour un type d'heure
+-- Utilisé dans la génération de fichier
+
+DROP              FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) CASCADE;
+CREATE OR REPLACE FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
+$$
+DECLARE
+    totalHeures INTEGER;
+BEGIN
+    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+    SELECT  SUM (nbSemaine * nbGroupe * nbHeure) INTO totalHeures
+    FROM    Intervient
+    WHERE   Id_Intervenant = s_Id_Intervenant AND 
+            Id_Heure = s_Id_Heure ;
+
+    -- Retourner le résultat et si la requête est nulle, on renvoie 0
+    RETURN COALESCE(totalHeures, 0);
+END;
+$$ LANGUAGE plpgsql;
+
 
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
