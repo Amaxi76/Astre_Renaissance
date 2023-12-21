@@ -9,7 +9,7 @@ package astre.modele;
 //TODO: Penser à fermer le rs et st
 //TODO: Refactoriser la métode UPDATE
 //TODO: Trier les méthodes utilisées ou non
-//TODO: Pour toutes les fonctions somme qui retourne un int faire une fonction générale qui a deux paramètre : la fonction et les paramètres 
+//TODO: Pour toutes les fonctions somme qui retourne un int faire une fonction générale qui a deux paramètre : la fonction et les paramètres
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -135,7 +135,6 @@ public class BD
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )
 	{
-		//TODO: refaire le compteur
 
 		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
 
@@ -273,6 +272,8 @@ public class BD
 
 		return semestre;
 	}
+
+	//TODO: Supprimer car inutile ?
 
 	public Intervient getIntervient ( int c )
 	{
@@ -739,7 +740,7 @@ public class BD
 		{
 			object[lig][0] = ModeleTableau.DEFAUT;
 			Object[] tmp = Utilitaire.toArray ( lst.get ( lig ) );
-			
+
 			for ( int col = 0 ; col < nbAttributs; col ++ )
 			{
 				object[lig][col+1] = tmp[col];
@@ -839,8 +840,8 @@ public class BD
 					{
 						System.out.println( "Ptit problème de converstion : getTableauParticulier()" );
 					}
-					
-	
+
+
 				}
 				cpt++;
 			}
@@ -874,13 +875,13 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur 1 getHistorique() : " + e );
+			System.out.println ( "Erreur 1 getHistorique () : " + e );
 		}
 
 		return lst;
 	}
 
-	
+
 
 	/*---------------------------------------*/
 	/*                INSERT                 */

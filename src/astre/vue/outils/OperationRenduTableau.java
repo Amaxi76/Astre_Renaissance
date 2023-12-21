@@ -35,7 +35,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
-			char operation = (char) premiereCelulleLigne;
+			char operation = ( char ) premiereCelulleLigne;
 
 			/*
 			 * Ajouter des actions à réaliser sur la ligne en fonction de l'opération donnée
