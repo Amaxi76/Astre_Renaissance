@@ -49,13 +49,15 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 		this.cbHeuresAjouter   = new JComboBox<>();
 		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
-			cbHeuresAjouter.addItem ( h.getNom ( ) );
+			if ( !h.getNom().equals("CM") && !h.getNom().equals("TD") && !h.getNom().equals("TP") )
+				cbHeuresAjouter.addItem ( h.getNom ( ) );
 		}
 
 		this.cbHeuresSupprimer = new JComboBox<>();
 		for ( Heure h : this.ctrl.getTable ( Heure.class ) )
 		{
-			cbHeuresSupprimer.addItem ( h.getNom ( ) );
+			if ( !h.getNom().equals("CM") && !h.getNom().equals("TD") && !h.getNom().equals("TP") )
+				cbHeuresSupprimer.addItem ( h.getNom ( ) );
 		}
 
 		this.btnAjouter   = new JButton ( "Ajouter"   );
