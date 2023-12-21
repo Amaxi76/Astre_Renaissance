@@ -95,7 +95,6 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 		if ( donnees.length != 0 )
 		{
 			JComponent jcellule = ( JComponent ) cellule;
-			jcellule.setBorder ( null );
 
 			//Pour le tableau d'intervenant
 			if ( donnees[0].length == 17 && col == 14 )//nbcolonne de tablo intervenant et seulement la derniere colonne
@@ -108,13 +107,16 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				{
 					jcellule.setBorder ( BorderFactory.createMatteBorder ( 1,1,1,1,Color.RED ) );
 				}
+				else
+				{
+					jcellule.setBorder ( null );
+				}
 			}
 
 			if ( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
 			{
 
 			}
-
 		}
 
 		return this;
