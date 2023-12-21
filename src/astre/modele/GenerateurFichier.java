@@ -99,13 +99,13 @@ public class GenerateurFichier
 		}
 	}
 
-	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod )
+	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod, String theme )
 	{
 		try 
 		{
 			for ( ModuleIUT m : ensMod )
 			{
-				GenererHTMLModule ( m );
+				GenererHTMLModule ( m, theme );
 			}
 
 			System.out.println ( "Tous les modules on été exportés sous format HTML" );
@@ -282,7 +282,7 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLModule ( ModuleIUT module )
+	public static void GenererHTMLModule ( ModuleIUT module, String theme)
 	{
 		String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
 
@@ -294,7 +294,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                                  +
 			"<head>\n"                                                                            +
 				"\t<meta charset=\"UTF-8\">\n"                                                    +
-				"\t<link href=\"./css/styleModule.css\" rel=\"stylesheet\">\n"                    +
+				"\t<link href=\"./css/styleModule"+ theme +".css\" rel=\"stylesheet\">\n"                    +
 				"\t<title>" + module.getCode ( ) + " - " + module.getLibCourt ( ) + " </title>\n" +
 			"</head>\n"                                                                           +
 			"<body>\n"                                                                            +
