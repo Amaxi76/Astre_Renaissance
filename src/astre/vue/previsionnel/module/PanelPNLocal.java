@@ -418,15 +418,15 @@ public class PanelPNLocal extends JPanel
 		{
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
-				//Supprimer de la liste
-				lstLabelsHeures     .remove(i);
-				lstTextFieldsHeures .remove(i);
-				lstLabelsTotalHeures.remove(i);
-
 				//Supprimer du Panel
 				this.remove ( lstLabelsHeures     .get(i) );
 				this.remove ( lstTextFieldsHeures .get(i) );
 				this.remove ( lstLabelsTotalHeures.get(i) );
+
+				//Supprimer de la liste
+				lstLabelsHeures     .remove(i);
+				lstTextFieldsHeures .remove(i);
+				lstLabelsTotalHeures.remove(i);
 
 				this.revalidate();
 			}
