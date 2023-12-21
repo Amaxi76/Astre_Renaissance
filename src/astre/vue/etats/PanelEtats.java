@@ -45,15 +45,14 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 
 		this.setBorder ( new EmptyBorder  ( 10, 10, 10, 10 ) );
-
-		this.setLayout ( new BorderLayout ( 20, 20         ) );
+		this.setLayout ( new BorderLayout ( 20, 20 ) );
 
 		//styles pour html
-		this.style = new HashMap<String, String>();
-		this.style.put("Champs Fleuri    (Rouge et Rose)   ", "Rose");
-		this.style.put("Film d'Antan     (Noir et Blanc)   ", "Noir");
-		this.style.put("Vague & Marée    (Marine et Corail)", "Bleu");
-		this.style.put("Sapin de Noël    (Vert et Marron)  ", "Noel");
+		this.style = new HashMap<String, String> ( );
+		this.style.put ( "Champs Fleuri    (Rouge et Rose)   ", "Rose" );
+		this.style.put ( "Film d'Antan     (Noir et Blanc)   ", "Noir" );
+		this.style.put ( "Vague & Marée    (Marine et Corail)", "Bleu" );
+		this.style.put ( "Sapin de Noël    (Vert et Marron)  ", "Noel" );
 		
 		//création des combobox
 		this.cbInter = new JComboBox<> ( );
@@ -68,12 +67,12 @@ public class PanelEtats extends JPanel implements ActionListener
 			cbModule.addItem ( m.getCode ( ) + " - " + m.getLibCourt ( ) );
 		}
 
-		this.cbStyle = new JComboBox<>();
-		for(String s : this.style.keySet())
+		this.cbStyle = new JComboBox<> ( );
+		for ( String s : this.style.keySet ( ) )
 		{
-			this.cbStyle.addItem(s);
+			this.cbStyle.addItem ( s );
 		}
-		cbStyle.setSelectedItem("Vague & Marée    (Marine et Corail)");
+		cbStyle.setSelectedItem ( "Vague & Marée    (Marine et Corail)" );
 
 		//création des boutons
 		this.btnRecapModule   = new JButton ( "Module individuel"      );
@@ -117,16 +116,16 @@ public class PanelEtats extends JPanel implements ActionListener
 		panelHtml.add ( new JLabel ( "HTML" ) );
 		panelHtml.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 
-		JPanel panelCentre = new JPanel( new BorderLayout());
-		panelCentre.add(panelHtml, BorderLayout.NORTH);
-		panelCentre.add(panel, BorderLayout.CENTER);
+		JPanel panelCentre = new JPanel ( new BorderLayout ( ) );
+		panelCentre.add ( panelHtml, BorderLayout.NORTH  );
+		panelCentre.add ( panel    , BorderLayout.CENTER );
 
 		JPanel panelNord = new JPanel ( new GridLayout ( 3, 1 ) );
 		panelNord.add ( new JLabel ( "CSV" ) );
 		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 		panelNord.add ( this.btnCsv );
 
-		JPanel panelSud = new JPanel(new BorderLayout(10,10));
+		JPanel panelSud = new JPanel ( new BorderLayout ( 10,10 ) );
 		panelSud.add ( new JLabel ( "Choix du style :" ), BorderLayout.NORTH  );
 		panelSud.add ( this.cbStyle                          , BorderLayout.CENTER );
 
@@ -153,7 +152,7 @@ public class PanelEtats extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnRecapModule )
 		{
 			//Génération de l'html pour 1 module
-			GenerateurFichier.GenererHTMLModule ( this.ctrl.getTable ( ModuleIUT.class ).get ( this.cbModule.getSelectedIndex ( ) ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) )  );
+			GenerateurFichier.GenererHTMLModule ( this.ctrl.getTable ( ModuleIUT.class ).get ( this.cbModule.getSelectedIndex ( ) ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 		}
 		
 		if ( e.getSource ( ) == this.btnCsv )
@@ -167,7 +166,7 @@ public class PanelEtats extends JPanel implements ActionListener
 			//Génération du html pour tous les intervenants
 			for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
 			{
-				GenerateurFichier.GenererHTMLIntervenant ( i, this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) )  );
+				GenerateurFichier.GenererHTMLIntervenant ( i, this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 			}
 		}
 
@@ -176,7 +175,7 @@ public class PanelEtats extends JPanel implements ActionListener
 			//Génération du html pour tous les modules
 			for ( ModuleIUT m : this.ctrl.getTable ( ModuleIUT.class ) )
 			{
-				GenerateurFichier.GenererHTMLModule ( m, this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) )  );
+				GenerateurFichier.GenererHTMLModule ( m, this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 			}
 		}
 	}
