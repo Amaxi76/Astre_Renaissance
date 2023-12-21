@@ -137,12 +137,15 @@ public class PanelRepartition extends JPanel
 		gbc.gridy = 0;
 		gbc.gridx = 0;
 		this.add ( new JLabel ( "CM" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
 
 		gbc.gridx = 2;
 		this.add ( new JLabel ( "TD" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
 
 		gbc.gridx = 4;
 		this.add ( new JLabel ( "TP" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
 
 
 		gbc.gridy = 1;
