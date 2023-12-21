@@ -6,6 +6,9 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JCheckBox;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -84,6 +87,39 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			}
 		}
 
-		return cellule;
+		//zone test
+
+		//recupe entete de modeleTablo
+		//verif si entete ou taille
+
+
+		ModeleTableau modele = ( ModeleTableau ) ( tbl.getModel ( ) );
+		Object[][] donnees = modele.getDonnees();
+
+		if ( donnees.length != 0 )
+		{
+			JComponent jcellule = (JComponent) cellule;
+			jcellule.setBorder(null);
+
+			if( donnees[0].length == 17 && col == 14)//nbcolonne de tablo intervenant
+			{
+				int hmin = Integer.parseInt(donnees[lig][5].toString());
+				int hmax = Integer.parseInt(donnees[lig][6].toString());
+				int total = Integer.parseInt(donnees[lig][16].toString());
+
+				if( hmin > total || hmax < total )
+				{
+					jcellule.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.RED));
+				}
+			}
+
+			if( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
+			{
+
+			}
+
+		}
+
+		return this;
 	}
 }

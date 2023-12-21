@@ -30,6 +30,7 @@ public class PanelPNLocalBis extends JPanel
 	/*-------------*/
 
 	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtHSae;
 	private JTextField txtHTut;
@@ -42,9 +43,10 @@ public class PanelPNLocalBis extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelPNLocalBis ( Controleur ctrl )
+	public PanelPNLocalBis ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -180,6 +182,7 @@ public class PanelPNLocalBis extends JPanel
 		{
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
+				this.frm.messageErreurAjouter();
 				return;
 			}
 		}
@@ -212,6 +215,10 @@ public class PanelPNLocalBis extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "SAE" ) || nomHeure.equals ( "Tut" ) )
+			{
+				this.frm.messageErreurSupprimer();
+			}
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel

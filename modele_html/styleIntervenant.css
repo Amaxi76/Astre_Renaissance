@@ -33,11 +33,6 @@ table
 	margin-top: 6vh;
 }
 
-#recap tr td, #recap tr th
-{
-	width: 16.6%;
-}
-
 th 
 {
 	background-color: #1D2F47;
@@ -72,7 +67,7 @@ tr:nth-child(even)
 	text-align: center;
 }
 
-.total
+tr.total, .total
 {
-	background-color: #e49d92;
+    background-color: #e49d92;
 }

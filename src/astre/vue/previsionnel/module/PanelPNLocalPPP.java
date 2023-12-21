@@ -31,6 +31,7 @@ public class PanelPNLocalPPP extends JPanel
 	/*-------------*/
 
 	private Controleur  ctrl;
+	private FrameModule frm;
 
 	private JTextField txtCM;
 	private JTextField txtTD;
@@ -46,9 +47,10 @@ public class PanelPNLocalPPP extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelPNLocalPPP ( Controleur ctrl )
+	public PanelPNLocalPPP ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
+		this.frm  = frm;
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -247,6 +249,7 @@ public class PanelPNLocalPPP extends JPanel
 		{
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
+				this.frm.messageErreurAjouter();
 				return;
 			}
 		}
@@ -279,6 +282,11 @@ public class PanelPNLocalPPP extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) || nomHeure.equals ( "Tut" ) || nomHeure.equals ( "PONCT" ) )
+			{
+				this.frm.messageErreurSupprimer();
+			}
+
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel
