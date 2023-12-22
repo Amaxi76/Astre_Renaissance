@@ -74,12 +74,12 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			setHorizontalAlignment ( LEFT );
 		}
 		
-		// Mettre les cases à cocher
+		/*// Mettre les cases à cocher
 		if ( valeur instanceof Boolean )
 		{
 			setHorizontalAlignment(SwingConstants.CENTER);
 			setSelected((Boolean) value);
-		}
+		}*/
 
 		return this;
 	}
