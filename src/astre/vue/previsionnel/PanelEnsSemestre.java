@@ -57,9 +57,9 @@ public class PanelEnsSemestre extends JTabbedPane
 	/**
 	 * @return the lstSemestre
 	 */
-	public Tableau getTableauSemetre ( ) 
+	public Tableau getTableauSemetre ( int id ) 
 	{
-		return this.lstSemestre.get ( 0 ).getTableauEnsembleModule ( );
+		return this.lstSemestre.get ( id-1 ).getTableauEnsembleModule ( );
 	}
 
 }

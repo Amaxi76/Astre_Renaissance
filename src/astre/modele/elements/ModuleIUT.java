@@ -34,8 +34,8 @@ public class ModuleIUT
 		Object lc = contrat[4];
 		Object v  = contrat[5];
 
-		if ( ( s instanceof Semestre )  ||  ! ( tm instanceof String ) || ! ( c instanceof String ) || ! ( ll instanceof String ) ||
-		                                    ! ( ll instanceof String ) || ! ( c instanceof Boolean ) )
+		if ( ! ( s instanceof Semestre )  ||  ! ( tm instanceof String ) || ! ( c instanceof String ) || ! ( ll instanceof String ) ||
+		                                      ! ( lc instanceof String ) || ! ( v instanceof Boolean ) )
 			throw new IllegalArgumentException ( "Les données du moduleIUT ne sont pas du bon type" );
 		
 		Semestre semestre          = ( Semestre ) s;

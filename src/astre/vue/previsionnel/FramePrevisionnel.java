@@ -78,8 +78,8 @@ public class FramePrevisionnel extends AFrame
 		repaint();
 	}
 
-	public Tableau getTableauSemetre ( ) 
+	public Tableau getTableauSemetre ( int id ) 
 	{
-		return this.pnlEnsSemestre.getTableauSemetre ( );
+		return this.pnlEnsSemestre.getTableauSemetre ( id );
 	}
 }

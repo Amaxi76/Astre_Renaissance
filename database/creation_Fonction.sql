@@ -767,8 +767,8 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer un ModuleIUT
 
-DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER );
-CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER ) RETURNS VOID AS
+DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
 

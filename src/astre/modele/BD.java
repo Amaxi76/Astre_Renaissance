@@ -822,6 +822,7 @@ public class BD
 
 	public Object[][] getTableauParticulier ( String nomRecherche )
 	{
+		//TODO: Mettre des '' sur les string et les enlever là où c'est appeler
 		Object[][] tabObjet = null;
 
 		try
@@ -864,7 +865,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur 1 getIntervientsTableau() : " + e );
+			System.out.println ( "Erreur getTableauParticulier ( String nomRecherche ) : " + e );
 		}
 
 		return tabObjet;
@@ -1069,25 +1070,34 @@ public class BD
 
 	public void delete ( ModuleIUT m )
 	{
-		String req = "DELETE FROM ModuleIUT where Id_ModuleIUT = ?";
+		//System.out.println("paramètre : " + m.getCode());
+		String req = "DELETE FROM ModuleIUT where Code_ModuleIUT = '" + m.getCode ( ) + "'";
 
 		try
 		{
+			System.out.println("try 1");
             ps = co.prepareStatement ( req );
-            ps.setString ( 1, m.getCode ( ) );
+            //ps.setString ( 1, m.getCode ( ) );
+			System.out.println("try 2");
             ps.executeUpdate ( );
-
+			System.out.println("try 3");
 			ps.close ( );
         }
 		catch ( SQLException e )
 		{
+			System.out.println("catch 1");
+			System.out.println(e);
 			int test = JOptionPane.showInternalConfirmDialog ( null, "Le module " + m.getCode ( ) + " est présent sur une autre table, voulez-vous supprimer toutes ses relations ?", "Suppression impossible", JOptionPane.YES_NO_OPTION );
-
+			System.out.println("catch 2");
 			if(test == 0)
 			{
-				deleteAllIntervient ( m.getCode ( ), "code_moduleIUT" );
-				deleteAllHoraire    ( m.getCode ( ), "code_moduleIUT" );
+				System.out.println("catch 3");
+				deleteAllIntervient ( m.getCode ( ), "Code_ModuleIUT" );
+				System.out.println("catch 4");
+				deleteAllHoraire    ( m.getCode ( ), "Code_ModuleIUT" );
+				System.out.println("catch 5");
 				delete ( m );
+				System.out.println("catch 6");
 			}
         }
 	}
@@ -1157,6 +1167,10 @@ public class BD
 
 	public void deleteAllIntervient ( String nb, String id )
 	{
+		nb = id.equals ( "Code_ModuleIUT" ) ? "'" + nb + "'" : nb;
+
+		System.out.println("Intervient nb : " + nb);
+
 		String req = "DELETE FROM Intervient where " +  id + " = " + nb;
 
 		try
@@ -1174,6 +1188,10 @@ public class BD
 
 	public void deleteAllHoraire ( String nb, String id )
 	{
+		nb = id.equals ( "Code_ModuleIUT" ) ? "'" + nb + "'" : nb;
+
+		System.out.println("Intervient nb : " + nb);
+
 		String req = "DELETE FROM Horaire where " +  id + " = " + nb;
 
 		try

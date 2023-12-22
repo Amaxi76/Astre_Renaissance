@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
 import astre.modele.elements.Semestre;
+import astre.modele.outils.Utilitaire;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
@@ -84,7 +85,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		Object[] typeDefaut = { "", 0,"", "", "", false };
+		Object[] typeDefaut = { 'D', 0, "", "", "", false };
+		
 		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
@@ -166,7 +168,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	public void majTableau ( )
 	{
-		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauModule ( this.numSemestre ) );
+		System.out.println(Utilitaire.afficherValeurs(this.ctrl.getTableauParticulier( "f_selectModuleParSemestre(" + numSemestre + ")" )));
+		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauParticulier( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 	}
 	
 }
