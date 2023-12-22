@@ -266,6 +266,10 @@ public class PanelRepartitionBis extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "SAE" ) || nomHeure.equals ( "Tut" ) )
+			{
+				return;
+			}
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel

@@ -364,6 +364,10 @@ public class PanelRepartitionPPP extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) || nomHeure.equals ( "Tut" ) || nomHeure.equals ( "PONCT" ) )
+			{
+				return;
+			}
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel
