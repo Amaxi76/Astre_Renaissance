@@ -16,6 +16,8 @@ import astre.modele.elements.*;
 
 public class GenerateurFichier
 {
+	/** Genere le ficher csv des intervenants
+	 */
 	public static void recapTtInter ( )
 	{
         String chemin = "./fichierGenerer/recapTtIntervenant.csv";
@@ -90,6 +92,10 @@ public class GenerateurFichier
         }
 	}
 
+	/** Genere la page Html de tous les intervenants
+	 *  @param ensInt
+	 *  @param theme
+	 */
 	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt, String theme )
 	{
 		try 
@@ -107,6 +113,10 @@ public class GenerateurFichier
 		}
 	}
 
+	/** Genere la page Html de tous les modules
+	 *  @param ensMod
+	 *  @param theme
+	 */
 	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod, String theme )
 	{
 		try 
@@ -124,6 +134,10 @@ public class GenerateurFichier
 		}
 	}
 
+	/** Genere la page Html d'un intervenant
+	 *  @param inter
+	 *  @param theme
+	 */
 	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
 	{
 		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
@@ -290,6 +304,10 @@ public class GenerateurFichier
         }
 	}
 
+	/** Genere la page Html d'un module
+	 *  @param module
+	 *  @param theme
+	 */
 	public static void GenererHTMLModule ( ModuleIUT module, String theme)
 	{
 		String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
