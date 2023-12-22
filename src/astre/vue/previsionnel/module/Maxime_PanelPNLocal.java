@@ -69,8 +69,8 @@ public class PanelPNLocal extends JPanel
 
 	private void initialiserComposantsModule ( String nomTypeModule )
 	{
-		this.ensTxtNbHeure    = new HashMap<String, JTextField>();
-		this.ensLblTotalPromo = new HashMap<String, JLabel>();
+		this.ensTxtNbHeure    = new HashMap<> ( );
+		this.ensLblTotalPromo = new HashMap<> ( );
 
 		this.ensIntitule = switch ( nomTypeModule )
 		{
@@ -106,7 +106,7 @@ public class PanelPNLocal extends JPanel
 		//placement du commentaire
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		this.add ( new JLabel ("Total (eqtd) promo") );
+		this.add ( new JLabel ( "Total (eqtd) promo" ) );
 
 		//placement des intitulés et leurs informations
 		for ( int cptColonnes = 0; cptColonnes < this.ensIntitule.length; cptColonnes++ )
@@ -156,22 +156,42 @@ public class PanelPNLocal extends JPanel
 	private void majSomme ( )
 	{
 		//TODO: adapter l'ancien mais avec les hashmap
-		ensTxtNbHeure.forEach ( ( cle, valeur ) ->
+
+		// Total des heures sans l'équivalent TD
+		this.ensTxtNbHeure.forEach ( ( cle, valeur ) ->
 		{
 			int somme = 0;
-			if ( !valeur.getText ( ).isEmpty ( ) )
-			{
-				try
-				{
-					somme += Integer.parseInt ( valeur.getText ( ) );
-				}
-				catch ( Exception e )
-				{
-					somme += 0;
-				}
-			}
 			
-			this.lblSommePromo.setText ( String.valueOf ( somme ) );
+			try
+			{
+				somme += Integer.parseInt ( valeur.getText ( ) );
+			}
+			catch ( Exception e )
+			{
+				somme += 0;
+			}
+		
+			this.lblSommePromo.setText ( "" + somme );
+		} );
+
+		// Calcul de l'équivalent TD
+		this.ensLblTotalPromo.forEach ( ( cle, valeur ) ->
+		{
+			int somme = 0;
+			double eqtv;
+
+			try
+			{
+				eqtv = Integer.parseInt ( this.ensTxtNbHeure.get ( cle ).getText ( ) ) * this.coeffHeure ( cle );
+			}
+			catch ( Exception e )
+			{
+				eqtv = 0.0;
+			}
+
+			valeur.setText ( "" + eqtv );
+			somme += eqtv;
+			this.lblSommeEQTDPromo.setText ( "" + somme );
 		} );
 	}
 
@@ -187,7 +207,7 @@ public class PanelPNLocal extends JPanel
 		{
 			return 0.0;
 		}
-		return heure.getCoefTd();
+		return heure.getCoefTd ( );
 	}
 
 	public void setModule ( ModuleIUT module )
