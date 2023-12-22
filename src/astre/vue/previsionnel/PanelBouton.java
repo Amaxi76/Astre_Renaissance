@@ -9,14 +9,18 @@ package astre.vue.previsionnel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import astre.vue.outils.ConstantesVue;
+import astre.vue.outils.Tableau;
 import astre.vue.previsionnel.module.*;
 import astre.Controleur;
+import astre.modele.elements.Intervenant;
+import astre.modele.elements.ModuleIUT;
 
 public class PanelBouton extends JPanel implements ActionListener
 {
@@ -111,6 +115,18 @@ public class PanelBouton extends JPanel implements ActionListener
 			{
 				this.frameModule = new FrameModule ( this.ctrl );
 				this.frameModule.setModule( this.framePrevisionnel.getModuleSelection( ) );
+			}
+		}
+
+		if ( e.getSource ( ) == this.btnSupprimer )
+		{
+			if( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			{
+				Tableau ensSemestre = this.framePrevisionnel.getTableauSemetre ( );
+				ensSemestre.supprimerLigne ( );
+				this.ctrl.majTableauBD ( ensSemestre.getDonnees ( ), ModuleIUT.class );
+				ensSemestre.ajusterTailleColonnes ( );
+				this.repaint ( );
 			}
 		}
 	}
