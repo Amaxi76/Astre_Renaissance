@@ -39,7 +39,7 @@ public class PanelPNLocal extends JPanel
 		/* ------------------------- */
 
 		this.ctrl = ctrl;
-		this.setLayout ( new GridBagLayout() );
+		this.setLayout ( new GridBagLayout ( ) );
 		this.setBorder ( BorderFactory.createLineBorder ( Color.GRAY, 1 ) );
 
 
@@ -48,7 +48,6 @@ public class PanelPNLocal extends JPanel
 		/* ------------------------- */
 
 		this.initialiserComposantsModule ( nomTypeModule );
-
 
 		/* ------------------------- */
 		/* Ajout des composants      */
@@ -97,7 +96,7 @@ public class PanelPNLocal extends JPanel
 			this.ensLblTotalPromo.put ( intitule, new JLabel ( )        );
 		}
 
-		this.lblSommePromo = new JLabel ( "0", 3 );
+		this.lblSommePromo     = new JLabel ( "0", 3 );
 		this.lblSommeEQTDPromo = new JLabel ( "0", 3 );
 	}
 
@@ -157,7 +156,7 @@ public class PanelPNLocal extends JPanel
 	private void majSomme ( )
 	{
 		//TODO: adapter l'ancien mais avec les hashmap
-		ensTxtNbHeure.forEach( ( cle, valeur ) ->
+		ensTxtNbHeure.forEach ( ( cle, valeur ) ->
 		{
 			int somme = 0;
 			if ( !valeur.getText ( ).isEmpty ( ) )
@@ -166,15 +165,14 @@ public class PanelPNLocal extends JPanel
 				{
 					somme += Integer.parseInt ( valeur.getText ( ) );
 				}
-				catch (Exception e)
+				catch ( Exception e )
 				{
 					somme += 0;
 				}
-				somme = Integer.parseInt ( valeur.getText ( ) );
 			}
+			
 			this.lblSommePromo.setText ( String.valueOf ( somme ) );
 		} );
-
 	}
 
 	private void majTotalHeure ( )
