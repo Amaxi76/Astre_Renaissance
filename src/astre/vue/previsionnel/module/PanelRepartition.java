@@ -665,18 +665,18 @@ public class PanelRepartition extends JPanel
 
 		textFieldNbSem.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalNouvHeure();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalNouvHeure();
+													 majTotalHeure();     }
 		});
 
 		textFieldNbHeure.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalNouvHeure();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalNouvHeure();
+													 majTotalHeure();     }
 		});
 
 		this.revalidate();
