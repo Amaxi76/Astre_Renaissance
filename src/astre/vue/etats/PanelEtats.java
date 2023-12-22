@@ -37,8 +37,8 @@ public class PanelEtats extends JPanel implements ActionListener
 
 	private Controleur ctrl;
 	
-	/**
-	 * 	Panel pour la frame des Etats.
+	/** Constructeur de PanelEtats
+	 * @param ctrl
 	 */
 	public PanelEtats ( Controleur ctrl )
 	{
