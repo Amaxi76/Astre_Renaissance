@@ -7,7 +7,6 @@ package astre;
   */
 
 import astre.modele.elements.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import astre.modele.*;
@@ -28,7 +27,6 @@ public class Controleur
 	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
 	public Semestre          getSemestre           ( int      numSemestre         ) { return this.metier.getSemestre           ( numSemestre    ); }
-	public Object[][]        getTableauModule      ( int      numSemestre         ) { return this.metier.getTableauModule      ( numSemestre    ); } //TODO: à refaire / enlever
 	public Heure             getHeure              ( int      nom                 ) { return this.metier.getHeure              ( nom            ); }
 	public Heure             getHeure              ( String   nom                 ) { return this.metier.getHeure              ( nom            ); }
 	public Contrat           getContrat            ( String   nom                 ) { return this.metier.getContrat            ( nom            ); }
@@ -50,8 +48,8 @@ public class Controleur
 		new PopUpErreur ( titre, message );
 	}
 
-	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee    (); }
-	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero(); }
+	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee     ( ); }
+	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero ( ); }
 
 	public static void main ( String[] args )
 	{

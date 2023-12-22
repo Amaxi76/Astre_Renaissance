@@ -95,7 +95,7 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource() == this.btnAjouter)
+		if ( e.getSource ( ) == this.btnAjouter )
 		{
 			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
 
