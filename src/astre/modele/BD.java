@@ -550,7 +550,7 @@ public class BD
 	}
 
 	// Utilisée dans panelRepartition.java
-	public int getNBHeureEQTD (String code, String nomHeure)
+	public int getNBHeureEQTD ( String code, String nomHeure )
 	{
 		int somme = 0;
 
@@ -572,7 +572,7 @@ public class BD
 	}
 
 	// Utilisée dans générateur.java
-	public int getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant)
+	public int getNBHeureParSemestre ( int Id_Semestre, int Id_Intervenant )
 	{
 		int somme = 0;
 
@@ -594,7 +594,7 @@ public class BD
 	}
 
 	// Utilisée dans générateur.java
-	public int getNBHeurePNParModule (String code, int Id_Heure)
+	public int getNBHeurePNParModule ( String code, int Id_Heure )
 	{
 		int somme = 0;
 
@@ -615,9 +615,8 @@ public class BD
 		return somme;
 	}
 
-
 	// Utilisée dans générateur.java
-	public int getNBHeureRepParModule (String code, int Id_Heure)
+	public int getNBHeureRepParModule ( String code, int Id_Heure )
 	{
 		int somme = 0;
 
@@ -704,6 +703,28 @@ public class BD
 		return somme;
 	}
 
+	//Utilisée dans générateur.java
+	public int getTotalHeureParInter ( int idInter, int idHeure )
+	{
+		int somme = 0;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectTotHeureInter(" + idInter + "," + idHeure + ")" );
+
+			rs.next ( );
+
+			somme = rs.getInt(1);
+		}
+		catch (Exception e)
+		{
+			System.out.println ( "Erreur getTotalHeureParInter ( int idInter, int idHeure ) : " + e );
+		}
+
+		return somme;
+	}
+
 	public int getNbTuple ( String table )
 	{
 		int nbTuple = 0;
@@ -752,6 +773,7 @@ public class BD
 
 	// Utilisé dans src\astre\vue\previsionnel\module\PanelAffectation.java
 	//TODO: regarder pour l'enlever
+	//TODO: Utiliser la fonction getTableauParticulier 
 	public Object[][] getIntervientsTableau ( String module )
 	{
 		int nbIntervients = 0;
@@ -811,10 +833,6 @@ public class BD
 			int nbAttributs = rsmd.getColumnCount ( );
 			tabObjet = new Object[this.getNbTuple ( nomRecherche )][nbAttributs + 1];
 
-			System.out.println("est null : " + rs.wasNull());
-			System.out.println("nb attributs : " + nbAttributs);
-			System.out.println("nb lignes : " + this.getNbTuple ( nomRecherche ));
-
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
@@ -823,30 +841,26 @@ public class BD
 				{
 					try
 					{
-						//System.out.println( rsmd.getColumnTypeName ( i ) );
-						//tabObjet[cpt][i] = Class.forName ( rsmd.getColumnTypeName ( i ) ).cast ( rs.getArray ( i ) );
-
 						Object valeur = rs.getObject ( i );
 
-						tabObjet[cpt][i] = switch ( rsmd.getColumnType ( i ))
+						tabObjet[cpt][i] = valeur;
+						// CA MARCHE SANS FAIRE CA
+						/*switch ( rsmd.getColumnType ( i ) )
 						{
 							case Types.INTEGER -> ( Integer ) ( valeur );
 							case Types.VARCHAR -> ( String  ) ( valeur );
 							case Types.DOUBLE  -> ( Double  ) ( valeur );
-							default-> valeur.toString();
-						};
+							case Types.BOOLEAN -> ( Boolean ) ( valeur );
+							default-> valeur.toString ( );
+						};*/
 					}
 					catch ( Exception e )
 					{
-						System.out.println( "Ptit problème de converstion : getTableauParticulier()" );
+						System.out.println ( "Ptit problème de conversion : getTableauParticulier ( +)" );
 					}
-
-
 				}
 				cpt++;
 			}
-
-			System.out.println(tabObjet[0][8]);
 		}
 		catch ( SQLException e )
 		{
@@ -925,26 +939,27 @@ public class BD
 		}
 	}
 
-	/*public void insert ( Module m )
+	public void insert ( ModuleIUT m )
 	{
-		String req = "INSERT INTO Module VALUES(?,?,?,?,?)";
+		String req = "INSERT INTO ModuleIUT VALUES(?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, m.getCode() );
-			ps.setString ( 2, m.getLibLong  ( ) );
-			ps.setString ( 3, m.getLibCourt ( ) );
-			ps.setInt    ( 4, m.getT );
-			ps.setInt    ( 5, m.getSemestre ( ).getIdSemestre ( ) );
+			ps.setString  ( 1, m.getCode       ( ) );
+			ps.setString  ( 2, m.getLibLong    ( ) );
+			ps.setString  ( 3, m.getLibCourt   ( ) );
+			ps.setString  ( 4, m.getTypeModule ( ) );
+			ps.setBoolean ( 5, m.estValide     ( ) );
+			ps.setInt     ( 6, m.getSemestre   ( ).getIdSemestre ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(module m) : " + e );
+			System.out.println ( "Erreur insert(moduleIUT m) : " + e );
 		}
-	}*/
+	}
 
 	public void insert ( Intervenant i )
 	{
@@ -1173,6 +1188,13 @@ public class BD
 			System.out.println ( ex );
         }
 	}
+
+	//Tentative de généralisation de la méthode delete
+	public void delete ( String table, Object[] parametres )
+	{
+		final String  REQ = "DELETE FROM " + table + " WHERE ";
+	}
+
 	/*---------------------------------------*/
 	/*                UPDATE                 */
 	/*---------------------------------------*/

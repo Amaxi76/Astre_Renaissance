@@ -30,8 +30,11 @@ public class GenerateurFichier
             ecrivain.write ( entete );
             ecrivain.newLine ( );
 
-			BD bd = BD.getInstance ( ); //A changer ??
+			BD bd = BD.getInstance ( );
+
+			//Object[][] elem = bd.getTableauParticulier ( "v_intervenant" );
 			Object[][] elem = bd.getTableau ( Intervenant.class );
+
 			for ( int i = 0; i < elem.length; i++ )
 			{
 				String[] s = new String[24];
@@ -41,7 +44,7 @@ public class GenerateurFichier
 					s[j] = elem[i][j + 1].toString ( );
 				}
 
-				//TODO faire avec la requete d'Alizéa
+				//TODO faire avec la requete d'Alizéa mais risque d'etre compliquer
 				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
 				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
 				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
@@ -65,49 +68,13 @@ public class GenerateurFichier
 				s[22] = Double.parseDouble ( s[12] ) + Double.parseDouble ( s[20] ) + "";
 				s[23] = Double.parseDouble ( s[13] ) + Double.parseDouble ( s[21] ) + "";
 
-				/*double ttsemT = 0;
-				double ttsemR = 0;
-				int testT = 1;
-				int testR = 2;
-				for( int j = 6; j < s.length; j++)
-				{
-					if( j == 14 || j == 22)
-					{
-						s[j] = ttsemT + "";
-						s[j+1] = ttsemR + "";
-
-						ttsemT= 0;
-						ttsemR=0;
-					}
-					else
-					{
-						if(j%2==0)
-						{
-							s[j] = bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), testT) + "";
-							ttsemT+=bd.getInterventionIntervenantTheo(Integer.parseInt( elem[i][0].toString()), testT);
-							testT += 2;
-						}
-						else
-						{
-							s[j] = bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), testR) + "";
-							ttsemR+=bd.getInterventionIntervenant(Integer.parseInt( elem[i][0].toString()), testR);
-							testR += 2;
-						}
-
-					}
-				}*/
-
-
 				for( int cpt = 0; cpt < s.length; cpt++ )
 				{
-					//System.out.println( cpt + " " + s[cpt] + " ");
 					ecrivain.write ( s[cpt] + "," );
 				}
 
-
             	ecrivain.newLine ( );
 			}
-
             System.out.println ( "Fichier CSV créé avec succès." );
         } catch ( IOException e )
 		{
@@ -115,13 +82,13 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt )
+	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt, String theme )
 	{
 		try 
 		{
 			for ( Intervenant i : ensInt )
 			{
-				GenererHTMLIntervenant ( i );
+				GenererHTMLIntervenant ( i, theme );
 			}
 
 			System.out.println ( "Tous les intervenants on été exportés sous format HTML" );
@@ -132,13 +99,13 @@ public class GenerateurFichier
 		}
 	}
 
-	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod )
+	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod, String theme )
 	{
 		try 
 		{
 			for ( ModuleIUT m : ensMod )
 			{
-				GenererHTMLModule ( m );
+				GenererHTMLModule ( m, theme );
 			}
 
 			System.out.println ( "Tous les modules on été exportés sous format HTML" );
@@ -149,7 +116,7 @@ public class GenerateurFichier
 		}
 	}
 
-	public static void GenererHTMLIntervenant ( Intervenant inter )
+	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
 	{
 		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
 
@@ -164,7 +131,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                          +
 			"<head>\n"                                                                    +
 				"\t<meta charset=\"UTF-8\">\n"                                            +
-				"\t<link href=\"./css/style.css\" rel=\"stylesheet\">\n"                  +
+				"\t<link href=\"./css/styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n"       +
 				"\t<title>Intervenant " + inter.getNom ( ).toUpperCase ( ) + " </title>\n"    +
 			"</head>\n"                                                                   +
 			"<body>\n"                                                                    ;
@@ -278,6 +245,25 @@ public class GenerateurFichier
 				}
 			}
 
+			table += "<tr class = 'total'>" +
+						"<td class='num'>Total</td>" +
+						"<td class='mod'>&nbsp;</td>" ;
+			
+			nbHeure = 0;
+			somme = 0;
+			for ( Heure h : bd.getTable ( Heure.class ) )
+			{
+				nbHeure = bd.getTotalHeureParInter ( inter.getId ( ), h.getId ( ) );
+
+				table += "<td class = 'heure'>" + nbHeure + "</td>";
+
+				somme += nbHeure;
+			}			
+			
+						
+			table += "<td class='heure'>" + somme + " heures</td>"    +
+					 "</tr>" ;
+
 			ecrivain.write ( table );
 
 			//Écriture fermant les balises html
@@ -296,7 +282,7 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLModule ( ModuleIUT module )
+	public static void GenererHTMLModule ( ModuleIUT module, String theme)
 	{
 		String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
 
@@ -308,7 +294,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                                  +
 			"<head>\n"                                                                            +
 				"\t<meta charset=\"UTF-8\">\n"                                                    +
-				"\t<link href=\"./css/styleModule.css\" rel=\"stylesheet\">\n"                    +
+				"\t<link href=\"./css/styleModule"+ theme +".css\" rel=\"stylesheet\">\n"                    +
 				"\t<title>" + module.getCode ( ) + " - " + module.getLibCourt ( ) + " </title>\n" +
 			"</head>\n"                                                                           +
 			"<body>\n"                                                                            +

@@ -3,9 +3,6 @@ package astre.modele.outils;
 import java.util.Arrays;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
-
-import astre.vue.outils.OperationRenduTableau;
 
 /**
  * Classe des données et d'affichage du tableau.

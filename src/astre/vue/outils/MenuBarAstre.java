@@ -5,16 +5,20 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import astre.Controleur;
 import astre.vue.FrameAccueil;
 import astre.vue.intervenants.FrameIntervenants;
 import astre.vue.parametrage.FrameParametrage;
 import astre.vue.previsionnel.FramePrevisionnel;
 import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
+import astre.vue.etats.FrameEtats;
 
 /** Menu de l'application
   * @author : Maxime Lemoine
-  * @version : 2.0 - 14/12/2023
+  * @version : 2.0 - 21/12/2023
   * @date : 06/12/2023
   */
 public class MenuBarAstre extends JMenuBar implements ActionListener
@@ -44,8 +48,6 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	{
 		//Initialisation
 		super ( );
-		//TODO: ne fonctionne pas encore : this.setMargin​ ( new Insets ( 2,20,2,20 ) );
-
 		this.ctrl             = ctrl;
 		this.parent           = parent;
 
@@ -162,30 +164,47 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	 * Actions à réaliser lors des selections
 	 */
 
-	private void allerVersPage ( String nom ) //TODO: ajouter tous les accès aux frames
-
+	private void allerVersPage ( String nom )
 	{
-		// TODO: récupérer la chaine "options" d'une autre manière qu'en dur dans le code (chercher dans le modèle du tableau ou créer une hashmap)
-		String[] options = {"Accueil", "Paramètres", "Prévisionnel", "Intervenants", "Quitter", "Nouvelle année", "S"};
-		System.out.println( "selectionné : " + nom ); // TODO: à supprimer
+		String[] options = MenuBarAstre.getOptionsBarre ( );
 
-		if ( nom.equals( options[0] ) ) { new FrameAccueil      ( this.ctrl );  }
-		if ( nom.equals( options[1] ) ) { new FrameParametrage  ( this.ctrl );  }
-		if ( nom.equals( options[2] ) ) { new FramePrevisionnel ( this.ctrl );  }
-		if ( nom.equals( options[3] ) ) { new FrameIntervenants ( this.ctrl );  }
-		if ( nom.equals( options[4] ) ) { parent.dispose ( );                   }
-		if ( nom.equals( options[5] ) )
+		if ( nom.equals ( options[0] ) )
+		{
+			new FrameAccueil      ( this.ctrl );
+			this.parent.dispose ( );
+		}
+			
+		if ( nom.equals ( options[1] ) )
+			this.parent.dispose ( );
+
+		if ( nom.equals ( options[2] ) )
+		{
+			new FrameParametrage  ( this.ctrl );
+			this.parent.dispose ( );
+		}
+			
+		if ( nom.contains ( "S" ) ) // cas des sous menus avec semestre
+		{
+			new FramePrevisionnel ( this.ctrl, Integer.parseInt( nom.charAt ( 1 ) +"" )-1 );
+			this.parent.dispose ( );
+		}
+
+		if ( nom.equals ( options[9] ) )
+		{
+			new FrameIntervenants ( this.ctrl );
+			this.parent.dispose ( );
+		}
+			
+		if ( nom.equals ( options[10] ) )
 		{
 			new FrameAccueil       ( this.ctrl );
 			new FrameNouvelleAnnee ( this.ctrl );
+			this.parent.dispose ( );
 		}
 
-		// cas des sous menus avec semestre
-		if ( nom.contains( options[6] ) ) { new FramePrevisionnel  ( this.ctrl, Integer.parseInt( nom.charAt ( 1 ) +"" )-1 ); }
-
-		// femermer la fenetre existante
-		if ( java.util.Arrays.asList ( options ).contains ( nom ) || nom.contains ( "S" ) )
+		if ( nom.equals ( options[11] ) )
 		{
+			new FrameEtats        ( this.ctrl );
 			this.parent.dispose ( );
 		}
 	}
@@ -215,6 +234,24 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 		ImageIcon icone = new ImageIcon ( REPERTOIRE + image );
 		Image imgDim = icone.getImage ( ).getScaledInstance ( taille, taille, Image.SCALE_SMOOTH );
 		return new ImageIcon ( imgDim );
+	}
+
+	/**
+	 * Méthodes qui permet de récupérer toutes les options du MenuBar
+	 */
+	public static final String[] getOptionsBarre ( )
+	{
+		List<String> options = new ArrayList<> ( );
+
+		for ( String[] ligne : MenuBarAstre.getModeleBar ( ) )
+		{
+			if ( ligne[TYPE].equals ( ITEM ) || ligne[TYPE].equals ( ITEM_SM ) )
+			{
+				options.add ( ligne[NAME] );
+			}
+		}
+
+		return options.toArray ( new String[options.size ( )] );
 	}
 
 	/**

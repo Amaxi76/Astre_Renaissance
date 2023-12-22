@@ -6,6 +6,7 @@ import astre.modele.BD;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,6 +25,7 @@ public class PanelHistorique extends JPanel
 	public PanelHistorique ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
+		this.setBorder ( BorderFactory.createEmptyBorder ( 10, 10, 10, 10 ) );
 
 		//création du textArea
 		this.txtHistorique = new JTextArea ( 30, 80 );
@@ -41,6 +43,5 @@ public class PanelHistorique extends JPanel
 		{
 			this.txtHistorique.append ( s + "\n" );
 		}
-
 	}
 }

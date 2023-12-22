@@ -23,6 +23,8 @@ import java.awt.GridLayout;
 
   //TODO: Faire la fraction "2/3" - jcrois pas non
 
+  //TODO: Afficher les heures Réelles ou Théoriques ?
+
 public class PanelIntervenants extends JPanel implements ActionListener
 {
 	// paramètres du tableau
@@ -102,7 +104,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Placement des panels
 		this.panelCentre = new JPanel ( );
-		this.panelSud    = new JPanel ( new GridLayout(1, 2) );
+		this.panelSud    = new JPanel ( new GridLayout ( 1, 2 ) );
 		JPanel panelBtn  = new JPanel ( );
 
 		panelCentre.setLayout ( new BorderLayout ( ) );
@@ -112,7 +114,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		GroupLayout layout = new GroupLayout ( panelBtn );
 		panelBtn.setLayout ( layout );
 
-		layout.setAutoCreateGaps ( true );
+		layout.setAutoCreateGaps          ( true );
 		layout.setAutoCreateContainerGaps ( true );
 
 		//placer horizontalement les boutons
@@ -141,8 +143,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.panelSud.add ( this.panelDiagramme );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
-		this.add ( panelCentre                            , BorderLayout.CENTER );
-		this.add ( panelSud                               , BorderLayout.SOUTH  );
+		this.add ( panelCentre                                 , BorderLayout.CENTER );
+		this.add ( panelSud                                    , BorderLayout.SOUTH  );
 
 
 		/* ------------------------- */
@@ -171,7 +173,6 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			}
 		};
 
-		cbEdit      .addMouseListener ( adapter );
 		this.tableau.addMouseListener ( adapter );
 	}
 

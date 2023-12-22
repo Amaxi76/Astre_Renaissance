@@ -33,9 +33,9 @@ table
 	margin-top: 6vh;
 }
 
-.total
+#recap tr td, #recap tr th
 {
-	background-color: #e49d92;
+	width: 16.6%;
 }
 
 th 
@@ -70,4 +70,9 @@ tr:nth-child(even)
 .heure
 {
 	text-align: center;
+}
+
+tr.total, .total
+{
+    background-color: #e49d92;
 }

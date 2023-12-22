@@ -20,7 +20,7 @@ public class FrameEtats extends AFrame
 		this.panel = new PanelEtats ( this.ctrl );
 		
 		this.setTitle              ( "Etats"    );
-		this.setSize               ( 500, 350   );
+		this.setSize               ( 500, 420   );
 		this.setLocationRelativeTo ( null       );
 		
 		this.add ( this.panel );
