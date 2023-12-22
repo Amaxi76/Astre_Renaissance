@@ -287,7 +287,7 @@ public class PanelPNLocalPPP extends JPanel
 				this.frm.messageErreurSupprimer();
 			}
 
-			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			else if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel
 				this.remove ( lstLabelsHeures     .get(i) );

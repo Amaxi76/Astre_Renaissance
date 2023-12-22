@@ -207,7 +207,7 @@ public class PanelPNLocal extends JPanel
 			int somme = CM + TD + TP;
 
 			
-			for (int i = 3; i < lstTextFieldsHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			for (int i = 3; i < lstTextFieldsHeures.size(); i++)
 			{
 				JTextField textField = lstTextFieldsHeures.get(i);
 				if ( !textField.getText().isEmpty() )
@@ -302,7 +302,7 @@ public class PanelPNLocal extends JPanel
 			}
 			
 			
-			for ( int i = 3; i < this.lstTextFieldsHeures.size() && i < this.lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			for ( int i = 3; i < this.lstTextFieldsHeures.size() && i < this.lstLabelsTotalHeures.size(); i++)
 			{
 				JTextField textField       = this.lstTextFieldsHeures .get(i);
 				JLabel     labelTotalHeure = this.lstLabelsTotalHeures.get(i);
