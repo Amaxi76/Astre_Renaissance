@@ -160,99 +160,21 @@ public class PanelPNLocal extends JPanel
 		ensTxtNbHeure.forEach( ( cle, valeur ) ->
 		{
 			int somme = 0;
-			if ( !valeur.getText().isEmpty() )
+			if ( !valeur.getText ( ).isEmpty ( ) )
 			{
-				somme = Integer.parseInt ( valeur.getText() );
+				try
+				{
+					somme += Integer.parseInt ( valeur.getText ( ) );
+				}
+				catch (Exception e)
+				{
+					somme += 0;
+				}
+				somme = Integer.parseInt ( valeur.getText ( ) );
 			}
 			this.lblSommePromo.setText ( String.valueOf ( somme ) );
 		} );
 
-	}
-
-	private void majSomme()
-	{
-		try
-		{
-			int CM    = 0;
-			int TD    = 0;
-			int TP    = 0;
-			
-			//TEST MODULABLE
-			int nouvHeureValeur = 0;
-			
-			if (!txtCM.getText().isEmpty() )
-			{
-				CM = Integer.parseInt ( txtCM.getText() );
-			}
-
-			if ( !txtTD.getText().isEmpty() )
-			{
-				TD = Integer.parseInt ( txtTD.getText() );
-			}
-
-			if (!txtTP.getText().isEmpty() )
-			{
-				TP = Integer.parseInt ( txtTP.getText() );
-			}
-
-			int somme = CM + TD + TP;
-
-			//TEST MODULABLE
-			for (int i = 3; i < lstTextFieldsHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
-			{
-				JTextField textField = lstTextFieldsHeures.get(i);
-				if ( !textField.getText().isEmpty() )
-				{
-					nouvHeureValeur = Integer.parseInt(textField.getText());
-					somme += nouvHeureValeur;
-				}
-			}
-
-			lblSomme.setText ( String.valueOf ( somme ) );
-
-
-			double totalCM = 0;
-			double totalTD = 0;
-			double totalTP = 0;
-
-			//TEST MODULABLE
-			double nouvTotalHeureValeur = 0;
-
-			if ( !lblTotalCM.getText().isEmpty() )
-			{
-				totalCM = Double.parseDouble ( lblTotalCM.getText() );
-			}
-
-			if ( !lblTotalTD.getText().isEmpty() )
-			{
-				totalTD = Double.parseDouble ( lblTotalTD.getText() );
-			}
-			
-			if ( !lblTotalTP.getText().isEmpty() )
-			{
-				totalTP = Double.parseDouble ( lblTotalTP.getText() );
-			}
-
-			double totalSomme = totalCM + totalTD + totalTP;
-
-			//TEST MODULABLE
-			for (int i = 3; i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
-			{
-				JLabel labelTotalHeure = lstLabelsTotalHeures.get(i);
-
-				if ( !labelTotalHeure.getText().isEmpty() )
-				{
-					nouvTotalHeureValeur = Double.parseDouble ( labelTotalHeure.getText() );
-					totalSomme += nouvTotalHeureValeur;
-				}
-			}
-
-			lblTotalSomme.setText ( String.valueOf ( totalSomme ) );
-		}
-		catch ( NumberFormatException ex )
-		{
-			lblSomme.setText ( "Erreur" );
-		}
 	}
 
 	private void majTotalHeure ( )
