@@ -64,7 +64,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			enregistrer();
+			//enregistrer();
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
@@ -73,7 +73,7 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 		}
 	}
 
-	private void enregistrer()
+	/*private void enregistrer()
 	{
 		String typeModule = this.frm.getPanelModuleLabel().getType();
 
@@ -163,5 +163,5 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 
 			new Horaire ( Ponct, module, PonctPN, 1, HPonct );
 		}
-	}
+	}*/
 }

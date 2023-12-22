@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import astre.Controleur;
-import astre.modele.BD;
 import astre.modele.elements.Heure;
 import astre.modele.elements.Intervenant;
 import astre.modele.elements.ModuleIUT;
@@ -23,7 +22,6 @@ import astre.vue.outils.Tableau;
   * @date : 13/12/2023
   */
 
-//TODO: séparer la partie ihm et partie métier (ex: utilisation de DB au lieu d'un appel vers le controleur puis métier)
 public class PanelAffectation extends JPanel implements ActionListener
 {
 	/*-------------*/
@@ -54,11 +52,10 @@ public class PanelAffectation extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String[] noms = { "action", "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
+		String[] noms       = { "action", "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
 		Object[] typeDefaut = { 'A', "", "", 0, 0, 0, "..." };
 
 		this.tableau = Tableau.initialiserTableau ( noms, typeDefaut, true, 1, null );
-		if ( this.tableau == null ){ System.out.println( "tableau de panel affectation est null ");}
 
 		//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditInter = new JComboBox<> ( );
@@ -83,12 +80,11 @@ public class PanelAffectation extends JPanel implements ActionListener
 		this.btnAjouter   = new JButton ( "Ajouter"   );
 		this.btnSupprimer = new JButton ( "Supprimer" );
 
-		this.add ( this.scrollPane,   BorderLayout.NORTH );
-
 		panelSud.add ( this.btnAjouter   );
 		panelSud.add ( this.btnSupprimer );
-
-		this.add ( panelSud, BorderLayout.SOUTH );
+		
+		this.add ( this.scrollPane, BorderLayout.NORTH );
+		this.add ( panelSud       , BorderLayout.SOUTH );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -116,10 +112,6 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 	public void setDonnee ( ModuleIUT module )
 	{
-		//this.tableau.modifDonnees ( BD.getInstance ( ).getIntervientsTableau ( module.getCode ( ) ) );
-
-		System.out.println(module.getCode());
 		this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( NOM_REQUETE + "('" + module.getCode ( ) + "')") );
-		System.out.println( astre.modele.outils.Utilitaire.afficherValeurs ( this.ctrl.getTableauParticulier ( NOM_REQUETE + "('" + module.getCode ( ) + "')") ) );
 	}
 }

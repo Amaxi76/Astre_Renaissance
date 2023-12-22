@@ -26,7 +26,7 @@ public class ModeleTableau extends AbstractTableModel
 	/*---------------------------------------*/
 	/*              CONSTRUCTEUR             */
 	/*---------------------------------------*/
-
+	
 	/**
 	 * Constructeur par défaut
 	 * Prends tout en paramètres

@@ -19,7 +19,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -124,35 +123,25 @@ public class FrameAccueil extends AFrame implements ActionListener
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnPrevisionnel )
-		{
 			new FramePrevisionnel ( this.ctrl );
-		}
 		
 		if ( e.getSource ( ) == this.btnIntervenants )
-		{
 			new FrameIntervenants ( this.ctrl );
-		}
 		
-		if ( e.getSource ( ) == this.btnParametre )
-		{
+		if ( e.getSource ( ) == this.btnParametre    )
 			new FrameParametrage ( this.ctrl );
-		}
 
-		if ( e.getSource ( ) == this.btnEtat )
-		{
+		if ( e.getSource ( ) == this.btnEtat         )
 			new FrameEtats ( this.ctrl );
-		}
 
-		if ( e.getSource() == this.btnAnnee )
+		if ( e.getSource ( ) == this.btnAnnee        )
 		{
 			new FrameNouvelleAnnee ( this.ctrl );
 			return;
 		}
 
-		if ( e.getSource ( ) == this.btnHistorique )
-		{
+		if ( e.getSource ( ) == this.btnHistorique   )
 			new FrameHistorique ( this.ctrl );
-		}
 
 		this.dispose ( );
 	}

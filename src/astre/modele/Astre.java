@@ -2,7 +2,6 @@ package astre.modele;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class Astre
 	public int sommeHeure ( String code, char typeHeure )
 	{
 		int somme = 0;
-		
+
 		for ( Heure h : this.bd.getHeures ( code, typeHeure ).keySet (  ) )
 			somme += this.bd.getHeures ( code, typeHeure ).get ( h );
 

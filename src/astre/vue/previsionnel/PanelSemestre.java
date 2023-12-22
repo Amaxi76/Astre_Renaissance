@@ -118,7 +118,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
-		/* -----------------------    -- */
+		/* ----------------------------- */
 
 		this.txtNbGpTD     .addActionListener ( this );
 		this.txtNbGpTP     .addActionListener ( this );
@@ -156,7 +156,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	public void majTableau ( )
 	{
-		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
+		this.tableauEnsembleModule.modifDonnees ( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 	}
 	
 }

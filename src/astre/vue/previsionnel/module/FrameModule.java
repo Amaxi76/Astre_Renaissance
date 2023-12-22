@@ -29,8 +29,8 @@ public class FrameModule extends JFrame
 
 	private PanelModuleLabel    panelModuleLabel;
 	private PanelModuleBouton   panelModuleBouton;
-	private PanelPNLocal	    panelPNLocal;
-	private PanelPNLocalBis	    panelPNLocalBis;
+	private PanelPNLocal        panelPNLocal;
+	private PanelPNLocalBis     panelPNLocalBis;
 	private PanelPNLocalPPP	    panelPNLocalPPP;
 	private PanelModuleHeure    panelModuleHeure;
 	private PanelRepartition    panelRepartition;
@@ -52,19 +52,19 @@ public class FrameModule extends JFrame
 	 * 
 	 */
 
-	public FrameModule ( Controleur ctrl )
+	public FrameModule ( Controleur ctrl, String typeModule, int numSemestre )
 	{
 		this.ctrl = ctrl;
 
-		this.setSize               ( 1600, 1080       );
+		this.setSize               ( 1600, 1080              );
 		this.setTitle              ( "Prévisionnel : Module" );
-		this.setLocationRelativeTo ( null                        );
+		this.setLocationRelativeTo ( null                    );
 
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, this );
+		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, typeModule, numSemestre );
 		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
 		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl, this );
@@ -80,21 +80,27 @@ public class FrameModule extends JFrame
 		this.lblMessageErreur = new JLabel ( "" );
 
 		//Met un délai de 3 secondes sur le message d'erreur
-		this.timerMessageErreur = new Timer(3000, new ActionListener()
+		this.timerMessageErreur = new Timer ( 3000, new ActionListener ( )
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed ( ActionEvent e )
 			{
-				lblMessageErreur.setText("");
-				timerMessageErreur.stop();
+				lblMessageErreur.setText ( "" );
+				timerMessageErreur.stop ( );
 			}
-		});
+		} );
 		
+		/* ------------------------------- */
+		/*  Positionnement des composants  */
+		/* ------------------------------- */
 
 		/*---------*/
 		/*  Nord   */
 		/*---------*/
 
-		this.add ( panelModuleLabel, BorderLayout.NORTH  );
+		JPanel panelNord = new JPanel ( new BorderLayout ( ) );
+		panelNord.add ( this.panelModuleBouton, BorderLayout.LINE_START );
+
+		this.add ( panelNord, BorderLayout.NORTH );
 
 		/*----------*/
 		/*  Centre  */
@@ -143,7 +149,7 @@ public class FrameModule extends JFrame
 
 		gbcO.gridy = 1;
 		gbcO.gridx = 0;
-		panelOuest.add ( this.cbValidation, gbcO );
+		panelOuest.add ( this.cbValidation    , gbcO );
 
 		gbcO.gridy = 2;
 		gbcO.gridx = 0;
@@ -158,7 +164,7 @@ public class FrameModule extends JFrame
 		/*  Sud  */
 		/*-------*/
 
-		this.add ( this.panelModuleBouton, BorderLayout.SOUTH);
+		this.add ( this.panelModuleBouton, BorderLayout.SOUTH );
 
 		this.setVisible ( true );
 	}
@@ -202,7 +208,7 @@ public class FrameModule extends JFrame
 	/** Retourne le panelRepartitionPPP de FrameModule
 	 * @return panelRepartitionPPP
 	 */
-	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }		
+	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
 
 	/** Retourne le panelModuleHeure de FrameModule
 	 * @return panelModuleHeure
@@ -272,7 +278,7 @@ public class FrameModule extends JFrame
 		
 		this.panelAffectation.setDonnee ( module );
 
-		this.cbValidation.setSelected ( module.estValide( ) );
+		this.cbValidation.setSelected ( module.estValide ( ) );
 	}
 
 	public void messageErreurAjouter ( )

@@ -19,8 +19,8 @@ import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelPNLocal
- * @author : Clémentin Ly
-* @version : 2.0 - 14/12/2023
+ * @author : Clémentin Ly, Maxime Lemoine
+* @version : 3.0 - 22/12/2023
 * @date : 12/12/2023
 */
 
@@ -52,7 +52,7 @@ public class PanelPNLocal extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelPNLocal(Controleur ctrl, FrameModule frm)
+	public PanelPNLocal(Controleur ctrl, FrameModule frm) //TODO: enlever frameModule
 	{
 		this.ctrl = ctrl;
 		this.frm  = frm;
@@ -172,10 +172,10 @@ public class PanelPNLocal extends JPanel
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme();
+		@Override public void keyTyped   ( KeyEvent e ) { majSomme();
 												majTotalHeure();}
-		public void keyPressed ( KeyEvent e ) {}
-		public void keyReleased( KeyEvent e ) {}
+		@Override public void keyPressed ( KeyEvent e ) { /* */ }
+		@Override public void keyReleased( KeyEvent e ) { /* */ }
 	}
 
 	private void majSomme()
@@ -326,26 +326,11 @@ public class PanelPNLocal extends JPanel
 	private double coeffHeure ( String nomHeure )
 	{
 		Heure heure = this.ctrl.getHeure ( nomHeure );
-
-		double coefficient = 0.0;
-
-		switch (nomHeure)
+		if ( heure == null )
 		{
-			case "CM":
-				coefficient = heure.getCoefTd();
-				break;
-			case "TD":
-				coefficient = heure.getCoefTd();
-				break;
-			case "TP":
-				coefficient = heure.getCoefTd();
-				break;
-		
-			default:
-				break;
+			return 0.0;
 		}
-
-		return coefficient;
+		return heure.getCoefTd();
 	}
 
 	public void setModule ( ModuleIUT module )
