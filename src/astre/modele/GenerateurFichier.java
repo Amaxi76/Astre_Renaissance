@@ -32,51 +32,58 @@ public class GenerateurFichier
 
 			BD bd = BD.getInstance ( );
 
-			//Object[][] elem = bd.getTableauParticulier ( "v_intervenant" );
-			Object[][] elem = bd.getTableau ( Intervenant.class );
+			ArrayList<Intervenant> lst = ( ArrayList<Intervenant> ) bd.getTable ( Intervenant.class );
 
-			for ( int i = 0; i < elem.length; i++ )
+			for ( int i = 0; i < lst.size ( ); i++ )
 			{
-				String[] s = new String[24];
+				Intervenant inter = lst.get ( i );
 
-				for ( int j=0; j < 6; j++ )
+				double totalTheo = 0;
+				double totalReel = 0;
+				
+				ecrivain.write ( inter.getContrat      ( ).getNom     ( ) + "\t" );
+				ecrivain.write ( inter.getNom                         ( ) + "\t" );
+				ecrivain.write ( inter.getPrenom                      ( ) + "\t" );
+				ecrivain.write ( inter.getheureService                ( ) + "\t" );
+				ecrivain.write ( inter.getHeureMaximum                ( ) + "\t" );
+				ecrivain.write ( inter.getContrat      ( ).getRatioTP ( ) + "\t" );
+
+				int tour = 1;
+				while ( tour < 3 )
 				{
-					s[j] = elem[i][j + 1].toString ( );
+					double sommeTheo = 0;
+					double sommeReel = 0;
+
+					for ( int j = tour; j < 5 + tour; j+=2 )
+					{
+						double theo = bd.getInterventionIntervenantTheo ( inter.getId ( ), j );
+						double reel = bd.getInterventionIntervenant     ( inter.getId ( ), j );
+
+						ecrivain.write ( theo + "\t" );
+						ecrivain.write ( reel + "\t" );
+
+						sommeTheo += theo;
+						sommeReel += reel;
+					}
+
+					ecrivain.write ( sommeTheo + "\t" );
+					ecrivain.write ( sommeReel + "\t" );
+
+					totalTheo += sommeTheo;
+					totalReel += sommeReel;
+
+					tour++;
 				}
+				
+				ecrivain.write ( totalTheo + "\t" );
+				ecrivain.write ( totalReel + "\t" );
 
-				//TODO faire avec la requete d'Alizéa mais risque d'etre compliquer
-				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
-				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
-				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
-				s[ 9] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
-				s[10] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
-				s[11] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
-
-				s[12] = Double.parseDouble ( s[6] ) + Double.parseDouble ( s[8] ) + Double.parseDouble ( s[10] ) + "";
-				s[13] = Double.parseDouble ( s[7] ) + Double.parseDouble ( s[9] ) + Double.parseDouble ( s[11] ) + "";
-
-				s[14] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 2 ) + "";
-				s[15] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 2 ) + "";
-				s[16] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 4 ) + "";
-				s[17] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 4 ) + "";
-				s[18] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 6 ) + "";
-				s[19] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 6 ) + "";
-
-				s[20] = Double.parseDouble ( s[14] ) + Double.parseDouble ( s[16] ) + Double.parseDouble ( s[18] ) + "";
-				s[21] = Double.parseDouble ( s[15] ) + Double.parseDouble ( s[17] ) + Double.parseDouble ( s[19] ) + "";
-
-				s[22] = Double.parseDouble ( s[12] ) + Double.parseDouble ( s[20] ) + "";
-				s[23] = Double.parseDouble ( s[13] ) + Double.parseDouble ( s[21] ) + "";
-
-				for( int cpt = 0; cpt < s.length; cpt++ )
-				{
-					ecrivain.write ( s[cpt] + "," );
-				}
-
-            	ecrivain.newLine ( );
+				ecrivain.newLine ( );
 			}
+
             System.out.println ( "Fichier CSV créé avec succès." );
-        } catch ( IOException e )
+        } 
+		catch ( IOException e )
 		{
             e.printStackTrace ( );
         }
