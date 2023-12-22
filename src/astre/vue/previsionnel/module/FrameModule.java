@@ -128,7 +128,7 @@ public class FrameModule extends JFrame
 
 		JPanel panelOuest = new JPanel ( new GridBagLayout ( ) );
 
-		GridBagConstraints gbcO = new GridBagConstraints();
+		GridBagConstraints gbcO = new GridBagConstraints ( );
 		gbcO.insets = new Insets ( 5, 10, 15, 10 );
 
 		this.add ( panelOuest, BorderLayout.WEST );
@@ -277,13 +277,13 @@ public class FrameModule extends JFrame
 
 	public void messageErreurAjouter ( )
 	{
-		this.lblMessageErreur.setText( "L'heure existe déjà" );
-		timerMessageErreur.start();
+		this.lblMessageErreur.setText ( "L'heure existe déjà" );
+		timerMessageErreur.start ( );
 	}
 
 	public void messageErreurSupprimer ( )
 	{
-		this.lblMessageErreur.setText( "On ne peut pas supprimer une heure principale" );
-		timerMessageErreur.start();
+		this.lblMessageErreur.setText ( "On ne peut pas supprimer une heure principale" );
+		timerMessageErreur.start ( );
 	}
 }

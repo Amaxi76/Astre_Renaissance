@@ -142,9 +142,9 @@ public class PanelRepartitionBis extends JPanel
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme();}
+		public void keyTyped   ( KeyEvent e ) {}
 		public void keyPressed ( KeyEvent e ) {}
-		public void keyReleased( KeyEvent e ) {}
+		public void keyReleased( KeyEvent e ) { majSomme(); }
 	}
 
 	private void majSomme()
@@ -266,6 +266,10 @@ public class PanelRepartitionBis extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "SAE" ) || nomHeure.equals ( "Tut" ) )
+			{
+				return;
+			}
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel

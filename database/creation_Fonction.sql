@@ -37,9 +37,9 @@ CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RET
 $$
 BEGIN
 	RETURN QUERY
-        SELECT *
-        FROM   v_Module v
-        WHERE  v.Id_Semestre = $1;
+		SELECT *
+		FROM   v_Module v
+		WHERE  v.Id_Semestre = $1;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -90,7 +90,7 @@ BEGIN
 	RETURN QUERY
 		SELECT he.Id_Heure, ho.nbHeurePn, ho.nbHeureRepartie
 		FROM   Horaire ho JOIN Heure he    ON ho.Id_Heure       = he.Id_Heure 
-		                  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT 
+						  JOIN ModuleIUT m ON ho.Code_ModuleIUT = m.Code_ModuleIUT 
 		WHERE ho.Code_ModuleIUT = $1;
 
 END;
@@ -103,18 +103,18 @@ DROP              FUNCTION f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_In
 CREATE OR REPLACE FUNCTION f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    v_result INTEGER;
+	v_result INTEGER;
 BEGIN
    
-    SELECT nbSemaine * nbGroupe * nbHeure
-    INTO v_result
-    FROM Intervient
-    WHERE Code_ModuleIUT = s_code AND 
-          Id_Intervenant = s_Id_Intervenant AND 
-          Id_Heure = s_Id_Heure;
+	SELECT nbSemaine * nbGroupe * nbHeure
+	INTO v_result
+	FROM Intervient
+	WHERE Code_ModuleIUT = s_code AND 
+		  Id_Intervenant = s_Id_Intervenant AND 
+		  Id_Heure = s_Id_Heure;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(v_result, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(v_result, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -125,17 +125,17 @@ DROP              FUNCTION f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_
 CREATE OR REPLACE FUNCTION f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    v_result INTEGER;
+	v_result INTEGER;
 BEGIN
    
-    SELECT nbHeurePN
-    INTO v_result
-    FROM Horaire
-    WHERE Code_ModuleIUT = s_code AND 
-          Id_Heure = s_Id_Heure;
+	SELECT nbHeurePN
+	INTO v_result
+	FROM Horaire
+	WHERE Code_ModuleIUT = s_code AND 
+		  Id_Heure = s_Id_Heure;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(v_result, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(v_result, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -146,17 +146,17 @@ DROP              FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id
 CREATE OR REPLACE FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    v_result INTEGER;
+	v_result INTEGER;
 BEGIN
    
-    SELECT nbHeureRepartie
-    INTO v_result
-    FROM Horaire
-    WHERE Code_ModuleIUT = s_code AND 
-          Id_Heure = s_Id_Heure;
+	SELECT nbHeureRepartie
+	INTO v_result
+	FROM Horaire
+	WHERE Code_ModuleIUT = s_code AND 
+		  Id_Heure = s_Id_Heure;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(v_result, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(v_result, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -167,16 +167,16 @@ DROP              FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER;
+	totalHeures INTEGER;
 BEGIN
-    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
-    SELECT  SUM (nbSemaine * nbGroupe * nbHeure) INTO totalHeures
-    FROM    Intervient i JOIN ModuleIUT m ON i.Code_ModuleIUT = m.Code_ModuleIUT
-    WHERE   Id_Intervenant = s_Id_Intervenant AND 
-            Id_Semestre = s_Id_Semestre;
+	-- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+	SELECT  SUM (nbSemaine * nbGroupe * nbHeure) INTO totalHeures
+	FROM    Intervient i JOIN ModuleIUT m ON i.Code_ModuleIUT = m.Code_ModuleIUT
+	WHERE   Id_Intervenant = s_Id_Intervenant AND 
+			Id_Semestre = s_Id_Semestre;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -187,20 +187,20 @@ DROP              FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTE
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER := 0;
+	totalHeures INTEGER := 0;
 BEGIN
 
-    -- Semestre 2
-    totalHeures := totalHeures + f_selectNBHeureParSemestre(2, s_Id_Intervenant);
+	-- Semestre 2
+	totalHeures := totalHeures + f_selectNBHeureParSemestre(2, s_Id_Intervenant);
 
-    -- Semestre 4
-    totalHeures := totalHeures + f_selectNBHeureParSemestre(4, s_Id_Intervenant);
+	-- Semestre 4
+	totalHeures := totalHeures + f_selectNBHeureParSemestre(4, s_Id_Intervenant);
 
-    -- Semestre 6
-    totalHeures := totalHeures + f_selectNBHeureParSemestre(6, s_Id_Intervenant);
+	-- Semestre 6
+	totalHeures := totalHeures + f_selectNBHeureParSemestre(6, s_Id_Intervenant);
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -211,20 +211,20 @@ DROP              FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant IN
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER := 0;
+	totalHeures INTEGER := 0;
 BEGIN
 
-    -- Semestre 1
-    totalHeures := totalHeures + f_selectNBHeureParSemestre(1, s_Id_Intervenant);
+	-- Semestre 1
+	totalHeures := totalHeures + f_selectNBHeureParSemestre(1, s_Id_Intervenant);
 
-    -- Semestre 3
-    totalHeures := totalHeures + f_selectNBHeureParSemestre(3, s_Id_Intervenant);
+	-- Semestre 3
+	totalHeures := totalHeures + f_selectNBHeureParSemestre(3, s_Id_Intervenant);
 
-    -- Semestre 5
-    totalHeures := totalHeures + f_selectNBHeureParSemestre(5, s_Id_Intervenant);
+	-- Semestre 5
+	totalHeures := totalHeures + f_selectNBHeureParSemestre(5, s_Id_Intervenant);
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -235,18 +235,18 @@ DROP              FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEG
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER := 0;
+	totalHeures INTEGER := 0;
 BEGIN
 
-    -- Impair
-    totalHeures := totalHeures +  f_selectNBHeureParSemestreImpair (s_Id_Intervenant);
+	-- Impair
+	totalHeures := totalHeures +  f_selectNBHeureParSemestreImpair (s_Id_Intervenant);
 
-    -- Pair
-    totalHeures := totalHeures +  f_selectNBHeureParSemestrePair   (s_Id_Intervenant);
+	-- Pair
+	totalHeures := totalHeures +  f_selectNBHeureParSemestrePair   (s_Id_Intervenant);
 
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -257,16 +257,16 @@ DROP              FUNCTION f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure V
 CREATE OR REPLACE FUNCTION f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure VARCHAR ( 50 ) ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER;
+	totalHeures INTEGER;
 BEGIN
-    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
-    SELECT  SUM (nbSemaine * nbGroupe * coeffTD) INTO totalHeures
-    FROM    Intervient i JOIN Heure h ON i.Id_Heure = h.Id_Heure
-    WHERE   Code_ModuleIUT = s_code AND 
-            nomHeure = s_nomHeure;
+	-- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+	SELECT  SUM (nbSemaine * nbGroupe * coeffTD) INTO totalHeures
+	FROM    Intervient i JOIN Heure h ON i.Id_Heure = h.Id_Heure
+	WHERE   Code_ModuleIUT = s_code AND 
+			nomHeure = s_nomHeure;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -277,15 +277,15 @@ DROP              FUNCTION f_selectTotHeureRep ( s_code VARCHAR(5) ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectTotHeureRep ( s_code VARCHAR(5) ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER;
+	totalHeures INTEGER;
 BEGIN
-    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
-    SELECT  SUM (nbHeureRepartie) INTO totalHeures
-    FROM    Horaire
-    WHERE   Code_ModuleIUT = s_code;
+	-- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+	SELECT  SUM (nbHeureRepartie) INTO totalHeures
+	FROM    Horaire
+	WHERE   Code_ModuleIUT = s_code;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -296,15 +296,15 @@ DROP              FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER;
+	totalHeures INTEGER;
 BEGIN
-    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
-    SELECT  SUM (nbHeurePN) INTO totalHeures
-    FROM    Horaire
-    WHERE   Code_ModuleIUT = s_code;
+	-- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+	SELECT  SUM (nbHeurePN) INTO totalHeures
+	FROM    Horaire
+	WHERE   Code_ModuleIUT = s_code;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -315,18 +315,49 @@ DROP              FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_I
 CREATE OR REPLACE FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-    totalHeures INTEGER;
+	totalHeures INTEGER;
 BEGIN
-    -- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
-    SELECT  SUM (nbSemaine * nbGroupe * nbHeure) INTO totalHeures
-    FROM    Intervient
-    WHERE   Id_Intervenant = s_Id_Intervenant AND 
-            Id_Heure = s_Id_Heure ;
+	-- Calcul du nombre total d'heures pour l'intervenant dans le semestre donné
+	SELECT  SUM (nbSemaine * nbGroupe * nbHeure) INTO totalHeures
+	FROM    Intervient
+	WHERE   Id_Intervenant = s_Id_Intervenant AND 
+			Id_Heure = s_Id_Heure ;
 
-    -- Retourner le résultat et si la requête est nulle, on renvoie 0
-    RETURN COALESCE(totalHeures, 0);
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(totalHeures, 0);
 END;
 $$ LANGUAGE plpgsql;
+
+
+--Permet de récupérer les doubles en string
+DROP              FUNCTION f_conversion ( s_Id_contrat INTEGER ) CASCADE;
+CREATE OR REPLACE FUNCTION f_conversion ( s_Id_contrat INTEGER ) RETURNS VARCHAR AS
+$$
+DECLARE
+	fraction VARCHAR;
+BEGIN
+
+	SELECT
+	TRIM(BOTH '0' FROM
+		CONCAT(
+		CASE WHEN ratiotp < 0 THEN '-' ELSE '' END,
+		FLOOR(ABS(ratiotp))::TEXT,
+		' ',
+		CASE 
+			WHEN ABS(ratiotp)::numeric % 0.66 = 0 THEN '2/3'
+			ELSE FLOOR((ABS(ratiotp) - FLOOR(ABS(ratiotp))) * 100)::TEXT
+		END
+		)
+	) INTO fraction
+	FROM contrat
+	WHERE Id_Contrat = s_Id_contrat;
+
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(fraction, '0');
+END;
+$$ LANGUAGE plpgsql;
+
+
 
 
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
@@ -400,7 +431,7 @@ CREATE OR REPLACE FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLo
 $$
 BEGIN
 
-    INSERT INTO Module (   Code_ModuleIUT,   libLong,   libCourt,   typeModule,   Id_Semestre ) 
+	INSERT INTO Module (   Code_ModuleIUT,   libLong,   libCourt,   typeModule,   Id_Semestre ) 
 	VALUES             ( i_Code_ModuleIUT, i_libLong, i_libCourt, i_typeModule, i_Id_Semestre );
 
 END;
@@ -456,14 +487,14 @@ CREATE OR REPLACE FUNCTION f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeT
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Semestre
+	UPDATE Semestre
 
-    SET    nbGroupeTP  = u_nbGroupeTP,
-           nbGroupeTD  = u_nbGroupeTD,
-           nbEtud      = u_nbEtud,
-           nbSemaine   = u_nbSemaine
+	SET    nbGroupeTP  = u_nbGroupeTP,
+		   nbGroupeTD  = u_nbGroupeTD,
+		   nbEtud      = u_nbEtud,
+		   nbSemaine   = u_nbSemaine
 
-    WHERE  Id_Semestre = u_Id_Semestre;
+	WHERE  Id_Semestre = u_Id_Semestre;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -473,12 +504,12 @@ CREATE OR REPLACE FUNCTION f_updateAnneeSemestre ( )
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Semestre
+	UPDATE Semestre
 
-    SET    nbGroupeTP  = 0,
-           nbGroupeTD  = 0,
-           nbEtud      = 0,
-           nbSemaine   = 0;
+	SET    nbGroupeTP  = 0,
+		   nbGroupeTD  = 0,
+		   nbEtud      = 0,
+		   nbSemaine   = 0;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -488,14 +519,14 @@ CREATE OR REPLACE FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat 
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Contrat
+	UPDATE Contrat
 
-    SET    nomContrat      = u_nomContrat,
-           hServiceContrat = u_hServiceContrat,
-           hMaxContrat     = u_hMaxContrat,
-           ratioTP         = u_ratioTP
+	SET    nomContrat      = u_nomContrat,
+		   hServiceContrat = u_hServiceContrat,
+		   hMaxContrat     = u_hMaxContrat,
+		   ratioTP         = u_ratioTP
 
-    WHERE  Id_Contrat = u_id_contrat;
+	WHERE  Id_Contrat = u_id_contrat;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -506,11 +537,11 @@ CREATE OR REPLACE FUNCTION f_updateHeure ( u_Id_Heure INTEGER, u_nomHeure VARCHA
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Heure
-    SET    coeffTD  = u_coeffTD,
-           nomHeure = u_nomHeure
-           
-    WHERE  Id_Heure = u_Id_Heure;
+	UPDATE Heure
+	SET    coeffTD  = u_coeffTD,
+		   nomHeure = u_nomHeure
+		   
+	WHERE  Id_Heure = u_Id_Heure;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -521,14 +552,14 @@ CREATE OR REPLACE FUNCTION f_updateModuleIUT ( u_Code_ModuleIUT VARCHAR(50), u_l
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE ModuleIUT
+	UPDATE ModuleIUT
 
-    SET    libLong     = u_libLong,  
-           libCourt    = u_libCourt, 
-           typeModule  = u_typeModule,    
-           Id_Semestre = u_Id_Semestre  
+	SET    libLong     = u_libLong,  
+		   libCourt    = u_libCourt, 
+		   typeModule  = u_typeModule,    
+		   Id_Semestre = u_Id_Semestre  
 
-    WHERE  Code_ModuleIUT = u_Code_ModuleIUT;
+	WHERE  Code_ModuleIUT = u_Code_ModuleIUT;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -539,15 +570,15 @@ CREATE OR REPLACE FUNCTION f_updateIntervenant ( u_Id_Intervenant INTEGER, u_nom
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Intervenant
+	UPDATE Intervenant
 
-    SET    nom        = u_nom,
-           prenom     = u_prenom,
-           hService   = u_hService,
-           hMax       = u_hMax,
-           Id_Contrat = u_Id_Contrat
+	SET    nom        = u_nom,
+		   prenom     = u_prenom,
+		   hService   = u_hService,
+		   hMax       = u_hMax,
+		   Id_Contrat = u_Id_Contrat
 
-    WHERE  Id_Intervenant = u_Id_Intervenant;
+	WHERE  Id_Intervenant = u_Id_Intervenant;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -558,14 +589,14 @@ CREATE OR REPLACE FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_Id_H
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Intervient
+	UPDATE Intervient
 
-    SET    nbSemaine   = u_nbSemaine,  
-           nbGroupe    = u_nbGroupe,
-           nbHeure     = u_nbHeure,
-           commentaire = u_commentaire
+	SET    nbSemaine   = u_nbSemaine,  
+		   nbGroupe    = u_nbGroupe,
+		   nbHeure     = u_nbHeure,
+		   commentaire = u_commentaire
 
-    WHERE  Id_Intervenant = u_Id_Intervenant AND Id_Heure = u_Id_Heure AND Code_ModuleIUT = u_Code_ModuleIUT;
+	WHERE  Id_Intervenant = u_Id_Intervenant AND Id_Heure = u_Id_Heure AND Code_ModuleIUT = u_Code_ModuleIUT;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -576,13 +607,13 @@ CREATE OR REPLACE FUNCTION f_updateHoraire ( u_Id_Heure VARCHAR(50), u_Code_Modu
 RETURNS VOID AS
 $$
 BEGIN
-    UPDATE Horaire
+	UPDATE Horaire
 
-    SET    nbSemaine         = u_nbSemaine,
-           nbHeureRepartie   = u_nbHeureRepartie,
-           nbHeurePN         = u_nbHeurePN
+	SET    nbSemaine         = u_nbSemaine,
+		   nbHeureRepartie   = u_nbHeureRepartie,
+		   nbHeurePN         = u_nbHeurePN
 
-    WHERE  Id_Heure = u_Id_Heure AND Code_ModuleIUT = u_Code_ModuleIUT;
+	WHERE  Id_Heure = u_Id_Heure AND Code_ModuleIUT = u_Code_ModuleIUT;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -592,15 +623,15 @@ DROP              FUNCTION f_update_historique_Intervenant() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Intervenant()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || NEW.nom);
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || OLD.nom);
-    END IF;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || NEW.nom);
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''intervenant ' || OLD.nom);
+	END IF;
 
-    RETURN NEW;
+	RETURN NEW;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -611,16 +642,16 @@ DROP              FUNCTION f_update_historique_Contrat() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Contrat()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || NEW.nomContrat);
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || OLD.nomContrat);
-    END IF;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || NEW.nomContrat);
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le contrat ' || OLD.nomContrat);
+	END IF;
 
-    RETURN NEW;
-      
+	RETURN NEW;
+	  
 END;
 $$ LANGUAGE plpgsql;
 
@@ -630,16 +661,16 @@ DROP              FUNCTION f_update_historique_Semestre() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Semestre()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || NEW.Id_Semestre);
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || OLD.Id_Semestre);
-    END IF;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || NEW.Id_Semestre);
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le semestre ' || OLD.Id_Semestre);
+	END IF;
 
-    RETURN NEW;
-      
+	RETURN NEW;
+	  
 
 END;
 $$ LANGUAGE plpgsql;
@@ -650,15 +681,15 @@ DROP              FUNCTION f_update_historique_Heure() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Heure()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || NEW.nomHeure);
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || OLD.nomHeure);
-    END IF;
-      
-      RETURN NEW;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || NEW.nomHeure);
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur l''heure ' || OLD.nomHeure);
+	END IF;
+	  
+	  RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -668,15 +699,15 @@ DROP              FUNCTION f_update_historique_ModuleIUT() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_ModuleIUT()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || NEW.Code_ModuleIUT);
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || OLD.Code_ModuleIUT);
-    END IF;
-      
-    RETURN NEW;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || NEW.Code_ModuleIUT);
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table ' || TG_TABLE_NAME || ' a subi une modification de type ' || TG_OP || ' sur le module ' || OLD.Code_ModuleIUT);
+	END IF;
+	  
+	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -687,17 +718,17 @@ CREATE OR REPLACE FUNCTION f_update_historique_Intervient()
 RETURNS TRIGGER AS $$
 BEGIN
 
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || NEW.Id_Intervenant ||
-                                   ', codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = '                      || NEW.Id_Heure || ')');
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || OLD.Id_Intervenant ||
-                                   ', codeModule = ' || OLD.Code_ModuleIUT || ', idHeure = '                      || OLD.Id_Heure || ')');
-    END IF;
-      
-    RETURN NEW;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || NEW.Id_Intervenant ||
+								   ', codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = '                      || NEW.Id_Heure || ')');
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (Id_Intervenant = ' || OLD.Id_Intervenant ||
+								   ', codeModule = ' || OLD.Code_ModuleIUT || ', idHeure = '                      || OLD.Id_Heure || ')');
+	END IF;
+	  
+	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -707,16 +738,16 @@ DROP              FUNCTION f_update_historique_Horaire() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Horaire()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = ' || NEW.Id_Heure || ')');
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO Historique (dateModification, commentaire)
-        VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || OLD.Code_ModuleIUT || ', idHeure = ' || OLD.Id_Heure || ')');
-    END IF;
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || NEW.Code_ModuleIUT || ', idHeure = ' || NEW.Id_Heure || ')');
+	ELSIF TG_OP = 'DELETE' THEN
+		INSERT INTO Historique (dateModification, commentaire)
+		VALUES (CURRENT_TIMESTAMP, 'La table '       || TG_TABLE_NAME      || ' a subi une modification de type ' || TG_OP        || ' sur la relation (codeModule = ' || OLD.Code_ModuleIUT || ', idHeure = ' || OLD.Id_Heure || ')');
+	END IF;
 
-      
-      RETURN NEW;
+	  
+	  RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -731,11 +762,11 @@ $$
 BEGIN
 
 	DELETE FROM Intervient  CASCADE;
-    DELETE FROM Horaire     CASCADE;
-    DELETE FROM ModuleIUT   CASCADE;
-    DELETE FROM Intervenant CASCADE;
-    DELETE FROM Contrat     CASCADE;
-    DELETE FROM Heure       CASCADE;
+	DELETE FROM Horaire     CASCADE;
+	DELETE FROM ModuleIUT   CASCADE;
+	DELETE FROM Intervenant CASCADE;
+	DELETE FROM Contrat     CASCADE;
+	DELETE FROM Heure       CASCADE;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -821,6 +852,21 @@ $$
 BEGIN
 
 	DELETE FROM Horaire WHERE Id_Heure = d_Id_Heure AND Code_ModuleIUT = d_Code_ModuleIUT;
+
+END;
+$$ LANGUAGE plpgsql;
+
+DROP              FUNCTION f_selectIntervient ( code_Module VARCHAR );
+CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( nom_Intervenant VARCHAR, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+	
+	SELECT inte.nom, h.nomHeure, i.nbSemaine, i.nbGroupe, i.nbHeure, i.commentaire
+	FROM   Intervient i JOIN Intervenant inte ON i.id_intervenant = inte.Id_Intervenant
+	                    JOIN Heure       h    ON i.Id_Heure       = h.Id_Heure
+	WHERE  i.Code_ModuleIUT = code_module;
 
 END;
 $$ LANGUAGE plpgsql;

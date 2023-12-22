@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /** Menu de l'application
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
   * @version : 1.0 - 19/12/2023
   * @date : 19/12/2023
   */
+//TODO: Ligne sélectionner en bleu
 public class OperationRenduTableau extends DefaultTableCellRenderer
 {
 	//private static final long serialVersionUID = 1L;
@@ -31,32 +33,27 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 	{
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
-
+		
 		if ( valeur instanceof Boolean )
 		{
 			JCheckBox checkBox = new JCheckBox ( );
 			checkBox.setSelected            ( ( Boolean ) valeur );
 			checkBox.setHorizontalAlignment ( JCheckBox.CENTER   );
-
 			cellule = checkBox;
 		}
-
-		// Aligner le texte à droite si la valeur est numérique
-		if ( valeur instanceof Number )
-			setHorizontalAlignment ( RIGHT );
-		else
-			setHorizontalAlignment ( LEFT ); // Rétablir l'alignement par défaut pour le texte
-
+		
 		// par défaut il y a une alternance de couleurs
-		if ( lig % 2 == 0 )
-			cellule.setBackground ( COULEUR_FOND_1 );
-		else
-			cellule.setBackground ( COULEUR_FOND_2 );
+		if ( ! focus )
+		{
+			if ( lig % 2 == 0 )
+				cellule.setBackground ( COULEUR_FOND_1 );
+			else
+				cellule.setBackground ( COULEUR_FOND_2 );
+		}
 		
 		cellule.setForeground ( tbl.getForeground ( ) );
-
-		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		
+		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
 			char operation = ( char ) premiereCelulleLigne;
@@ -86,10 +83,22 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					break;
 			}
 		}
+			
+		// Aligner le texte à droite si la valeur est numérique
+		if ( valeur instanceof Number )
+		{
+			setHorizontalAlignment ( RIGHT );
+		}
+		else
+		{
+			// Rétablir l'alignement par défaut pour le texte
+			setHorizontalAlignment ( LEFT );
+		}
 
 		//Récupération des données
 		ModeleTableau modele = ( ModeleTableau ) ( tbl.getModel ( ) );
 		Object[][] donnees   = modele.getDonnees ( );
+		String[] entete = modele.getEntete ( );
 
 		//changement des couleurs de bordure pour alertes
 		if ( donnees.length != 0 )
@@ -97,7 +106,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			JComponent jcellule = ( JComponent ) cellule;
 
 			//Pour le tableau d'intervenant
-			if ( donnees[0].length == 17 && col == 14 )//nbcolonne de tablo intervenant et seulement la derniere colonne
+			if ( entete.length == 17 && col == 14 )//nbcolonne de tablo intervenant et seulement la derniere colonne
 			{
 				int hmin  = Integer.parseInt ( donnees[lig][ 5].toString ( ) );
 				int hmax  = Integer.parseInt ( donnees[lig][ 6].toString ( ) );
@@ -113,12 +122,35 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				}
 			}
 
-			if ( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
+			if ( entete.length == 6 && entete[0].equals("") && col == 2 )//tablo module (ya pas d'entete)
 			{
+				String[] ratio = donnees[lig][4].toString ( ).split("/");
+				
+				for(int i =0; i< ratio.length ; i++)
+					ratio[i] = ratio[i].strip( );
 
+				int hPN  = Integer.parseInt ( ratio[1] );
+				int hRep = Integer.parseInt ( ratio[0] );
+
+				if ( hRep > hPN || ( hRep < hPN - hPN/10 ) )
+				{
+					jcellule.setBorder ( BorderFactory.createMatteBorder ( 1,1,1,1,Color.RED ) );
+				}
+				else
+				{
+					jcellule.setBorder ( null );
+				}
 			}
 		}
 
-		return this;
+		
+		/*// Mettre les cases à cocher
+		if ( valeur instanceof Boolean )
+		{
+			setHorizontalAlignment(SwingConstants.CENTER);
+			setSelected((Boolean) value);
+		}*/
+
+		return cellule;
 	}
 }

@@ -181,7 +181,7 @@ SELECT
       prenom,
       hService,
       hMax,
-      ratioTP,
+      f_conversion ( c.Id_Contrat ) AS ratioTP,
       f_selectNBHeureParSemestre ( 1, Id_Intervenant  ) AS s1,
       f_selectNBHeureParSemestre ( 3, Id_Intervenant  ) AS s3,
       f_selectNBHeureParSemestre ( 5, Id_Intervenant  ) AS s5,
@@ -201,3 +201,4 @@ ORDER BY
 CREATE VIEW v_Module AS
 SELECT id_semestre, Code_ModuleIUT, libLong, (f_selectTotHeureRep(Code_ModuleIUT) || ' / ' || f_selectTotHeurePN(Code_ModuleIUT)) AS Recap, valide
 FROM   ModuleIUT;
+

@@ -137,9 +137,9 @@ public class PanelModuleLabel  extends JPanel
 
 		this.txtCode.addKeyListener(new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majLabels(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) { }
-			public void keyReleased ( KeyEvent e ) { }
+			public void keyReleased ( KeyEvent e ) { majLabels(); }
 		} );
 
 
@@ -179,7 +179,7 @@ public class PanelModuleLabel  extends JPanel
 			this.lblType.setText ( "SAE" );
 		}
 
-		else if ( code.startsWith ( "PP" ) )
+		else if ( code.startsWith ( "PPP" ) )
 		{
 			this.lblType.setText ( "PPP" );
 		}

@@ -148,9 +148,9 @@ public class PanelPNLocalPPP extends JPanel
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme();}
+		public void keyTyped   ( KeyEvent e ) {}
 		public void keyPressed ( KeyEvent e ) {}
-		public void keyReleased( KeyEvent e ) {}
+		public void keyReleased( KeyEvent e ) { majSomme(); }
 	}
 
 	private void majSomme()
@@ -287,7 +287,7 @@ public class PanelPNLocalPPP extends JPanel
 				this.frm.messageErreurSupprimer();
 			}
 
-			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
+			else if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel
 				this.remove ( lstLabelsHeures     .get(i) );
