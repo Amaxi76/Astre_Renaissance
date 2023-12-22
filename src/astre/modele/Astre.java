@@ -18,25 +18,6 @@ public class Astre
 		this.bd = BD.getInstance ( );
 	}
 
-	public Object[][] getTableauModule ( int numeroSemestre )
-	{
-		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( this.bd.getModules ( numeroSemestre ) ) ;
-
-		Object[][] tabObjet = new Object[ensModules.size ( ) ][4];
-
-		for ( int cpt = 0; cpt < ensModules.size ( ); cpt++ )
-		{
-			ModuleIUT module = ensModules.get ( cpt );
-			
-			tabObjet[cpt][0] = module.getCode    ( );
-			tabObjet[cpt][1] = module.getLibLong ( );
-			tabObjet[cpt][2] = "" + this.sommeHeure ( module.getCode ( ), 'R' ) + "/" + this.sommeHeure ( module.getCode ( ), 'P' );
-			tabObjet[cpt][3] = module.estValide  ( );
-		}
-		
-		return tabObjet;
-	}
-
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
@@ -49,7 +30,7 @@ public class Astre
 	public Contrat       getContrat            ( String nom          ) { return this.bd.getContrat            ( nom          ); }
 	public ModuleIUT     getModule             ( String nom          ) { return this.bd.getModule             ( nom          ); }
 
-	public ArrayList<String> getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
+	public List<String>      getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }
 	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants (      ); }
 	public <T> List<T>       getTable          ( Class<T> type   ) { return this.bd.getTable        ( type ); }

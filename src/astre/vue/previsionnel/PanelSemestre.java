@@ -84,7 +84,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
 		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
-		Object[] typeDefaut = { "", 0,"", "", "", false };
+		Object[] typeDefaut = { "", 0, "", "", "", false };
 		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
@@ -100,20 +100,20 @@ public class PanelSemestre extends JPanel implements ActionListener
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 
-		pnlOptionSemestre.add ( new JLabel ( "nb gp TD"    ) );
+		pnlOptionSemestre.add ( new JLabel ( "nb gp TD"    )  );
 		pnlOptionSemestre.add ( this.txtNbGpTD                );
-		pnlOptionSemestre.add ( new JLabel ( "nb gp TP"    ) );
+		pnlOptionSemestre.add ( new JLabel ( "nb gp TP"    )  );
 		pnlOptionSemestre.add ( this.txtNbGpTP                );
-		pnlOptionSemestre.add ( new JLabel ( "nb Etd"      ) );
+		pnlOptionSemestre.add ( new JLabel ( "nb Etd"      )  );
 		pnlOptionSemestre.add ( this.txtNbEtud                );
-		pnlOptionSemestre.add ( new JLabel ( "nb semaines" ) );
+		pnlOptionSemestre.add ( new JLabel ( "nb semaines" )  );
 		pnlOptionSemestre.add ( this.txtNbSemaine             );
 		pnlOptionSemestre.add ( this.btnEnregistrer           );
 		pnlOptionSemestre.add ( this.lblMessageEnregistrement );
 
 		pnlListeModule.add ( spTab, BorderLayout.CENTER );
 
-		this.add ( pnlOptionSemestre, BorderLayout.NORTH );
+		this.add ( pnlOptionSemestre, BorderLayout.NORTH  );
 		this.add ( pnlListeModule   , BorderLayout.CENTER );
 
 		/* ----------------------------- */
@@ -156,7 +156,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	public void majTableau ( )
 	{
-		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauModule ( this.numSemestre ) );
+		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 	}
 	
 }

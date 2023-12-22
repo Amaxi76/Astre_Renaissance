@@ -30,6 +30,8 @@ public class PanelAffectation extends JPanel implements ActionListener
 	/*--Attributs--*/
 	/*-------------*/
 
+	private static final String NOM_REQUETE = "f_selectIntervient";
+
 	private Controleur  ctrl;
 
 	private Tableau     tableau;
@@ -114,6 +116,10 @@ public class PanelAffectation extends JPanel implements ActionListener
 
 	public void setDonnee ( ModuleIUT module )
 	{
-		this.tableau.modifDonnees ( BD.getInstance ( ).getIntervientsTableau ( module.getCode ( ) ) );
+		//this.tableau.modifDonnees ( BD.getInstance ( ).getIntervientsTableau ( module.getCode ( ) ) );
+
+		System.out.println(module.getCode());
+		this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( NOM_REQUETE + "('" + module.getCode ( ) + "')") );
+		System.out.println( astre.modele.outils.Utilitaire.afficherValeurs ( this.ctrl.getTableauParticulier ( NOM_REQUETE + "('" + module.getCode ( ) + "')") ) );
 	}
 }
