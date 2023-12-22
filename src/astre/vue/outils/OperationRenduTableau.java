@@ -143,6 +143,14 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			}
 		}
 
+		
+		/*// Mettre les cases à cocher
+		if ( valeur instanceof Boolean )
+		{
+			setHorizontalAlignment(SwingConstants.CENTER);
+			setSelected((Boolean) value);
+		}*/
+
 		return cellule;
 	}
 }
