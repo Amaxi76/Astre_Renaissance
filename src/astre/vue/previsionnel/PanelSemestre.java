@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
 import astre.modele.elements.Semestre;
+import astre.modele.outils.Utilitaire;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
@@ -34,7 +35,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 	private Timer      timerMessageEnregistrement;
 
 	private JLabel     lblMessageEnregistrement;
-	
+
 	private Tableau    tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
@@ -127,6 +128,14 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.btnEnregistrer.addActionListener ( this );
 	}
 
+	/**
+	 * @return the tableauEnsembleModule
+	 */
+	public Tableau getTableauEnsembleModule ( ) 
+	{
+		return this.tableauEnsembleModule;
+	}
+
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
@@ -153,6 +162,8 @@ public class PanelSemestre extends JPanel implements ActionListener
 		}
 		return "pas de selection";
 	}
+
+	
 
 	public void majTableau ( )
 	{

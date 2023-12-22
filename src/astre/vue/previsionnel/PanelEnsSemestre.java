@@ -2,6 +2,7 @@ package astre.vue.previsionnel;
 
 import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
+import astre.vue.outils.Tableau;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,14 @@ public class PanelEnsSemestre extends JTabbedPane
 	public void majTableau ( )
 	{
 		this.lstSemestre.get ( this.getSelectedIndex ( ) ).majTableau ( );
+	}
+
+	/**
+	 * @return the lstSemestre
+	 */
+	public Tableau getTableauSemetre ( int id ) 
+	{
+		return this.lstSemestre.get ( id-1 ).getTableauEnsembleModule ( );
 	}
 
 }

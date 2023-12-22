@@ -245,7 +245,7 @@ public class PanelPNLocal extends JPanel
 			double totalSomme = totalCM + totalTD + totalTP;
 
 			
-			for (int i = 3; i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
+			for (int i = 3; i < lstLabelsTotalHeures.size(); i++)
 			{
 				JLabel labelTotalHeure = lstLabelsTotalHeures.get(i);
 

@@ -9,14 +9,19 @@ package astre.vue.previsionnel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import astre.vue.outils.ConstantesVue;
+import astre.vue.outils.Tableau;
 import astre.vue.previsionnel.module.*;
 import astre.Controleur;
+import astre.modele.elements.Intervenant;
+import astre.modele.elements.ModuleIUT;
+import astre.modele.outils.Utilitaire;
 
 public class PanelBouton extends JPanel implements ActionListener
 {
@@ -35,6 +40,7 @@ public class PanelBouton extends JPanel implements ActionListener
 	private JButton btnModifier;
 	private JButton btnSupprimer;
 
+	private static final String REQUETE = "v_Module";
 
 	/*----------------*/
 	/*--Constructeur--*/
@@ -113,6 +119,68 @@ public class PanelBouton extends JPanel implements ActionListener
 				this.frameModule.setModule( this.framePrevisionnel.getModuleSelection( ) );
 			}
 		}
+
+		if ( e.getSource ( ) == this.btnSupprimer )
+		{
+			if( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			{
+				//System.out.println("Module sélectionner : " + this.framePrevisionnel.getModuleSelection()); //debug
+
+				int id_semestre = this.ctrl.getModule(this.framePrevisionnel.getModuleSelection ( ) ).getSemestre ( ).getIdSemestre ( );
+
+				//System.out.println("Id de semstre : " + id_semestre);//debug
+
+				Tableau ensSemestre = this.framePrevisionnel.getTableauSemetre ( id_semestre );
+				ensSemestre.supprimerLigne ( );
+
+				//System.out.println(Utilitaire.afficherValeurs(ensSemestre.getDonnees ( ) ) ); //debug
+
+				//System.out.println("Il est passé par ici"); //debug
+
+				this.ctrl.majTableauBD ( preparerTableau ( ensSemestre.getDonnees ( ) ), ModuleIUT.class );
+
+				ensSemestre.modifDonnees( this.ctrl.getTableauParticulier ( REQUETE + " WHERE id_semestre = " + id_semestre) );
+
+				//System.out.println("Il repassera par là"); //debug
+
+				ensSemestre.ajusterTailleColonnes ( );
+				this.repaint ( );
+			}
+		}
+	}
+
+	/**
+	 * Raccourcir le tableau de l'affichage pour mettre à jour la base de données
+	 */
+	private Object[][] preparerTableau ( Object[][] tab  )
+	{
+		// Enlever les colonnes en trop
+		Object[][] tab2 = Utilitaire.formater ( tab, 7 );
+		
+		// Remplacer les noms de contrat par les objets contrat
+		int COLONNE_SEMESTRE = 1;
+		
+		for ( int lig = 0; lig < tab.length; lig++ )
+		{
+			tab2[lig][COLONNE_SEMESTRE] = this.ctrl.getSemestre ( ( int ) ( tab2[lig][COLONNE_SEMESTRE] ) );
+		}
+		
+		// Replacer les objets dans le bon ordre pour le constructeur
+		for ( int lig = 0; lig < tab2.length; lig++ )
+		{
+			String codeTmp = "" + tab2[lig][2];
+
+			tab2[lig][2] = this.ctrl.getModule(codeTmp).getTypeModule ( );
+			tab2[lig][3] = codeTmp;
+			tab2[lig][4] = this.ctrl.getModule(codeTmp).getLibLong    ( );
+			tab2[lig][5] = this.ctrl.getModule(codeTmp).getLibCourt   ( );
+			tab2[lig][6] = this.ctrl.getModule(codeTmp).estValide     ( );
+	
+		}
+		
+		//System.out.println(Utilitaire.afficherValeurs(tab2));
+
+		return tab2;
 	}
 
 	private void centrerTexte ( JButton btn )
