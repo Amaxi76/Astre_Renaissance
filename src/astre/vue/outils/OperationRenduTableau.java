@@ -94,7 +94,63 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			// Rétablir l'alignement par défaut pour le texte
 			setHorizontalAlignment ( LEFT );
 		}
+
+		//Récupération des données
+		ModeleTableau modele = ( ModeleTableau ) ( tbl.getModel ( ) );
+		Object[][] donnees   = modele.getDonnees ( );
+		String[] entete = modele.getEntete ( );
+
+		//changement des couleurs de bordure pour alertes
+		if ( donnees.length != 0 )
+		{
+			JComponent jcellule = ( JComponent ) cellule;
+
+			//Pour le tableau d'intervenant
+			if ( entete.length == 17 && col == 14 )//nbcolonne de tablo intervenant et seulement la derniere colonne
+			{
+				int hmin  = Integer.parseInt ( donnees[lig][ 5].toString ( ) );
+				int hmax  = Integer.parseInt ( donnees[lig][ 6].toString ( ) );
+				int total = Integer.parseInt ( donnees[lig][16].toString ( ) );
+
+				if ( hmin > total || hmax < total )
+				{
+					jcellule.setBorder ( BorderFactory.createMatteBorder ( 1,1,1,1,Color.RED ) );
+				}
+				else
+				{
+					jcellule.setBorder ( null );
+				}
+			}
+
+			if ( entete.length == 6 && entete[0].equals("") && col == 2 )//tablo module (ya pas d'entete)
+			{
+				String[] ratio = donnees[lig][4].toString ( ).split("/");
+				
+				for(int i =0; i< ratio.length ; i++)
+					ratio[i] = ratio[i].strip( );
+
+				int hPN  = Integer.parseInt ( ratio[1] );
+				int hRep = Integer.parseInt ( ratio[0] );
+
+				if ( hRep > hPN || ( hRep < hPN - hPN/10 ) )
+				{
+					jcellule.setBorder ( BorderFactory.createMatteBorder ( 1,1,1,1,Color.RED ) );
+				}
+				else
+				{
+					jcellule.setBorder ( null );
+				}
+			}
+		}
+
 		
+		/*// Mettre les cases à cocher
+		if ( valeur instanceof Boolean )
+		{
+			setHorizontalAlignment(SwingConstants.CENTER);
+			setSelected((Boolean) value);
+		}*/
+
 		return cellule;
 	}
 }

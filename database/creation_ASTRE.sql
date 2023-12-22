@@ -181,7 +181,7 @@ SELECT
       prenom,
       hService,
       hMax,
-      ratioTP,
+      f_conversion ( c.Id_Contrat ) AS ratioTP,
       f_selectNBHeureParSemestre ( 1, Id_Intervenant  ) AS s1,
       f_selectNBHeureParSemestre ( 3, Id_Intervenant  ) AS s3,
       f_selectNBHeureParSemestre ( 5, Id_Intervenant  ) AS s5,

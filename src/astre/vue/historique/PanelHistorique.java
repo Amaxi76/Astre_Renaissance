@@ -1,9 +1,6 @@
 package astre.vue.historique;
 
 import astre.Controleur;
-import astre.modele.BD;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,6 +19,9 @@ public class PanelHistorique extends JPanel
 	private JTextArea txtHistorique;
 	private Controleur ctrl;
 
+	/** Constructeur de PanelHistorique
+	 * @param ctrl
+	 */
 	public PanelHistorique ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;

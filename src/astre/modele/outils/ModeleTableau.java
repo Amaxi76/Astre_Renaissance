@@ -56,6 +56,7 @@ public class ModeleTableau extends AbstractTableModel
 	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
 	public Object     getObjet      ( int lig, int col ) { return this.tabDonnees[lig][col];  }
 	public Object[][] getDonnees    (                  ) { return this.tabDonnees;            }
+	public String[]   getEntete     (                  ) { return this.ensEntete;             }
 
 
 	/*---------------------------------------*/

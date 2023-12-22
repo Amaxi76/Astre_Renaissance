@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 /** Page de gestion de l'historique
@@ -16,21 +15,24 @@ import javax.swing.JButton;
 import astre.Controleur;
 import astre.vue.outils.AFrame;
 
-public class FrameHistorique extends AFrame  implements ActionListener
+public class FrameHistorique extends AFrame implements ActionListener
 {
 	private PanelHistorique panel;
 	private JButton         btnRetour;
 	
+	/** Constructeur de FrameHistorique
+	 * @param ctrl
+	 */
 	public FrameHistorique ( Controleur ctrl )
 	{
 		super ( ctrl );
 
 		this.setLayout             ( new BorderLayout ( 10, 10 ) );
-		this.setTitle              ( "Historique"                );
-		this.setSize               ( 1000,600                    );
-		this.setLocationRelativeTo ( null                        );
+		this.setTitle              ( "Historique"                    );
+		this.setSize               ( 1000,600                 );
+		this.setLocationRelativeTo ( null                                );
 		
-		this.panel     = new PanelHistorique ( this.ctrl );
+		this.panel     = new PanelHistorique ( this.ctrl      );
 		this.btnRetour = new JButton         ( "Retour"  );
 		
 		this.add ( this.panel    , BorderLayout.CENTER );

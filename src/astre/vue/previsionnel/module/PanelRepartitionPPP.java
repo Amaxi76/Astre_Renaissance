@@ -208,9 +208,9 @@ public class PanelRepartitionPPP extends JPanel
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme();}
+		public void keyTyped   ( KeyEvent e ) {}
 		public void keyPressed ( KeyEvent e ) {}
-		public void keyReleased( KeyEvent e ) {}
+		public void keyReleased( KeyEvent e ) { majSomme(); }
 	}
 
 	private void majSomme()
@@ -364,6 +364,10 @@ public class PanelRepartitionPPP extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) || nomHeure.equals ( "Tut" ) || nomHeure.equals ( "PONCT" ) )
+			{
+				return;
+			}
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel

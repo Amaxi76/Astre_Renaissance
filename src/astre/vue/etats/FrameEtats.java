@@ -13,6 +13,9 @@ public class FrameEtats extends AFrame
 {
 	private PanelEtats panel;
 	
+	/** Constructeur de FrameEtats
+	 * @param ctrl
+	 */
 	public FrameEtats ( Controleur ctrl )
 	{
 		super ( ctrl );

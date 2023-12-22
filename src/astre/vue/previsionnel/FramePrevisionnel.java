@@ -8,10 +8,13 @@ package astre.vue.previsionnel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.List;
+import java.util.ArrayList;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
 import astre.vue.outils.ConstantesVue;
+import astre.vue.outils.Tableau;
 
 public class FramePrevisionnel extends AFrame
 {
@@ -73,5 +76,10 @@ public class FramePrevisionnel extends AFrame
 	{
 		this.pnlEnsSemestre.majTableau ( );
 		repaint();
+	}
+
+	public Tableau getTableauSemetre ( int id ) 
+	{
+		return this.pnlEnsSemestre.getTableauSemetre ( id );
 	}
 }

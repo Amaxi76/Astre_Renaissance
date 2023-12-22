@@ -329,6 +329,37 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+--Permet de récupérer les doubles en string
+DROP              FUNCTION f_conversion ( s_Id_contrat INTEGER ) CASCADE;
+CREATE OR REPLACE FUNCTION f_conversion ( s_Id_contrat INTEGER ) RETURNS VARCHAR AS
+$$
+DECLARE
+	fraction VARCHAR;
+BEGIN
+
+	SELECT
+	TRIM(BOTH '0' FROM
+		CONCAT(
+		CASE WHEN ratiotp < 0 THEN '-' ELSE '' END,
+		FLOOR(ABS(ratiotp))::TEXT,
+		' ',
+		CASE 
+			WHEN ABS(ratiotp)::numeric % 0.66 = 0 THEN '2/3'
+			ELSE FLOOR((ABS(ratiotp) - FLOOR(ABS(ratiotp))) * 100)::TEXT
+		END
+		)
+	) INTO fraction
+	FROM contrat
+	WHERE Id_Contrat = s_Id_contrat;
+
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(fraction, '0');
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
 -- -- Sélectionner les heuresPN
@@ -767,8 +798,8 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer un ModuleIUT
 
-DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER );
-CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER ) RETURNS VOID AS
+DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
 
