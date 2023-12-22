@@ -113,9 +113,24 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				}
 			}
 
-			if ( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
+			if ( donnees[0].length == 6 && col == 2 )//tablo module
 			{
+				String[] ratio = donnees[lig][4].toString ( ).split("/");
+				
+				for(int i =0; i< ratio.length ; i++)
+					ratio[i] = ratio[i].strip( );
 
+				int hPN  = Integer.parseInt ( ratio[1] );
+				int hRep = Integer.parseInt ( ratio[0] );
+
+				if ( hRep > hPN || ( hRep < hPN - hPN/10 ) )
+				{
+					jcellule.setBorder ( BorderFactory.createMatteBorder ( 1,1,1,1,Color.RED ) );
+				}
+				else
+				{
+					jcellule.setBorder ( null );
+				}
 			}
 		}
 
