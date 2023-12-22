@@ -939,26 +939,27 @@ public class BD
 		}
 	}
 
-	/*public void insert ( Module m )
+	public void insert ( ModuleIUT m )
 	{
-		String req = "INSERT INTO Module VALUES(?,?,?,?,?)";
+		String req = "INSERT INTO ModuleIUT VALUES(?,?,?,?,?)";
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, m.getCode() );
-			ps.setString ( 2, m.getLibLong  ( ) );
-			ps.setString ( 3, m.getLibCourt ( ) );
-			ps.setInt    ( 4, m.getT );
-			ps.setInt    ( 5, m.getSemestre ( ).getIdSemestre ( ) );
+			ps.setString  ( 1, m.getCode       ( ) );
+			ps.setString  ( 2, m.getLibLong    ( ) );
+			ps.setString  ( 3, m.getLibCourt   ( ) );
+			ps.setString  ( 4, m.getTypeModule ( ) );
+			ps.setBoolean ( 5, m.estValide     ( ) );
+			ps.setInt     ( 6, m.getSemestre   ( ).getIdSemestre ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(module m) : " + e );
+			System.out.println ( "Erreur insert(moduleIUT m) : " + e );
 		}
-	}*/
+	}
 
 	public void insert ( Intervenant i )
 	{
