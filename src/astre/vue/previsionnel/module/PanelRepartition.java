@@ -268,57 +268,57 @@ public class PanelRepartition extends JPanel
 
 		this.txtNbSemCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalCM();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalCM();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbHCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalCM();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalCM();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbSemTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTD();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTD();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbHTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTD();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTD();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbSemTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTP();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTP();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbHTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTP();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTP();
+													 majTotalHeure(); }
 		});
 
 		this.txtHeureP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalHeure(); }
 		});
 
 		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
