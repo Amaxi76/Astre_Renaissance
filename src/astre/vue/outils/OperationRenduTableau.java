@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 //TODO: Ligne sélectionner en bleu
 public class OperationRenduTableau extends DefaultTableCellRenderer
 {
-	//private static final long serialVersionUID = 1L;
 	private static final Color COULEUR_MODIFIER  = new Color ( 174,214,241 );
 	private static final Color COULEUR_SUPPRIMER = new Color ( 230,176,170 );
 	private static final Color COULEUR_AJOUTER   = new Color ( 171,235,198 );
@@ -39,11 +38,13 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			JCheckBox checkBox = new JCheckBox ( );
 			checkBox.setSelected            ( ( Boolean ) valeur );
 			checkBox.setHorizontalAlignment ( JCheckBox.CENTER   );
+			checkBox.setBackground          ( tbl.getSelectionBackground ( ) );
+			checkBox.setForeground          ( tbl.getSelectionForeground ( ) );
 			cellule = checkBox;
 		}
 		
 		// par défaut il y a une alternance de couleurs
-		if ( ! focus )
+		if ( ! estSelectionne )
 		{
 			if ( lig % 2 == 0 )
 				cellule.setBackground ( COULEUR_FOND_1 );
