@@ -6,7 +6,7 @@ package astre.modele.elements;
   * @date : 12/12/2023
   */
 
-//TODO : Faire des factory pour les heures 
+//TODO: Faire des factory pour les heures 
 
 public class Horaire
 {

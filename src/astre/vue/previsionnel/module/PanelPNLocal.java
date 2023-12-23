@@ -82,16 +82,16 @@ public class PanelPNLocal extends JPanel
 
 		this.ensIntitule = switch ( nomTypeModule )
 		{
-			case "Ressource" -> new String[] { "CM", "TP", "TD" };
-			case "SAE"       -> new String[] { "h Sae", "h Tut" };
-			case "Stage"     -> new String[] { "REH", "h Tut"   };
-			case "PPP"       -> new String[] { "CM", "TP", "TD", "HP", "HT" };
+			case "Ressource" -> new String[] { "CM"   , "TP"   , "TD"             };
+			case "SAE"       -> new String[] { "h Sae", "h Tut"                   };
+			case "Stage"     -> new String[] { "REH"  , "h Tut"                   };
+			case "PPP"       -> new String[] { "CM"   , "TP"   , "TD", "HP", "HT" };
 			default -> new String[] {}; //Cas en cas de type de module innexistant
 		};
 
 		for ( String intitule : this.ensIntitule )
 		{
-			this.ensTxtNbHeure.put    ( intitule, creerTextField ( true )  );
+			this.ensTxtNbHeure   .put ( intitule, creerTextField ( true  ) );
 			this.ensTxtTotalPromo.put ( intitule, creerTextField ( false ) );
 		}
 
@@ -105,7 +105,7 @@ public class PanelPNLocal extends JPanel
 	private static JTextField creerTextField ( boolean editable )
 	{
 		JTextField txtTmp = new JTextField ( );
-		txtTmp.setPreferredSize ( new Dimension ( 55, 15 ) ); //de base : (40,15)
+		txtTmp.setPreferredSize ( new Dimension ( 55, 20 ) ); //de base : (40,15)
 
 		if ( editable )
 		{
@@ -114,8 +114,8 @@ public class PanelPNLocal extends JPanel
 		else
 		{
 			txtTmp.setEditable   ( false            );
-			txtTmp.setEnabled    ( false            );
 			txtTmp.setBackground ( Color.LIGHT_GRAY );
+			//txtTmp.setForeground ( Color.BLACK      );
 		}
 		
 		return txtTmp;
@@ -215,14 +215,21 @@ public class PanelPNLocal extends JPanel
 		this.txtSommeEQTDPromo.setText ( "" + sommeEQTD );
 	}
 
+	//TODO: ne prends pas en compte les ajouts ou modifications du nombre de types d'heure différentes
 	public void majIhm ( Object[][] donnees )
 	{
-		//TODO: mettre à jour tous les txt avec les données passées en paramètre
-		for ( int cpt = 0; cpt < this.ensIntitule.length; cpt++ )
+		// mettre à jour les zones de texte
+		for ( Object[] lig : donnees )
 		{
-			String intitule = this.ensIntitule [ cpt ];
-			this.ensTxtNbHeure.get ( intitule ).setText ( "" + donnees [ cpt ][1] );
+			if ( this.ensTxtNbHeure.containsKey ( lig [0] ) )
+			{
+				JTextField txtTmp = this.ensTxtNbHeure.get ( lig [0] );
+				txtTmp.setText ( "" + lig[1] );
+			}
 		}
+		
+		// mettre à jour les sommes
+		this.majSomme ( );
 	}
 
 	/**

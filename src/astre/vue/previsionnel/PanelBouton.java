@@ -48,9 +48,9 @@ public class PanelBouton extends JPanel implements ActionListener
 	
 	public PanelBouton ( Controleur ctrl, FramePrevisionnel frame )
 	{
-		this.ctrl = ctrl;
+		this.ctrl              = ctrl;
 		this.framePrevisionnel = frame;
-		this.frameModule = null;
+		this.frameModule       = null;
 		this.setBorder( new EmptyBorder ( ConstantesVue.MARGE_EXTERIEURE_COMPOSANT, 0, 0, 0 ) );
 		
 		/* ------------------------- */
@@ -113,24 +113,26 @@ public class PanelBouton extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnModifier )
 		{
-			if( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			if ( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
 			{
-				//this.frameModule = new FrameModule ( this.ctrl, "Ressource", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ) );;
-				//this.frameModule.setModule( this.framePrevisionnel.getModuleSelection( ) );
+				ModuleIUT module = this.ctrl.getModule ( this.framePrevisionnel.getModuleSelection ( ) );
+
+				this.frameModule = new FrameModule ( this.ctrl, module.getTypeModule ( ), ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'M' );
+				this.frameModule.majPanel ( module.getCode ( ) );
 			}
 		}
 
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
-			if( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			if ( !this.framePrevisionnel.getModuleSelection( ).equals ( "pas de selection" ) )
 			{
 				//System.out.println("Module sélectionner : " + this.framePrevisionnel.getModuleSelection()); //debug
 
-				int id_semestre = this.ctrl.getModule(this.framePrevisionnel.getModuleSelection ( ) ).getSemestre ( ).getIdSemestre ( );
+				int idSemestre = this.ctrl.getModule ( this.framePrevisionnel.getModuleSelection ( ) ).getSemestre ( ).getIdSemestre ( );
 
 				//System.out.println("Id de semstre : " + id_semestre);//debug
 
-				Tableau ensSemestre = this.framePrevisionnel.getTableauSemetre ( id_semestre );
+				Tableau ensSemestre = this.framePrevisionnel.getTableauSemetre ( idSemestre );
 				ensSemestre.supprimerLigne ( );
 
 				//System.out.println(Utilitaire.afficherValeurs(ensSemestre.getDonnees ( ) ) ); //debug
@@ -139,7 +141,7 @@ public class PanelBouton extends JPanel implements ActionListener
 
 				this.ctrl.majTableauBD ( preparerTableau ( ensSemestre.getDonnees ( ) ), ModuleIUT.class );
 
-				ensSemestre.modifDonnees( this.ctrl.getTableauParticulier ( REQUETE + " WHERE id_semestre = " + id_semestre) );
+				ensSemestre.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE + " WHERE id_semestre = " + idSemestre ) );
 
 				//System.out.println("Il repassera par là"); //debug
 

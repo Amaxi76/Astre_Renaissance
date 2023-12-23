@@ -870,3 +870,18 @@ BEGIN
 
 END;
 $$ LANGUAGE plpgsql;
+
+DROP              FUNCTION f_selectHoraire ( code_Module VARCHAR );
+CREATE OR REPLACE FUNCTION f_selectHoraire ( code_Module VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeurePN INTEGER ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+	
+	SELECT h.nomHeure, ho.nbHeurePN
+	FROM   Horaire ho JOIN Heure h     ON h.id_heure    = ho.id_heure
+	                  JOIN ModuleIUT m ON m.Code_ModuleIUT = ho.Code_ModuleIUT
+	WHERE  ho.Code_ModuleIUT = code_module;
+
+END;
+$$ LANGUAGE plpgsql;

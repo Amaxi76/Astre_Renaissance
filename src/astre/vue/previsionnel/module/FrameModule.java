@@ -1,5 +1,8 @@
 package astre.vue.previsionnel.module;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import astre.Controleur;
+import astre.modele.elements.Heure;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
+import astre.modele.outils.Utilitaire;
 
 /** Classe FrameModule
  * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
@@ -167,26 +172,27 @@ public class FrameModule extends JFrame
 	}
 
 	/**
-	 * met à jour les panels
+	 * met à jour les panels avec les données de la base de données
 	 */
-	public void majPanel ( )
+	//TODO: Méthode à compléter avec panelRepartition et checkbox cbValidation
+	public void majPanel ( String code )
 	{
+		final String REQUETE = "f_selectHoraire('" + code + "')";
+
 		// Mise à jour du module
-		ModuleIUT module = this.ctrl.getModule ( this.panelModuleLabel.getCode ( ) );
-		Object[] tabModule = { module.getSemestre ( ), module.getTypeModule ( ), module.getCode ( ), module.getLibLong ( ), module.getLibCourt ( ) };
-				
-		Object[][] tabHoraire = this.ctrl.getTableau ( Horaire.class );
-		
-		Object[][] heuresPn = new Object[tabHoraire.length][2];
-		heuresPn[0]
+		ModuleIUT module = this.ctrl.getModule ( code   );
+
+		Object[]   tabModule  = Utilitaire.toArray  ( module );
+		Object[][] tabHoraire = Utilitaire.formater ( this.ctrl.getTableauParticulier ( REQUETE ), 1, 2 );
 
 		//Object[][] heureAffectees = new Object[tabHoraire.length][4];
 
-		this.panelPNLocal    .majIhm ( heuresPn  );
-		this.panelModuleLabel.majIhm ( tabModule );
+		this.panelPNLocal    .majIhm ( tabHoraire );
+
+		this.panelModuleLabel.majIhm ( tabModule  );
 		//this.panelRepartition.majIhm ( heureAffectees );
 		
-		this.cbValidation.setSelected ( module.estValide ( ) );
+		//this.cbValidation.setSelected ( module.estValide ( ) );
 	}
 
 	/**

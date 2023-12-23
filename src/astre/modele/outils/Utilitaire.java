@@ -129,7 +129,8 @@ public abstract class Utilitaire
 	 */
 	public static Object[][] formater ( Object[][] tableau, int nbColonnes )
 	{
-		Object[][] tableauTmp = new Object[tableau.length][nbColonnes];
+		//TODO: supprimer ce commentaire si la méthode fonctionne correctement
+		/*Object[][] tableauTmp = new Object[tableau.length][nbColonnes];
 
 		for ( int lig = 0; lig < tableau.length; lig++ )
 		{
@@ -142,40 +143,42 @@ public abstract class Utilitaire
 				else
 				{
 					// Ajoutez une valeur vide pour les nouvelles colonnes
-					tableauTmp[lig][col] = "X"; //TODO: remplacer la valeur par Null
+					tableauTmp[lig][col] = null;
 				}
 			}
 		}
 
-		return tableauTmp;
+		return tableauTmp;*/
+
+		return Utilitaire.formater ( tableau, 0, nbColonnes-1 );
 	}
 
 	/**
 	 * Copie profonde d'un tableau avec un nouveau nombre de colonnes (conserve les colonnes de indDeb à indFin)
 	 */
-	/*public static Object[][] formater ( Object[][] tableau, int indDeb, int indFin )
+	public static Object[][] formater ( Object[][] tableau, int indDeb, int indFin )
 	{
 		int taille = indFin - indDeb + 1;
 		Object[][] tableauTmp = new Object[tableau.length][taille];
 
 		for ( int lig = 0; lig < tableau.length; lig++ )
 		{
-			for ( int col = 0; col <  ; col++ )
+			for ( int col = 0; col < taille ; col++ )
 			{
 				if ( col < tableau[lig].length )
 				{
-					tableauTmp[lig][col] = tableau[lig][col];
+					tableauTmp[lig][col] = tableau[lig][indDeb+col];
 				}
 				else
 				{
 					// Ajoutez une valeur vide pour les nouvelles colonnes
-					tableauTmp[lig][col] = "X"; //TODO: remplacer la valeur par Null
+					tableauTmp[lig][col] = null;
 				}
 			}
 		}
 
 		return tableauTmp;
-	}*/
+	}
 
 	/**
 	 * Copie profonde d'un tableau
