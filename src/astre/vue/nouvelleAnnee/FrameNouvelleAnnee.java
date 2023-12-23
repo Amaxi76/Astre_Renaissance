@@ -6,15 +6,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import astre.Controleur;
+import astre.vue.outils.AFrame;
 
 
-public class FrameNouvelleAnnee extends JFrame implements ActionListener
+public class FrameNouvelleAnnee extends AFrame implements ActionListener
 {
 	/*--------------------*/
 	/*      Attributs     */
@@ -36,20 +36,20 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 
 	public FrameNouvelleAnnee ( Controleur ctrl )
 	{
-		this.ctrl = ctrl;
+		super ( ctrl );
 
 		/* --------------------------------------- */
 		/*           Option de la frame            */
 		/* --------------------------------------- */
 
 		this.setTitle( "Nouvelle Année" );
-		this.setSize ( 500, 300 );
+		this.setSize ( 500, 300         );
 
 		/* --------------------------------------- */
 		/*         Création des composants         */
 		/* --------------------------------------- */
 
-        // Création d'un panel 
+		// Création d'un panel 
 		JPanel panel    = new JPanel ( new GridLayout ( 4, 1, 10, 10 ) );
 
 		//Ajout d'un bordure
@@ -58,18 +58,18 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 		//Création d'un label
 		JLabel lbl      = new JLabel  ( "Choisissez une des options suivantes pour changer d'année :" );
 
-        // Création des trois boutons
-        this.btnNew     = new JButton ( "Garder les données importantes" );
-        this.btnZero    = new JButton ( "Recommencer une année de zéro"  );
-        this.btnAnnuler = new JButton ( "Annuler"                        );
+		// Création des trois boutons
+		this.btnNew     = new JButton ( "Garder les données importantes" );
+		this.btnZero    = new JButton ( "Recommencer une année de zéro"  );
+		this.btnAnnuler = new JButton ( "Annuler"                        );
 
 		//Ajout du label au panel
 		panel.add ( lbl            );
 		
-        // Ajout des boutons au panel
+		// Ajout des boutons au panel
 		panel.add ( this.btnNew     );
-        panel.add ( this.btnZero    );
-        panel.add ( this.btnAnnuler );
+		panel.add ( this.btnZero    );
+		panel.add ( this.btnAnnuler );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -80,11 +80,11 @@ public class FrameNouvelleAnnee extends JFrame implements ActionListener
 		this.btnNew    .addActionListener ( this );
 		this.btnAnnuler.addActionListener ( this );
 
-        // Ajout du panel à la frame
-        this.add ( panel );
+		// Ajout du panel à la frame
+		this.add ( panel );
 
-        // Centrer la frame au milieu de l'écran
-        setLocationRelativeTo ( null );
+		// Centrer la frame au milieu de l'écran
+		setLocationRelativeTo ( null );
 
 		// Afficher la frame
 		this.setVisible ( true );

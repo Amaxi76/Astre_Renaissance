@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+import astre.Controleur;
 import astre.modele.elements.*;
-import astre.modele.outils.ModeleTableau;
 
 public class Astre
 {
@@ -48,7 +48,8 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public int sommeHeure ( String code, char typeHeure )
+	//TODO: à supprimer si bien inutile
+	/*public int sommeHeure ( String code, char typeHeure )
 	{
 		int somme = 0;
 
@@ -56,14 +57,18 @@ public class Astre
 			somme += this.bd.getHeures ( code, typeHeure ).get ( h );
 
 		return somme;
-	}
+	}*/
 
-
+	/**
+	 * Met à jour la base de donnée en créant un nouvel objet avec chaque lignes de tabDonnéesBD
+	 */
 	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
 	{
 		for ( int i = 0; i < tabDonneeBD.length; i++ )
 		{
-			try
+			Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
+			this.majObjetBD ( sousTab, type, ( char ) tabDonneeBD[i][0] );
+			/*try
 			{
 				Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
 				
@@ -81,10 +86,37 @@ public class Astre
 			catch ( Exception e )
 			{
 				e.printStackTrace ( );
-			}
+			}*/
 		}
 	}
 
+	/**
+	 * Créée un objet du bon type à partir de ses attributs contenus dans tabObjet
+	 */
+	public void majObjetBD ( Object[] tabObjet, Class<?> type, char modification )
+	{
+		try
+		{	
+			Object objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) tabObjet );
+
+			switch ( modification )
+			{
+				case Controleur.AJOUTER   -> this.insert ( objet );
+				case Controleur.MODIFIER  -> this.update ( objet );
+				case Controleur.SUPPRIMER -> this.delete ( objet );
+			
+				default  -> { break; } // ModeleTableau.DEFAUT et ModeleTableau.IGNORER
+			}
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace ( );
+		}
+	}
+
+	/**
+	 * Utilisation de la méthode INSERT, UPDATE ou DELETE sur un objet dans la base de données
+	 */
 	private void modification ( Object o, String methode )
 	{
 		try
@@ -98,6 +130,8 @@ public class Astre
 		}
 	}
 	
+	
+
 	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
 	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
 }

@@ -1,6 +1,7 @@
 package astre.vue.previsionnel.module;
 
 import astre.modele.elements.ModuleIUT;
+import astre.modele.elements.Semestre;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -142,11 +143,13 @@ public class PanelModuleLabel  extends JPanel
 		txt.setBackground ( Color.LIGHT_GRAY );
 	}
 
-	public void majIhm ( String code )
+	public void majIhm ( Object[] module )
 	{
-		this.txtCode    .setText ( code                                         );
-		this.txtLibLong .setText ( this.ctrl.getModule ( code ).getLibLong  ( ) );
-		this.txtLibCourt.setText ( this.ctrl.getModule ( code ).getLibCourt ( ) );
+		this.txtSemestre.setText ( "S" + ( ( Semestre ) module[0] ).getIdSemestre ( ) );
+		this.txtType    .setText ( ( String ) module[1] );
+		this.txtCode    .setText ( ( String ) module[2] );
+		this.txtLibLong .setText ( ( String ) module[3] );
+		this.txtLibCourt.setText ( ( String ) module[4] );
 	}
 
 	/*private void majLabels ( )
@@ -226,4 +229,18 @@ public class PanelModuleLabel  extends JPanel
 	public String    getLibLong  ( ) { return this.txtLibLong .getText ( );                     }
 	public String    getLibCourt ( ) { return this.txtLibCourt.getText ( );                     }
 	public ModuleIUT getModule   ( ) { return this.ctrl.getModule ( this.txtCode.getText ( ) ); }
+
+	public Object[] getDonnees ( )
+	{
+		Object[] moduleIUT = new Object[6];
+
+		moduleIUT[0] = this.ctrl.getSemestre ( Integer.parseInt ( this.txtSemestre.getText ( ).substring ( 1 ) ) );
+		moduleIUT[1] = this.txtType.getText ( );
+		moduleIUT[2] = this.txtCode.getText ( );
+		moduleIUT[3] = this.txtLibLong.getText ( );
+		moduleIUT[4] = this.txtLibCourt.getText ( );
+		moduleIUT[5] = false;
+
+		return moduleIUT;
+	}
 }

@@ -98,25 +98,25 @@ public class PanelBouton extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btncreerRessource )
 		{
-			this.frameModule = new FrameModule ( this.ctrl );
+			this.frameModule = new FrameModule ( this.ctrl, "Ressource", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
 		}
 
 		if ( e.getSource ( ) == this.btncreerSAE )
 		{
-			this.frameModule = new FrameModule ( this.ctrl );
+			this.frameModule = new FrameModule ( this.ctrl, "SAE", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
 		}
 
 		if ( e.getSource ( ) == this.btncreerStage )
 		{
-			this.frameModule = new FrameModule ( this.ctrl );
+			this.frameModule = new FrameModule ( this.ctrl, "Stage", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
 		}
 
 		if ( e.getSource ( ) == this.btnModifier )
 		{
 			if( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
 			{
-				this.frameModule = new FrameModule ( this.ctrl );
-				this.frameModule.setModule( this.framePrevisionnel.getModuleSelection( ) );
+				//this.frameModule = new FrameModule ( this.ctrl, "Ressource", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ) );;
+				//this.frameModule.setModule( this.framePrevisionnel.getModuleSelection( ) );
 			}
 		}
 

@@ -25,6 +25,7 @@ public class AFrame extends JFrame
 		// Image
 		Image icon = Toolkit.getDefaultToolkit ( ).getImage ( "./data/images/astre_petit.png" );  
 		this.setIconImage ( icon ); 
+		ctrl.setFrameActuelle ( this );
 	
 		// attributs
 		this.ctrl = ctrl;
@@ -39,7 +40,7 @@ public class AFrame extends JFrame
 	/**
 	 * Récupérer la fenetre utilisée pour le composant
 	 */
-	public static void fermer ( Component compo )
+	public static void fermerFenetreContenant ( Component compo ) //ancien nom : fermer
 	{
 		java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor ( compo );
 
@@ -52,7 +53,7 @@ public class AFrame extends JFrame
 	
 	public static void retourAccueil ( Controleur ctrl )
 	{
-		new FrameAccueil ( ctrl );
+		ctrl.setFrameActuelle ( new FrameAccueil ( ctrl ) );
 	}
 	
 	/*public void allerVersPage ( Class c )

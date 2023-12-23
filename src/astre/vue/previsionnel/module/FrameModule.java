@@ -11,11 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import astre.Controleur;
+import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
 
 /** Classe FrameModule
- * @author : Clémentin Ly
-* @version : 1.0 - 11/12/2023
+ * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
+* @version : 2.0 - 23/12/2023
 * @date : 11/12/2023
 */
 
@@ -30,8 +31,8 @@ public class FrameModule extends JFrame
 	private PanelModuleLabel    panelModuleLabel;
 	private PanelModuleBouton   panelModuleBouton;
 	private PanelPNLocal        panelPNLocal;
-	private PanelPNLocalBis     panelPNLocalBis;
-	private PanelPNLocalPPP	    panelPNLocalPPP;
+	//private PanelPNLocalBis     panelPNLocalBis;
+	//private PanelPNLocalPPP	    panelPNLocalPPP;
 	private PanelModuleHeure    panelModuleHeure;
 	private PanelRepartition    panelRepartition;
 	private PanelRepartitionBis panelRepartitionBis;
@@ -52,7 +53,7 @@ public class FrameModule extends JFrame
 	 * 
 	 */
 
-	public FrameModule ( Controleur ctrl, String typeModule, int numSemestre )
+	public FrameModule ( Controleur ctrl, String typeModule, int numSemestre, char action )
 	{
 		this.ctrl = ctrl;
 
@@ -64,10 +65,10 @@ public class FrameModule extends JFrame
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, typeModule, numSemestre );
+		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, typeModule, numSemestre + 1 );
 		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
-		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, this );
-		this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl, this );
+		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, typeModule );
+		/*this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl, this );
 		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl, this );
 		this.panelModuleHeure    = new PanelModuleHeure    ( this.ctrl, this );
 		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
@@ -87,7 +88,7 @@ public class FrameModule extends JFrame
 				lblMessageErreur.setText ( "" );
 				timerMessageErreur.stop ( );
 			}
-		} );
+		} );*/
 		
 		/* ------------------------------- */
 		/*  Positionnement des composants  */
@@ -98,7 +99,7 @@ public class FrameModule extends JFrame
 		/*---------*/
 
 		JPanel panelNord = new JPanel ( new BorderLayout ( ) );
-		panelNord.add ( this.panelModuleBouton, BorderLayout.LINE_START );
+		panelNord.add ( this.panelModuleLabel, BorderLayout.LINE_START );
 
 		this.add ( panelNord, BorderLayout.NORTH );
 
@@ -106,10 +107,8 @@ public class FrameModule extends JFrame
 		/*  Centre  */
 		/*----------*/
 
-		JPanel panelCentre  = new JPanel ( new GridBagLayout ( ) );
+		/*JPanel panelCentre  = new JPanel ( new GridBagLayout ( ) );
 		
-		this.add ( panelCentre, BorderLayout.CENTER );
-
 		GridBagConstraints gbcC = new GridBagConstraints ( );
 		gbcC.insets = new Insets ( 5, 10, 15, 10 );
 
@@ -127,7 +126,7 @@ public class FrameModule extends JFrame
 		this.panelAffectation.setPreferredSize ( new Dimension ( 850, 500 ) );
 		panelCentre.add ( this.panelAffectation, gbcC );
 
-		
+		this.add ( panelCentre, BorderLayout.CENTER );*/
 		/*---------*/
 		/*  Ouest  */
 		/*---------*/
@@ -137,12 +136,10 @@ public class FrameModule extends JFrame
 		GridBagConstraints gbcO = new GridBagConstraints ( );
 		gbcO.insets = new Insets ( 5, 10, 15, 10 );
 
-		this.add ( panelOuest, BorderLayout.WEST );
-
 		gbcO.gridy = 0;
 		gbcO.gridx = 0;
 		panelOuest.add ( this.panelPNLocal,    gbcO  );
-		panelOuest.add ( this.panelPNLocalBis, gbcO  );
+		/*panelOuest.add ( this.panelPNLocalBis, gbcO  );
 		panelOuest.add ( this.panelPNLocalPPP, gbcO  );
 		this.panelPNLocalBis.setVisible ( false );
 		this.panelPNLocalPPP.setVisible ( false );
@@ -157,9 +154,9 @@ public class FrameModule extends JFrame
 
 		gbcO.gridy = 3;
 		gbcO.gridx = 0;
-		panelOuest.add ( this.lblMessageErreur, gbcO );
+		panelOuest.add ( this.lblMessageErreur, gbcO );*/
 
-
+		this.add ( panelOuest, BorderLayout.WEST );
 		/*-------*/
 		/*  Sud  */
 		/*-------*/
@@ -169,6 +166,55 @@ public class FrameModule extends JFrame
 		this.setVisible ( true );
 	}
 
+	/**
+	 * met à jour les panels
+	 */
+	public void majPanel ( )
+	{
+		// Mise à jour du module
+		ModuleIUT module = this.ctrl.getModule ( this.panelModuleLabel.getCode ( ) );
+		Object[] tabModule = { module.getSemestre ( ), module.getTypeModule ( ), module.getCode ( ), module.getLibLong ( ), module.getLibCourt ( ) };
+				
+		Object[][] tabHoraire = this.ctrl.getTableau ( Horaire.class );
+		
+		Object[][] heuresPn = new Object[tabHoraire.length][2];
+		heuresPn[0]
+
+		//Object[][] heureAffectees = new Object[tabHoraire.length][4];
+
+		this.panelPNLocal    .majIhm ( heuresPn  );
+		this.panelModuleLabel.majIhm ( tabModule );
+		//this.panelRepartition.majIhm ( heureAffectees );
+		
+		this.cbValidation.setSelected ( module.estValide ( ) );
+	}
+
+	/**
+	 * Met à jour la base de donnée
+	 */
+	public void majDonnees ( char action )
+	{
+		//TODO: Compléter avec le panelRépartition
+		if ( action == 'A' )
+			this.ctrl.majObjetBD ( this.panelModuleLabel.getDonnees ( ), ModuleIUT.class, Controleur.AJOUTER );
+		
+		Object[][] heurePn = this.panelPNLocal.getDonnees ( );
+		//Object[][] heureAffectees = this.pnlRepartition.getDonnees ( );
+	
+		Object[][] tabHorraire = new Object[heurePn.length][6];
+
+		for ( int cpt = 0; cpt < tabHorraire.length; cpt++ )
+		{
+			tabHorraire[cpt][0] = action; // Action
+			tabHorraire[cpt][1] = this.ctrl.getHeure  ( heurePn[0][cpt].toString ( )           ); // Heure (Objet) JSP si ça corrige le problème
+			tabHorraire[cpt][2] = this.ctrl.getModule ( this.panelModuleLabel.getCode ( ) ); // Module (Objet)
+			tabHorraire[cpt][3] = heurePn[1]; // nbHeurePN
+			tabHorraire[cpt][4] = 0; // NbSemaine        TODO: mettre valeur de heureAffectees
+			tabHorraire[cpt][5] = 0; // nbHeureAffectees TODO: mettre valeur de heureAffectees
+		}
+
+		this.ctrl.majTableauBD ( tabHorraire, Horaire.class );
+	}
 
 	/** Retourne si la checkbox est sélectionnée ou non
 	 * @return cbValidation
@@ -188,12 +234,12 @@ public class FrameModule extends JFrame
 	/** Retourne le panelPNLocalBis de FrameModule
 	 * @return panelPNLocalBis
 	 */
-	public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
+	//public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
 
 	/** Retourne le panelPNLocalPPP de FrameModule
 	 * @return panelPNLocalPPP
 	 */
-	public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
+	//public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
 
 	/** Retourne le panelRepartition de FrameModule
 	 * @return panelRepartition
@@ -221,7 +267,7 @@ public class FrameModule extends JFrame
 	 * Si le module est un autre type, on rend visible les panels principaux et on rend invisible le reste.
 	 * @param typeModule
 	 */
-	public void setVisiblePanels ( String typeModule )
+	/*public void setVisiblePanels ( String typeModule )
 	{
 		if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
 		{
@@ -253,7 +299,7 @@ public class FrameModule extends JFrame
 			this.panelPNLocalBis .setVisible ( false );
 			this.panelPNLocalPPP .setVisible ( false );
 		}
-	}
+	}*/
 
 	/** Permet de modifier le module avec le code passé en paramètre.
 	 * On récupère le panel qui est visible grâce au code passé en paramètre afin de lui affecter les données du module en question.
@@ -261,7 +307,7 @@ public class FrameModule extends JFrame
 	 * On valide la checkbox si le module est validé.
 	 * @param code
 	 */
-	public void setModule ( String code )
+	/*public void setModule ( String code )
 	{
 		ModuleIUT module = this.ctrl.getModule ( code );
 
@@ -279,7 +325,7 @@ public class FrameModule extends JFrame
 		this.panelAffectation.setDonnee ( module );
 
 		this.cbValidation.setSelected ( module.estValide ( ) );
-	}
+	}*/
 
 	public void messageErreurAjouter ( )
 	{

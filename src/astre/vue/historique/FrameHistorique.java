@@ -28,11 +28,11 @@ public class FrameHistorique extends AFrame implements ActionListener
 		super ( ctrl );
 
 		this.setLayout             ( new BorderLayout ( 10, 10 ) );
-		this.setTitle              ( "Historique"                    );
-		this.setSize               ( 1000,600                 );
-		this.setLocationRelativeTo ( null                                );
+		this.setTitle              ( "Historique"                );
+		this.setSize               ( 1000, 600                   );
+		this.setLocationRelativeTo ( null                        );
 		
-		this.panel     = new PanelHistorique ( this.ctrl      );
+		this.panel     = new PanelHistorique ( this.ctrl );
 		this.btnRetour = new JButton         ( "Retour"  );
 		
 		this.add ( this.panel    , BorderLayout.CENTER );

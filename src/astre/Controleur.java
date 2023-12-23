@@ -2,27 +2,55 @@ package astre;
 
 /** Classe Controleur
   * @author : Maximilien Lesterlin, Maxime Lemoine, Mateo Sa et Clémentin Ly
-  * @version : 2.1 - 19/12/2023
+  * @version : 2.2 - 22/12/2023
   * @date : 06/12/2023
   */
 
 import astre.modele.elements.*;
 import java.util.List;
 
+import astre.vue.outils.AFrame;
+import astre.vue.FrameAccueil;
 import astre.modele.*;
-import astre.vue.*;
 import astre.vue.outils.PopUpErreur;
 
 public class Controleur
 {
-	private FrameAccueil ihm;
-	private Astre        metier;
+	//TODO: généraliser l'emplacement de ces constantes
+	public static final char AJOUTER   = 'A';
+	public static final char MODIFIER  = 'M';
+	public static final char SUPPRIMER = 'S';
+
+	private AFrame ihm;
+	private Astre  metier;
 
 	public Controleur ( )
 	{
-		this.ihm    = new FrameAccueil ( this );
 		this.metier = new Astre        (      );
+		this.ihm    = new FrameAccueil ( this );
 	}
+	
+	/*---------------------------------------*/
+	/*               ACCES IHM               */
+	/*---------------------------------------*/ 
+
+	/**
+	 * Méthode permettant de mettre à jour la fenetre ouverte actuellement et utilisable par le controleur
+	 */
+	public void setFrameActuelle   ( AFrame fenetre ) { this.ihm = fenetre; }
+	public AFrame getFrameActuelle (                ) { return this.ihm;    }
+
+	/**
+	 * Ouvre une popup pour afficher une erreur
+	 */
+	public static void afficherErreur ( String titre, String message )
+	{
+		new PopUpErreur ( titre, message );
+	}
+
+	/*---------------------------------------*/
+	/*             ACCES METIER              */
+	/*---------------------------------------*/ 
 
 	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
@@ -41,12 +69,8 @@ public class Controleur
 	public void insert ( Object o ) { this.metier.insert ( o ); }
 	public void delete ( Object o ) { this.metier.delete ( o ); }
 
-	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
-
-	public static void afficherErreur ( String titre, String message )
-	{
-		new PopUpErreur ( titre, message );
-	}
+	public void majTableauBD ( Object[][] tab, Class<?> type                    ) { this.metier.majTableauBD ( tab, type ); }
+	public void majObjetBD   ( Object[]   ens, Class<?> type, char modification ) { this.metier.majObjetBD   ( ens, type, modification ); }
 
 	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee     ( ); }
 	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero ( ); }

@@ -6,7 +6,9 @@ package astre.modele.elements;
   * @date : 12/12/2023
   */
 
-public class Horaire 
+//TODO : Faire des factory pour les heures 
+
+public class Horaire
 {
 	private Heure     heure;
 	private ModuleIUT module;
@@ -21,7 +23,7 @@ public class Horaire
 	 * @param nbSemaine
 	 * @param nbHeure
 	 */
-	public Horaire ( Heure heure, ModuleIUT module, int nbHeurePN, int nbSemaine, int nbHeure ) 
+	public Horaire ( Heure heure, ModuleIUT module, int nbHeurePN, int nbSemaine, int nbHeure )
 	{
 		this.heure     = heure;
 		this.module    = module;
