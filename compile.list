@@ -42,10 +42,9 @@ src/astre/vue/etats/PanelEtats.java
 
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModuleLabel.java
+src/astre/vue/previsionnel/module/PanelModuleHeure.java
 src/astre/vue/previsionnel/module/PanelModuleBouton.java
 src/astre/vue/previsionnel/module/PanelPNLocal.java
-src/astre/vue/previsionnel/module/PanelPNLocalBis.java
-src/astre/vue/previsionnel/module/PanelPNLocalPPP.java
 src/astre/vue/previsionnel/module/PanelRepartition.java
 src/astre/vue/previsionnel/module/PanelRepartitionBis.java
 src/astre/vue/previsionnel/module/PanelRepartitionPPP.java
