@@ -37,6 +37,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 	public FrameNouvelleAnnee ( Controleur ctrl )
 	{
 		super ( ctrl );
+		this.ctrl = ctrl;
 
 		/* --------------------------------------- */
 		/*           Option de la frame            */
@@ -143,6 +144,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 
 		if ( e.getSource ( ) == this.btnAnnuler ) 
 		{
+			AFrame.retourAccueil ( ctrl );
 			this.dispose ( );
 		}
 	}

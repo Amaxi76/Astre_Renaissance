@@ -140,7 +140,6 @@ public class FrameAccueil extends AFrame implements ActionListener
 		if ( e.getSource ( ) == this.btnAnnee        )
 		{
 			frameActuelle = new FrameNouvelleAnnee ( this.ctrl );
-			return;
 		}
 
 		if ( e.getSource ( ) == this.btnHistorique   )
