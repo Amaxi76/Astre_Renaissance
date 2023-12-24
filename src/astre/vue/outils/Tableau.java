@@ -158,9 +158,7 @@ public class Tableau extends JTable
 	*/
 	public void ajouterLigne ( )
 	{
-		System.out.println ( "oui" );
 		this.modele.ajouterLigne ( );
-
 		this.ajusterTailleColonnes ( );
 	}
 
