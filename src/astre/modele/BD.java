@@ -38,6 +38,8 @@ public class BD
 
 	private BD ( )
 	{
+		String erreurConnexion = "";
+
 		try
 		{
 			Class.forName ( JDBC );
@@ -45,7 +47,7 @@ public class BD
 		}
 		catch ( ClassNotFoundException | SQLException e1 )
 		{
-			System.out.println ( "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 );
+			erreurConnexion += "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 + "\n";
 
 			try
 			{
@@ -54,7 +56,8 @@ public class BD
 			}
 			catch ( ClassNotFoundException | SQLException e2 )
 			{
-				System.out.println ( "Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 );
+				erreurConnexion += "Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 ;
+				JOptionPane.showMessageDialog ( null, erreurConnexion, "Erreur de connexion", JOptionPane.ERROR_MESSAGE ); //de l'ihm glissé ici déso
 			}
 		}
 	}
