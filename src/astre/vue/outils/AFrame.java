@@ -4,7 +4,6 @@ import astre.vue.FrameAccueil;
 import astre.Controleur;
 import javax.swing.JFrame;
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -42,35 +41,11 @@ public class AFrame extends JFrame
 	 */
 	public static void fermerFenetreContenant ( Component compo ) //ancien nom : fermer
 	{
-		java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor ( compo );
-
-		if ( window instanceof Frame )
-		{
-			Frame parentFrame = ( Frame ) window;
-			parentFrame.dispose ( );
-		}
+		javax.swing.SwingUtilities.getWindowAncestor ( compo ).dispose ( );
 	}
 	
 	public static void retourAccueil ( Controleur ctrl )
 	{
 		ctrl.setFrameActuelle ( new FrameAccueil ( ctrl ) );
 	}
-	
-	/*public void allerVersPage ( Class c )
-	{
-		try
-		{
-			this.dispose ( );
-			
-			// Obtenez le constructeur avec un paramètre de type Ctrl (ou le type approprié)
-			java.lang.reflect.Constructor<?> constructor = c.getDeclaredConstructor ( Controleur.class );
-
-			// Instanciez la nouvelle classe en passant l'objet ctrl dans le constructeur
-			constructor.newInstance ( this.ctrl );
-		}
-		catch ( Exception e )
-		{
-			System.out.println( "Erreur génération de la page " +c.getClass().getName()+ ": " + e );
-		}
-	}*/
 }
