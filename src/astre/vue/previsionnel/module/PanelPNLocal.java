@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 import astre.modele.elements.Heure;
-import astre.modele.elements.Horaire;
+import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.FiltreTextFieldEntier;
 
 /** Classe PanelModuleLabel
@@ -30,7 +30,7 @@ public class PanelPNLocal extends JPanel
 {
 	private Controleur ctrl;
 
-	private String[] ensIntitule;
+	private String[] ensIntitule; //TODO: remplacer par une List<String> voir peut être à le supprimer ?
 	private Map<String, JTextField> ensTxtNbHeure;
 	private Map<String, JTextField> ensTxtTotalPromo;
 
@@ -82,10 +82,10 @@ public class PanelPNLocal extends JPanel
 
 		this.ensIntitule = switch ( nomTypeModule )
 		{
-			case "Ressource" -> new String[] { "CM"   , "TP"   , "TD"             };
-			case "SAE"       -> new String[] { "h Sae", "h Tut"                   };
-			case "Stage"     -> new String[] { "REH"  , "h Tut"                   };
-			case "PPP"       -> new String[] { "CM"   , "TP"   , "TD", "HP", "HT" };
+			case "Ressource" -> new String[] { "CM"  , "TP"   , "TD"             };
+			case "SAE"       -> new String[] { "SAE" , "Tut"                     }; //ne pas mettre le "h" sur les "h Tut" par exemple (car sinon il y a des problèmes avec le métier)
+			case "Stage"     -> new String[] { "REH" , "Tut"                     };
+			case "PPP"       -> new String[] { "CM"  , "TP"   , "TD", "HP", "HT" };
 			default -> new String[] {}; //Cas en cas de type de module innexistant
 		};
 
@@ -139,7 +139,7 @@ public class PanelPNLocal extends JPanel
 			String intitule = this.ensIntitule [ cptColonnes ];
 			
 			gbc.gridy = 0;
-			this.add ( new JLabel ( intitule ), gbc );
+			this.add ( new JLabel ( "h " + intitule ), gbc );
 			gbc.gridy = 1;
 			this.add ( this.ensTxtNbHeure   .get ( intitule ), gbc );
 			gbc.gridy = 2;

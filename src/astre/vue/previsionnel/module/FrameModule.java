@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import astre.modele.elements.Heure;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.outils.Utilitaire;
+import astre.vue.previsionnel.FramePrevisionnel;
 
 /** Classe FrameModule
  * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
@@ -25,7 +27,7 @@ import astre.modele.outils.Utilitaire;
 * @date : 11/12/2023
 */
 
-public class FrameModule extends JFrame
+public class FrameModule extends JDialog //JDialog pour garder le focus sur la fenêtre
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -58,13 +60,14 @@ public class FrameModule extends JFrame
 	 * 
 	 */
 
-	public FrameModule ( Controleur ctrl, String typeModule, int numSemestre, char action )
+	public FrameModule ( Controleur ctrl, FramePrevisionnel parent, String typeModule, int numSemestre, char action )
 	{
+		super ( parent, "Prévisionnel : Module", true ); //JDialog pour garder le focus sur la fenêtre
+		
 		this.ctrl = ctrl;
 
-		this.setSize               ( 1600, 1080              );
-		this.setTitle              ( "Prévisionnel : Module" );
-		this.setLocationRelativeTo ( null                    );
+		this.setSize               ( 1000, 500    );
+		this.setLocationRelativeTo ( parent                    );
 
 		/* ------------------------- */
 		/* Création des composants   */
@@ -73,6 +76,7 @@ public class FrameModule extends JFrame
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, typeModule, numSemestre + 1 );
 		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
 		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, typeModule );
+
 		/*this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl, this );
 		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl, this );
 		this.panelModuleHeure    = new PanelModuleHeure    ( this.ctrl, this );
@@ -167,8 +171,7 @@ public class FrameModule extends JFrame
 		/*-------*/
 
 		this.add ( this.panelModuleBouton, BorderLayout.SOUTH );
-
-		this.setVisible ( true );
+		this.setVisible( false ); //très important (lié à l'utilisation de JDialog)
 	}
 
 	/**

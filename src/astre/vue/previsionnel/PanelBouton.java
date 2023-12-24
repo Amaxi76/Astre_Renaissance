@@ -96,32 +96,32 @@ public class PanelBouton extends JPanel implements ActionListener
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.btncreerRessource )
+		//Gestion des cas si création
+		String typeModule = null;
+
+		if ( e.getSource ( ) == this.btncreerRessource ) { typeModule = "Ressource"; }
+		if ( e.getSource ( ) == this.btncreerSAE       ) { typeModule = "SAE";       }
+		if ( e.getSource ( ) == this.btncreerStage     ) { typeModule = "Stage";     }
+
+		if ( typeModule != null )
 		{
-			this.frameModule = new FrameModule ( this.ctrl, "Ressource", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
+			this.frameModule = new FrameModule ( this.ctrl, framePrevisionnel, typeModule, framePrevisionnel.getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
+			this.frameModule.setVisible( true );
 		}
 
-		if ( e.getSource ( ) == this.btncreerSAE )
-		{
-			this.frameModule = new FrameModule ( this.ctrl, "SAE", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
-		}
-
-		if ( e.getSource ( ) == this.btncreerStage )
-		{
-			this.frameModule = new FrameModule ( this.ctrl, "Stage", ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
-		}
-
+		// Gestion du cas si modification
 		if ( e.getSource ( ) == this.btnModifier )
 		{
 			if ( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
 			{
 				ModuleIUT module = this.ctrl.getModule ( this.framePrevisionnel.getModuleSelection ( ) );
-
-				this.frameModule = new FrameModule ( this.ctrl, module.getTypeModule ( ), ( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).getPanelEnsSemestre ( ).getSelectedIndex ( ), 'M' );
+				this.frameModule = new FrameModule ( this.ctrl, framePrevisionnel, module.getTypeModule ( ), framePrevisionnel.getPanelEnsSemestre ( ).getSelectedIndex ( ), 'M' );
 				this.frameModule.majPanel ( module.getCode ( ) );
+				this.frameModule.setVisible( true ); //important de le mettre après le majPanel
 			}
 		}
 
+		// Gestion du cas si suppression
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			if ( !this.framePrevisionnel.getModuleSelection( ).equals ( "pas de selection" ) )

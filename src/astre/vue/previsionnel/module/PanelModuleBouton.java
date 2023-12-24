@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
 
 import astre.Controleur;
 import astre.modele.elements.Heure;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.elements.Semestre;
+import astre.vue.outils.AFrame;
 
 /** Classe PanelModuleBouton
   * @author : Clémentin Ly
@@ -69,7 +69,8 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose(); //TODO: fonctionne mais peut être mettre qqch de plus propre via une valeur passée en paramètre de contructeur ?
+			AFrame.fermerFenetreContenant ( this );
+			//( (JFrame)(this.getParent().getParent().getParent().getParent()) ).dispose(); //TODO: fonctionne mais peut être mettre qqch de plus propre via une valeur passée en paramètre de contructeur ?
 		}
 	}
 
