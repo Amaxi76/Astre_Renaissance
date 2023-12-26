@@ -1,22 +1,48 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-public class FrameModule extends JFrame
+public class FrameModule extends JFrame implements KeyListener
 {
-	public FrameModule()
+	private AbstractPanelRepartition pnlRepartition;
+
+	public FrameModule ( boolean avecGroupe )
 	{
-		this.add ( new PanelRepartition() );
-		this.setVisible(true);
-		this.pack();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		if ( avecGroupe )
+			this.pnlRepartition = new PanelRepartitionAvecGroupes_v4 ( this );
+		else
+			this.pnlRepartition = new PanelRepartitionSansGroupes_v4 ( this );
+
+		this.add ( this.pnlRepartition ); // afficher en version "typeRessource"
+
+		String[] entetes = new String[]{ "CM", "TP", "TD", "Tut" };
+		for ( String typeModule : entetes )
+		{
+			this.pnlRepartition.ajouterTypeHeure ( typeModule );
+		}
+		//this.pnlRepartition.supprimerTypeHeure ( "Tut" );
+
+		this.setVisible ( true );
+		this.pack ( );
+		this.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
 	}
 
-	public static void main(String[] args)
+	public static void main ( String[] args )
 	{
-		new FrameModule();
+		new FrameModule ( true );
+	}
+
+	public static String formaterDouble ( double num )
+	{
+		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+		decimalSymbols.setDecimalSeparator('.');
+		return new DecimalFormat("0.00", decimalSymbols).format(num);
 	}
 
 	/**
@@ -40,5 +66,15 @@ public class FrameModule extends JFrame
 		}
 		
 		return txtTmp;
+	}
+
+	@Override public void keyTyped   ( KeyEvent e ) {}
+	@Override public void keyPressed ( KeyEvent e ) {}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		System.out.println ( "maj" );
+		this.pnlRepartition.majIHM ( );
 	}
 }
