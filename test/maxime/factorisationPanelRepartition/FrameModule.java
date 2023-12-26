@@ -61,7 +61,7 @@ public class FrameModule extends JFrame implements KeyListener
 		else
 		{
 			txtTmp.setEditable   ( false            );
-			txtTmp.setBackground ( Color.LIGHT_GRAY );
+			txtTmp.setBackground ( new Color ( 225,225,225 ) );
 			//txtTmp.setForeground ( Color.BLACK      );
 		}
 		

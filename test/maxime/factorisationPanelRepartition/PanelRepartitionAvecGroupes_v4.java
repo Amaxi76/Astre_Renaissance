@@ -1,15 +1,17 @@
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.KeyListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.util.HashMap;
 import java.util.Map;
 
-//FIXME: peut surement avoir des problèmes d'arrondis (vu qu'on gère que des entiers)
 public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 {
 	private PanelRepartitionTypesHeures  pnlRepartitionTypesHeures;
@@ -26,30 +28,41 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 	private void initialiserPanels ( )
 	{
 		GridBagConstraints gbc = new GridBagConstraints ( );
-		gbc.insets = new Insets ( 5, 5, 5, 30 );
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.gridwidth = 1;
+		gbc.insets = new Insets ( 5, 15, 5, 0 );
 
 		// Ajout du panel des repartition des heures
+		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		this.pnlRepartitionTypesHeures = new PanelRepartitionTypesHeures ( );
 		this.add ( this.pnlRepartitionTypesHeures, gbc );
 
-		// Ajout du panel d'affichage des équivalents de types d'heures
+		// Ajout du panel des titres des lignes d'équivalences de types d'heures
+		gbc.insets = new Insets ( 25, 10, 5, 0 );
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.gridheight = 3;
 		gbc.gridx = 1;
+		gbc.gridy = 0;
+		this.add ( new PanelLabelsEquivalences ( ), gbc );
+
+		gbc.insets = new Insets ( 25, 5, 5, 20 );
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.gridheight = 3;
+
+		// Ajout du panel d'affichage des équivalents de types d'heures
+		gbc.gridx = 2;
 		gbc.gridy = 0;
 		this.pnlEquivalencesTypesHeures = new PanelEquivalencesTypesHeures ( );
 		this.add ( this.pnlEquivalencesTypesHeures, gbc );
 
 		// Ajout du panel des heures ponctuelles
-		gbc.gridx = 2;
+		gbc.gridx = 3;
 		gbc.gridy = 0;
 		this.pnlHeuresPonctuelles = new PanelVerticalSaisie ( super.listenerModule, "hp", new boolean[]{true, false, false} );
 		this.add ( this.pnlHeuresPonctuelles, gbc );
 
 		// Ajout du panel des heures totales
-		gbc.gridx = 3;
+		gbc.gridx = 4;
 		gbc.gridy = 0;
 		this.pnlHeuresTotales = new PanelVerticalSaisie ( super.listenerModule, "Σ", new boolean[]{false, false, false} );
 		this.add ( this.pnlHeuresTotales, gbc );
@@ -99,6 +112,75 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 	}
 
 //---------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------//
+
+	/**
+	 * Classe interne pour le panel des heures du panel de repartition AVEC GROUPES
+	 */
+	private class PanelRepartitionTypesHeures extends JPanel
+	{
+		private Map <String, PanelSaisieSemaines> ensPnlSaisieSemaines;
+
+		public PanelRepartitionTypesHeures ( )
+		{
+			this.ensPnlSaisieSemaines = new HashMap <String, PanelSaisieSemaines>();
+			
+			this.setLayout( new BoxLayout ( this, BoxLayout.X_AXIS ) );
+		}
+
+		/**
+		 * Permet d'ajouter un nouveau type d'heure visuellement et physiquement
+		 * @param typeHeure
+		 */
+		public void ajouterTypeHeure ( String typeHeure )
+		{
+			this.ensPnlSaisieSemaines.put ( typeHeure, new PanelSaisieSemaines ( PanelRepartitionAvecGroupes_v4.this.listenerModule, typeHeure ) );
+			this.add ( this.ensPnlSaisieSemaines.get ( typeHeure ) );
+		}
+
+		/**
+		 * Permet de supprimer un type d'heure visuellement et physiquement
+		 * @param typeHeure
+		 */
+		public void supprimerTypeHeure ( String typeHeure )
+		{
+			// supprimer le panel visuelement
+			this.remove ( this.ensPnlSaisieSemaines.get ( typeHeure ) );
+
+			// supprimer le panel physiquement
+			this.ensPnlSaisieSemaines.remove ( typeHeure );
+		}
+
+		public double[] getValeurTypeHeure ( String typeHeure )
+		{
+			return this.ensPnlSaisieSemaines.get ( typeHeure ).getValeurs ( );
+		}
+	}
+	
+//---------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------//
+
+	/**
+	 * Classe interne pour le panel des labels des équivalences de types d'heures
+	 */
+	private class PanelLabelsEquivalences extends JPanel
+	{
+		public PanelLabelsEquivalences ( )
+		{
+			this.setLayout ( new BoxLayout ( this, BoxLayout.Y_AXIS ) );
+			this.setBorder( new EmptyBorder( new Insets ( 5,5,5,5 ) ) );
+
+			this.add ( Box.createRigidArea ( new Dimension ( 55, 20      ) ) ); //dimension d'un JTextField
+			this.add ( Box.createRigidArea ( new Dimension ( 0,5         ) ) ); //dimension d'un espace vertical
+			this.add ( Box.createRigidArea ( new Dimension ( 55, 20      ) ) );
+			this.add ( new JLabel          ( "Total promo (eqtd)" , JLabel.RIGHT   ) );
+			this.add ( Box.createRigidArea ( new Dimension ( 0,5         ) ) );
+			this.add ( new JLabel          ( "Total affecté (eqtd)", JLabel.RIGHT  ) );
+		}
+	}
+
+//---------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------//
 
 	/**
 	 * Classe interne pour le panel des équivalences de types d'heures
@@ -112,7 +194,7 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 			this.ensPnlTypeHeure = new HashMap <String, PanelVerticalSaisie>();
 
 			this.setLayout( new BoxLayout ( this, BoxLayout.X_AXIS ) );
-			this.setBorder( new EmptyBorder ( new Insets ( 60, 2, 2, 2 ) ) );
+			//this.setBorder( new EmptyBorder ( new Insets ( 80, 2, 2, 2 ) ) );
 		}
 
 		/**
@@ -160,58 +242,6 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 				double operation = valeurs[0] * valeurs[1];
 				this.setValeursTypeHeure ( typeHeure, operation, operation*5, 0.0 ); //TODO: remplacer le x5 par le nb de semaines du ctrl et calculer le 0.0
 			}
-		}
-	}
-
-//---------------------------------------------------------------------------------------//
-
-	/**
-	 * Classe interne pour le panel des heures du panel de repartition AVEC GROUPES
-	 */
-	private class PanelRepartitionTypesHeures extends JPanel
-	{
-		private Map <String, PanelSaisieSemaines> ensPnlSaisieSemaines;
-
-		public PanelRepartitionTypesHeures ( )
-		{
-			this.ensPnlSaisieSemaines = new HashMap <String, PanelSaisieSemaines>();
-			
-			this.setLayout( new BoxLayout ( this, BoxLayout.X_AXIS ) );
-			this.setBorder( new EmptyBorder ( new Insets ( 0, 10, 0, 10 ) ) );
-		}
-
-		/**
-		 * Permet d'ajouter un nouveau type d'heure visuellement et physiquement
-		 * @param typeHeure
-		 */
-		public void ajouterTypeHeure ( String typeHeure )
-		{
-			this.ensPnlSaisieSemaines.put ( typeHeure, new PanelSaisieSemaines ( PanelRepartitionAvecGroupes_v4.this.listenerModule, typeHeure ) );
-			this.add ( this.ensPnlSaisieSemaines.get ( typeHeure ) );
-		}
-
-		/**
-		 * Permet de supprimer un type d'heure visuellement et physiquement
-		 * @param typeHeure
-		 */
-		public void supprimerTypeHeure ( String typeHeure )
-		{
-			// supprimer le panel visuelement
-			this.remove ( this.ensPnlSaisieSemaines.get ( typeHeure ) );
-
-			// supprimer le panel physiquement
-			this.ensPnlSaisieSemaines.remove ( typeHeure );
-		}
-
-		public double[] getValeurTypeHeure ( String typeHeure )
-		{
-			return this.ensPnlSaisieSemaines.get ( typeHeure ).getValeurs ( );
-		}
-
-		//TODO: à faire
-		public void majIHM ( Object[] ensValeurs )
-		{
-
 		}
 	}
 }
