@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 //FIXME: peut surement avoir des problèmes d'arrondis (vu qu'on gère que des entiers)
-public class PanelRepartitionSansGroupes_v4 extends AbstractPanelRepartition
+public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 {
 	private PanelRepartitionTypesHeures pnlEquivalencesTypesHeures;
 	private PanelVerticalSaisie         pnlHeuresTotales;
 
-	public PanelRepartitionSansGroupes_v4 ( KeyListener listenerModule )
+	public PanelRepartitionSansGroupes ( KeyListener listenerModule )
 	{
 		super ( listenerModule );
 		this.initialiserPanels ( );
@@ -84,7 +84,7 @@ public class PanelRepartitionSansGroupes_v4 extends AbstractPanelRepartition
 		public void ajouterTypeHeure ( String typeHeure )
 		{
 			// ajouter le panel
-			PanelVerticalSaisie pnlTypeHeure = new PanelVerticalSaisie ( PanelRepartitionSansGroupes_v4.this.listenerModule, typeHeure, new boolean[]{true, false} );
+			PanelVerticalSaisie pnlTypeHeure = new PanelVerticalSaisie ( PanelRepartitionSansGroupes.this.listenerModule, typeHeure, new boolean[]{true, false} );
 			this.ensPnlTypeHeure.put ( typeHeure, pnlTypeHeure );
 			this.add ( pnlTypeHeure );
 		}
@@ -124,19 +124,12 @@ public class PanelRepartitionSansGroupes_v4 extends AbstractPanelRepartition
 				double operation =valeur * 1.5; //TODO: à remplacer par x ratio
 				sommeHeuresEQTD += operation;
 
-				entry.getValue().setValeur ( 2, operation );
+				entry.getValue().setValeur ( 1, operation );
 			}
 
 			// maj des heures totales
-			PanelRepartitionSansGroupes_v4.this.pnlHeuresTotales.setValeur ( 0, sommeHeures );
-			PanelRepartitionSansGroupes_v4.this.pnlHeuresTotales.setValeur ( 2, sommeHeuresEQTD );
-
-			/*for ( PanelVerticalSaisie pnlTypeHeure : this.ensPnlTypeHeure.values ( ) )
-			{
-				int operation = pnlTypeHeure.getSaisie (  );
-				pnlTypeHeure.majIHM ( );
-			}
-			this.getSaisie(  )*/
+			PanelRepartitionSansGroupes.this.pnlHeuresTotales.setValeur ( 0, sommeHeures );
+			PanelRepartitionSansGroupes.this.pnlHeuresTotales.setValeur ( 1, sommeHeuresEQTD );
 		}
 	}
 }

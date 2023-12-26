@@ -12,14 +12,14 @@ import javax.swing.border.EmptyBorder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
+public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 {
 	private PanelRepartitionTypesHeures  pnlRepartitionTypesHeures;
 	private PanelEquivalencesTypesHeures pnlEquivalencesTypesHeures;
 	private PanelVerticalSaisie          pnlHeuresPonctuelles;
 	private PanelVerticalSaisie          pnlHeuresTotales;
 
-	public PanelRepartitionAvecGroupes_v4 ( KeyListener listenerModule )
+	public PanelRepartitionAvecGroupes ( KeyListener listenerModule )
 	{
 		super ( listenerModule );
 		this.initialiserPanels ( );
@@ -134,7 +134,7 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 		 */
 		public void ajouterTypeHeure ( String typeHeure )
 		{
-			this.ensPnlSaisieSemaines.put ( typeHeure, new PanelSaisieSemaines ( PanelRepartitionAvecGroupes_v4.this.listenerModule, typeHeure ) );
+			this.ensPnlSaisieSemaines.put ( typeHeure, new PanelSaisieSemaines ( PanelRepartitionAvecGroupes.this.listenerModule, typeHeure ) );
 			this.add ( this.ensPnlSaisieSemaines.get ( typeHeure ) );
 		}
 
@@ -204,7 +204,7 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 		public void ajouterTypeHeure ( String typeHeure )
 		{
 			// ajouter le panel visuelement
-			PanelVerticalSaisie pnlTypeHeure = new PanelVerticalSaisie ( PanelRepartitionAvecGroupes_v4.this.listenerModule, typeHeure, new boolean[]{false, false, false} );
+			PanelVerticalSaisie pnlTypeHeure = new PanelVerticalSaisie ( PanelRepartitionAvecGroupes.this.listenerModule, typeHeure, new boolean[]{false, false, false} );
 			this.ensPnlTypeHeure.put ( typeHeure, pnlTypeHeure );
 			this.add ( pnlTypeHeure );
 		}
@@ -238,7 +238,7 @@ public class PanelRepartitionAvecGroupes_v4 extends AbstractPanelRepartition
 			System.out.println("majIHM");
 			for ( String typeHeure : this.ensPnlTypeHeure.keySet ( ) )
 			{
-				double[] valeurs = PanelRepartitionAvecGroupes_v4.this.pnlRepartitionTypesHeures.getValeurTypeHeure ( typeHeure );
+				double[] valeurs = PanelRepartitionAvecGroupes.this.pnlRepartitionTypesHeures.getValeurTypeHeure ( typeHeure );
 				double operation = valeurs[0] * valeurs[1];
 				this.setValeursTypeHeure ( typeHeure, operation, operation*5, 0.0 ); //TODO: remplacer le x5 par le nb de semaines du ctrl et calculer le 0.0
 			}

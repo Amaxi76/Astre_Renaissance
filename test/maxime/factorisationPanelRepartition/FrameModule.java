@@ -15,9 +15,9 @@ public class FrameModule extends JFrame implements KeyListener
 	public FrameModule ( boolean avecGroupe )
 	{
 		if ( avecGroupe )
-			this.pnlRepartition = new PanelRepartitionAvecGroupes_v4 ( this );
+			this.pnlRepartition = new PanelRepartitionAvecGroupes ( this );
 		else
-			this.pnlRepartition = new PanelRepartitionSansGroupes_v4 ( this );
+			this.pnlRepartition = new PanelRepartitionSansGroupes ( this );
 
 		this.add ( this.pnlRepartition ); // afficher en version "typeRessource"
 
@@ -35,7 +35,7 @@ public class FrameModule extends JFrame implements KeyListener
 
 	public static void main ( String[] args )
 	{
-		new FrameModule ( true );
+		new FrameModule ( false );
 	}
 
 	public static String formaterDouble ( double num )
@@ -74,7 +74,6 @@ public class FrameModule extends JFrame implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		System.out.println ( "maj" );
 		this.pnlRepartition.majIHM ( );
 	}
 }

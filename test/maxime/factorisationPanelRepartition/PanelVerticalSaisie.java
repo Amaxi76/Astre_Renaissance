@@ -59,11 +59,8 @@ public class PanelVerticalSaisie extends JPanel
 			catch ( NumberFormatException e )
 			{
 				valeurs[ i ] = 0.0;
-				System.out.println("erreur" + this.ensTxt[i].getText () + " : " + e.getMessage ());
 			}
 		}
-
-		System.out.println( "pnlVertical : " + valeurs[0] + " : " + valeurs[1] + " : " + valeurs[2] );
 		return valeurs;
 	}
 }
