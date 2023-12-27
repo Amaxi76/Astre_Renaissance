@@ -9,7 +9,6 @@ package astre.vue.previsionnel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -19,10 +18,10 @@ import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 import astre.vue.previsionnel.module.*;
 import astre.Controleur;
-import astre.modele.elements.Intervenant;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.outils.Utilitaire;
 
+//TODO: c'est une dinguerie de pas nommer ses variables en lowerCamelCase
 public class PanelBouton extends JPanel implements ActionListener
 {
 	/*-------------*/
@@ -37,6 +36,7 @@ public class PanelBouton extends JPanel implements ActionListener
 	private JButton btncreerRessource;
 	private JButton btncreerSAE;
 	private JButton btncreerStage;
+	private JButton btncreerPPP;
 	private JButton btnModifier;
 	private JButton btnSupprimer;
 
@@ -62,6 +62,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.btncreerRessource = new JButton ( "<html>créer<br>Ressource</html>"   );
 		this.btncreerSAE       = new JButton ( "<html>créer<br>SAÉ</html>"         );
 		this.btncreerStage     = new JButton ( "<html>créer<br>Stage/Suivi</html>" );
+		this.btncreerPPP       = new JButton ( "<html>créer<br>PPP</html>"         );
 		this.btnModifier       = new JButton ( "modifier"                          );
 		this.btnSupprimer      = new JButton ( "supprimer"                         );
 
@@ -72,12 +73,14 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.centrerTexte ( this.btncreerRessource );
 		this.centrerTexte ( this.btncreerSAE       );
 		this.centrerTexte ( this.btncreerStage     );
+		this.centrerTexte ( this.btncreerPPP       );
 		this.centrerTexte ( this.btnModifier       );
 		this.centrerTexte ( this.btnSupprimer      );
 		
 		this.add ( this.btncreerRessource );
 		this.add ( this.btncreerSAE       );
 		this.add ( this.btncreerStage     );
+		this.add ( this.btncreerPPP       );
 		this.add ( this.btnModifier       );
 		this.add ( this.btnSupprimer      );
 
@@ -88,6 +91,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		this.btncreerRessource.addActionListener ( this );
 		this.btncreerSAE      .addActionListener ( this );
 		this.btncreerStage    .addActionListener ( this );
+		this.btncreerPPP      .addActionListener ( this );
 		this.btnModifier      .addActionListener ( this );
 		this.btnSupprimer     .addActionListener ( this );
 
@@ -102,6 +106,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btncreerRessource ) { typeModule = "Ressource"; }
 		if ( e.getSource ( ) == this.btncreerSAE       ) { typeModule = "SAE";       }
 		if ( e.getSource ( ) == this.btncreerStage     ) { typeModule = "Stage";     }
+		if ( e.getSource ( ) == this.btncreerPPP       ) { typeModule = "PPP";       }
 
 		if ( typeModule != null )
 		{

@@ -1,21 +1,18 @@
 package astre.vue.previsionnel.module;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import astre.Controleur;
-import astre.modele.elements.Heure;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.outils.Utilitaire;
@@ -23,11 +20,11 @@ import astre.vue.previsionnel.FramePrevisionnel;
 
 /** Classe FrameModule
  * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
-* @version : 2.0 - 23/12/2023
-* @date : 11/12/2023
-*/
+ * @version : 3.0 - 27/12/2023
+ * @date : 11/12/2023
+ */
 
-public class FrameModule extends JDialog //JDialog pour garder le focus sur la fenêtre
+public class FrameModule extends JDialog implements KeyListener //JDialog pour garder le focus sur la fenêtre
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -35,16 +32,11 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 
 	private Controleur          ctrl;
 
-	private PanelModuleLabel    panelModuleLabel;
-	private PanelModuleBouton   panelModuleBouton;
-	private PanelPNLocal        panelPNLocal;
-	//private PanelPNLocalBis     panelPNLocalBis;
-	//private PanelPNLocalPPP	    panelPNLocalPPP;
-	private PanelModuleHeure    panelModuleHeure;
-	private PanelRepartition    panelRepartition;
-	private PanelRepartitionBis panelRepartitionBis;
-	private PanelRepartitionPPP panelRepartitionPPP;
-	private PanelAffectation    panelAffectation;
+	private PanelModuleLabel         panelModuleLabel;
+	private PanelPNLocal             panelPNLocal;
+	private AbstractPanelRepartition pnlRepartition;
+	private PanelModuleBouton        panelModuleBouton;
+	//private PanelAffectation       panelAffectation;
 
 	private JCheckBox           cbValidation;
 
@@ -56,17 +48,29 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 	/*----------------*/
 
 	/** Constructeur de FrameModule
-	 * @param ctrl le controleur
-	 * 
+	 * @param ctrl : le controleur
+	 * @param parent : la fenêtre parente
+	 * @param typeModule : le type de module
+	 * @param numSemestre : le numéro du semestre
+	 * @param action : l'action à effectuer
 	 */
-
 	public FrameModule ( Controleur ctrl, FramePrevisionnel parent, String typeModule, int numSemestre, char action )
 	{
 		super ( parent, "Prévisionnel : Module", true ); //JDialog pour garder le focus sur la fenêtre
 		
 		this.ctrl = ctrl;
 
-		this.setSize               ( 1000, 500    );
+		String[] ensIntituleTypeHeure = switch ( typeModule )
+		{
+			case "Ressource" -> new String[] { "CM"  , "TP"   , "TD"             };
+			case "SAE"       -> new String[] { "SAE" , "Tut"                     }; //ne pas mettre le "h" sur les "h Tut" par exemple (car sinon il y a des problèmes avec le métier)
+			case "Stage"     -> new String[] { "REH" , "Tut"                     };
+			case "PPP"       -> new String[] { "CM"  , "TP"   , "TD", "HP", "HT" };
+			default -> new String[] {}; //Cas en cas de type de module innexistant
+		};
+
+
+		this.setSize               ( 1400, 500    );
 		this.setLocationRelativeTo ( parent                    );
 
 		/* ------------------------- */
@@ -74,16 +78,16 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 		/* ------------------------- */
 
 		this.panelModuleLabel    = new PanelModuleLabel    ( this.ctrl, typeModule, numSemestre + 1 );
-		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
-		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, typeModule );
+		this.panelPNLocal        = new PanelPNLocal        ( this.ctrl, typeModule, ensIntituleTypeHeure );
 
-		/*this.panelPNLocalBis     = new PanelPNLocalBis     ( this.ctrl, this );
-		this.panelPNLocalPPP     = new PanelPNLocalPPP     ( this.ctrl, this );
-		this.panelModuleHeure    = new PanelModuleHeure    ( this.ctrl, this );
-		this.panelRepartition    = new PanelRepartition    ( this.ctrl, this );
-		this.panelRepartitionBis = new PanelRepartitionBis ( this.ctrl, this );
-		this.panelRepartitionPPP = new PanelRepartitionPPP ( this.ctrl, this );
-		this.panelAffectation    = new PanelAffectation    ( this.ctrl       );
+		boolean avecGroupe = typeModule.equals( "Ressource" );
+		if ( avecGroupe )
+			this.pnlRepartition = new PanelRepartitionAvecGroupes ( this, this.ctrl, this.panelModuleLabel.getCode ( ) );
+		else
+			this.pnlRepartition = new PanelRepartitionSansGroupes ( this );
+
+		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this );
+		
 
 		this.cbValidation      = new JCheckBox ( "Validation" );
 
@@ -97,7 +101,7 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 				lblMessageErreur.setText ( "" );
 				timerMessageErreur.stop ( );
 			}
-		} );*/
+		} );
 		
 		/* ------------------------------- */
 		/*  Positionnement des composants  */
@@ -123,12 +127,7 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 
 		gbcC.gridy = 0;
 		gbcC.gridx = 0;
-		panelCentre.add ( this.panelRepartition,    gbcC );
-		panelCentre.add ( this.panelRepartitionBis, gbcC );
-		panelCentre.add ( this.panelRepartitionPPP, gbcC );
-
-		this.panelRepartitionBis.setVisible ( false );
-		this.panelRepartitionPPP.setVisible ( false );
+		panelCentre.add ( this.pnlRepartition, gbcC );
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
@@ -136,6 +135,7 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 		panelCentre.add ( this.panelAffectation, gbcC );
 
 		this.add ( panelCentre, BorderLayout.CENTER );*/
+
 		/*---------*/
 		/*  Ouest  */
 		/*---------*/
@@ -148,30 +148,42 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 		gbcO.gridy = 0;
 		gbcO.gridx = 0;
 		panelOuest.add ( this.panelPNLocal,    gbcO  );
-		/*panelOuest.add ( this.panelPNLocalBis, gbcO  );
-		panelOuest.add ( this.panelPNLocalPPP, gbcO  );
-		this.panelPNLocalBis.setVisible ( false );
-		this.panelPNLocalPPP.setVisible ( false );
 
 		gbcO.gridy = 1;
 		gbcO.gridx = 0;
 		panelOuest.add ( this.cbValidation    , gbcO );
 
-		gbcO.gridy = 2;
-		gbcO.gridx = 0;
-		panelOuest.add ( this.panelModuleHeure, gbcO );
+		gbcO.anchor = GridBagConstraints.EAST;
+		gbcO.gridy = 0;
+		gbcO.gridx = 1;
+		panelOuest.add ( this.pnlRepartition, gbcO );
 
-		gbcO.gridy = 3;
-		gbcO.gridx = 0;
-		panelOuest.add ( this.lblMessageErreur, gbcO );*/
+		gbcO.gridy = 1;
+		gbcO.gridx = 1;
+		panelOuest.add ( this.lblMessageErreur, gbcO );
 
 		this.add ( panelOuest, BorderLayout.WEST );
+
 		/*-------*/
 		/*  Sud  */
 		/*-------*/
 
 		this.add ( this.panelModuleBouton, BorderLayout.SOUTH );
 		this.setVisible( false ); //très important (lié à l'utilisation de JDialog)
+
+
+		// Ajout des types d'heures aux panels
+		for ( String entetetypeHeure : ensIntituleTypeHeure )
+		{
+			this.pnlRepartition.ajouterTypeHeure ( entetetypeHeure );
+		}
+
+		// Ajouts des données si l'action est de modifier
+		if ( action == 'M' )
+		{
+			if ( action == Controleur.MODIFIER )
+				this.majPanel ( "R1.01" );//FIXME: trouver comment mettre ce code
+		}
 	}
 
 	/**
@@ -193,7 +205,9 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 		this.panelPNLocal    .majIhm ( tabHoraire );
 
 		this.panelModuleLabel.majIhm ( tabModule  );
-		//this.panelRepartition.majIhm ( heureAffectees );
+
+		/*if ( this.pnlRepartition instanceof PanelRepartitionAvecGroupes ) //TODO: à enlever surement ?
+			((PanelRepartitionAvecGroupes)this.pnlRepartition).setValeurs ( );*/
 		
 		//this.cbValidation.setSelected ( module.estValide ( ) );
 	}
@@ -230,112 +244,6 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 	 */
 	public boolean getCbValidation ( ) { return this.cbValidation.isSelected ( ); }
 
-	/** Retourne le panelModuleLabel de FrameModule
-	 * @return panelModuleLabel
-	 */
-	public PanelModuleLabel    getPanelModuleLabel    ( ) { return this.panelModuleLabel;    }
-
-	/** Retourne le panelPNLocal de FrameModule
-	 * @return panelPNLocal
-	 */
-	public PanelPNLocal	       getPanelPNLocal        ( ) { return this.panelPNLocal;        }
-
-	/** Retourne le panelPNLocalBis de FrameModule
-	 * @return panelPNLocalBis
-	 */
-	//public PanelPNLocalBis     getPanelPNLocalBis     ( ) { return this.panelPNLocalBis;     }
-
-	/** Retourne le panelPNLocalPPP de FrameModule
-	 * @return panelPNLocalPPP
-	 */
-	//public PanelPNLocalPPP     getPanelPNLocalPPP     ( ) { return this.panelPNLocalPPP;     }
-
-	/** Retourne le panelRepartition de FrameModule
-	 * @return panelRepartition
-	 */
-	public PanelRepartition    getPanelRepartition    ( ) { return this.panelRepartition;    }
-
-	/** Retourne le panelRepartitionBis de FrameModule
-	 * @return panelRepartitionBis
-	 */
-	public PanelRepartitionBis getPanelRepartitionBis ( ) { return this.panelRepartitionBis; }
-
-	/** Retourne le panelRepartitionPPP de FrameModule
-	 * @return panelRepartitionPPP
-	 */
-	public PanelRepartitionPPP getPanelRepartitionPPP ( ) { return this.panelRepartitionPPP; }
-
-	/** Retourne le panelModuleHeure de FrameModule
-	 * @return panelModuleHeure
-	 */
-	public PanelModuleHeure    getPanelModuleHeure    ( ) { return this.panelModuleHeure;    }
-
-	/** Permet de rendre visible les panels en fonction du type de module.
-	 * Si le module est un SAE ou un Stage, on rend visible les panels Bis et on rend invisible le reste.
-	 * Si le module est un PPP, on rend visible les panels PPP et on rend invisible le reste.
-	 * Si le module est un autre type, on rend visible les panels principaux et on rend invisible le reste.
-	 * @param typeModule
-	 */
-	/*public void setVisiblePanels ( String typeModule )
-	{
-		if ( typeModule.equals ( "SAE" ) || typeModule.equals ( "Stage" ) )
-		{
-			this.panelRepartition   .setVisible ( false );
-			this.panelRepartitionBis.setVisible ( true  );
-			this.panelRepartitionPPP.setVisible ( false );
-
-			this.panelPNLocal    .setVisible ( false );
-			this.panelPNLocalBis .setVisible ( true  );
-			this.panelPNLocalPPP .setVisible ( false );
-		}
-		else if ( typeModule.equals ( "PPP" ) )
-		{
-			this.panelRepartition   .setVisible ( false );
-			this.panelRepartitionBis.setVisible ( false );
-			this.panelRepartitionPPP.setVisible ( true  );
-
-			this.panelPNLocal    .setVisible ( false );
-			this.panelPNLocalBis .setVisible ( false );
-			this.panelPNLocalPPP .setVisible ( true  );
-		}
-		else
-		{
-			this.panelRepartition   .setVisible ( true  );
-			this.panelRepartitionBis.setVisible ( false );
-			this.panelRepartitionPPP.setVisible ( false );
-
-			this.panelPNLocal    .setVisible ( true  );
-			this.panelPNLocalBis .setVisible ( false );
-			this.panelPNLocalPPP .setVisible ( false );
-		}
-	}*/
-
-	/** Permet de modifier le module avec le code passé en paramètre.
-	 * On récupère le panel qui est visible grâce au code passé en paramètre afin de lui affecter les données du module en question.
-	 * On affecte les données dans le tableau du panelAffectation.
-	 * On valide la checkbox si le module est validé.
-	 * @param code
-	 */
-	/*public void setModule ( String code )
-	{
-		ModuleIUT module = this.ctrl.getModule ( code );
-
-		this.panelModuleLabel.setModule ( module );
-		this.setVisiblePanels ( module.getTypeModule ( ) );
-
-		if ( this.panelPNLocal   .isVisible ( ) ) this.panelPNLocal   .setModule ( module );
-		if ( this.panelPNLocalBis.isVisible ( ) ) this.panelPNLocalBis.setModule ( module );
-		if ( this.panelPNLocalPPP.isVisible ( ) ) this.panelPNLocalPPP.setModule ( module );
-		
-		if ( this.panelRepartition   .isVisible ( ) ) this.panelRepartition   .setModule ( module );
-		if ( this.panelRepartitionBis.isVisible ( ) ) this.panelRepartitionBis.setModule ( module );
-		if ( this.panelRepartitionPPP.isVisible ( ) ) this.panelRepartitionPPP.setModule ( module );
-		
-		this.panelAffectation.setDonnee ( module );
-
-		this.cbValidation.setSelected ( module.estValide ( ) );
-	}*/
-
 	public void messageErreurAjouter ( )
 	{
 		this.lblMessageErreur.setText ( "L'heure existe déjà" );
@@ -346,5 +254,15 @@ public class FrameModule extends JDialog //JDialog pour garder le focus sur la f
 	{
 		this.lblMessageErreur.setText ( "On ne peut pas supprimer une heure principale" );
 		timerMessageErreur.start ( );
+	}
+
+	@Override public void keyTyped   ( KeyEvent e ) {}
+	@Override public void keyPressed ( KeyEvent e ) {}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		this.pnlRepartition.majIHM ( );
+		//majPanel ??
 	}
 }

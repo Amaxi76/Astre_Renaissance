@@ -37,7 +37,7 @@ public class PanelPNLocal extends JPanel
 	private JTextField txtSommePromo;
 	private JTextField txtSommeEQTDPromo;
 
-	public PanelPNLocal ( Controleur ctrl, String nomTypeModule, String[] ensIntitule )
+	public PanelPNLocal ( Controleur ctrl, String nomTypeModule )
 	{
 		/* -------------------------- */
 		/*    Propriétés générales    */
@@ -51,7 +51,7 @@ public class PanelPNLocal extends JPanel
 		/*  Création des composants   */
 		/* -------------------------- */
 
-		this.initialiserComposantsModule ( nomTypeModule, ensIntitule );
+		this.initialiserComposantsModule ( nomTypeModule );
 
 		/* -------------------------- */
 		/*    Ajout des composants    */
@@ -75,11 +75,19 @@ public class PanelPNLocal extends JPanel
 	/**
 	 * Créer tous les composants
 	 */
-	private void initialiserComposantsModule ( String nomTypeModule, String[] ensIntitule )
+	private void initialiserComposantsModule ( String nomTypeModule )
 	{
 		this.ensTxtNbHeure    = new HashMap<> ( );
 		this.ensTxtTotalPromo = new HashMap<> ( );
-		this.ensIntitule = ensIntitule;
+
+		this.ensIntitule = switch ( nomTypeModule )
+		{
+			case "Ressource" -> new String[] { "CM"  , "TP"   , "TD"             };
+			case "SAE"       -> new String[] { "SAE" , "Tut"                     }; //ne pas mettre le "h" sur les "h Tut" par exemple (car sinon il y a des problèmes avec le métier)
+			case "Stage"     -> new String[] { "REH" , "Tut"                     };
+			case "PPP"       -> new String[] { "CM"  , "TP"   , "TD", "HP", "HT" };
+			default -> new String[] {}; //Cas en cas de type de module innexistant
+		};
 
 		for ( String intitule : this.ensIntitule )
 		{

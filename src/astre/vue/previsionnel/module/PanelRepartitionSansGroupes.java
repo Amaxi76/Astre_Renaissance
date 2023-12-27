@@ -1,3 +1,5 @@
+package astre.vue.previsionnel.module;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.KeyListener;

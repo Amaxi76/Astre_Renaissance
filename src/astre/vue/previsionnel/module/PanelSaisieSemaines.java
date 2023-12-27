@@ -1,3 +1,5 @@
+package astre.vue.previsionnel.module;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -6,6 +8,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import astre.vue.outils.Saisie;
 
 /** Classe PanelSaisieSemaines
  * @author : Maxime Lemoine
@@ -51,13 +55,13 @@ public class PanelSaisieSemaines extends JPanel
 
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.gridx = 0;
-		this.txtNbSemaine = FrameModule.creerTextFieldEntier ( true );
+		this.txtNbSemaine = Saisie.creerTextFieldEntier ( true );
 		this.txtNbSemaine.addKeyListener ( listener );
 		this.add ( this.txtNbSemaine, gbc );
 
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 1;
-		this.txtNbHeureSemaine = FrameModule.creerTextFieldEntier ( true );
+		this.txtNbHeureSemaine = Saisie.creerTextFieldEntier ( true );
 		this.txtNbHeureSemaine.addKeyListener ( listener );
 		this.add ( this.txtNbHeureSemaine, gbc );
 	}

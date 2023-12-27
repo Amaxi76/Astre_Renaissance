@@ -8,6 +8,11 @@ import java.text.DecimalFormatSymbols;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+/** Classe FrameModule
+ * @author : Maxime Lemoine
+ * @version : 1.0 - 20/12/2023
+ * @date : 27/12/2023
+ */
 public class FrameModule extends JFrame implements KeyListener
 {
 	private AbstractPanelRepartition pnlRepartition;
@@ -19,7 +24,7 @@ public class FrameModule extends JFrame implements KeyListener
 		else
 			this.pnlRepartition = new PanelRepartitionSansGroupes ( this );
 
-		this.add ( this.pnlRepartition ); // afficher en version "typeRessource"
+		this.add ( this.pnlRepartition );
 
 		String[] entetes = new String[]{ "CM", "TP", "TD", "Tut" };
 		for ( String typeModule : entetes )

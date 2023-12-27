@@ -1,3 +1,5 @@
+package astre.vue.previsionnel.module;
+
 import java.awt.Dimension;
 import java.awt.event.KeyListener;
 import java.awt.Insets;
@@ -8,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import astre.vue.outils.Saisie;
 
 /** Classe PanelVerticalSaisie
  * @author : Maxime Lemoine
@@ -35,7 +39,7 @@ public class PanelVerticalSaisie extends JPanel
 		for ( int i = 0; i < saisiesModifiables.length; i++ )
 		{
 			boolean estModifiable = saisiesModifiables[ i ];
-			this.ensTxt[i] = FrameModule.creerTextFieldEntier ( estModifiable );
+			this.ensTxt[i] = Saisie.creerTextFieldEntier ( estModifiable );
 			
 			if ( estModifiable )
 				this.ensTxt[i].addKeyListener ( listener );
@@ -47,7 +51,7 @@ public class PanelVerticalSaisie extends JPanel
 
 	public void setValeur ( int index, double valeur )
 	{
-		this.ensTxt[ index ].setText ( FrameModule.formaterDouble ( valeur ) );
+		this.ensTxt[ index ].setText ( Saisie.formaterDouble ( valeur ) );
 	}
 
 	public double[] getValeurs ( )

@@ -1,3 +1,5 @@
+package astre.vue.previsionnel.module;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -9,7 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import astre.Controleur;
+import astre.modele.BD;
+import astre.modele.elements.Horaire;
+import astre.modele.elements.ModuleIUT;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /** Classe PanelRepartitionAvecGroupes
@@ -19,14 +28,17 @@ import java.util.Map;
  */
 public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 {
+	private Controleur ctrl;
+	
 	private PanelRepartitionTypesHeures  pnlRepartitionTypesHeures;
 	private PanelEquivalencesTypesHeures pnlEquivalencesTypesHeures;
 	private PanelVerticalSaisie          pnlHeuresPonctuelles;
 	private PanelVerticalSaisie          pnlHeuresTotales;
 
-	public PanelRepartitionAvecGroupes ( KeyListener listenerModule )
+	public PanelRepartitionAvecGroupes ( KeyListener listenerModule, Controleur ctrl, String codeModule )
 	{
 		super ( listenerModule );
+		this.ctrl = ctrl;
 		this.initialiserPanels ( );
 	}
 
@@ -116,6 +128,19 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 		this.pnlHeuresTotales.setValeur ( 2, sommes[2] + valeursHP[2] );
 	}
 
+	/**
+	 * @param module
+	 */
+	public void setValeurs ( )
+	{
+		List<Horaire> lstHoraire = this.ctrl.getTable ( Horaire.class );
+
+		for ( Horaire h : lstHoraire )
+		{
+			this.pnlRepartitionTypesHeures.setValeursTypeHeure ( h.getHeure ( ).getNom ( ), h.getNbSemaine ( ), h.getNbHeure ( ) );
+		}
+	}
+
 //---------------------------------------------------------------------------------------//
 //---------------------------------------------------------------------------------------//
 
@@ -159,6 +184,14 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 		public double[] getValeurTypeHeure ( String typeHeure )
 		{
 			return this.ensPnlSaisieSemaines.get ( typeHeure ).getValeurs ( );
+		}
+
+		public void setValeursTypeHeure ( String typeHeure, double val1, double val2 )
+		{
+			System.out.println( typeHeure );
+			System.out.println( this.ensPnlSaisieSemaines.get ( typeHeure ) );
+			System.out.println( "" );
+			this.ensPnlSaisieSemaines.get ( typeHeure ).setValeurs ( new String[]{val1+"", val2+""} );
 		}
 	}
 	
@@ -234,13 +267,11 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 
 		public double[] getValeurTypeHeure ( String typeHeure )
 		{
-			System.out.println( this.ensPnlTypeHeure.get ( typeHeure ).getValeurs ( )[0] + " : " + this.ensPnlTypeHeure.get ( typeHeure ).getValeurs ( )[1] + " : " + this.ensPnlTypeHeure.get ( typeHeure ).getValeurs ( )[2]);
 			return this.ensPnlTypeHeure.get ( typeHeure ).getValeurs ( );
 		}
 
 		public void majIHM ( )
 		{
-			System.out.println("majIHM");
 			for ( String typeHeure : this.ensPnlTypeHeure.keySet ( ) )
 			{
 				double[] valeurs = PanelRepartitionAvecGroupes.this.pnlRepartitionTypesHeures.getValeurTypeHeure ( typeHeure );

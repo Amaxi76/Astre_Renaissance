@@ -1,3 +1,5 @@
+package astre.vue.previsionnel.module;
+
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyListener;
