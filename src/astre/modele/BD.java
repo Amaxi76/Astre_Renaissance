@@ -356,7 +356,7 @@ public class BD
 				}
 				catch (Exception e)
 				{
-					// TODO: handle exception
+					System.out.println ( "Erreur création de contrat : " + e );
 				}
 			}
 
@@ -412,15 +412,15 @@ public class BD
 					                         "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
 					                         "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
 				                             "Where  Id_Semestre      = "+ semes +" AND " +
-					                         "       i.Id_intervenant = " + inter);
+					                         "       i.Id_intervenant = " + inter );
 			while ( rs.next( ) )
 			{
 				ligne = 0;
 				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
 
-				if( getHeure(rs.getInt(5)).getNom().equals("TP") )
+				if ( getHeure ( rs.getInt ( 5 ) ).getNom ( ).equals ( "TP" ) )
 				{
-					ligne *= getIntervenant(rs.getInt(4)).getContrat().getRatioTP();
+					ligne *= getIntervenant ( rs.getInt (4 ) ).getContrat ( ).getRatioTP ( );
 				}
 
 				result += ligne;
@@ -435,7 +435,7 @@ public class BD
 	}
 
 	//meme méthode qu'au dessus mais sans prendre en compte les coeff tp
-	public double getInterventionIntervenantTheo(int inter, int semes)
+	public double getInterventionIntervenantTheo ( int inter, int semes )
 	{
 		double result = 0;
 		double ligne;
@@ -447,16 +447,11 @@ public class BD
 					                         "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
 					                         "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
 				                             "Where  Id_Semestre      = "+ semes +" AND " +
-					                         "       i.Id_intervenant = " + inter);
-			while ( rs.next( ) )
+					                         "       i.Id_intervenant = " + inter );
+			while ( rs.next ( ) )
 			{
 				ligne = 0;
-				ligne += rs.getInt(1) * rs.getInt(2) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
-
-				/*if( getHeure(rs.getInt(5)).getNom().equals("TP") )
-				{
-					ligne *= getIntervenant(rs.getInt(4)).getContrat().getRatioTP();
-				}*/
+				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt ( 3 ) * getHeure ( rs.getInt ( 5 ) ).getCoefTd ( );
 
 				result += ligne;
 			}
@@ -576,11 +571,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureParModule('" + code + "'," + Id_Inter + "," + Id_Heure + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -598,11 +593,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureEQTD('" + code + "','" + nomHeure + "')" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureEQTD('" + code + "','" + nomHeure + "')" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -620,11 +615,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestre(" + Id_Semestre + "," + Id_Intervenant + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureParSemestre(" + Id_Semestre + "," + Id_Intervenant + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -642,11 +637,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeurePNParModule('" + code + "'," + Id_Heure + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeurePNParModule('" + code + "'," + Id_Heure + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -664,11 +659,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureRepParModule('" + code + "'," + Id_Heure + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureRepParModule('" + code + "'," + Id_Heure + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -686,11 +681,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestreImpair(" + id + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureParSemestreImpair(" + id + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -708,11 +703,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestrePair(" + id + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureParSemestrePair(" + id + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -730,11 +725,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectNBHeureParSemestreTot(" + id + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectNBHeureParSemestreTot(" + id + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -752,11 +747,11 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ("SELECT * FROM f_selectTotHeureInter(" + idInter + "," + idHeure + ")" );
+			ResultSet rs = st.executeQuery ( "SELECT * FROM f_selectTotHeureInter(" + idInter + "," + idHeure + ")" );
 
 			rs.next ( );
 
-			somme = rs.getInt(1);
+			somme = rs.getInt ( 1 );
 		}
 		catch (Exception e)
 		{
@@ -836,18 +831,18 @@ public class BD
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "select Id_Intervenant, Id_Heure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient where code_moduleIUT = '" + module + "'");
+			ResultSet rs = st.executeQuery ( "select Id_Intervenant, Id_Heure, nbSemaine, nbGroupe, nbHeure, commentaire from Intervient where code_moduleIUT = '" + module + "'" );
 			int cpt = 0;
 			while ( rs.next ( ) )
 			{
-				intervients[cpt][0] = getIntervenant(rs.getInt ( 1 )).getNom();//nom
-				intervients[cpt][1] = getHeure(rs.getInt ( 2 )).getNom();//heure
-				intervients[cpt][2] = rs.getInt    ( 3 );//nbsemaine
-				intervients[cpt][3] = rs.getInt    ( 4 );//nbgroupe
-				intervients[cpt][4] = rs.getInt    ( 5 );//nbheure
-				intervients[cpt][5] = rs.getString ( 6 );//commentaire
+				intervients[cpt][0] = getIntervenant ( rs.getInt ( 1 ) ).getNom ( );//nom
+				intervients[cpt][1] = getHeure       ( rs.getInt ( 2 ) ).getNom ( );//heure
+				intervients[cpt][2] = rs.getInt      ( 3 );//nbsemaine
+				intervients[cpt][3] = rs.getInt      ( 4 );//nbgroupe
+				intervients[cpt][4] = rs.getInt      ( 5 );//nbheure
+				intervients[cpt][5] = rs.getString   ( 6 );//commentaire
 
-				if( intervients[cpt][5] == null )
+				if ( intervients[cpt][5] == null )
 					intervients[cpt][5] = "";
 
 				cpt++;
@@ -922,8 +917,8 @@ public class BD
 			ResultSet rs = st.executeQuery ( "select * from Historique" );
 			while ( rs.next ( ) )
 			{
-				String date[] = rs.getString(2).split(":");
-				lst.add( date[0] + ":" + date[1] + "  " + rs.getString(3) );
+				String date[] = rs.getString ( 2 ).split ( ":" );
+				lst.add ( date[0] + ":" + date[1] + "  " + rs.getString ( 3 ) );
 			}
 
 			rs.close ( );
@@ -1087,7 +1082,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			JOptionPane.showConfirmDialog( null, "Le contrat " + c.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.WARNING_MESSAGE );
+			JOptionPane.showConfirmDialog ( null, "Le contrat " + c.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.WARNING_MESSAGE );
 		}
 	}
 
@@ -1105,7 +1100,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			JOptionPane.showConfirmDialog( null, "L'Heure " + h.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.WARNING_MESSAGE );
+			JOptionPane.showConfirmDialog ( null, "L'Heure " + h.getNom ( ) + " est présent sur une autre table, supprimer toutes ses relations avant de le supprimer", "Suppression impossible", JOptionPane.WARNING_MESSAGE );
 		}
 	}
 
@@ -1326,12 +1321,12 @@ public class BD
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, m.getLibLong    ( ) );
-			ps.setString ( 2, m.getLibCourt   ( ) );
-			ps.setString ( 3, m.getTypeModule ( ) );
-			ps.setBoolean( 4, m.estValide()       );
-			ps.setInt    ( 5, m.getSemestre   ( ).getIdSemestre ( ) );
-			ps.setString ( 6, m.getCode       ( ) );
+			ps.setString  ( 1, m.getLibLong    ( ) );
+			ps.setString  ( 2, m.getLibCourt   ( ) );
+			ps.setString  ( 3, m.getTypeModule ( ) );
+			ps.setBoolean ( 4, m.estValide     ( ) );
+			ps.setInt     ( 5, m.getSemestre   ( ).getIdSemestre ( ) );
+			ps.setString  ( 6, m.getCode       ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
