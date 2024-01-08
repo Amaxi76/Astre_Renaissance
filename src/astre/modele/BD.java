@@ -1,5 +1,7 @@
 package astre.modele;
 
+import java.io.FileInputStream;
+
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
   * @version : 1.0 - 18/12/2023
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -26,10 +29,16 @@ import astre.modele.outils.Utilitaire;
 public class BD
 {
 	private static final String JDBC      = "org.postgresql.Driver";
-	private static final String LOGIN     = "sm220306";
-	private static final String PASSWORD  = /* mot de passe ---> */																																					"mateo2705";
-	private static final String URL_WOODY = "jdbc:postgresql://woody/" + LOGIN;
-	private static final String URL_LOCAL = "jdbc:postgresql://localhost:7777/" + LOGIN;
+	//private static final String LOGIN     = "sm220306";
+	//private static final String PASSWORD  = /* mot de passe ---> */																																					"mateo2705";
+	//private static final String URL_WOODY = "jdbc:postgresql://woody/" + LOGIN;
+	//private static final String URL_LOCAL = "jdbc:postgresql://localhost:7777/" + LOGIN;
+
+	private String login;
+	private String password;
+
+	private String urlWoody;
+	private String urlLocal;
 
 	private static BD dbInstance;
 
@@ -38,25 +47,27 @@ public class BD
 
 	private BD ( )
 	{
+		setIndentifiant ( );
+		
 		String erreurConnexion = "";
 
 		try
 		{
 			Class.forName ( JDBC );
-			co = DriverManager.getConnection ( URL_WOODY , LOGIN, PASSWORD );
+			co = DriverManager.getConnection ( this.urlWoody , this.login, this.password );
 		}
 		catch ( ClassNotFoundException | SQLException e1 )
 		{
-			erreurConnexion += "Erreur de connexion à la base de données " + URL_WOODY + " : " + e1 + "\n";
+			erreurConnexion += "Erreur de connexion à la base de données " + this.urlWoody + " : " + e1 + "\n";
 
 			try
 			{
 				Class.forName ( "org.postgresql.Driver" );
-				co = DriverManager.getConnection( URL_LOCAL, LOGIN, PASSWORD );
+				co = DriverManager.getConnection( this.urlLocal, this.login, this.password );
 			}
 			catch ( ClassNotFoundException | SQLException e2 )
 			{
-				erreurConnexion += "Erreur de connexion à la base de données " + URL_LOCAL + " : " + e2 ;
+				erreurConnexion += "Erreur de connexion à la base de données " + this.urlLocal + " : " + e2 ;
 				JOptionPane.showMessageDialog ( null, erreurConnexion, "Erreur de connexion", JOptionPane.ERROR_MESSAGE ); //de l'ihm glissé ici déso
 			}
 		}
@@ -65,6 +76,25 @@ public class BD
 	public static BD getInstance ( )
 	{
 		return dbInstance != null ? dbInstance : new BD ( );
+	}
+
+	/* Méthode permettant de recupérer les identifiants
+	 */
+	private void setIndentifiant ( )
+	{
+		try
+		{
+			Scanner sc = new Scanner ( new FileInputStream ( "./data/identifiant/identifiant.txt" ) );
+
+			this.login    = sc.nextLine ( );
+			this.password = sc.nextLine ( );
+
+			sc.close ( );
+		}
+		catch ( Exception e ){ e.printStackTrace ( ); }
+
+		this.urlWoody = "jdbc:postgresql://woody/"          + this.login;
+		this.urlLocal = "jdbc:postgresql://localhost:7777/" + this.login;
 	}
 
 	/*---------------------------------------*/
