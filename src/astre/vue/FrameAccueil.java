@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,29 +56,27 @@ public class FrameAccueil extends AFrame implements ActionListener
 	{
 		super( ctrl );
 
-		this.setSize               ( 1000, 700 );
-		this.setTitle              ( "ASTRE"   );
-		this.setLocationRelativeTo ( null      );
+		this.setSize               ( 1000, 700  );
+		this.setTitle              ( "ASTRE"    );
+		this.setLocationRelativeTo ( null       );
+		this.setLayout ( new GridLayout ( 2,1 ) );
 
 		/* ------------------------- */
 		/*  Création des composants  */
 		/* ------------------------- */
 
-		JPanel panel         = new JPanel ( new BorderLayout (      )         );
-		JPanel panelTest     = new JPanel ( new GridLayout   ( 1, 3 )         );
-		JPanel panelButton   = new JPanel ( new GridLayout   ( 7, 1, 15, 15 ) );
-		JPanel panelInutile  = new JPanel (                                   );
-		JPanel panelInutile2 = new JPanel (                                   );
+		int largeur = this.getWidth( );
 
-		//JLabel lblAnneee     = new JLabel ("Année en cours "); //TODO: Affilier une année ?
-		
+		JPanel panel         = new JPanel ( new BorderLayout (      )         );
+		JPanel panelButton   = new JPanel ( new GridLayout   ( 8, 1, 15, 15 ) );
+
+		panelButton.setBorder ( BorderFactory.createEmptyBorder ( 10, (largeur/3), 10, (largeur/3) ) );
+
+		JLabel lblAnnee     = new JLabel ("Année en cours : " + this.ctrl.getAnnee ( ) );
 		JLabel j = new JLabel ( new ImageIcon ( Toolkit.getDefaultToolkit ( ).getImage ( "./data/images/astre.png" ) ) );
 
 		panel        .setOpaque ( false );
-		panelTest    .setOpaque ( false );
 		panelButton  .setOpaque ( false );
-		panelInutile .setOpaque ( false );
-		panelInutile2.setOpaque ( false );
 
 		this.btnParametre    = new JButton ( "Paramètre"                    );
 		this.btnPrevisionnel = new JButton ( "Prévisionnel"                 );
@@ -86,6 +85,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
 		this.btnHistorique   = new JButton ( "Historique"                   );
 
+		panelButton.add (      lblAnnee        );
 		panelButton.add ( this.btnParametre    );
 		panelButton.add ( this.btnPrevisionnel );
 		panelButton.add ( this.btnIntervenants );
@@ -93,18 +93,10 @@ public class FrameAccueil extends AFrame implements ActionListener
 		panelButton.add ( this.btnAnnee        );
 		panelButton.add ( this.btnHistorique   );
 
-		panelTest.add ( panelInutile  );
-		panelTest.add ( panelButton   );
-		panelTest.add ( panelInutile2 );
-
-		panel.add ( panelTest, BorderLayout.SOUTH );
+		panel.add( j, BorderLayout.CENTER );
 		
-		JPanel test = new JPanel ( new GridLayout ( 2, 1 ) );
-		test.add(j);
-		test.add(panel);
-		this.add(test);
-
-		//this.getContentPane ( ).add ( j );
+		this.add ( panel       );
+		this.add ( panelButton );
 
 		/* ------------------------- */
 		/* Activation des composants */

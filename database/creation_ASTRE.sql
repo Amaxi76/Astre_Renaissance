@@ -25,10 +25,10 @@ DROP TABLE Historique  CASCADE;
 
 CREATE TABLE Annee
 (
-   nom    VARCHAR(10);
+   nom    VARCHAR(10),
 
-   PRIMARY KEY  (nom);
-)
+   PRIMARY KEY  (nom)
+);
 
 CREATE TABLE Semestre
 (

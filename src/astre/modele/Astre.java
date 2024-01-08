@@ -131,7 +131,7 @@ public class Astre
 	}
 	
 	
-
+	public String  getAnnee          ( ) { return this.bd.getAnnee          ( ); }
 	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
 	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
 }

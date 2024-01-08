@@ -288,6 +288,28 @@ public class BD
 		return ensHoraire;
 	}
 
+	public String getAnnee ( )
+	{
+		String REQUETE = "SELECT * FROM Annee";
+		String nom = "";
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery    ( "SELECT * FROM Annee" );
+
+			rs.next ( );
+
+			nom = rs.getString(1);
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "getAnnee ( )" +  e );
+		}
+
+		return nom;
+	}
+
 	/*---------------------------------------*/
 	/*             RECUP UNITAIRE            */
 	/*---------------------------------------*/
