@@ -84,7 +84,7 @@ public class BD
 	{
 		try
 		{
-			Scanner sc = new Scanner ( new FileInputStream ( "./data/identifiant/identifiant.txt" ) );
+			Scanner sc = new Scanner ( new FileInputStream ( "../data/identifiant/identifiant.txt" ) );
 
 			this.login    = sc.nextLine ( );
 			this.password = sc.nextLine ( );
@@ -92,6 +92,8 @@ public class BD
 			sc.close ( );
 		}
 		catch ( Exception e ){ e.printStackTrace ( ); }
+
+		System.out.println( "MON SUPER LOGIN : " + this.login);
 
 		this.urlWoody = "jdbc:postgresql://woody/"          + this.login;
 		this.urlLocal = "jdbc:postgresql://localhost:7777/" + this.login;
