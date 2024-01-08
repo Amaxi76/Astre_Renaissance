@@ -72,9 +72,9 @@ public class Controleur
 	public void majTableauBD ( Object[][] tab, Class<?> type                    ) { this.metier.majTableauBD ( tab, type ); }
 	public void majObjetBD   ( Object[]   ens, Class<?> type, char modification ) { this.metier.majObjetBD   ( ens, type, modification ); }
 
-	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee     ( ); }
-	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero ( ); }
-	public String  getAnnee          ( ) { return this.metier.getAnnee          ( ); }
+	public boolean nouvelleAnnee     ( String nom ) { return this.metier.nouvelleAnnee     ( nom ); }
+	public boolean nouvelleAnneeZero ( String nom ) { return this.metier.nouvelleAnneeZero ( nom ); }
+	public String  getAnnee          (            ) { return this.metier.getAnnee          (     ); }
 
 	public static void main ( String[] args )
 	{

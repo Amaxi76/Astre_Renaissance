@@ -120,7 +120,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			
 				if ( retour2 == 0 )
 				{
-					if ( this.ctrl.nouvelleAnneeZero ( ) )
+					if ( this.ctrl.nouvelleAnneeZero ( this.txtNom.getText ( ) ) )
 					{
 						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
 						this.dispose ( );
@@ -145,7 +145,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			
 				if ( retour2 == 0 )
 				{
-					if ( this.ctrl.nouvelleAnnee ( ) )
+					if ( this.ctrl.nouvelleAnnee ( this.txtNom.getText ( ) ) )
 					{
 						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
 						this.dispose ( );
@@ -165,4 +165,6 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			this.dispose ( );
 		}
 	}
+
+	
 }
