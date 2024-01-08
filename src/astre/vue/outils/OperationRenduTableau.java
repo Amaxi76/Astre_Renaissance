@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /** Menu de l'application
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
   * @version : 1.0 - 19/12/2023
   * @date : 19/12/2023
   */
+//TODO: Ligne sélectionner en bleu
 public class OperationRenduTableau extends DefaultTableCellRenderer
 {
 	//private static final long serialVersionUID = 1L;
@@ -31,32 +33,27 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 	{
 		// Appeler la méthode de la classe parent pour obtenir le rendu par défaut
 		Component cellule = super.getTableCellRendererComponent ( tbl, valeur, estSelectionne, focus, lig, col );
-
+		
 		if ( valeur instanceof Boolean )
 		{
 			JCheckBox checkBox = new JCheckBox ( );
 			checkBox.setSelected            ( ( Boolean ) valeur );
 			checkBox.setHorizontalAlignment ( JCheckBox.CENTER   );
-
 			cellule = checkBox;
 		}
-
-		// Aligner le texte à droite si la valeur est numérique
-		if ( valeur instanceof Number )
-			setHorizontalAlignment ( RIGHT );
-		else
-			setHorizontalAlignment ( LEFT ); // Rétablir l'alignement par défaut pour le texte
-
+		
 		// par défaut il y a une alternance de couleurs
-		if ( lig % 2 == 0 )
-			cellule.setBackground ( COULEUR_FOND_1 );
-		else
-			cellule.setBackground ( COULEUR_FOND_2 );
+		if ( ! focus )
+		{
+			if ( lig % 2 == 0 )
+				cellule.setBackground ( COULEUR_FOND_1 );
+			else
+				cellule.setBackground ( COULEUR_FOND_2 );
+		}
 		
 		cellule.setForeground ( tbl.getForeground ( ) );
-
-		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		
+		Object premiereCelulleLigne = ( ( ModeleTableau ) ( tbl.getModel ( ) ) ).getObjet ( lig, 0 );
 		if ( premiereCelulleLigne instanceof Character )
 		{
 			char operation = ( char ) premiereCelulleLigne;
@@ -86,40 +83,18 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 					break;
 			}
 		}
-
-		//zone test
-
-		//recupe entete de modeleTablo
-		//verif si entete ou taille
-
-
-		ModeleTableau modele = ( ModeleTableau ) ( tbl.getModel ( ) );
-		Object[][] donnees = modele.getDonnees();
-
-		if ( donnees.length != 0 )
+			
+		// Aligner le texte à droite si la valeur est numérique
+		if ( valeur instanceof Number )
 		{
-			JComponent jcellule = (JComponent) cellule;
-			jcellule.setBorder(null);
-
-			if( donnees[0].length == 17 && col == 14)//nbcolonne de tablo intervenant
-			{
-				int hmin = Integer.parseInt(donnees[lig][5].toString());
-				int hmax = Integer.parseInt(donnees[lig][6].toString());
-				int total = Integer.parseInt(donnees[lig][16].toString());
-
-				if( hmin > total || hmax < total )
-				{
-					jcellule.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.RED));
-				}
-			}
-
-			if( donnees[0].length == -1 )//TODO faire pour tableau de module (dépassement par rapport au PN ou répartition incomplète.)
-			{
-
-			}
-
+			setHorizontalAlignment ( RIGHT );
 		}
-
-		return this;
+		else
+		{
+			// Rétablir l'alignement par défaut pour le texte
+			setHorizontalAlignment ( LEFT );
+		}
+		
+		return cellule;
 	}
 }
