@@ -19,6 +19,10 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 	/*--------------------*/
 
 	private Controleur ctrl;
+
+	private JComboBox<String> cbAnnee;
+	private JButton           btnValider;
+
 	private JButton    btnZero;
 	private JButton    btnNew;
 	private JButton    btnAnnuler;
@@ -43,7 +47,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/* --------------------------------------- */
 
 		this.setTitle ( "Gestion des années" );
-		this.setSize  ( 500, 300  );
+		this.setSize  ( 500, 500  );
 
 		this.setLayout ( new BorderLayout ( 10, 10 ) );
 
@@ -51,22 +55,20 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/*         Création des composants         */
 		/* --------------------------------------- */
 
-		// A changer
-		// JComboBox<String> cbAnnee = new JComboBox<> ( );
-		// for ( String s : this.ctrl.getEnsAnnee ( ) )
-		// {
-		// 	cbAnnee.addItem ( s );
-		// }
+		this.cbAnnee = new JComboBox<> ( );
+		for ( String s : this.ctrl.getEnsAnnee ( ) )
+		{
+			cbAnnee.addItem ( s );
+		}
 		
-		JPanel panel = new JPanel ( new GridLayout ( 3, 1, 10, 10 ) );
-
+		JPanel panel = new JPanel ( new GridLayout ( 4, 1, 10, 10 ) );
+		JPanel panel2 = new JPanel ( new GridLayout( 4, 1, 10, 5 ) );
 		JPanel pnlTxt = new JPanel( );
-		
-		// Création d'un panel 
-		//JPanel panel    = new JPanel ( new GroupLayout(rootPane) );
+		JPanel pnlTxt2 = new JPanel ( );
 
 		//Ajout d'un bordure
-		panel.setBorder ( BorderFactory.createEmptyBorder ( 10, 10, 10, 10 ) );
+		panel.setBorder ( BorderFactory.createEmptyBorder ( 0, 10, 10, 10 ) );
+		panel2.setBorder ( BorderFactory.createEmptyBorder ( 0, 10, 0, 10 ) );
 
 		//Création d'un label
 		JLabel lblNom   = new JLabel  ( "nom de l'année :" ); 
@@ -74,25 +76,36 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		// Création des trois boutons
 		this.btnNew     = new JButton ( "Garder les données importantes" );
 		this.btnZero    = new JButton ( "Recommencer une année de zéro"  );
-		this.btnAnnuler = new JButton ( "Annuler"                        );
+		this.btnAnnuler = new JButton ( "Retour"                        );
+
+		this.btnValider = new JButton ( "Valider" );
 
 		//création du txtfield
 		this.txtNom = new JTextField ( 10 );
 
-		//Ajout du label au panel
-
-
+		//ajouts sur les panels
 		pnlTxt.add( lblNom );
 		pnlTxt.add( this.txtNom );
 		
-		// Ajout des boutons au panel
+		panel.add( new JLabel("Creer une nouvelle année"));
 		panel.add ( pnlTxt    );
 		panel.add ( this.btnNew     );
 		panel.add ( this.btnZero    );
 
+		pnlTxt2.add( new JLabel("Choississez une année voulue :"));
+		pnlTxt2.add(this.cbAnnee);
+
+		panel2.add(new JLabel("Changer l'année actuelle"));
+		panel2.add(pnlTxt2);
+		panel2.add(this.btnValider);
+
+		JPanel pnlFin = new JPanel(new GridLayout(2, 1, 10, 0));
+		pnlFin.add(panel2);
+		pnlFin.add(panel);
+
 		// Ajout du panel à la frame
 		this.add ( this.btnAnnuler, BorderLayout.SOUTH);
-		this.add ( panel, BorderLayout.CENTER );
+		this.add ( pnlFin, BorderLayout.CENTER );
 
 		/* ------------------------- */
 		/* Activation des composants */

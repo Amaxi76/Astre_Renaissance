@@ -101,8 +101,6 @@ public class BD
 		}
 		catch ( Exception e ){ e.printStackTrace ( ); }
 
-		System.out.println( "MON SUPER LOGIN : " + this.login);
-
 		this.urlWoody = "jdbc:postgresql://woody/"          + this.login;
 		this.urlLocal = "jdbc:postgresql://localhost:7777/" + this.login;
 	}
