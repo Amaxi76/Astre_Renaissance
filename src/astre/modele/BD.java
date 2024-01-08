@@ -286,15 +286,45 @@ public class BD
 		return ensHoraire;
 	}
 
-	public String getAnnee ( )
+	public List<String> getEnsAnnee ( )
 	{
-		String REQUETE = "SELECT * FROM Annee";
+		ArrayList<String> ensAnnee = new ArrayList <String> ( );
+
+		String REQUETE = "SELECT nom FROM Annee";
+
+		try
+		{
+			Statement         st = co.createStatement  (         );
+			PreparedStatement ps = co.prepareStatement ( REQUETE );
+
+			ResultSet rs = ps.executeQuery ( );
+
+			while ( rs.next ( ) )
+			{
+				ensAnnee.add ( rs.getString ( 1 ) );
+			} 
+
+			rs.close ( );
+			ps.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "getHoraire ( )" +  e );
+		}
+
+		return ensAnnee;
+	}
+
+	public String getAnneeAct ( )
+	{
+		String REQUETE = "SELECT NOM FROM Annee WHERE actuelle = true";
 		String nom = "";
 
 		try
 		{
 			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery    ( "SELECT * FROM Annee" );
+			ResultSet rs = st.executeQuery    ( REQUETE );
 
 			rs.next ( );
 

@@ -20,11 +20,13 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import astre.Controleur;
+import astre.modele.elements.Contrat;
 import astre.vue.outils.AFrame;
 
 
@@ -65,27 +67,38 @@ public class FrameAccueil extends AFrame implements ActionListener
 		/*  Création des composants  */
 		/* ------------------------- */
 
-		int largeur = this.getWidth( );
+		int largeur = this.getWidth ( );
 
-		JPanel panel         = new JPanel ( new BorderLayout (      )         );
+		JPanel panel         = new JPanel ( new BorderLayout (              ) );
 		JPanel panelButton   = new JPanel ( new GridLayout   ( 8, 1, 15, 15 ) );
+		JPanel panelAnnee    = new JPanel ( new BorderLayout (              ) );
 
 		panelButton.setBorder ( BorderFactory.createEmptyBorder ( 10, (largeur/3), 10, (largeur/3) ) );
 
 		JLabel lblAnnee     = new JLabel ("Année en cours : " + this.ctrl.getAnnee ( ) );
 		JLabel j = new JLabel ( new ImageIcon ( Toolkit.getDefaultToolkit ( ).getImage ( "./data/images/astre.png" ) ) );
 
-		panel        .setOpaque ( false );
-		panelButton  .setOpaque ( false );
-
 		this.btnParametre    = new JButton ( "Paramètre"                    );
 		this.btnPrevisionnel = new JButton ( "Prévisionnel"                 );
 		this.btnIntervenants = new JButton ( "Intervenants"                 );
 		this.btnEtat         = new JButton ( "Etats"                        );
-		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
+		this.btnAnnee        = new JButton ( "Gestion des années"           );
 		this.btnHistorique   = new JButton ( "Historique"                   );
 
-		panelButton.add (      lblAnnee        );
+		// A changer
+		// JComboBox<String> cbAnnee = new JComboBox<> ( );
+		// for ( String s : this.ctrl.getEnsAnnee ( ) )
+		// {
+		// 	cbAnnee.addItem ( s );
+		// }
+
+		/* ---------------------------------- */
+		/* Ajout et activation des composants */
+		/* ---------------------------------- */
+
+		panelAnnee.add ( lblAnnee, BorderLayout.CENTER );
+
+		panelButton.add (      panelAnnee      );
 		panelButton.add ( this.btnParametre    );
 		panelButton.add ( this.btnPrevisionnel );
 		panelButton.add ( this.btnIntervenants );
@@ -97,6 +110,10 @@ public class FrameAccueil extends AFrame implements ActionListener
 		
 		this.add ( panel       );
 		this.add ( panelButton );
+
+		panel        .setOpaque ( false );
+		panelButton  .setOpaque ( false );
+		panelAnnee   .setOpaque ( false );
 
 		/* ------------------------- */
 		/* Activation des composants */

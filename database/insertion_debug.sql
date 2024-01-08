@@ -21,7 +21,7 @@ DELETE FROM Heure       CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
-INSERT INTO Annee VALUES ('Test');
+INSERT INTO Annee VALUES ( 'Test', true );
 
 INSERT INTO Semestre VALUES
 (1,  5, 6, 85, 10),
@@ -63,7 +63,7 @@ INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
 ('CM'   , 1.5 ),
 ('REH'  , 1   ),
 ('SAE'  , 1   ),
-('PONCT', 1   ),
+('HP'   , 1   ),
 ('Tut'  , 1   );
 
 INSERT INTO Intervient (Id_Intervenant, Id_Heure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
