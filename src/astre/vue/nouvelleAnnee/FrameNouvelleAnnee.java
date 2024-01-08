@@ -1,14 +1,12 @@
 package astre.vue.nouvelleAnnee;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
@@ -24,6 +22,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 	private JButton    btnZero;
 	private JButton    btnNew;
 	private JButton    btnAnnuler;
+	private JTextField txtNom;
 
 	/*---------------------*/
 	/*     Constructeur    */
@@ -43,34 +42,55 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/*           Option de la frame            */
 		/* --------------------------------------- */
 
-		this.setTitle( "Nouvelle Année" );
-		this.setSize ( 500, 300         );
+		this.setTitle ( "Nouvelle Année" );
+		this.setSize  ( 500, 300  );
+
+		this.setLayout ( new BorderLayout ( 10, 10 ) );
 
 		/* --------------------------------------- */
 		/*         Création des composants         */
 		/* --------------------------------------- */
 
+		
+		
+		
+		JPanel panel = new JPanel ( new GridLayout ( 3, 1, 10, 10 ) );
+
+		JPanel pnlTxt = new JPanel( );
+		
 		// Création d'un panel 
-		JPanel panel    = new JPanel ( new GridLayout ( 4, 1, 10, 10 ) );
+		//JPanel panel    = new JPanel ( new GroupLayout(rootPane) );
 
 		//Ajout d'un bordure
 		panel.setBorder ( BorderFactory.createEmptyBorder ( 10, 10, 10, 10 ) );
 
 		//Création d'un label
 		JLabel lbl      = new JLabel  ( "Choisissez une des options suivantes pour changer d'année :" );
+		JLabel lblNom   = new JLabel  ( "nom de l'année :" ); 
 
 		// Création des trois boutons
 		this.btnNew     = new JButton ( "Garder les données importantes" );
 		this.btnZero    = new JButton ( "Recommencer une année de zéro"  );
 		this.btnAnnuler = new JButton ( "Annuler"                        );
 
+		//création du txtfield
+		this.txtNom = new JTextField ( 10 );
+
 		//Ajout du label au panel
-		panel.add ( lbl            );
+
+
+		pnlTxt.add( lblNom );
+		pnlTxt.add( this.txtNom );
 		
 		// Ajout des boutons au panel
+		panel.add ( pnlTxt    );
 		panel.add ( this.btnNew     );
 		panel.add ( this.btnZero    );
-		panel.add ( this.btnAnnuler );
+
+		// Ajout du panel à la frame
+		this.add ( lbl, BorderLayout.NORTH );
+		this.add ( this.btnAnnuler, BorderLayout.SOUTH);
+		this.add ( panel, BorderLayout.CENTER );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -80,9 +100,6 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		this.btnZero   .addActionListener ( this );
 		this.btnNew    .addActionListener ( this );
 		this.btnAnnuler.addActionListener ( this );
-
-		// Ajout du panel à la frame
-		this.add ( panel );
 
 		// Centrer la frame au milieu de l'écran
 		setLocationRelativeTo ( null );
@@ -103,7 +120,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			
 				if ( retour2 == 0 )
 				{
-					if ( this.ctrl.nouvelleAnneeZero ( " NOM A INSERE ICI " ) )
+					if ( this.ctrl.nouvelleAnneeZero ( this.txtNom.getText ( ) ) )
 					{
 						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
 						this.dispose ( );
@@ -128,7 +145,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			
 				if ( retour2 == 0 )
 				{
-					if ( this.ctrl.nouvelleAnnee ( " INSEREZ LE NOM " ) )
+					if ( this.ctrl.nouvelleAnnee ( this.txtNom.getText ( ) ) )
 					{
 						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
 						this.dispose ( );
