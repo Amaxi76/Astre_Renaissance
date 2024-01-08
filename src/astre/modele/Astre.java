@@ -165,17 +165,28 @@ public class Astre
 				ligne = sc.nextLine ( );
 			}
 
+			// Gestion des années
+
 			String annee =
-			"INSERT INTO Annee VALUES \n"    +
-			"( '" + nom + "', true ); \n"    ;
+			"INSERT INTO Annee VALUES \n"    ;
+			
+			for (String s : this.bd.getEnsAnnee ( ) )
+			{
+				annee += ("( '" + s + "', false ), \n" );
+			}
+
+			annee += "( '" + nom + "', true ); \n\n"    ;
 
 			ecrivain.write(annee);
+
+			// Gestion des semestres
 
 			ecrivain.close ( );
 			return true;
 		} 
 		catch (Exception e) 
 		{
+			System.out.println(e);
 			return false;
 		}
 	
@@ -185,8 +196,21 @@ public class Astre
 	{  
 		try 
 		{
-			Scanner sc              = new Scanner        ( new FileInputStream ( "../database/creation_Astre.sql" ) );
-			BufferedWriter ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
+			Scanner sc;
+			Scanner sc1;
+			BufferedWriter ecrivain;
+			try
+			{
+				sc       = new Scanner        ( new FileInputStream ( "./database/creation_ASTRE.sql"                 ) );
+				sc1      = new Scanner        ( new FileInputStream ( "./database/insertion_default.sql"              ) );
+				ecrivain = new BufferedWriter ( new FileWriter      ( "./database/creation_insertion_" + nom + ".sql" ) );
+			}
+			catch ( Exception e )
+			{
+				sc       = new Scanner        ( new FileInputStream ( "../database/creation_ASTRE.sql"                 ) );
+				sc1      = new Scanner        ( new FileInputStream ( "../database/insertion_default.sql"              ) );
+				ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
+			}
 
 			String ligne = sc.nextLine ( );
 
@@ -197,19 +221,24 @@ public class Astre
 				ligne = sc.nextLine ( );
 			}
 
-			sc = new Scanner        ( new FileInputStream ( "../database/insertion_default.sql" ) );
+			ligne = sc1.nextLine ( );
 
-			
-			while ( sc.hasNextLine ( ) )
+			while ( sc1.hasNextLine ( ) )
 			{
 				ecrivain.write ( ligne + "\n");
 
-				ligne = sc.nextLine ( );
+				ligne = sc1.nextLine ( );
 			}
 
 			String annee =
-			"INSERT INTO Annee VALUES \n"    +
-			"( '" + nom + "', true ); \n"    ;
+			"INSERT INTO Annee VALUES \n"    ;
+			
+			for (String s : this.bd.getEnsAnnee ( ) )
+			{
+				annee += ("( '" + s + "', false ), \n" );
+			}
+
+			annee += "( '" + nom + "', true ); \n\n"    ;
 
 			ecrivain.write(annee);
 
@@ -229,6 +258,7 @@ public class Astre
 		}
 		catch (Exception e) 
 		{
+			System.out.println(e);
 			return false;
 		}
 

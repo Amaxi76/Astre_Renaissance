@@ -1,8 +1,7 @@
+
 /*
 	@author Alizéa LEBARON
-	@version 1.0 - 13/12/2023 
-	@date 11/12/2023 
-	@description Script d'insertion pour tester notre base
+	@description Script d'insertion pour cette année
 */
 
 /* ---------------------------------------------------- */
