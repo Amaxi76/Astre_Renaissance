@@ -50,9 +50,6 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/* --------------------------------------- */
 		/*         Création des composants         */
 		/* --------------------------------------- */
-
-		
-		
 		
 		JPanel panel = new JPanel ( new GridLayout ( 3, 1, 10, 10 ) );
 
