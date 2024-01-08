@@ -1,9 +1,13 @@
 package astre.modele;
 
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import astre.Controleur;
 import astre.modele.elements.*;
@@ -132,6 +136,103 @@ public class Astre
 	
 	
 	public String  getAnnee          ( ) { return this.bd.getAnnee          ( ); }
-	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
-	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
+
+
+	public boolean nouvelleAnnee     ( String nom ) 
+	{ 
+		try 
+		{
+			Scanner sc              = new Scanner        ( new FileInputStream ( "../database/creation_Astre.sql" ) );
+			BufferedWriter ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
+
+			String ligne = sc.nextLine ( );
+
+			while ( sc.hasNextLine ( ) )
+			{
+				ecrivain.write ( ligne + "\n");
+
+				ligne = sc.nextLine ( );
+			}
+
+			sc = new Scanner        ( new FileInputStream ( "../database/insertion_default.sql" ) );
+
+			
+			while ( sc.hasNextLine ( ) )
+			{
+				ecrivain.write ( ligne + "\n");
+
+				ligne = sc.nextLine ( );
+			}
+
+			String annee =
+			"INSERT INTO Annee VALUES \n"    +
+			"('" + nom + "'); \n"            ;
+
+			ecrivain.write(annee);
+
+			ecrivain.close ( );
+			return true;
+		} 
+		catch (Exception e) 
+		{
+			return false;
+		}
+	
+	}
+
+
+
+	public boolean nouvelleAnneeZero ( String nom ) 
+	{  
+		try 
+		{
+			Scanner sc              = new Scanner        ( new FileInputStream ( "../database/creation_Astre.sql" ) );
+			BufferedWriter ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
+
+			String ligne = sc.nextLine ( );
+
+			while ( sc.hasNextLine ( ) )
+			{
+				ecrivain.write ( ligne + "\n");
+
+				ligne = sc.nextLine ( );
+			}
+
+			sc = new Scanner        ( new FileInputStream ( "../database/insertion_default.sql" ) );
+
+			
+			while ( sc.hasNextLine ( ) )
+			{
+				ecrivain.write ( ligne + "\n");
+
+				ligne = sc.nextLine ( );
+			}
+
+			String annee =
+			"INSERT INTO Annee VALUES \n"    +
+			"('" + nom + "'); \n"            ;
+
+			ecrivain.write(annee);
+
+			String semestre = 
+			"INSERT INTO Semestre VALUES \n" +
+			"(1, 0, 0, 0, 0), \n"            +
+			"(2, 0, 0, 0, 0), \n"            +
+			"(3, 0, 0, 0, 0), \n"            +
+			"(4, 0, 0, 0, 0), \n"            +
+			"(5, 0, 0, 0, 0), \n"            +
+			"(6, 0, 0, 0, 0); \n"            ;
+   
+			ecrivain.write(semestre);
+
+			ecrivain.close ( );
+			return true;
+		}
+		catch (Exception e) 
+		{
+			return false;
+		}
+
+	}
+
 }
