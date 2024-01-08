@@ -42,7 +42,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/*           Option de la frame            */
 		/* --------------------------------------- */
 
-		this.setTitle ( "Nouvelle Année" );
+		this.setTitle ( "Gestion des années" );
 		this.setSize  ( 500, 300  );
 
 		this.setLayout ( new BorderLayout ( 10, 10 ) );
@@ -51,8 +51,12 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/*         Création des composants         */
 		/* --------------------------------------- */
 
-		
-		
+		// A changer
+		// JComboBox<String> cbAnnee = new JComboBox<> ( );
+		// for ( String s : this.ctrl.getEnsAnnee ( ) )
+		// {
+		// 	cbAnnee.addItem ( s );
+		// }
 		
 		JPanel panel = new JPanel ( new GridLayout ( 3, 1, 10, 10 ) );
 
@@ -65,7 +69,6 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		panel.setBorder ( BorderFactory.createEmptyBorder ( 10, 10, 10, 10 ) );
 
 		//Création d'un label
-		JLabel lbl      = new JLabel  ( "Choisissez une des options suivantes pour changer d'année :" );
 		JLabel lblNom   = new JLabel  ( "nom de l'année :" ); 
 
 		// Création des trois boutons
@@ -88,7 +91,6 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		panel.add ( this.btnZero    );
 
 		// Ajout du panel à la frame
-		this.add ( lbl, BorderLayout.NORTH );
 		this.add ( this.btnAnnuler, BorderLayout.SOUTH);
 		this.add ( panel, BorderLayout.CENTER );
 

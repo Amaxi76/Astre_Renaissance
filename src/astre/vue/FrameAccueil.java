@@ -82,7 +82,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 		this.btnPrevisionnel = new JButton ( "Prévisionnel"                 );
 		this.btnIntervenants = new JButton ( "Intervenants"                 );
 		this.btnEtat         = new JButton ( "Etats"                        );
-		this.btnAnnee        = new JButton ( "Commencer une nouvelle année" );
+		this.btnAnnee        = new JButton ( "Gestion des années"           );
 		this.btnHistorique   = new JButton ( "Historique"                   );
 
 		// A changer
