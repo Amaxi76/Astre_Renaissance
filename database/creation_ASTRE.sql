@@ -25,7 +25,8 @@ DROP TABLE Historique  CASCADE;
 
 CREATE TABLE Annee
 (
-   nom    VARCHAR(10),
+   nom      VARCHAR(15),
+   actuelle BOOLEAN,
 
    PRIMARY KEY  (nom)
 );

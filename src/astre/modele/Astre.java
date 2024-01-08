@@ -135,7 +135,8 @@ public class Astre
 	}
 	
 	
-	public String  getAnnee          ( ) { return this.bd.getAnnee          ( ); }
+	public String        getAnnee             ( ) { return this.bd.getAnneeAct ( ) ; }
+	public List<String>  getEnsAnnee          ( ) { return this.bd.getEnsAnnee ( ) ; }
 
 
 	public boolean nouvelleAnnee     ( String nom ) 
@@ -166,7 +167,7 @@ public class Astre
 
 			String annee =
 			"INSERT INTO Annee VALUES \n"    +
-			"('" + nom + "'); \n"            ;
+			"( '" + nom + "', true ); \n"    ;
 
 			ecrivain.write(annee);
 
@@ -179,8 +180,6 @@ public class Astre
 		}
 	
 	}
-
-
 
 	public boolean nouvelleAnneeZero ( String nom ) 
 	{  
@@ -210,7 +209,7 @@ public class Astre
 
 			String annee =
 			"INSERT INTO Annee VALUES \n"    +
-			"('" + nom + "'); \n"            ;
+			"( '" + nom + "', true ); \n"    ;
 
 			ecrivain.write(annee);
 
