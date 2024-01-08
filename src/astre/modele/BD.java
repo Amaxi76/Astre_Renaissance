@@ -84,7 +84,15 @@ public class BD
 	{
 		try
 		{
-			Scanner sc = new Scanner ( new FileInputStream ( "../data/identifiant/identifiant.txt" ) );
+			Scanner sc;
+			try
+			{
+				sc = new Scanner ( new FileInputStream ( "./data/identifiant/identifiant.txt" ) );
+			}
+			catch ( Exception e )
+			{
+				sc = new Scanner ( new FileInputStream ( "../data/identifiant/identifiant.txt" ) );
+			}
 
 			this.login    = sc.nextLine ( );
 			this.password = sc.nextLine ( );
