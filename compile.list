@@ -26,6 +26,7 @@ src/astre/vue/outils/Tableau.java
 src/astre/vue/outils/PopUpErreur.java
 src/astre/vue/outils/FiltreTextFieldEntier.java
 src/astre/vue/outils/OperationRenduTableau.java
+src/astre/vue/outils/Saisie.java
 
 src/astre/vue/parametrage/FrameParametrage.java
 src/astre/vue/parametrage/PanelBouton.java
@@ -42,13 +43,13 @@ src/astre/vue/etats/PanelEtats.java
 
 src/astre/vue/previsionnel/module/FrameModule.java
 src/astre/vue/previsionnel/module/PanelModuleLabel.java
-src/astre/vue/previsionnel/module/PanelModuleHeure.java
 src/astre/vue/previsionnel/module/PanelModuleBouton.java
 src/astre/vue/previsionnel/module/PanelPNLocal.java
-src/astre/vue/previsionnel/module/PanelRepartition.java
-src/astre/vue/previsionnel/module/PanelRepartitionBis.java
-src/astre/vue/previsionnel/module/PanelRepartitionPPP.java
-src/astre/vue/previsionnel/module/PanelAffectation.java
+src/astre/vue/previsionnel/module/PanelRepartitionSansGroupes.java
+src/astre/vue/previsionnel/module/PanelVerticalSaisie.java
+src/astre/vue/previsionnel/module/PanelRepartitionAvecGroupes.java
+src/astre/vue/previsionnel/module/AbstractPanelRepartition.java
+src/astre/vue/previsionnel/module/PanelSaisieSemaines.java
 
 src/astre/vue/historique/FrameHistorique.java
 src/astre/vue/historique/PanelHistorique.java
