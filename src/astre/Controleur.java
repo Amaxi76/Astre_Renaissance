@@ -36,7 +36,7 @@ public class Controleur
 
 		System.out.println("Base de données présente : " + this.metier.estGenere ( ) );
 		
-		if (! this.metier.estGenere ( ) )
+		if ( ! this.metier.estGenere ( ) )
 			this.metier.genererBDD ( );
 	}
 	
@@ -93,16 +93,16 @@ public class Controleur
 		String cheminFichier  = "./data/identifiant/identifiant.txt";
 		String cheminFichier2 = "../data/identifiant/identifiant.txt";
 
-        File fichier  = new File ( cheminFichier  );
+		File fichier  = new File ( cheminFichier  );
 		File fichier2 = new File ( cheminFichier2 );
 
-        if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
+		if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
 		{
-            new FrameIdentifiant ( );
-        }
+			new FrameIdentifiant ( );
+		}
 		else 
 		{
-            new Controleur ( );
-        }
+			new Controleur ( );
+		}
 	}
 }

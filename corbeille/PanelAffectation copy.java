@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,14 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 import astre.Controleur;
 import astre.modele.elements.Contrat;
 import astre.modele.elements.Heure;
 import astre.modele.elements.Intervenant;
-import astre.modele.outils.Utilitaire;
 import astre.vue.outils.Tableau;
 import astre.vue.rendus.OperationRenduTableauIntervient;
 
@@ -30,7 +26,7 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
   * @date : 13/12/2023
   */
 
-  public class PanelAffectation extends JPanel implements ActionListener, TableModelListener
+  public class PanelAffectation extends JPanel implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
@@ -46,19 +42,15 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 	private JButton     btnAjouter;
 	private JButton     btnSupprimer;
 
-
-
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelAffectation ( FrameModule frmModule, Controleur ctrl, String typeModule, String[] ensIntitule )
+	public PanelAffectation ( Controleur ctrl, FrameModule frmModule, String typeModule, String[] ensIntitule )
 	{
 		this.ctrl        = ctrl;
 		this.ensIntitule = ensIntitule;
 		this.frmModule   = frmModule;
-
-
 
 		this.setLayout        ( new BorderLayout ( )       );
 		this.setPreferredSize ( new Dimension ( 900, 500 ) );
@@ -76,14 +68,14 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 		{
 			//TODO: total eqtd devrait être en float (dans bd aussi)
 			enTete     = new String [] { "action",  "idIntervenant", "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
-			typeDefaut = new Object [] {      'A',                0,            "",     "",        1,            0,          0, "..."         };
-			modifiable = new boolean[] {     true,            false,          true,   true,     true,         true,      false, true          };
+			typeDefaut = new Object [] {      'A',                0,            "",     "",        1,            0,          0,         "..." };
+			modifiable = new boolean[] {     true,            false,          true,   true,     true,         true,      false,          true };
 		}
 		else
 		{
 			enTete     = new String [] { "action",  "idIntervenant", "Intervenant", "type", "nb H", "tot eqtd", "commentaire" };
-			typeDefaut = new Object [] {      'A',                0,            "",     "",    0.0,          0, "..."         };
-			modifiable = new boolean[] {     true,            false,          true,   true,   true,      false, true          };
+			typeDefaut = new Object [] {      'A',                0,            "",     "",    0.0,          0,         "..." };
+			modifiable = new boolean[] {     true,            false,          true,   true,   true,      false,          true };
 		}
 
 		// Création du tableau
@@ -148,28 +140,28 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 		this.btnSupprimer.addActionListener ( this );
 
 		this.tableau.addKeyListener ( frmModule );
-		this.tableau.getModel ( ).addTableModelListener ( this );
 	}
 
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
 		if ( e.getSource ( ) == this.btnAjouter )
-		{
 			this.tableau.ajouterLigne ( );
-			this.repaint ( );
-		}
 
 		if ( e.getSource ( ) == this.btnSupprimer )
-		{
 			this.tableau.supprimerLigne ( );
-			this.repaint ( );
-		}
+
+		this.repaint ( );
 	}
 
 	public void setValeurs ( Object[][] tabValeurs )
 	{
 		this.tableau.modifDonnees ( tabValeurs );
+	}
+
+	public Object[][] getValeurs ( )
+	{
+		return this.tableau.getDonnees ( );
 	}
 
 	public Map<String, Double> getSommesEQTD ( )
@@ -216,7 +208,7 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 		{
 			if ( ( int ) this.tableau.getDonnees ( ) [ligne][COLONNE_INTERVENANT] != 0 ) 
 			{
-				Heure       h = this.ctrl.getHeure                          ( this.tableau.getDonnees ( ) [ligne][COLONNE_HEURE]      .toString ( )   );				
+				Heure       h = this.ctrl.getHeure                          ( this.tableau.getDonnees ( ) [ligne][COLONNE_HEURE]      .toString ( )   );
 				Intervenant i = this.ctrl.getIntervenant ( Integer.parseInt ( this.tableau.getDonnees ( ) [ligne][COLONNE_INTERVENANT].toString ( ) ) );
 				Contrat     c = i.getContrat ( );
 				
@@ -228,13 +220,6 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 				
 				this.tableau.setValueAt ( coefHeure * coefIntervenant * nbSemaine * nbHeure * nbGroupe, ligne, COLONNE_EQTD - 2 );
 			}
-			
 		}
-	}
-
-	@Override
-	public void tableChanged ( TableModelEvent e )
-	{
-		this.frmModule.majIHM ( );
 	}
 }

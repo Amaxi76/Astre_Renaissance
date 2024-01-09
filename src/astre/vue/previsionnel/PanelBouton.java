@@ -117,7 +117,7 @@ public class PanelBouton extends JPanel implements ActionListener
 		// Gestion du cas si modification
 		if ( e.getSource ( ) == this.btnModifier )
 		{
-			if ( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			if ( ! this.framePrevisionnel.getModuleSelection ( ).equals ( "pas de selection" ) )
 			{
 				ModuleIUT module = this.ctrl.getModule ( this.framePrevisionnel.getModuleSelection ( ) );
 				this.frameModule = new FrameModule ( this.ctrl, framePrevisionnel, module.getTypeModule ( ), framePrevisionnel.getPanelEnsSemestre ( ).getSelectedIndex ( ), 'M' );

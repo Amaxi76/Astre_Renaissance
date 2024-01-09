@@ -1,4 +1,4 @@
-package astre.vue.previsionnel.module;
+package astre.vue.previsionnel.module.avecGroupe;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import astre.Controleur;
+import astre.vue.previsionnel.module.AbstractPanelRepartition;
+import astre.vue.previsionnel.module.FrameModule;
+import astre.vue.previsionnel.module.PanelSaisieSemaines;
+import astre.vue.previsionnel.module.PanelVerticalSaisie;
 
 import java.util.HashMap;
 import java.util.Map;

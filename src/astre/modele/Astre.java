@@ -1,22 +1,16 @@
 package astre.modele;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import astre.Controleur;
 import astre.modele.elements.*;
-import astre.modele.outils.Utilitaire;
 
 public class Astre
 {

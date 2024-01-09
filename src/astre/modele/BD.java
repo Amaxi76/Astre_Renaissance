@@ -968,8 +968,6 @@ public class BD
 					}
 				}
 				cpt++;
-
-				System.out.println(Utilitaire.afficherValeurs(tabObjet));
 			}
 		}
 		catch ( SQLException e )

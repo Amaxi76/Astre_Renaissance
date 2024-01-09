@@ -17,9 +17,13 @@ import javax.swing.border.EmptyBorder;
 
 import astre.Controleur;
 import astre.modele.elements.Horaire;
+import astre.modele.elements.Intervient;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.outils.Utilitaire;
 import astre.vue.previsionnel.FramePrevisionnel;
+import astre.vue.previsionnel.module.avecGroupe.PanelAffectationAvecGroupe;
+import astre.vue.previsionnel.module.avecGroupe.PanelRepartitionAvecGroupes;
+import astre.vue.previsionnel.module.sansGroupe.PanelRepartitionSansGroupes;
 
 /** Classe FrameModule
  * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
@@ -41,7 +45,7 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 	private PanelPNLocal             panelPNLocal;
 	private AbstractPanelRepartition panelRepartition;
 	private PanelModuleBouton        panelModuleBouton;
-	private PanelAffectation         panelAffectation;
+	private AbstractPanelAffectation panelAffectation;
 
 	private JCheckBox cbValidation;
 	private JLabel    lblMessageErreur;
@@ -70,19 +74,23 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 			case "SAE"       -> new String[] { "SAE" , "Tut"                     }; //ne pas mettre le "h" sur les "h Tut" par exemple (car sinon il y a des problèmes avec le métier)
 			case "Stage"     -> new String[] { "REH" , "Tut"                     };
 			case "PPP"       -> new String[] { "CM"  , "TP"   , "TD", "HP", "HT" };
-			default -> new String[] {}; //Cas en cas de type de module innexistant
+			default          -> new String[] {}; //Cas en cas de type de module innexistant
 		};
 
 		this.setSize               ( 1500, 1000 );
-		this.setLocationRelativeTo ( parent    );
+		this.setLocationRelativeTo ( parent     );
 
 		/* ------------------------- */
 		/* Création des composants   */
 		/* ------------------------- */
 
-		this.panelModuleLabel    = new PanelModuleLabel (       this.ctrl, typeModule, numSemestre + 1      );
-		this.panelPNLocal        = new PanelPNLocal     ( this, this.ctrl, typeModule, ensIntituleTypeHeure );
-		this.panelAffectation    = new PanelAffectation ( this, this.ctrl, typeModule, ensIntituleTypeHeure );
+		String  [] ensEntete     = new String [] { "action",  "idIntervenant", "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
+		Object  [] ensTypeDefaut = new Object [] {      'A',                0,            "",     "",        1,            0,          0,         "..." };
+		boolean [] ensModifiable = new boolean[] {     true,            false,          true,   true,     true,         true,      false,          true };
+
+		this.panelModuleLabel    = new PanelModuleLabel ( this.ctrl, typeModule, numSemestre + 1      );
+		this.panelPNLocal        = new PanelPNLocal     ( this.ctrl, this, typeModule, ensIntituleTypeHeure );
+		this.panelAffectation    = new PanelAffectationAvecGroupe ( this.ctrl, this, ensIntituleTypeHeure, ensEntete, ensTypeDefaut, ensModifiable );
 
 		if ( action == Controleur.MODIFIER ) this.panelModuleLabel.formatTxt ( this.panelModuleLabel.getTxtCode ( ) );
 
@@ -181,7 +189,7 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 
 		// Mise à jour du module
 		ModuleIUT module = this.ctrl.getModule ( code );
-
+	
 		Object[]   tabModule      = Utilitaire.toArray  ( module );
 		Object[][] tabHoraire     = Utilitaire.formater ( this.ctrl.getTableauParticulier ( REQUETE_HORAIRE     ), 1, 2 );
 		Object[][] tabRepartition = Utilitaire.formater ( this.ctrl.getTableauParticulier ( REQUETE_REPARTION   ), 1, 3 );
@@ -239,6 +247,9 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 		}
 
 		this.ctrl.majTableauBD ( tabHorraire, Horaire.class );
+		
+		// Mise à jour des affectations
+		this.ctrl.majTableauBD ( this.panelAffectation.getValeurs ( ), Intervient.class );
 	}
 
 	public void messageErreurAjouter ( )
@@ -289,7 +300,7 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 
 	public void majIHM ( )
 	{
+		this.panelAffectation.majTotEqtd ( );
 		this.panelRepartition.majIHM ( );
-		this.panelAffectation.majSomme ( );
 	}
 }
