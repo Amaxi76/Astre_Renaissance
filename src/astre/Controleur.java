@@ -7,10 +7,13 @@ package astre;
   */
 
 import astre.modele.elements.*;
+
+import java.io.File;
 import java.util.List;
 
 import astre.vue.outils.AFrame;
 import astre.vue.FrameAccueil;
+import astre.vue.FrameIdentifiant;
 import astre.modele.*;
 import astre.vue.outils.PopUpErreur;
 
@@ -80,6 +83,19 @@ public class Controleur
 
 	public static void main ( String[] args )
 	{
-		new Controleur ( );
+		String cheminFichier  = "./data/identifiant/identifiant.txt";
+		String cheminFichier2 = "../data/identifiant/identifiant.txt";
+
+        File fichier  = new File ( cheminFichier  );
+		File fichier2 = new File ( cheminFichier2 );
+
+        if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
+		{
+            new FrameIdentifiant ( );
+        }
+		else 
+		{
+            new Controleur ( );
+        }
 	}
 }

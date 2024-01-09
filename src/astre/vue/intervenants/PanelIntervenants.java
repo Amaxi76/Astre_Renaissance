@@ -29,8 +29,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 {
 	// paramètres du tableau
 	private static final String[]  NOMS_COL   = { "action", "Id" ,"Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1" , "S3" , "S5" , "sTot", "S2" , "S4" , "S6" , "sTot", "Total" };
-	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , ""      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0        };
-	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , false    , false, false, false, false , false, false, false, false , false   };
+	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , "0"      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0       };
+	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , true     , false, false, false, false , false, false, false, false , false   };
 	private static final int       DECALAGE   = 2;
 	
 	// requetes
@@ -50,7 +50,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	private JPanel      panelCentre;
 	private JPanel      panelSud;
 
-	private PanelDiagramme panelDiagramme;
+	private JPanel      panelDiagramme;
+	private Thread      thread;
 
 	private Controleur  ctrl;
 
@@ -95,7 +96,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
 		//Ajout du diagramme
-		this.panelDiagramme = new PanelDiagramme ( );
+		this.panelDiagramme = new JPanel ( );
 
 		/* ------------------------- */
 		/* Placement des composants  */
@@ -162,13 +163,23 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			@Override
 			public void mouseClicked ( MouseEvent e )
 			{
-				int ligne = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
-
-				int idInter =  Integer.parseInt ( tableau.getDonnees ( )[ligne][1].toString ( ) );
-				if ( idInter > 0  )
-					changerDiagramme ( idInter );
-				else
-					changerDiagramme ( -1 );
+				if ( PanelIntervenants.this.thread != null )
+					PanelIntervenants.this.thread.interrupt ( );
+					
+				PanelIntervenants.this.thread = new Thread ( ( ) -> {
+					int ligne = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
+					int idInter = Integer.parseInt ( tableau.getDonnees ( )[ligne][1].toString ( ) );
+				
+					if ( idInter > 0 ) 
+					{
+						changerDiagramme ( idInter );
+					} 
+					else 
+					{
+						changerDiagramme ( -1 );
+					}
+				} );
+				PanelIntervenants.this.thread.start ( );
 			}
 		};
 
@@ -244,9 +255,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	 */
 	public void changerDiagramme ( int idInter )
 	{
-		PanelDiagramme diagramme;
+		JPanel diagramme;
 		if ( idInter == -1 )
-			diagramme = new PanelDiagramme ( );
+			diagramme = new JPanel ( );
 		else
 			diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
 
