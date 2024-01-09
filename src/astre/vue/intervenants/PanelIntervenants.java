@@ -50,7 +50,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	private JPanel      panelCentre;
 	private JPanel      panelSud;
 
-	private JPanel panelDiagramme;
+	private JPanel      panelDiagramme;
+	private Thread      thread;
 
 	private Controleur  ctrl;
 
@@ -163,7 +164,10 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			@Override
 			public void mouseClicked ( MouseEvent e )
 			{
-				new Thread ( ( ) -> {
+				if ( PanelIntervenants.this.thread != null )
+					PanelIntervenants.this.thread.interrupt ( );
+					
+				PanelIntervenants.this.thread = new Thread ( ( ) -> {
 					int ligne = PanelIntervenants.this.tableau.rowAtPoint ( e.getPoint ( ) );
 					int idInter = Integer.parseInt ( tableau.getDonnees ( )[ligne][1].toString ( ) );
 				
@@ -175,7 +179,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 					{
 						changerDiagramme ( -1 );
 					}
-				} ).start ( );
+				} );
+				PanelIntervenants.this.thread.start ( );
 			}
 		};
 
