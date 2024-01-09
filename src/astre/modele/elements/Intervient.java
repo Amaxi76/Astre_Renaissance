@@ -6,9 +6,6 @@ package astre.modele.elements;
   * @date : 12/12/2023
   */
 
-
-  //TODO: Faire des factory
-
 public class Intervient 
 {
 	private Intervenant intervenant;

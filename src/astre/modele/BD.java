@@ -6,7 +6,7 @@ import java.io.FileReader;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
-  * @version : 1.0 - 18/12/2023
+  * @version : 1.0 - 09/01/2023
   * @date : 06/12/2023
   */
 
@@ -335,7 +335,6 @@ public class BD
 	{
 		ArrayList<Horaire> ensHoraire = new ArrayList<> ( );
 
-		//TODO faire fonction
 		String REQUETE = "SELECT * FROM Horaire where Code_ModuleIUT = ?";
 
 		try

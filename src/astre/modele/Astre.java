@@ -33,7 +33,7 @@ public class Astre
 	public Object[][]    getTableau            ( Class<?>  type      ) { return this.bd.getTableau            ( type         ); }
 	public Object[][]    getTableauParticulier ( String nomRecherche ) { return this.bd.getTableauParticulier ( nomRecherche ); }
 	public Semestre      getSemestre           ( int    numSemestre  ) { return this.bd.getSemestre           ( numSemestre  ); }
-	public Heure         getHeure              ( int    nom          ) { return this.bd.getHeure              ( nom          ); } //TODO: nom de variable à retravailler
+	public Heure         getHeure              ( int    id           ) { return this.bd.getHeure              ( id           ); } 
 	public Heure         getHeure              ( String nom          ) { return this.bd.getHeure              ( nom          ); }
 	public Contrat       getContrat            ( String nom          ) { return this.bd.getContrat            ( nom          ); }
 	public ModuleIUT     getModule             ( String nom          ) { return this.bd.getModule             ( nom          ); }
@@ -56,17 +56,6 @@ public class Astre
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/ 
-
-	//TODO: à supprimer si bien inutile
-	/*public int sommeHeure ( String code, char typeHeure )
-	{
-		int somme = 0;
-
-		for ( Heure h : this.bd.getHeures ( code, typeHeure ).keySet (  ) )
-			somme += this.bd.getHeures ( code, typeHeure ).get ( h );
-
-		return somme;
-	}*/
 
 	/**
 	 * Met à jour la base de donnée en créant un nouvel objet avec chaque lignes de tabDonnéesBD

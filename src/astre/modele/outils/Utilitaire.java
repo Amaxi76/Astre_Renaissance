@@ -129,27 +129,6 @@ public abstract class Utilitaire
 	 */
 	public static Object[][] formater ( Object[][] tableau, int nbColonnes )
 	{
-		//TODO: supprimer ce commentaire si la méthode fonctionne correctement
-		/*Object[][] tableauTmp = new Object[tableau.length][nbColonnes];
-
-		for ( int lig = 0; lig < tableau.length; lig++ )
-		{
-			for ( int col = 0; col < nbColonnes; col++ )
-			{
-				if ( col < tableau[lig].length )
-				{
-					tableauTmp[lig][col] = tableau[lig][col];
-				}
-				else
-				{
-					// Ajoutez une valeur vide pour les nouvelles colonnes
-					tableauTmp[lig][col] = null;
-				}
-			}
-		}
-
-		return tableauTmp;*/
-
 		return Utilitaire.formater ( tableau, 0, nbColonnes-1 );
 	}
 
