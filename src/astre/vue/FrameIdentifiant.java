@@ -1,7 +1,14 @@
 package astre.vue;
 
+/** Classe Controleur
+  * @author : Mateo Sa et Clémentin Ly
+  * @version : 2.2 - 09/01/2024
+  * @date : 09/01/2024
+  */
+
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
@@ -20,38 +27,53 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 
 	public FrameIdentifiant ( )
 	{
-		this.setTitle( "Identifiant" );
-		this.setSize(250,250);
+		this.setTitle( "Identifiant"  );
+		this.setSize (500,250  );
+		this.setLocationRelativeTo ( null );
 
-		this.setLayout(new GridLayout(3,2,10,10));
+		this.setLayout ( new GridBagLayout() );
+		GridBagConstraints gbc = new GridBagConstraints( );
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
-		this.txtId = new JTextField();
-		this.txtMdp = new JPasswordField();
-		this.btnVal = new JButton("Valider");
+		this.txtId  = new JTextField     ( 20 );
+		this.txtMdp = new JPasswordField ( 20 );
+		this.btnVal = new JButton ( "Valider" );
 
-		this.add(new JLabel("Identifiant :"));
-		this.add(this.txtId);
-		this.add(new JLabel("Mdp :"));
-		this.add(this.txtMdp);
-		this.add(this.btnVal);
+		gbc.gridy = 0;
+		gbc.gridx = 0;
+		this.add ( new JLabel ( "Identifiant :" ), gbc );
 
-		this.btnVal.addActionListener(this);
+		gbc.gridx = 1;
+		this.add ( this.txtId, gbc );
 
-		this.setVisible(true);
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		this.add ( new JLabel ( "Mdp :" ), gbc );
+
+		gbc.gridx = 1;
+		this.add ( this.txtMdp, gbc );
+
+
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		this.add ( this.btnVal, gbc );
+
+		this.btnVal.addActionListener ( this );
+		this.setVisible ( true );
 	}
 
 	@Override
 	public void actionPerformed ( ActionEvent e )
 	{
-		if( e.getSource() == this.btnVal )
+		if ( e.getSource ( ) == this.btnVal )
 		{
 			try
 			{
-				PrintWriter pw = new PrintWriter( new FileOutputStream("./data/identifiant/identifiant.txt") );
+				PrintWriter pw = new PrintWriter ( new FileOutputStream ( "./data/identifiant/identifiant.txt" ) );
 
-				pw.println ( this.txtId.getText() );
-				char[] a = this.txtMdp.getPassword();
-				String s = new String(a);
+				pw.println ( this.txtId.getText ( ) );
+				char[] a = this.txtMdp.getPassword ( );
+				new String ( a );
 				pw.println ( a );
 
 				pw.close();
