@@ -1,4 +1,4 @@
-package astre.vue.previsionnel.module;
+package astre.vue.previsionnel.module.todo;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

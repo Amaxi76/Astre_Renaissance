@@ -21,6 +21,8 @@ DELETE FROM Heure       CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
+INSERT INTO Annee VALUES ( 'Test', true );
+
 INSERT INTO Semestre VALUES
 (1,  5, 6, 85, 10),
 (2,  5, 6, 66, 20),

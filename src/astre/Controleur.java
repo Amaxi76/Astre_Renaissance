@@ -6,14 +6,14 @@ package astre;
   * @date : 06/12/2023
   */
 
+import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import astre.vue.outils.AFrame;
 import astre.vue.outils.PopUpErreur;
-import astre.vue.previsionnel.module.FrameModule;
 import astre.vue.FrameAccueil;
 
+import astre.vue.FrameIdentifiant;
 import astre.modele.*;
 import astre.modele.elements.*;
 
@@ -33,6 +33,11 @@ public class Controleur
 	{
 		this.metier = new Astre        (      );
 		this.ihm    = new FrameAccueil ( this );
+
+		System.out.println("Base de données présente : " + this.metier.estGenere ( ) );
+		
+		if (! this.metier.estGenere ( ) )
+			this.metier.genererBDD ( );
 	}
 	
 	/*---------------------------------------*/
@@ -77,11 +82,27 @@ public class Controleur
 	public void majTableauBD ( Object[][] tab, Class<?> type                    ) { this.metier.majTableauBD ( tab, type ); }
 	public void majObjetBD   ( Object[]   ens, Class<?> type, char modification ) { this.metier.majObjetBD   ( ens, type, modification ); }
 
-	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee     ( ); }
-	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero ( ); }
+	public boolean      nouvelleAnnee     ( String nom ) { return this.metier.nouvelleAnnee     ( nom ); }
+	public boolean      nouvelleAnneeZero ( String nom ) { return this.metier.nouvelleAnneeZero ( nom ); }
+	public String       getAnnee          (            ) { return this.metier.getAnnee          (     ); }
+	public List<String> getEnsAnnee       (            ) { return this.metier.getEnsAnnee       (     ); }
+	public boolean      changerAnnee      ( String nom ) { return this.metier.changerAnnee      ( nom ); }
 
 	public static void main ( String[] args )
 	{
-		new Controleur ( );
+		String cheminFichier  = "./data/identifiant/identifiant.txt";
+		String cheminFichier2 = "../data/identifiant/identifiant.txt";
+
+        File fichier  = new File ( cheminFichier  );
+		File fichier2 = new File ( cheminFichier2 );
+
+        if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
+		{
+            new FrameIdentifiant ( );
+        }
+		else 
+		{
+            new Controleur ( );
+        }
 	}
 }

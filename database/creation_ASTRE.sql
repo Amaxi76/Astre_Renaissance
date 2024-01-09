@@ -9,6 +9,7 @@
 /*          Suppression des tables existantes           */
 /* ---------------------------------------------------- */ 
 
+DROP TABLE Annee       CASCADE;
 DROP TABLE Semestre    CASCADE;
 DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
@@ -21,6 +22,14 @@ DROP TABLE Historique  CASCADE;
 /* ---------------------------------------------------- */
 /*                  Création des tables                 */
 /* ---------------------------------------------------- */
+
+CREATE TABLE Annee
+(
+   nom      VARCHAR(15),
+   actuelle BOOLEAN,
+
+   PRIMARY KEY  (nom)
+);
 
 CREATE TABLE Semestre
 (
