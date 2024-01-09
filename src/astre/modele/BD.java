@@ -1,6 +1,8 @@
 package astre.modele;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
@@ -172,6 +174,55 @@ public class BD
 	public List<Contrat>     getContrats     ( ) { return this.getTable ( Contrat    .class ); }
 	public List<Heure>       getHeures       ( ) { return this.getTable ( Heure      .class ); }
 	public List<Intervient>  getIntervients  ( ) { return this.getTable ( Intervient .class ); }
+	public List<ModuleIUT>   getModuleIUTs   ( ) { return this.getTable ( ModuleIUT  .class ); }
+	public List<Horaire>     getHoraires     ( ) { return this.getTable ( Horaire    .class ); }
+
+	/* Script de création */
+
+	public void executeScript (String cheminScript) 
+	{
+		String requete = "";
+
+        try ( BufferedReader reader = new BufferedReader ( new FileReader ( cheminScript ) ) ) 
+		{
+			Statement st = co.createStatement();
+			//String requete = "";
+			String ligne;
+
+			// Lire le script SQL ligne par ligne
+			while ((ligne = reader.readLine()) != null) 
+			{
+				requete += ligne + "\n";
+
+				// Si la ligne se termine par un point-virgule, exécuter la requête
+				if (ligne.trim().endsWith(";")) 
+				{
+					// Affichez la requête avant de l'exécuter
+					System.out.println(requete);
+
+					// Exécuter la requête
+					st.executeUpdate(requete);
+
+
+
+					// Réinitialiser la variable requete
+					requete = "";
+				}
+			}
+
+
+            // Exécuter le script SQL
+            //st.executeUpdate ( script.toString ( ) );
+			co.commit();
+
+            System.out.println ( "Script SQL exécuté avec succès." );
+        } 
+		catch ( Exception e ) 
+		{
+			System.out.println(requete);
+            e.printStackTrace ( );
+        }
+    }
 
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )

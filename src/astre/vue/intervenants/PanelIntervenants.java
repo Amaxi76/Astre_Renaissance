@@ -97,7 +97,6 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		//Ajout du diagramme
 		this.panelDiagramme = new PanelDiagramme ( );
 
-
 		/* ------------------------- */
 		/* Placement des composants  */
 		/* ------------------------- */

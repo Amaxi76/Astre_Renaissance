@@ -1,4 +1,3 @@
-
 /*
 	@author Alizéa LEBARON
 	@description Script d'insertion pour cette année
@@ -19,6 +18,4 @@ DELETE FROM Heure       CASCADE;
 /* ---------------------------------------------------- */
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
-
-
 

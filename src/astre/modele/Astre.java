@@ -1,10 +1,15 @@
 package astre.modele;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -143,50 +148,59 @@ public class Astre
 	{ 
 		try 
 		{
-			Scanner sc              = new Scanner        ( new FileInputStream ( "../database/creation_Astre.sql" ) );
-			BufferedWriter ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
+			Scanner sc;
+			Scanner sc1;
+			BufferedWriter ecrivain;
 
-			String ligne = sc.nextLine ( );
+			try
+			{
+				sc       = new Scanner        ( new FileInputStream ( "./database/creation_ASTRE.sql"                 ) );
+				sc1      = new Scanner        ( new FileInputStream ( "./database/insertion_default.sql"              ) );
+				ecrivain = new BufferedWriter ( new FileWriter      ( "./database/creation_insertion_" + nom + ".sql" ) );
+			}
+			catch ( Exception e )
+			{
+				sc       = new Scanner        ( new FileInputStream ( "../database/creation_ASTRE.sql"                 ) );
+				sc1      = new Scanner        ( new FileInputStream ( "../database/insertion_default.sql"              ) );
+				ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
+			}
+
+			String ligne = "";
 
 			while ( sc.hasNextLine ( ) )
 			{
-				ecrivain.write ( ligne + "\n");
-
 				ligne = sc.nextLine ( );
-			}
-
-			sc = new Scanner        ( new FileInputStream ( "../database/insertion_default.sql" ) );
-
-			
-			while ( sc.hasNextLine ( ) )
-			{
 				ecrivain.write ( ligne + "\n");
-
-				ligne = sc.nextLine ( );
 			}
 
-			// Gestion des années
+			ligne = "";
 
-			String annee =
-			"INSERT INTO Annee VALUES \n"    ;
-			
-			for (String s : this.bd.getEnsAnnee ( ) )
+			while ( sc1.hasNextLine ( ) )
 			{
-				annee += ("( '" + s + "', false ), \n" );
+				ligne = sc1.nextLine ( );
+				ecrivain.write ( ligne + "\n");
 			}
 
-			annee += "( '" + nom + "', true ); \n\n"    ;
+			// écriture des données à sauvegardées
 
-			ecrivain.write(annee);
+			ecrivain.write( this.sauvegarde ( nom ) );
 
-			// Gestion des semestres
+			// fermuture des scanners
 
+			sc .close ( );
+			sc1.close ( );
 			ecrivain.close ( );
+
+			// Création de la nouvelle base de données
+
+			this.bd.executeScript("../database/creation_insertion_" + nom + ".sql");
+
 			return true;
 		} 
 		catch (Exception e) 
 		{
-			System.out.println(e);
+			System.out.println(e) ;
+
 			return false;
 		}
 	
@@ -212,22 +226,20 @@ public class Astre
 				ecrivain = new BufferedWriter ( new FileWriter      ( "../database/creation_insertion_" + nom + ".sql" ) );
 			}
 
-			String ligne = sc.nextLine ( );
+			String ligne = "";
 
 			while ( sc.hasNextLine ( ) )
 			{
-				ecrivain.write ( ligne + "\n");
-
 				ligne = sc.nextLine ( );
+				ecrivain.write ( ligne + "\n");
 			}
 
-			ligne = sc1.nextLine ( );
+			ligne = "";
 
 			while ( sc1.hasNextLine ( ) )
 			{
-				ecrivain.write ( ligne + "\n");
-
 				ligne = sc1.nextLine ( );
+				ecrivain.write ( ligne + "\n");
 			}
 
 			String annee =
@@ -254,14 +266,153 @@ public class Astre
 			ecrivain.write(semestre);
 
 			ecrivain.close ( );
+
+			// Création de la nouvelle base de données
+
+			this.bd.executeScript("../database/creation_insertion_" + nom + ".sql");
+
 			return true;
 		}
 		catch (Exception e) 
 		{
+
 			System.out.println(e);
+
 			return false;
 		}
 
 	}
 
+
+	private String sauvegarde ( String nom )
+	{
+		String sauvegarde =  " ";
+
+		// Gestion des années
+
+		String annee =
+		"INSERT INTO Annee VALUES \n"    ;
+			
+		for (String s : this.bd.getEnsAnnee ( ) )
+		{
+			annee += ("( '" + s + "', false ), \n" );
+		}
+
+		annee += "( '" + nom + "', true ); \n\n"    ;
+
+		sauvegarde +=  ( annee );
+
+		// Gestion des semestres
+
+		String semestre = "INSERT INTO Semestre VALUES \n";
+
+		boolean firstIteration = true;
+		for (Semestre s : this.bd.getSemestres ( ) )
+		{
+			if ( !firstIteration ) { semestre += ", \n"; } else { firstIteration = false; }
+			semestre += "(" + s.getIdSemestre ( ) + "," + s.getNbGroupeTP ( ) + "," + s.getNbGroupeTD ( ) + "," + s.getNbEtudiant ( ) + "," + s.getNbSemaine ( ) + ")";
+		}
+
+		semestre += "; \n\n";
+
+		sauvegarde +=  ( semestre );
+
+		// Gestion des contrat
+
+		String contrat = "INSERT INTO Contrat VALUES \n";
+
+		firstIteration = true;
+		for (Contrat c : this.bd.getContrats ( ) )
+		{
+			if ( !firstIteration ) { contrat += ", \n"; } else { firstIteration = false; }
+			contrat += "(" + c.getId ( ) + ",'" + c.getNom ( ) + "'," + c.getHeureServiceContrat ( ) + "," + c.getHeureMaxContrat ( ) + ",'" + c.getRatioTP ( ) + "')";
+		}
+
+		contrat += "; \n\n";
+
+		sauvegarde +=  ( contrat );
+
+		// Gestion des heures
+
+		String heure = "INSERT INTO Heure VALUES \n";
+
+		firstIteration = true;
+		for (Heure h : this.bd.getHeures ( ) )
+		{
+			if ( !firstIteration ) { heure += ", \n"; } else { firstIteration = false; }
+			heure += "(" + h.getId ( ) + ",'" + h.getNom ( ) + "','" + h.getCoefTd ( ) + "')";
+		}
+
+		heure += "; \n\n";
+
+		sauvegarde +=  ( heure );
+
+		// Gestion des modules
+
+		String ModuleIUT = "INSERT INTO ModuleIUT VALUES \n";
+
+		firstIteration = true;
+		for (ModuleIUT m : this.bd.getModuleIUTs ( ) )
+		{
+			if ( !firstIteration ) { ModuleIUT += ", \n"; } else { firstIteration = false; }
+			ModuleIUT += "('" + m.getCode ( )   + "','" + m.getLibLong ( ) + "','" + m.getLibCourt ( ) + "','" + m.getTypeModule ( ) + 
+			             "'," + m.estValide ( ) + ","   + m.getSemestre ( ).getIdSemestre ( )          + ")";
+		}
+
+		ModuleIUT += "; \n\n";
+
+		sauvegarde +=  ( ModuleIUT );
+
+		// Gestion des intervenants
+
+		String Intervenant = "INSERT INTO Intervenant VALUES \n";
+
+		firstIteration = true;
+		for (Intervenant i : this.bd.getIntervenants ( ) )
+		{
+			if ( !firstIteration ) { Intervenant += ", \n"; } else { firstIteration = false; }
+			Intervenant += "(" + i.getId ( ) + ",'" + i.getNom ( ) + "','" + i.getPrenom ( ) + "'," + i.getheureService ( ) + "," + i.getHeureMaximum ( ) + "," + i.getContrat ( ).getId ( ) +")";
+		}
+
+		Intervenant += "; \n\n";
+
+		sauvegarde +=  ( Intervenant );
+
+		// Gestion intervients
+
+		String Intervient = "INSERT INTO Intervient VALUES \n";
+
+		firstIteration = true;
+		for (Intervient i : this.bd.getIntervients ( ) )
+		{
+			if ( !firstIteration ) { Intervient += ", \n"; } else { firstIteration = false; }
+			Intervient += "("  + i.getIntervenant ( ).getId ( ) + "," + i.getHeure ( ).getId ( ) + ",'" + i.getModule ( ).getCode ( ) + 
+			              "'," + i.getNbSemaine ( ) + "," + i.getNbGroupe ( ) + "," + i.getNbHeure ( ) + ",'" + i.getCommentaire ( ) +"')";
+		}
+
+		Intervient += "; \n\n";
+
+		sauvegarde +=  ( Intervient );
+
+		// Gestion horaire
+
+		String Horaire = "INSERT INTO Horaire VALUES \n";
+
+		firstIteration = true;
+		for (Horaire h : this.bd.getHoraires ( ) )
+		{
+			if ( !firstIteration ) { Horaire += ", \n"; } else { firstIteration = false; }
+			Horaire += "("  + h.getHeure ( ).getId ( ) + ",'" + h.getModule ( ).getCode ( ) + "'," + h.getNbHeurePN ( ) + "," + 
+			                  h.getNbHeure         ( ) + ","  + h.getNbSemaine          ( ) + ")"  ;
+		}
+
+		Horaire += "; \n\n";
+
+		sauvegarde +=  ( Horaire );
+
+
+		return sauvegarde;
+	}
+
 }
+

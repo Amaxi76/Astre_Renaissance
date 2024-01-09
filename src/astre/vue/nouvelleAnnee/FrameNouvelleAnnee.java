@@ -127,51 +127,47 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnZero ) 
 		{
-			int retour1 = JOptionPane.showConfirmDialog ( this, "ATTENTION \n Cela effacera TOUTES les données",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION );
+			int retour1 = JOptionPane.showConfirmDialog ( this, "ATTENTION \n Cela lancera une nouvelle année sans aucune données !",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION );
 			
 			if ( retour1 == 0 )
 			{
-				int retour2 = JOptionPane.showConfirmDialog ( this, "ATTENTION \n Vous êtes vraiment sûr de vouloir TOUT effacer ?",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION );
-			
-				if ( retour2 == 0 )
+				if ( this.ctrl.nouvelleAnneeZero ( this.txtNom.getText ( ) ) )
 				{
-					if ( this.ctrl.nouvelleAnneeZero ( this.txtNom.getText ( ) ) )
-					{
-						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
-						this.dispose ( );
-					}
-						
-					else
-					{
-						JOptionPane.showMessageDialog ( this, "Erreur, contactez l'équipe de développeurs D:", "Échec !", JOptionPane.OK_CANCEL_OPTION );
-						this.dispose ( );
-					}
+					JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
+					AFrame.retourAccueil ( ctrl );
+					this.dispose ( );
 				}
+						
+				else
+				{
+					JOptionPane.showMessageDialog ( this, "Erreur, contactez l'équipe de développeurs D:", "Échec !", JOptionPane.OK_CANCEL_OPTION );
+					AFrame.retourAccueil ( ctrl );
+					this.dispose ( );
+				}
+
 			}
 		}
 
 		if (e.getSource ( ) == this.btnNew )
 		{
-			int retour1 = JOptionPane.showConfirmDialog(this, "ATTENTION \n Cela effacera les attributions des intervenants aux modules",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION);
+			int retour1 = JOptionPane.showConfirmDialog(this, "ATTENTION \n Cela créera une copie de l'année actuelle !",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION);
 			
 			if ( retour1 == 0 )
 			{
-				int retour2 = JOptionPane.showConfirmDialog ( this, "ATTENTION \n Vous êtes vraiment sûr de vouloir tout effacer ?",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION );
-			
-				if ( retour2 == 0 )
+				if ( this.ctrl.nouvelleAnnee ( this.txtNom.getText ( ) ) )
 				{
-					if ( this.ctrl.nouvelleAnnee ( this.txtNom.getText ( ) ) )
-					{
-						JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
-						this.dispose ( );
-					}
-					else
-					{
-						JOptionPane.showMessageDialog ( this, "Erreur, contactez l'équipe de développeurs D:", "Échec !", JOptionPane.OK_CANCEL_OPTION );
-						this.dispose ( );
-					}
+					JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
+					AFrame.retourAccueil ( ctrl );
+					this.dispose ( );
+				}
+				else
+				{
+					JOptionPane.showMessageDialog ( this, "Erreur, contactez l'équipe de développeurs D:", "Échec !", JOptionPane.OK_CANCEL_OPTION );
+					AFrame.retourAccueil ( ctrl );
+					this.dispose ( );
 				}
 			}
+
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler ) 
