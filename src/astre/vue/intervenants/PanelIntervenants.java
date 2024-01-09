@@ -50,7 +50,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	private JPanel      panelCentre;
 	private JPanel      panelSud;
 
-	private PanelDiagramme panelDiagramme;
+	private JPanel panelDiagramme;
 
 	private Controleur  ctrl;
 
@@ -95,7 +95,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.btnAnnuler     = new JButton ( "Annuler"     );
 
 		//Ajout du diagramme
-		this.panelDiagramme = new PanelDiagramme ( );
+		this.panelDiagramme = new JPanel ( );
 
 
 		/* ------------------------- */
@@ -245,9 +245,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	 */
 	public void changerDiagramme ( int idInter )
 	{
-		PanelDiagramme diagramme;
+		JPanel diagramme;
 		if ( idInter == -1 )
-			diagramme = new PanelDiagramme ( );
+			diagramme = new JPanel ( );
 		else
 			diagramme = PanelDiagramme.genererCamembert ( idInter, PanelIntervenants.TAILLE_DIAG );
 
