@@ -17,15 +17,14 @@ import astre.modele.elements.Horaire;
 import astre.modele.elements.ModuleIUT;
 import astre.vue.outils.FiltreTextFieldEntier;
 
-/** Classe PanelPNLocalPPP
+/** Classe PanelRepartitionBis
   * @author : Clémentin Ly
   * @version : 2.0 - 14/12/2023
   * @date : 14/12/2023
   */
 
-public class PanelPNLocalPPP extends JPanel
+public class PanelRepartitionBis extends JPanel
 {
-	
 	/*-------------*/
 	/*--Attributs--*/
 	/*-------------*/
@@ -33,12 +32,13 @@ public class PanelPNLocalPPP extends JPanel
 	private Controleur  ctrl;
 	private FrameModule frm;
 
-	private JTextField txtCM;
-	private JTextField txtTD;
-	private JTextField txtTP;
+	private JTextField txtHSae;
 	private JTextField txtHTut;
-	private JTextField txtHP;
 	private JLabel     lblSomme;
+
+	private JLabel     lblTotalHSaeAff;
+	private JLabel     lblTotalHTutAff;
+	private JLabel     lblTotalSommeAff;
 
 	private List<JLabel>     lstLabelsHeures      = new ArrayList<>();
 	private List<JTextField> lstTextFieldsHeures  = new ArrayList<>();
@@ -47,7 +47,7 @@ public class PanelPNLocalPPP extends JPanel
 	/*--Constructeur--*/
 	/*----------------*/
 
-	public PanelPNLocalPPP ( Controleur ctrl, FrameModule frm )
+	public PanelRepartitionBis ( Controleur ctrl, FrameModule frm )
 	{
 		this.ctrl = ctrl;
 		this.frm  = frm;
@@ -62,137 +62,113 @@ public class PanelPNLocalPPP extends JPanel
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
-		this.txtCM	  = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtCM );
-		this.lstTextFieldsHeures.add ( txtCM );
-
-		this.txtTD	  = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtTD );
-		this.lstTextFieldsHeures.add ( txtTD );
-
-		this.txtTP	  = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtTP );
-		this.lstTextFieldsHeures.add ( txtTP );
+		this.txtHSae  = new JTextField ( "", 2 );
+		FiltreTextFieldEntier.appliquer ( txtHSae );
+		this.lstTextFieldsHeures.add ( txtHSae );
 
 		this.txtHTut  = new JTextField ( "", 2 );
 		FiltreTextFieldEntier.appliquer ( txtHTut );
 		this.lstTextFieldsHeures.add ( txtHTut );
-
-		this.txtHP    = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtHP );
-		this.lstTextFieldsHeures.add ( txtHP );
 		
 		this.lblSomme = new JLabel();
 
+		this.lblTotalHSaeAff  = new JLabel();
+		this.lblTotalHTutAff  = new JLabel();
+		this.lblTotalSommeAff = new JLabel();
+
 		gbc.gridy = 0;
 		gbc.gridx = 1;
-		this.add ( new JLabel ( "CM" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
+		this.add ( new JLabel ( "h Sae" ), gbc );
+		this.lstLabelsHeures.add ( new JLabel ( "SAE" ) );
 
 		gbc.gridx = 2;
-		this.add ( new JLabel ( "TD" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
-
-		gbc.gridx = 3;
-		this.add ( new JLabel ( "TP" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
-
-		gbc.gridx = 4;
 		this.add ( new JLabel ( "h Tut" ), gbc );
 		this.lstLabelsHeures.add ( new JLabel ( "Tut" ) );
 
-		gbc.gridx = 5;
-		this.add ( new JLabel ( "h Ponct" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "PONCT" ) );
-
-		gbc.gridx = 6;
-		this.add ( new JLabel ( "Σ" ), gbc  );
+		gbc.gridx = 3;
+		this.add ( new JLabel ( "Σ" ), gbc      );
 
 
 		gbc.gridy = 1;
 		gbc.gridx = 0;
-		this.add ( new JLabel ( "Total (eqtd) promo" ), gbc );
+		this.add ( new JLabel ( "Total promo (eqtd)" ), gbc );
 
 		gbc.gridx = 1;
-		this.add ( this.txtCM, gbc     );
+		this.add ( this.txtHSae, gbc  );
 
 		gbc.gridx = 2;
-		this.add ( this.txtTD, gbc     );
+		this.add ( this.txtHTut, gbc  );
 
 		gbc.gridx = 3;
-		this.add ( this.txtTP, gbc    );
-
-		gbc.gridx = 4;
-		this.add ( this.txtHTut, gbc    );
-
-		gbc.gridx = 5;
-		this.add ( this.txtHP, gbc    );
-
-		gbc.gridx = 6;
 		this.add ( this.lblSomme, gbc );
+
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		this.add ( new JLabel ( "Total affecté (eqtd)" ), gbc );
+
+		gbc.gridx = 1;
+		this.add ( this.lblTotalHSaeAff, gbc  );
+
+		gbc.gridx = 2;
+		this.add ( this.lblTotalHTutAff, gbc  );
+
+		gbc.gridx = 3;
+		this.add ( this.lblTotalSommeAff, gbc );
+		
 
 		/* ------------------------- */
 		/* Activation des composants */
 		/* ------------------------- */
 
-		this.txtCM.addKeyListener   ( new AjoutKeyListenerSomme() );
-		this.txtTD.addKeyListener   ( new AjoutKeyListenerSomme() );
-		this.txtTP.addKeyListener   ( new AjoutKeyListenerSomme() );
+		this.txtHSae.addKeyListener ( new AjoutKeyListenerSomme() );
 		this.txtHTut.addKeyListener ( new AjoutKeyListenerSomme() );
-		this.txtHP.addKeyListener   ( new AjoutKeyListenerSomme() );
 
 		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
 		this.lblSomme.setPreferredSize ( new Dimension ( 40, 15 ) );
 		this.lblSomme.setOpaque( true );
+
+		this.lblTotalHSaeAff.setBackground ( Color.LIGHT_GRAY );
+		this.lblTotalHSaeAff.setPreferredSize ( new Dimension ( 40, 15 ) );
+		this.lblTotalHSaeAff.setOpaque( true );
+
+		this.lblTotalHTutAff.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalHTutAff.setPreferredSize( new Dimension ( 40, 15 ) );
+		this.lblTotalHTutAff.setOpaque( true );
+
+		this.lblTotalSommeAff.setBackground( Color.LIGHT_GRAY );
+		this.lblTotalSommeAff.setPreferredSize( new Dimension ( 40, 15 ) );
+		this.lblTotalSommeAff.setOpaque( true );
 	}
 
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme();}
+		public void keyTyped   ( KeyEvent e ) {}
 		public void keyPressed ( KeyEvent e ) {}
-		public void keyReleased( KeyEvent e ) {}
+		public void keyReleased( KeyEvent e ) { majSomme(); }
 	}
 
 	private void majSomme()
 	{
 		try
 		{
-			int hCM     = 0;
-			int hTD     = 0;
-			int hTP     = 0;
+			int hSae    = 0;
 			int hTut    = 0;
-			int hPonct  = 0;
 
 			int nouvHeureValeur = 0;
 
-			if (!txtCM.getText().isEmpty() )
+			if (!txtHSae.getText().isEmpty() )
 			{
-				hCM = getCM();
-			}
-
-			if ( !txtTD.getText().isEmpty() )
-			{
-				hTD = getTD();
-			}
-
-			if ( !txtTP.getText().isEmpty() )
-			{
-				hTP = getTP();
+				hSae = getSaeRepartition();
 			}
 
 			if ( !txtHTut.getText().isEmpty() )
 			{
-				hTut = getTut();
+				hTut = getTutRepartition();
 			}
 
-			if ( !txtHP.getText().isEmpty() )
-			{
-				hPonct = getPonct();
-			}
+			int somme = hSae + hTut;
 
-			int somme = hCM + hTD + hTP + hTut + hPonct;
-
-			for (int i = 5; i < lstTextFieldsHeures.size(); i++)
+			for (int i = 2; i < lstTextFieldsHeures.size(); i++)
 			{
 				JTextField textField = lstTextFieldsHeures.get(i);
 				if ( !textField.getText().isEmpty() )
@@ -202,46 +178,55 @@ public class PanelPNLocalPPP extends JPanel
 				}
 			}
 
-			this.lblSomme.setText ( Integer.toString ( somme ) );
+			lblSomme.setText ( String.valueOf ( somme ) );
 		}
-		catch ( NumberFormatException e )
+		catch ( NumberFormatException ex )
 		{
-			this.lblSomme.setText ( "Erreur" );
+			lblSomme.setText ( "Erreur" );
 		}
+
+		majAffectation();
+	}
+
+	private void majAffectation()
+	{
+		lblTotalHSaeAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "SAE") ) );
+		lblTotalHTutAff.setText ( String.valueOf ( this.ctrl.getNBHeureEQTD ( this.frm.getPanelModuleLabel().getCode(), "TUT") ) );
+
+		majAffectationSomme();
+	}
+
+	private void majAffectationSomme()
+	{
+		int SAE = Integer.parseInt( lblTotalHSaeAff.getText() );
+		int TUT = Integer.parseInt( lblTotalHTutAff.getText() );
+
+		int somme = SAE + TUT;
+		lblTotalSommeAff.setText ( String.valueOf ( somme ) );
 	}
 
 	public void setModule ( ModuleIUT module )
 	{
-		this.txtCM  .setText( "0" );
-		this.txtTD  .setText( "0" );
-		this.txtTP  .setText( "0" );
+		this.txtHSae.setText( "0" );
 		this.txtHTut.setText( "0" );
-		this.txtHP  .setText( "0" );
-
+		
 		ArrayList<Horaire> lstHoraire = (ArrayList<Horaire>) BD.getInstance().getHoraires( module.getCode() );
 
 		for(Horaire h : lstHoraire)
 		{
 			switch( h.getHeure().getNom().toUpperCase() )
 			{
-				case "CM"    : this.txtCM  .setText( h.getNbHeurePN() + "" ); break;
-				case "TD"    : this.txtTD  .setText( h.getNbHeurePN() + "" ); break;
-				case "TP"    : this.txtTP  .setText( h.getNbHeurePN() + "" ); break;
-				case "Tut"   : this.txtHTut.setText( h.getNbHeurePN() + "" ); break;
-				case "PONCT" : this.txtHP  .setText( h.getNbHeurePN() + "" ); break;
-				
+				case "SAE" : this.txtHSae.setText( h.getNbHeure  () + "" );
+				case "TUT" : this.txtHTut.setText( h.getNbHeure  () + "" );
+
 				default : ;
 			}
 		}
-
 		majSomme();
 	}
 
-	public int getCM    ( ) { return Integer.parseInt( this.txtCM  .getText() ); }
-	public int getTD    ( ) { return Integer.parseInt( this.txtTD  .getText() ); }
-	public int getTP    ( ) { return Integer.parseInt( this.txtTP  .getText() ); }
-	public int getTut   ( ) { return Integer.parseInt( this.txtHTut.getText() ); }
-	public int getPonct ( ) { return Integer.parseInt( this.txtHP  .getText() ); }
+	public int getSaeRepartition() { return Integer.parseInt ( this.txtHSae.getText() ); }
+	public int getTutRepartition() { return Integer.parseInt ( this.txtHTut.getText() ); }
 
 	public void ajouterHeure ( String nomHeure )
 	{
@@ -249,7 +234,6 @@ public class PanelPNLocalPPP extends JPanel
 		{
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
-				this.frm.messageErreurAjouter();
 				return;
 			}
 		}
@@ -282,11 +266,10 @@ public class PanelPNLocalPPP extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
-			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) || nomHeure.equals ( "Tut" ) || nomHeure.equals ( "PONCT" ) )
+			if ( nomHeure.equals ( "SAE" ) || nomHeure.equals ( "Tut" ) )
 			{
-				this.frm.messageErreurSupprimer();
+				return;
 			}
-
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel

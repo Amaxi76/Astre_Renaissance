@@ -245,7 +245,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 
 		for ( String[] ligne : MenuBarAstre.getModeleBar ( ) )
 		{
-			if ( ligne[TYPE].equals ( ITEM ) )
+			if ( ligne[TYPE].equals ( ITEM ) || ligne[TYPE].equals ( ITEM_SM ) )
 			{
 				options.add ( ligne[NAME] );
 			}

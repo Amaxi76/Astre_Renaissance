@@ -8,7 +8,6 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
-import javax.swing.*;
 
 public class FrameIntervenants extends AFrame
 {

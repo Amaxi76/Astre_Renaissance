@@ -6,6 +6,7 @@ import java.awt.Component;
 import javax.swing.table.*;
 import astre.modele.outils.ModeleTableau;
 import astre.modele.outils.Utilitaire;
+import astre.vue.rendus.OperationRenduTableau;
 
 /** Classe représentant un tableau personnalisable.
  *  @author Matéo Sa, Maxime Lemoine et Maximilien Lesterlin
@@ -72,7 +73,8 @@ public class Tableau extends JTable
 	public static Tableau initialiserTableau ( String[] ensEntete, Object[] ensDefaut, boolean[] ensModifiable, int decalage, Object[][] tabDonnees )
 	{
 		// ensDefaut est le seul paramètre obligatoire
-		if ( ensDefaut == null ) return null;
+		if ( ensDefaut == null )
+			throw new IllegalArgumentException ( "Paramètre ensDefaut : obligatoire et non null" );
 
 		int nbColonnes = ensDefaut.length;
 
@@ -102,7 +104,8 @@ public class Tableau extends JTable
 		boolean modifiableOk = ensModifiable.length == nbColonnes;
 		boolean donneesOk    = tabDonnees != null && (tabDonnees.length == 0 || tabDonnees[0].length == nbColonnes); //pas changer condition pcq la galère sinon
 
-		if ( ! ( enteteOk && modifiableOk && donneesOk ) ) return null;
+		if ( ! ( enteteOk && modifiableOk && donneesOk ) )
+			throw new IllegalArgumentException ( "Les paramètres de construction du tableau ne correspondent pas." );
 
 		// construction du tableau
 		return new Tableau ( ensEntete, ensDefaut, ensModifiable, decalage , tabDonnees );
@@ -158,9 +161,7 @@ public class Tableau extends JTable
 	*/
 	public void ajouterLigne ( )
 	{
-		System.out.println ( "oui" );
 		this.modele.ajouterLigne ( );
-
 		this.ajusterTailleColonnes ( );
 	}
 
@@ -218,5 +219,4 @@ public class Tableau extends JTable
 	* Permet de modifier la liste des cellules éditables avec les numéros de colonne choisi.
 	*/
 	public void setEditable ( boolean[] lst ) { this.modele.setEditable ( lst ); }
-
 }

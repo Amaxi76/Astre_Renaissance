@@ -56,30 +56,31 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('Toriyama'      , 'Akira'  , 420, 478, 2 );
 
 INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
-('TP'   , 1   ),
-('TD'   , 1   ),
-('CM'   , 1.5 ),
-('REH'  , 1   ),
-('SAE'  , 1   ),
-('PONCT', 1   ),
-('Tut'  , 1   );
+('TP' , 1   ),
+('TD' , 1   ),
+('CM' , 1.5 ),
+('REH', 1   ),
+('SAE', 1   ),
+('HP' , 1   ),
+('Tut', 1   );
 
 INSERT INTO Intervient (Id_Intervenant, Id_Heure, Code_ModuleIUT, nbSemaine, nbGroupe, nbHeure, commentaire) VALUES
-(1,  2, 'R5.03',    6,    2,    5, NULL         ),
-(1,  1, 'R1.01',    8,    1,    6, NULL         ),
-(1,  5, 'S6.01',    8,    1,    6, NULL         ),
-(1,  2, 'R1.01',    8,    1,    6, NULL         ),
+(1,  2, 'R5.03',    6,    2,    5, ''           ),
+(1,  1, 'R1.01',    8,    1,    6, ''           ),
+(1,  5, 'S6.01',    8,    1,    6, ''           ),
+(1,  2, 'R1.01',    8,    1,    6, ''           ),
 (4,  3, 'R1.01',    2,    1,    6, '3 CM 3H'    ),
 (2,  1, 'R1.01',    8,    1,    9, 'commentaire'),
-(3,  6, 'S2.05',    1,    1,    9, NULL         ),
-(6,  1, 'R5.06',   12,    2,    2, NULL         ),
-(3,  4, 'S6.ST',    1,    1,   12, NULL         ),
-(1,  3, 'R1.01',    8,    1,    6, NULL         );
+(3,  6, 'S2.05',    1,    1,    9, ''           ),
+(6,  1, 'R5.06',   12,    2,    2, ''           ),
+(3,  4, 'S6.ST',    1,    1,   12, ''           ),
+(1,  3, 'R1.01',    8,    1,    6, ''           );
   
 INSERT INTO Horaire VALUES
 (1, 'R1.01',  85,  5, 12),
 (2, 'R1.01',  30, 28, 11),
 (3, 'R1.01',   5,  2,  5),
+(6, 'R1.01',   0,  5, 1 ),
 (5, 'S5.01',  60,  0,  3),
 (4, 'S2.05',   2,  0,  1),
 (6, 'S6.ST',   6,  0,  3);

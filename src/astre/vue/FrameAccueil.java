@@ -19,7 +19,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -60,7 +59,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 		this.setLocationRelativeTo ( null      );
 
 		/* ------------------------- */
-		/* Création des composants   */
+		/*  Création des composants  */
 		/* ------------------------- */
 
 		JPanel panel         = new JPanel ( new BorderLayout (      )         );
@@ -99,7 +98,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 
 		panel.add ( panelTest, BorderLayout.SOUTH );
 		
-		JPanel test = new JPanel(new GridLayout(2,1));
+		JPanel test = new JPanel ( new GridLayout ( 2, 1 ) );
 		test.add(j);
 		test.add(panel);
 		this.add(test);
@@ -123,37 +122,29 @@ public class FrameAccueil extends AFrame implements ActionListener
 	/* ActionListener */
 	public void actionPerformed ( ActionEvent e )
 	{
+		AFrame frameActuelle = this;
+
 		if ( e.getSource ( ) == this.btnPrevisionnel )
-		{
-			new FramePrevisionnel ( this.ctrl );
-		}
+			frameActuelle = new FramePrevisionnel ( this.ctrl );
 		
 		if ( e.getSource ( ) == this.btnIntervenants )
-		{
-			new FrameIntervenants ( this.ctrl );
-		}
+			frameActuelle = new FrameIntervenants ( this.ctrl );
 		
-		if ( e.getSource ( ) == this.btnParametre )
+		if ( e.getSource ( ) == this.btnParametre    )
+			frameActuelle = new FrameParametrage ( this.ctrl );
+
+		if ( e.getSource ( ) == this.btnEtat         )
+			frameActuelle = new FrameEtats ( this.ctrl );
+
+		if ( e.getSource ( ) == this.btnAnnee        )
 		{
-			new FrameParametrage ( this.ctrl );
+			frameActuelle = new FrameNouvelleAnnee ( this.ctrl );
 		}
 
-		if ( e.getSource ( ) == this.btnEtat )
-		{
-			new FrameEtats ( this.ctrl );
-		}
+		if ( e.getSource ( ) == this.btnHistorique   )
+			frameActuelle = new FrameHistorique ( this.ctrl );
 
-		if ( e.getSource() == this.btnAnnee )
-		{
-			new FrameNouvelleAnnee ( this.ctrl );
-			return;
-		}
-
-		if ( e.getSource ( ) == this.btnHistorique )
-		{
-			new FrameHistorique ( this.ctrl );
-		}
-
+		this.ctrl.setFrameActuelle ( frameActuelle );
 		this.dispose ( );
 	}
 }

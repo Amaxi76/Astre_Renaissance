@@ -95,7 +95,7 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.btnAjouter )
+		/*if ( e.getSource ( ) == this.btnAjouter )
 		{
 			String nomHeure = ( String ) this.cbHeuresAjouter.getSelectedItem();
 
@@ -119,6 +119,6 @@ public class PanelModuleHeure extends JPanel implements ActionListener
 			if( this.frm.getPanelRepartition()   .isVisible() ) this.frm.getPanelRepartition()   .supprimerHeure ( nomHeure );
 			if( this.frm.getPanelRepartitionBis().isVisible() ) this.frm.getPanelRepartitionBis().supprimerHeure ( nomHeure );
 			if( this.frm.getPanelRepartitionPPP().isVisible() ) this.frm.getPanelRepartitionPPP().supprimerHeure ( nomHeure );
-		}
+		}*/
 	}
 }

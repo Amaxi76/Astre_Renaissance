@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.HashMap;
 
 public class PanelEtats extends JPanel implements ActionListener
 {
@@ -30,20 +31,28 @@ public class PanelEtats extends JPanel implements ActionListener
 
 	JComboBox<String> cbInter;
 	JComboBox<String> cbModule;
+	JComboBox<String> cbStyle;
+
+	HashMap<String,String> style;
 
 	private Controleur ctrl;
 	
-	/**
-	 * 	Panel pour la frame des Etats.
+	/** Constructeur de PanelEtats
+	 * @param ctrl
 	 */
 	public PanelEtats ( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
 
 		this.setBorder ( new EmptyBorder  ( 10, 10, 10, 10 ) );
+		this.setLayout ( new BorderLayout ( 20, 20 ) );
 
-		this.setLayout ( new BorderLayout ( 10, 10         ) );
-
+		//styles pour html
+		this.style = new HashMap<String, String> ( );
+		this.style.put ( "Champs Fleuri    (Rouge et Rose)   ", "Rose" );
+		this.style.put ( "Film d'Antan     (Noir et Blanc)   ", "Noir" );
+		this.style.put ( "Vague & Marée    (Marine et Corail)", "Bleu" );
+		this.style.put ( "Sapin de Noël    (Vert et Marron)  ", "Noel" );
 		
 		//création des combobox
 		this.cbInter = new JComboBox<> ( );
@@ -57,6 +66,13 @@ public class PanelEtats extends JPanel implements ActionListener
 		{
 			cbModule.addItem ( m.getCode ( ) + " - " + m.getLibCourt ( ) );
 		}
+
+		this.cbStyle = new JComboBox<> ( );
+		for ( String s : this.style.keySet ( ) )
+		{
+			this.cbStyle.addItem ( s );
+		}
+		cbStyle.setSelectedItem ( "Vague & Marée    (Marine et Corail)" );
 
 		//création des boutons
 		this.btnRecapModule   = new JButton ( "Module individuel"      );
@@ -96,18 +112,25 @@ public class PanelEtats extends JPanel implements ActionListener
 		this.btnRecapInter.setPreferredSize ( new Dimension ( 200, 30 ) );
 		layout.linkSize ( this.btnRecapInter, this.btnRecapModule, this.btnRecapTtInter, this.btnRecapTtModule, this.cbInter, this.cbModule );
 
-		JPanel panelNord = new JPanel ( new GridLayout ( 2, 1 ) );
-		
-		panelNord.add ( new JLabel ( "HTML" ) );
-		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
+		JPanel panelHtml = new JPanel ( new GridLayout ( 2, 1 ) );
+		panelHtml.add ( new JLabel ( "HTML" ) );
+		panelHtml.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
 
-		JPanel panelSud = new JPanel ( new GridLayout ( 3, 1 ) );
-		panelSud.add ( new JLabel ( "CSV" ) );
-		panelSud.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
-		panelSud.add ( this.btnCsv );
+		JPanel panelCentre = new JPanel ( new BorderLayout ( ) );
+		panelCentre.add ( panelHtml, BorderLayout.NORTH  );
+		panelCentre.add ( panel    , BorderLayout.CENTER );
+
+		JPanel panelNord = new JPanel ( new GridLayout ( 3, 1 ) );
+		panelNord.add ( new JLabel ( "CSV" ) );
+		panelNord.add ( new JSeparator ( SwingConstants.HORIZONTAL ) );
+		panelNord.add ( this.btnCsv );
+
+		JPanel panelSud = new JPanel ( new BorderLayout ( 10,10 ) );
+		panelSud.add ( new JLabel ( "Choix du style :" ), BorderLayout.NORTH  );
+		panelSud.add ( this.cbStyle                          , BorderLayout.CENTER );
 
 		this.add ( panelNord  , BorderLayout.NORTH  );
-		this.add ( panel      , BorderLayout.CENTER );
+		this.add ( panelCentre, BorderLayout.CENTER );
 		this.add ( panelSud   , BorderLayout.SOUTH  );
 		
 		//met les actionListener
@@ -123,13 +146,13 @@ public class PanelEtats extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnRecapInter )
 		{
 			//Génération de l'html pour 1 intervenant
-			GenerateurFichier.GenererHTMLIntervenant ( this.ctrl.getTable ( Intervenant.class ).get ( this.cbInter.getSelectedIndex ( ) ) );
+			GenerateurFichier.GenererHTMLIntervenant ( this.ctrl.getTable ( Intervenant.class ).get ( this.cbInter.getSelectedIndex ( ) ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 		}
 		
 		if ( e.getSource ( ) == this.btnRecapModule )
 		{
 			//Génération de l'html pour 1 module
-			GenerateurFichier.GenererHTMLModule ( this.ctrl.getTable ( ModuleIUT.class ).get ( this.cbModule.getSelectedIndex ( ) ) );
+			GenerateurFichier.GenererHTMLModule ( this.ctrl.getTable ( ModuleIUT.class ).get ( this.cbModule.getSelectedIndex ( ) ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 		}
 		
 		if ( e.getSource ( ) == this.btnCsv )
@@ -141,19 +164,13 @@ public class PanelEtats extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnRecapTtInter )
 		{
 			//Génération du html pour tous les intervenants
-			for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
-			{
-				GenerateurFichier.GenererHTMLIntervenant ( i );
-			}
+			GenerateurFichier.GenererHTMLToutIntervenant ( this.ctrl.getTable ( Intervenant.class ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 		}
 
 		if ( e.getSource ( ) == this.btnRecapTtModule )
 		{
 			//Génération du html pour tous les modules
-			for ( ModuleIUT m : this.ctrl.getTable ( ModuleIUT.class ) )
-			{
-				GenerateurFichier.GenererHTMLModule ( m );
-			}
+			GenerateurFichier.GenererHTMLToutModule ( this.ctrl.getTable ( ModuleIUT.class ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 		}
 	}
 }

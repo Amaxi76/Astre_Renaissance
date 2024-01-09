@@ -32,8 +32,8 @@ public class PanelEnsParametre extends JTabbedPane
 		String[] enTeteContrat   = { "action", "id", "Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
 		String[] enTeteTypeHeure = { "action", "id_Heure" , "Nom Heure"            , " Coeff TD" };
 
-		Object[] tabObjectsContrat   = { ' ', 0, "Nom du contrat", 0, 0, 0.0 };
-		Object[] tabObjectsTypeHeure = { ' ', 0, "Nom de l'heure", 0.0       };
+		Object[] tabObjectsContrat   = { ' ', 0, "Nom du contrat", 0, 0, 1.0 };
+		Object[] tabObjectsTypeHeure = { ' ', 0, "Nom de l'heure", 1.0       };
 
 		String   nomTabContrat   = "Liste des contrats";
 		String   nomTabTypeHeure = "Liste des types d'heures";

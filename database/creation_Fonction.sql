@@ -329,6 +329,37 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+--Permet de récupérer les doubles en string
+DROP              FUNCTION f_conversion ( s_Id_contrat INTEGER ) CASCADE;
+CREATE OR REPLACE FUNCTION f_conversion ( s_Id_contrat INTEGER ) RETURNS VARCHAR AS
+$$
+DECLARE
+	fraction VARCHAR;
+BEGIN
+
+	SELECT
+	TRIM(BOTH '0' FROM
+		CONCAT(
+		CASE WHEN ratiotp < 0 THEN '-' ELSE '' END,
+		FLOOR(ABS(ratiotp))::TEXT,
+		' ',
+		CASE 
+			WHEN ABS(ratiotp)::numeric % 0.66 = 0 THEN '2/3'
+			ELSE FLOOR((ABS(ratiotp) - FLOOR(ABS(ratiotp))) * 100)::TEXT
+		END
+		)
+	) INTO fraction
+	FROM contrat
+	WHERE Id_Contrat = s_Id_contrat;
+
+	-- Retourner le résultat et si la requête est nulle, on renvoie 0
+	RETURN COALESCE(fraction, '0');
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
 /* FONCTIONS NON UTILISÉES POUR LE MOMENT ? */
 
 -- -- Sélectionner les heuresPN
@@ -767,8 +798,8 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer un ModuleIUT
 
-DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER );
-CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT INTEGER ) RETURNS VOID AS
+DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) );
+CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
 
@@ -826,16 +857,46 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP              FUNCTION f_selectIntervient ( code_Module VARCHAR );
-CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( nom_Intervenant VARCHAR, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
+CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
 $$
 BEGIN
 
 	RETURN QUERY
 	
-	SELECT inte.nom, h.nomHeure, i.nbSemaine, i.nbGroupe, i.nbHeure, i.commentaire
+	SELECT inte.id_intervenant ,inte.nom || ' ' || inte.prenom, h.nomHeure, i.nbSemaine, i.nbGroupe, i.nbHeure, i.commentaire
 	FROM   Intervient i JOIN Intervenant inte ON i.id_intervenant = inte.Id_Intervenant
 	                    JOIN Heure       h    ON i.Id_Heure       = h.Id_Heure
-	WHERE  i.Code_ModuleIUT = code_module;
+	WHERE  i.Code_ModuleIUT = $1;
+
+END;
+$$ LANGUAGE plpgsql;
+
+DROP              FUNCTION f_selectHoraire ( code_Module VARCHAR );
+CREATE OR REPLACE FUNCTION f_selectHoraire ( code_Module VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeurePN INTEGER ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+	
+	SELECT h.nomHeure, ho.nbHeurePN
+	FROM   Horaire ho JOIN Heure h     ON h.id_heure    = ho.id_heure
+	                  JOIN ModuleIUT m ON m.Code_ModuleIUT = ho.Code_ModuleIUT
+	WHERE  ho.Code_ModuleIUT = code_module;
+
+END;
+$$ LANGUAGE plpgsql;
+
+DROP              FUNCTION f_selectHoraireBis ( code_Module VARCHAR );
+CREATE OR REPLACE FUNCTION f_selectHoraireBis ( code_Module VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeureRepartie INTEGER, nbSemaine INTEGER ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+	
+	SELECT h.nomHeure, ho.nbheurerepartie, ho.nbSemaine
+	FROM   Horaire ho JOIN Heure h     ON h.id_heure    = ho.id_heure
+	                  JOIN ModuleIUT m ON m.Code_ModuleIUT = ho.Code_ModuleIUT
+	WHERE  ho.Code_ModuleIUT = code_module;
 
 END;
 $$ LANGUAGE plpgsql;

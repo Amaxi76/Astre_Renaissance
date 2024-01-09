@@ -2,12 +2,12 @@ package astre.modele;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import astre.Controleur;
 import astre.modele.elements.*;
-import astre.modele.outils.ModeleTableau;
+import astre.modele.outils.Utilitaire;
 
 public class Astre
 {
@@ -18,38 +18,21 @@ public class Astre
 		this.bd = BD.getInstance ( );
 	}
 
-	public Object[][] getTableauModule ( int numeroSemestre )
-	{
-		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( this.bd.getModules ( numeroSemestre ) ) ;
-
-		Object[][] tabObjet = new Object[ensModules.size ( ) ][4];
-
-		for ( int cpt = 0; cpt < ensModules.size ( ); cpt++ )
-		{
-			ModuleIUT module = ensModules.get ( cpt );
-			
-			tabObjet[cpt][0] = module.getCode    ( );
-			tabObjet[cpt][1] = module.getLibLong ( );
-			tabObjet[cpt][2] = "" + this.sommeHeure ( module.getCode ( ), 'R' ) + "/" + this.sommeHeure ( module.getCode ( ), 'P' );
-			tabObjet[cpt][3] = module.estValide  ( );
-		}
-		
-		return tabObjet;
-	}
-
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Object[][]    getTableau            ( Class<?>  type      ) { return this.bd.getTableau            ( type         ); }
-	public Object[][]    getTableauParticulier ( String nomRecherche ) { return this.bd.getTableauParticulier ( nomRecherche ); }
-	public Semestre      getSemestre           ( int    numSemestre  ) { return this.bd.getSemestre           ( numSemestre  ); }
-	public Heure         getHeure              ( int    nom          ) { return this.bd.getHeure              ( nom          ); } //TODO: nom de variable à retravailler
-	public Heure         getHeure              ( String nom          ) { return this.bd.getHeure              ( nom          ); }
-	public Contrat       getContrat            ( String nom          ) { return this.bd.getContrat            ( nom          ); }
-	public ModuleIUT     getModule             ( String nom          ) { return this.bd.getModule             ( nom          ); }
+	public Object[][]    getTableau            ( Class<?>  type          ) { return this.bd.getTableau            ( type         ); }
+	public Object[][]    getTableauParticulier ( String nomRecherche     ) { return this.bd.getTableauParticulier ( nomRecherche ); }
+	public Semestre      getSemestre           ( int    numSemestre      ) { return this.bd.getSemestre           ( numSemestre  ); }
+	public Heure         getHeure              ( int    id               ) { return this.bd.getHeure              ( id           ); }
+	public Intervenant   getIntervenant        ( int    id               ) { return this.bd.getIntervenant        ( id           ); }
+	public Heure         getHeure              ( String nom              ) { return this.bd.getHeure              ( nom          ); }
+	public Contrat       getContrat            ( String nom              ) { return this.bd.getContrat            ( nom          ); }
+	public ModuleIUT     getModule             ( String nom              ) { return this.bd.getModule             ( nom          ); }
 
-	public ArrayList<String> getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
+
+	public List<String>      getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }
 	public List<Intervenant> getIntervenants   (                 ) { return this.bd.getIntervenants (      ); }
 	public <T> List<T>       getTable          ( Class<T> type   ) { return this.bd.getTable        ( type ); }
@@ -68,43 +51,45 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	public int sommeHeure ( String code, char typeHeure )
-	{
-		int somme = 0;
-		
-		for ( Heure h : this.bd.getHeures ( code, typeHeure ).keySet (  ) )
-			somme += this.bd.getHeures ( code, typeHeure ).get ( h );
-
-		return somme;
-	}
-
-
+	/**
+	 * Met à jour la base de donnée en créant un nouvel objet avec chaque lignes de tabDonnéesBD
+	 */
 	public void majTableauBD ( Object[][] tabDonneeBD, Class<?> type )
 	{
 		for ( int i = 0; i < tabDonneeBD.length; i++ )
 		{
-			try
-			{
-				Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
-				
-				Object objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) sousTab );
-
-				switch ( ( char ) tabDonneeBD[i][0] )
-				{
-					case ModeleTableau.AJOUTER   -> this.insert ( objet );
-					case ModeleTableau.MODIFIER  -> this.update ( objet );
-					case ModeleTableau.SUPPRIMER -> this.delete ( objet );
-				
-					default  -> { break; } // ModeleTableau.DEFAUT et ModeleTableau.IGNORER
-				}
-			}
-			catch ( Exception e )
-			{
-				e.printStackTrace ( );
-			}
+			Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
+			this.majObjetBD ( sousTab, type, ( char ) tabDonneeBD[i][0] );
 		}
 	}
 
+	/**
+	 * Créée un objet du bon type à partir de ses attributs contenus dans tabObjet
+	 */
+	public void majObjetBD ( Object[] tabObjet, Class<?> type, char modification )
+	{
+		try
+		{	
+			Object objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) tabObjet );
+
+			switch ( modification )
+			{
+				case Controleur.AJOUTER   -> this.insert ( objet );
+				case Controleur.MODIFIER  -> this.update ( objet );
+				case Controleur.SUPPRIMER -> this.delete ( objet );
+			
+				default  -> { break; } // ModeleTableau.DEFAUT et ModeleTableau.IGNORER
+			}
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace ( );
+		}
+	}
+
+	/**
+	 * Utilisation de la méthode INSERT, UPDATE ou DELETE sur un objet dans la base de données
+	 */
 	private void modification ( Object o, String methode )
 	{
 		try
@@ -117,7 +102,7 @@ public class Astre
 			e.printStackTrace ( );
 		}
 	}
-	
+
 	public boolean nouvelleAnnee     ( ) { return this.bd.nouvelleAnnee     ( ); }
 	public boolean nouvelleAnneeZero ( ) { return this.bd.nouvelleAnneeZero ( ); }
 }

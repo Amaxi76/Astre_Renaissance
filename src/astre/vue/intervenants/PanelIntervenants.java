@@ -3,14 +3,13 @@ package astre.vue.intervenants;
 import astre.Controleur;
 import astre.modele.elements.*;
 import astre.modele.outils.Utilitaire;
-import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
+import astre.vue.rendus.OperationRenduTableauIntervenants;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -21,15 +20,13 @@ import java.awt.GridLayout;
   * @date : 06/12/2023
   */
 
-  //TODO: Faire la fraction "2/3" - jcrois pas non
-
   //TODO: Afficher les heures Réelles ou Théoriques ?
 
 public class PanelIntervenants extends JPanel implements ActionListener
 {
 	// paramètres du tableau
 	private static final String[]  NOMS_COL   = { "action", "Id" ,"Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1" , "S3" , "S5" , "sTot", "S2" , "S4" , "S6" , "sTot", "Total" };
-	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , 0.0      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0       };
+	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , ""      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0        };
 	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , false    , false, false, false, false , false, false, false, false , false   };
 	private static final int       DECALAGE   = 2;
 	
@@ -76,6 +73,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Création du tableau
 		this.tableau = Tableau.initialiserTableau ( NOMS_COL, DEFAUT_COL, MODIF_COL, DECALAGE, this.ctrl.getTableauParticulier ( REQUETE ) );
+
+		for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
+			this.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervenants ( ) );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
@@ -143,8 +143,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.panelSud.add ( this.panelDiagramme );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
-		this.add ( panelCentre                                 , BorderLayout.CENTER );
-		this.add ( panelSud                                    , BorderLayout.SOUTH  );
+		this.add ( panelCentre                            , BorderLayout.CENTER );
+		this.add ( panelSud                               , BorderLayout.SOUTH  );
 
 
 		/* ------------------------- */
@@ -159,7 +159,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//ajout du mouseListener
 		MouseAdapter adapter = 	new MouseAdapter ( )
-		{
+		{ //TODO: remplacer par addActionListener et un tableau.getSelectedRow ( )
 			@Override
 			public void mouseClicked ( MouseEvent e )
 			{

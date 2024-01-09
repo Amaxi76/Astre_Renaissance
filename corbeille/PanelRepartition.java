@@ -268,57 +268,57 @@ public class PanelRepartition extends JPanel
 
 		this.txtNbSemCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalCM();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalCM();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbHCM.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalCM();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalCM();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbSemTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTD();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTD();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbHTD.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTD();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTD();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbSemTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTP();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTP();
+													 majTotalHeure(); }
 		});
 
 		this.txtNbHTP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalTP();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalTP();
+													 majTotalHeure(); }
 		});
 
 		this.txtHeureP.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalHeure(); }
 		});
 
 		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
@@ -665,18 +665,18 @@ public class PanelRepartition extends JPanel
 
 		textFieldNbSem.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalNouvHeure();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalNouvHeure();
+													 majTotalHeure();     }
 		});
 
 		textFieldNbHeure.addKeyListener ( new KeyListener()
 		{
-			public void keyTyped    ( KeyEvent e ) { majTotalNouvHeure();
-													 majTotalHeure(); }
+			public void keyTyped    ( KeyEvent e ) {}
 			public void keyPressed  ( KeyEvent e ) {}
-			public void keyReleased ( KeyEvent e ) {}
+			public void keyReleased ( KeyEvent e ) { majTotalNouvHeure();
+													 majTotalHeure();     }
 		});
 
 		this.revalidate();
@@ -686,6 +686,10 @@ public class PanelRepartition extends JPanel
 	{
 		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
 		{
+			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) )
+			{
+				return;
+			}
 			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
 			{
 				//Supprimer du Panel

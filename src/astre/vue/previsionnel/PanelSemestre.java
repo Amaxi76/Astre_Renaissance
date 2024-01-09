@@ -34,7 +34,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 	private Timer      timerMessageEnregistrement;
 
 	private JLabel     lblMessageEnregistrement;
-	
+
 	private Tableau    tableauEnsembleModule;
 	
 	public PanelSemestre ( int numSemestre, Controleur ctrl )
@@ -118,13 +118,21 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 		/* ----------------------------- */
 		/*   Activation des composants   */
-		/* -----------------------    -- */
+		/* ----------------------------- */
 
 		this.txtNbGpTD     .addActionListener ( this );
 		this.txtNbGpTP     .addActionListener ( this );
 		this.txtNbEtud     .addActionListener ( this );
 		this.txtNbSemaine  .addActionListener ( this );
 		this.btnEnregistrer.addActionListener ( this );
+	}
+
+	/**
+	 * @return the tableauEnsembleModule
+	 */
+	public Tableau getTableauEnsembleModule ( ) 
+	{
+		return this.tableauEnsembleModule;
 	}
 
 	public void actionPerformed ( ActionEvent e )
@@ -153,10 +161,10 @@ public class PanelSemestre extends JPanel implements ActionListener
 		}
 		return "pas de selection";
 	}
-
+	
 	public void majTableau ( )
 	{
-		this.tableauEnsembleModule.modifDonnees( this.ctrl.getTableauModule ( this.numSemestre ) );
+		this.tableauEnsembleModule.modifDonnees ( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
 	}
 	
 }

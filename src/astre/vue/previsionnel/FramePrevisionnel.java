@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import astre.Controleur;
 import astre.vue.outils.AFrame;
 import astre.vue.outils.ConstantesVue;
+import astre.vue.outils.Tableau;
 
 public class FramePrevisionnel extends AFrame
 {
@@ -73,5 +74,15 @@ public class FramePrevisionnel extends AFrame
 	{
 		this.pnlEnsSemestre.majTableau ( );
 		repaint();
+	}
+
+	public PanelEnsSemestre getPanelEnsSemestre ( )
+	{
+		return this.pnlEnsSemestre;
+	}
+
+	public Tableau getTableauSemetre ( int id ) 
+	{
+		return this.pnlEnsSemestre.getTableauSemetre ( id );
 	}
 }

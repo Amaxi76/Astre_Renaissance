@@ -118,7 +118,6 @@ public class PanelDiagramme extends JPanel
 		f.pack ( );*/
 
 		PanelDiagramme.genererCamembert( 1, 250 );
-		System.out.println( "mauvais main mec" );
 	}
 
 	public static PanelDiagramme genererCamembert ( int idIntervenant, int taille )

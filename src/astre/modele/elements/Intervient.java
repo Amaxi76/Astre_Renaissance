@@ -1,5 +1,7 @@
 package astre.modele.elements;
 
+import javax.swing.JOptionPane;
+
 /** Classe Intervient
   * @author : Alizéa Lebaron
   * @version : 1.0 - 12/12/2023
@@ -25,15 +27,59 @@ public class Intervient
 	 * @param nbHeure
 	 * @param commentaire
 	 */
-	public Intervient ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
+	private Intervient ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
 	{
 		this.intervenant = intervenant;
-		this.heure = heure;
-		this.module = module;
-		this.nbSemaine = nbSemaine;
-		this.nbGroupe = nbGroupe;
-		this.nbHeure = nbHeure;
+		this.heure       = heure;
+		this.module      = module;
+		this.nbSemaine   = nbSemaine;
+		this.nbGroupe    = nbGroupe;
+		this.nbHeure     = nbHeure;
 		this.commentaire = commentaire;
+	}
+
+	/** Crée un objet Intervient en prenant en paramètre un tableau d'objet.
+	 * @return L'objet créée si les données du tableau sont correctes.
+	 */
+	public static Intervient creation ( Object[] heure )
+	{
+		Object i   = heure[0];
+		Object h   = heure[1];
+		Object m   = heure[2];
+		Object nbS = heure[3];
+		Object nbG = heure[4];
+		Object nbH = heure[5];
+		Object c   = heure[6];
+
+		boolean iOk   = ( i   instanceof Intervenant );
+		boolean hOk   = ( h   instanceof Heure       );
+		boolean mOk   = ( m   instanceof ModuleIUT   );
+		boolean nbSOk = ( nbS instanceof Integer     );
+		boolean nbHOk = ( nbH instanceof Integer     );
+		boolean nbGOk = ( nbG instanceof Integer     );
+		boolean cOk   = ( c   instanceof String      );
+
+		if ( !iOk || !hOk || !mOk || !nbSOk || !nbGOk || !nbHOk || !cOk )
+		{
+			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
+			throw new IllegalArgumentException ( "Les données de l'intervient ne sont pas du bon type" );
+		}
+		
+		return Intervient.creation ( (Intervenant)i, (Heure)h, (ModuleIUT)m, (int)nbS, (int)nbG, (int)nbH, (String)c );
+	}
+
+	/** Crée un objet Intervient en prenant en paramètre un Intervenant, une Heure, un ModuleIUT, un nombre de semaine, un nombre de groupe, un nombre d'heure et un commentaire.
+	 * @return L'objet créée si les objets ne sont pas vides et que les valeurs numériques sont positives.
+	 */
+	public static Intervient creation ( Intervenant i, Heure h, ModuleIUT m, int nbS, int nbG, int nbH, String c )
+	{
+		if ( i == null || h == null || m == null || nbS < 0 || nbG < 0 || nbH < 0 )
+		{
+			JOptionPane.showMessageDialog ( null, "Une des données est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
+			throw new IllegalArgumentException ( "Une des données est vide" );
+		}
+			
+		return new Intervient ( i, h, m, nbS, nbG, nbH, c );
 	}
 
 	/*---------------------------------------*/

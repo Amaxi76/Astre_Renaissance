@@ -46,17 +46,17 @@ public class PanelBouton extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 		
-		this.btnAjouter   = new JButton ( "Ajouter"     );
+		this.btnAjouter   = new JButton ( "Ajouter"   );
 		this.btnSupprimer = new JButton ( "Supprimer" );
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
 		/* -----------------------    -- */
 		
-		this.centrerTexte ( this.btnAjouter     );
+		this.centrerTexte ( this.btnAjouter   );
 		this.centrerTexte ( this.btnSupprimer );
 		
-		this.add ( this.btnAjouter     );
+		this.add ( this.btnAjouter   );
 		this.add ( this.btnSupprimer );
 
 		/* ------------------------- */
