@@ -76,12 +76,26 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 				new String ( a );
 				pw.println ( a );
 
-				pw.close();
+				pw.close ( );
 			}
-			catch ( Exception ex) { ex.printStackTrace(); }
+			catch ( Exception ex )
+			{
+				try
+				{
+					PrintWriter pw = new PrintWriter ( new FileOutputStream ( "../data/identifiant/identifiant.txt" ) );
 
-			new Controleur();
-			this.dispose();
+					pw.println ( this.txtId.getText ( ) );
+					char[] a = this.txtMdp.getPassword ( );
+					new String ( a );
+					pw.println ( a );
+
+					pw.close();
+				}
+				catch ( Exception x ){}
+			}
+
+			new Controleur ( );
+			this.dispose ( );
 		}
 	}
 
