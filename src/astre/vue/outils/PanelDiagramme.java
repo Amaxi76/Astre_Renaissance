@@ -1,7 +1,7 @@
 package astre.vue.outils;
 
 /** Classe PanelDiagramme
-  * @author : Maxime Lemoine
+  * @author : Maxime Lemoine, Matéo Sa
   * @version : 1.0 - 14/12/2023
   * @date : 06/12/2023
  */
@@ -54,7 +54,7 @@ public class PanelDiagramme extends JPanel
 
 		final JFreeChart pieChart = ChartFactory.createPieChart ( null, pieDataset, true, true, true );
 		final ChartPanel cPanel = new ChartPanel ( pieChart );
-		cPanel.setPreferredSize ( new Dimension(taille + 60, taille ) );
+		cPanel.setPreferredSize ( new Dimension ( taille + 60, taille ) );
 
 		// Ajout des couleurs
 		PiePlot plot = ( PiePlot ) pieChart.getPlot ( );
