@@ -184,6 +184,7 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 		map.putIfAbsent ( "HP", 0.0 );
 
 		// Calcul des sommes par type d'heures
+		// 
 		for ( int cpt = 0; cpt < this.tableau.getDonnees ( ).length; cpt++ )
 		{
 			if ( ( char ) this.tableau.getDonnees ( ) [cpt][0] != Controleur.SUPPRIMER )
