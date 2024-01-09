@@ -223,10 +223,21 @@ DELETE FROM Heure       CASCADE;
 /* ---------------------------------------------------- */
 
  INSERT INTO Semestre VALUES 
+<<<<<<< HEAD
 (1,0,0,0,0), 
+=======
+>>>>>>> 6523e1f7911275b4628dfef4c2dfb8c7664944e6
 (2,0,0,0,0), 
 (3,0,0,0,0), 
 (4,0,0,0,0), 
 (5,0,0,0,0), 
+<<<<<<< HEAD
 (6,0,0,0,0); 
+=======
+(6,0,0,0,0), 
+(1,7,15,100,42); 
+
+INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
+('Nom du contrat',0,0,'1.0'); 
+>>>>>>> 6523e1f7911275b4628dfef4c2dfb8c7664944e6
 

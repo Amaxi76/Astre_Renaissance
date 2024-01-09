@@ -143,13 +143,13 @@ public class PanelEtats extends JPanel implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( e.getSource ( ) == this.btnRecapInter )
+		if ( e.getSource ( ) == this.btnRecapInter && this.cbInter.getSelectedIndex ( ) != -1 )
 		{
 			//Génération de l'html pour 1 intervenant
 			GenerateurFichier.GenererHTMLIntervenant ( this.ctrl.getTable ( Intervenant.class ).get ( this.cbInter.getSelectedIndex ( ) ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
 		}
 		
-		if ( e.getSource ( ) == this.btnRecapModule )
+		if ( e.getSource ( ) == this.btnRecapModule && this.cbModule.getSelectedIndex ( ) != -1 )
 		{
 			//Génération de l'html pour 1 module
 			GenerateurFichier.GenererHTMLModule ( this.ctrl.getTable ( ModuleIUT.class ).get ( this.cbModule.getSelectedIndex ( ) ), this.style.get ( this.cbStyle.getSelectedItem ( ).toString ( ) ) );
