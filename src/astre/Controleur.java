@@ -82,17 +82,19 @@ public class Controleur
 
 	public static void main ( String[] args )
 	{
-		String cheminFichier = "./data/identifiant/identifiant.txt";
+		String cheminFichier  = "./data/identifiant/identifiant.txt";
+		String cheminFichier2 = "../data/identifiant/identifiant.txt";
 
-        File fichier = new File(cheminFichier);
+        File fichier  = new File ( cheminFichier  );
+		File fichier2 = new File ( cheminFichier2 );
 
-        if ( fichier.exists ( ) ) 
+        if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
 		{
-            new Controleur ( );
+            new FrameIdentifiant ( );
         }
 		else 
 		{
-            new FrameIdentifiant();
+            new Controleur ( );
         }
 	}
 }
