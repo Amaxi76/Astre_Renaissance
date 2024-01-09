@@ -48,7 +48,7 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 
 		gbc.gridy = 1;
 		gbc.gridx = 0;
-		this.add ( new JLabel ( "Mdp :" ), gbc );
+		this.add ( new JLabel ( "Mot de Passe :" ), gbc );
 
 		gbc.gridx = 1;
 		this.add ( this.txtMdp, gbc );
