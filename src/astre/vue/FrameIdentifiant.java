@@ -1,6 +1,6 @@
 package astre.vue;
 
-/** Classe Controleur
+/** Classe FrameIdentifiant
   * @author : Mateo Sa et Clémentin Ly
   * @version : 2.2 - 09/01/2024
   * @date : 09/01/2024
