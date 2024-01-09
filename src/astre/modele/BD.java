@@ -198,7 +198,7 @@ public class BD
 				if (ligne.trim().endsWith(";")) 
 				{
 					// Affichez la requête avant de l'exécuter
-					System.out.println(requete);
+					// System.out.println(requete); //debug
 
 					// Exécuter la requête
 					st.executeUpdate(requete);
@@ -219,7 +219,7 @@ public class BD
         } 
 		catch ( Exception e ) 
 		{
-			System.out.println(requete);
+			//System.out.println(requete); // Debug
             e.printStackTrace ( );
         }
     }
@@ -1041,6 +1041,23 @@ public class BD
 	/*                INSERT                 */
 	/*---------------------------------------*/
 
+	public void insertAnnee ( String nom )
+	{
+		String req = "INSERT INTO Annee VALUES (?,false)";
+		try
+		{
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, nom );
+			ps.executeUpdate ( );
+
+			ps.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur insertAnnee ( String nom ) : " + e );
+		}
+	}
+
 	public void insert ( Contrat c )
 	{
 		String req = "INSERT INTO Contrat ( nomContrat, hServiceContrat, hMaxContrat, ratioTP ) VALUES(?,?,?,?)";
@@ -1356,8 +1373,32 @@ public class BD
 	/*                UPDATE                 */
 	/*---------------------------------------*/
 
-	//TODO: Faire tous les updates
+	// Utilisé dans Astre.java
+	public void setAnneeActuelle ( String nom )
+	{
+		String req  = "UPDATE Annee SET actuelle = true WHERE nom = ?";
+		String req1 = "UPDATE Annee SET actuelle = false";
 
+		try
+		{
+			//Mettre tous à false
+			ps = co.prepareStatement ( req1 );
+			ps.executeUpdate ( );
+
+			//Mettre le bon à vrai
+			ps = co.prepareStatement ( req );
+			ps.setString ( 1, nom );
+
+			ps.executeUpdate ( );
+
+			ps.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur setAnneeActuelle ( String nom ) : " + e );
+		}
+	}
+	
 	public void update ( Semestre s )
 	{
 		String req = "UPDATE Semestre SET nbGroupeTP = ?, nbGroupeTD = ?, nbEtud = ?, nbSemaine = ? WHERE Id_Semestre = ? ";

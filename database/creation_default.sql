@@ -9,7 +9,6 @@
 /*          Suppression des tables existantes           */
 /* ---------------------------------------------------- */ 
 
-DROP TABLE Annee       CASCADE;
 DROP TABLE Semestre    CASCADE;
 DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
@@ -22,14 +21,6 @@ DROP TABLE Historique  CASCADE;
 /* ---------------------------------------------------- */
 /*                  CrÃ©ation des tables                 */
 /* ---------------------------------------------------- */
-
-CREATE TABLE Annee
-(
-   nom      VARCHAR(15),
-   actuelle BOOLEAN,
-
-   PRIMARY KEY  (nom)
-);
 
 CREATE TABLE Semestre
 (
@@ -210,91 +201,3 @@ ORDER BY
 CREATE VIEW v_Module AS
 SELECT id_semestre, Code_ModuleIUT, libLong, (f_selectTotHeureRep(Code_ModuleIUT) || ' / ' || f_selectTotHeurePN(Code_ModuleIUT)) AS Recap, valide
 FROM   ModuleIUT;
-/*
-	@author AlizÃ©a LEBARON
-	@description Script d'insertion pour cette annÃ©e
-*/
-
-/* ---------------------------------------------------- */
-/*          Suppression des tuples existantes           */
-/* ---------------------------------------------------- */ 
-
-DELETE FROM Intervient  CASCADE; 
-DELETE FROM Horaire     CASCADE;
-DELETE FROM ModuleIUT   CASCADE;
-DELETE FROM Semestre    CASCADE;
-DELETE FROM Intervenant CASCADE;
-DELETE FROM Contrat     CASCADE;
-DELETE FROM Heure       CASCADE;
-
-/* ---------------------------------------------------- */
-/*                  CrÃ©ation des tuples                 */
-/* ---------------------------------------------------- */
-
- INSERT INTO Annee VALUES 
-( 'Test', false ), 
-( '4', true ); 
-
-INSERT INTO Semestre VALUES 
-(1,5,6,85,10), 
-(2,5,6,66,20), 
-(3,8,6,58,30), 
-(4,8,6,45,40), 
-(5,10,6,25,50), 
-(6,10,6,10,60); 
-
-INSERT INTO Contrat VALUES 
-(1,'Enseignant 2nd degrès',250,360,'1.0'), 
-(2,'Enseignant chercheur',25,389,'0.66'), 
-(3,'Contractuel',85,125,'0.66'); 
-
-INSERT INTO Heure VALUES 
-(1,'TP','1.0'), 
-(2,'TD','1.0'), 
-(3,'CM','1.5'), 
-(4,'REH','1.0'), 
-(5,'SAE','1.0'), 
-(6,'HP','1.0'), 
-(7,'Tut','1.0'); 
-
-INSERT INTO ModuleIUT VALUES 
-('R1.01','Initiation Développement','Init_Dev','Ressource',false,1), 
-('R1.02','Développement interfaces Web','Dev_Web','Ressource',true,1), 
-('S2.05','Gestion dun projet','Gestion_proj','SAE',false,2), 
-('R3.05','Programmation Système','prog_sys','Ressource',false,3), 
-('S4.ST','Stages','stages','Stage',false,4), 
-('R5.03','Politique de communication','comm','Ressource',false,5), 
-('R5.06','Programmation multimédia','prog_media','Ressource',false,5), 
-('S5.01','Développement avancé','dev_avancé','SAE',false,5), 
-('S6.01','évolution dune application','ev_appli','SAE',false,6), 
-('S6.ST','Stages','stages','Stage',false,6); 
-
-INSERT INTO Intervenant VALUES 
-(1,'De la Fontaine','Jean',250,360,1), 
-(2,'Orwell','Georges',25,389,2), 
-(3,'Lovecraft','Howard',85,125,2), 
-(4,'Maupassant','Guy',2,4,1), 
-(5,'De Balzac','Honoré',65,89,3), 
-(6,'Lovelace','Ada',102,365,3), 
-(7,'Toriyama','Akira',420,478,2); 
-
-INSERT INTO Intervient VALUES 
-(1,2,'R5.03',6,2,5,'null'), 
-(1,1,'R1.01',8,1,6,'null'), 
-(1,5,'S6.01',8,1,6,'null'), 
-(1,2,'R1.01',8,1,6,'null'), 
-(4,3,'R1.01',2,1,6,'3 CM 3H'), 
-(2,1,'R1.01',8,1,9,'commentaire'), 
-(3,6,'S2.05',1,1,9,'null'), 
-(6,1,'R5.06',12,2,2,'null'), 
-(3,4,'S6.ST',1,1,12,'null'), 
-(1,3,'R1.01',8,1,6,'null'); 
-
-INSERT INTO Horaire VALUES 
-(1,'R1.01',85,5,12), 
-(2,'R1.01',30,28,11), 
-(3,'R1.01',5,2,5), 
-(5,'S5.01',60,0,3), 
-(4,'S2.05',2,0,1), 
-(6,'S6.ST',6,0,3); 
-

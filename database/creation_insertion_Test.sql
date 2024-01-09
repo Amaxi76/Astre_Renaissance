@@ -9,7 +9,6 @@
 /*          Suppression des tables existantes           */
 /* ---------------------------------------------------- */ 
 
-DROP TABLE Annee       CASCADE;
 DROP TABLE Semestre    CASCADE;
 DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
@@ -22,14 +21,6 @@ DROP TABLE Historique  CASCADE;
 /* ---------------------------------------------------- */
 /*                  Cr√©ation des tables                 */
 /* ---------------------------------------------------- */
-
-CREATE TABLE Annee
-(
-   nom      VARCHAR(15),
-   actuelle BOOLEAN,
-
-   PRIMARY KEY  (nom)
-);
 
 CREATE TABLE Semestre
 (
@@ -231,11 +222,7 @@ DELETE FROM Heure       CASCADE;
 /*                  Cr√©ation des tuples                 */
 /* ---------------------------------------------------- */
 
- INSERT INTO Annee VALUES 
-( 'Test', false ), 
-( '2', true ); 
-
-INSERT INTO Semestre VALUES 
+ INSERT INTO Semestre VALUES 
 (1,5,6,85,10), 
 (2,5,6,66,20), 
 (3,8,6,58,30), 
@@ -243,40 +230,40 @@ INSERT INTO Semestre VALUES
 (5,10,6,25,50), 
 (6,10,6,10,60); 
 
-INSERT INTO Contrat VALUES 
-(1,'Enseignant 2nd degrËs',250,360,'1.0'), 
-(2,'Enseignant chercheur',25,389,'0.66'), 
-(3,'Contractuel',85,125,'0.66'); 
+INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
+('Enseignant 2nd degr√®s',250,360,'1.0'), 
+('Enseignant chercheur',25,389,'0.66'), 
+('Contractuel',85,125,'0.66'); 
 
-INSERT INTO Heure VALUES 
-(1,'TP','1.0'), 
-(2,'TD','1.0'), 
-(3,'CM','1.5'), 
-(4,'REH','1.0'), 
-(5,'SAE','1.0'), 
-(6,'HP','1.0'), 
-(7,'Tut','1.0'); 
+INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
+('TP','1.0'), 
+('TD','1.0'), 
+('CM','1.5'), 
+('REH','1.0'), 
+('SAE','1.0'), 
+('HP','1.0'), 
+('Tut','1.0'); 
 
 INSERT INTO ModuleIUT VALUES 
-('R1.01','Initiation DÈveloppement','Init_Dev','Ressource',false), 
-('R1.02','DÈveloppement interfaces Web','Dev_Web','Ressource',true), 
-('S2.05','Gestion dun projet','Gestion_proj','SAE',false), 
-('R3.05','Programmation SystËme','prog_sys','Ressource',false), 
-('S4.ST','Stages','stages','Stage',false), 
-('R5.03','Politique de communication','comm','Ressource',false), 
-('R5.06','Programmation multimÈdia','prog_media','Ressource',false), 
-('S5.01','DÈveloppement avancÈ','dev_avancÈ','SAE',false), 
-('S6.01','Èvolution dune application','ev_appli','SAE',false), 
-('S6.ST','Stages','stages','Stage',false); 
+('R1.01','Initiation D√©veloppement','Init_Dev','Ressource',false,1), 
+('R1.02','D√©veloppement interfaces Web','Dev_Web','Ressource',true,1), 
+('S2.05','Gestion dun projet','Gestion_proj','SAE',false,2), 
+('R3.05','Programmation Syst√©me','prog_sys','Ressource',false,3), 
+('S4.ST','Stages','stages','Stage',false,4), 
+('R5.03','Politique de communication','comm','Ressource',false,5), 
+('R5.06','Programmation multim√©dia','prog_media','Ressource',false,5), 
+('S5.01','D√©veloppement avanc√©','dev_avanc√©','SAE',false,5), 
+('S6.01','√©volution dune application','ev_appli','SAE',false,6), 
+('S6.ST','Stages','stages','Stage',false,6); 
 
-INSERT INTO Intervenant VALUES 
-(1,'De la Fontaine','Jean',250,360,1), 
-(2,'Orwell','Georges',25,389,2), 
-(3,'Lovecraft','Howard',85,125,2), 
-(4,'Maupassant','Guy',2,4,1), 
-(5,'De Balzac','HonorÈ',65,89,3), 
-(6,'Lovelace','Ada',102,365,3), 
-(7,'Toriyama','Akira',420,478,2); 
+INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
+('De la Fontaine','Jean',250,360,1), 
+('Orwell','Georges',25,389,2), 
+('Lovecraft','Howard',85,125,2), 
+('Maupassant','Guy',2,4,1), 
+('De Balzac','Honor√©',65,89,3), 
+('Lovelace','Ada',102,365,3), 
+('Toriyama','Akira',420,478,2); 
 
 INSERT INTO Intervient VALUES 
 (1,2,'R5.03',6,2,5,'null'), 

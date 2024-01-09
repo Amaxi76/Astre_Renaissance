@@ -76,6 +76,7 @@ public class Controleur
 	public boolean      nouvelleAnneeZero ( String nom ) { return this.metier.nouvelleAnneeZero ( nom ); }
 	public String       getAnnee          (            ) { return this.metier.getAnnee          (     ); }
 	public List<String> getEnsAnnee       (            ) { return this.metier.getEnsAnnee       (     ); }
+	public boolean      changerAnnee      ( String nom ) { return this.metier.changerAnnee      ( nom ); }
 
 	public static void main ( String[] args )
 	{

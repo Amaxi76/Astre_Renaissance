@@ -112,9 +112,10 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/* ------------------------- */
 
 		// Ajout de l'écoute des boutons
-		this.btnZero   .addActionListener ( this );
-		this.btnNew    .addActionListener ( this );
-		this.btnAnnuler.addActionListener ( this );
+		this.btnZero      .addActionListener ( this );
+		this.btnValider   .addActionListener ( this );
+		this.btnNew       .addActionListener ( this );
+		this.btnAnnuler   .addActionListener ( this );
 
 		// Centrer la frame au milieu de l'écran
 		setLocationRelativeTo ( null );
@@ -168,6 +169,13 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 				}
 			}
 
+		}
+
+		if ( e.getSource ( ) == this.btnValider ) 
+		{
+			this.ctrl.changerAnnee ( this.cbAnnee.getSelectedItem ( ).toString ( ) );
+			AFrame.retourAccueil ( ctrl );
+			this.dispose ( );
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler ) 
