@@ -107,6 +107,81 @@ public class BD
 		this.urlLocal = "jdbc:postgresql://localhost:7777/" + this.login;
 	}
 
+	public boolean estGenere ( )
+	{
+		String REQUETE = "SELECT EXISTS ( SELECT 1 FROM information_schema.tables WHERE table_name = 'annee' )";
+		boolean estCree = true;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery    ( REQUETE );
+
+			rs.next ( );
+
+			estCree = rs.getBoolean(1);
+
+			rs.close ( );
+			st.close ( );
+
+			//Utilisation de variable pour refermer correctement les statement et resultat
+			return estCree;
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( e );
+		}
+		
+		return estCree;
+	}
+
+	/* Script de création */
+
+	public void executeScript (String cheminScript) 
+	{
+		String requete = "";
+
+        try ( BufferedReader reader = new BufferedReader ( new FileReader ( cheminScript ) ) ) 
+		{
+			Statement st = co.createStatement();
+			//String requete = "";
+			String ligne;
+
+			// Lire le script SQL ligne par ligne
+			while ((ligne = reader.readLine()) != null) 
+			{
+				requete += ligne + "\n";
+
+				// Si la ligne se termine par un point-virgule, exécuter la requête
+				if (ligne.trim().endsWith(";")) 
+				{
+					// Affichez la requête avant de l'exécuter
+					// System.out.println(requete); //debug
+
+					// Exécuter la requête
+					st.executeUpdate(requete);
+
+
+
+					// Réinitialiser la variable requete
+					requete = "";
+				}
+			}
+
+
+            // Exécuter le script SQL
+            //st.executeUpdate ( script.toString ( ) );
+			co.commit();
+
+            System.out.println ( "Script SQL exécuté avec succès." );
+        } 
+		catch ( Exception e ) 
+		{
+			//System.out.println(requete); // Debug
+            e.printStackTrace ( );
+        }
+    }
+
 	/*---------------------------------------*/
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
@@ -176,53 +251,6 @@ public class BD
 	public List<Intervient>  getIntervients  ( ) { return this.getTable ( Intervient .class ); }
 	public List<ModuleIUT>   getModuleIUTs   ( ) { return this.getTable ( ModuleIUT  .class ); }
 	public List<Horaire>     getHoraires     ( ) { return this.getTable ( Horaire    .class ); }
-
-	/* Script de création */
-
-	public void executeScript (String cheminScript) 
-	{
-		String requete = "";
-
-        try ( BufferedReader reader = new BufferedReader ( new FileReader ( cheminScript ) ) ) 
-		{
-			Statement st = co.createStatement();
-			//String requete = "";
-			String ligne;
-
-			// Lire le script SQL ligne par ligne
-			while ((ligne = reader.readLine()) != null) 
-			{
-				requete += ligne + "\n";
-
-				// Si la ligne se termine par un point-virgule, exécuter la requête
-				if (ligne.trim().endsWith(";")) 
-				{
-					// Affichez la requête avant de l'exécuter
-					// System.out.println(requete); //debug
-
-					// Exécuter la requête
-					st.executeUpdate(requete);
-
-
-
-					// Réinitialiser la variable requete
-					requete = "";
-				}
-			}
-
-
-            // Exécuter le script SQL
-            //st.executeUpdate ( script.toString ( ) );
-			co.commit();
-
-            System.out.println ( "Script SQL exécuté avec succès." );
-        } 
-		catch ( Exception e ) 
-		{
-			//System.out.println(requete); // Debug
-            e.printStackTrace ( );
-        }
-    }
 
 
 	public List<ModuleIUT> getModules ( int numeroSemestre )
@@ -384,6 +412,7 @@ public class BD
 		catch ( SQLException e )
 		{
 			System.out.println ( "getAnnee ( )" +  e );
+			nom = "Aucune année en cours";
 		}
 
 		return nom;

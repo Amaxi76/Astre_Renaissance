@@ -31,6 +31,11 @@ public class Controleur
 	{
 		this.metier = new Astre        (      );
 		this.ihm    = new FrameAccueil ( this );
+
+		System.out.println("Base de données présente : " + this.metier.estGenere ( ) );
+		
+		if (! this.metier.estGenere ( ) )
+			this.metier.genererBDD ( );
 	}
 	
 	/*---------------------------------------*/

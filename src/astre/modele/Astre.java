@@ -99,6 +99,9 @@ public class Astre
 		}
 	}
 
+	public boolean estGenere  ( ) { return this.bd.estGenere     (                                 ) ; }
+	public void    genererBDD ( ) {        this.bd.executeScript ( "./database/creation_debut.sql" ) ; }
+
 	/**
 	 * Créée un objet du bon type à partir de ses attributs contenus dans tabObjet
 	 */

@@ -75,8 +75,8 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 
 		// Création des trois boutons
 		this.btnNew     = new JButton ( "Garder les données importantes" );
-		this.btnZero    = new JButton ( "Recommencer une année de zéro"  );
-		this.btnAnnuler = new JButton ( "Retour"                        );
+		this.btnZero    = new JButton ( "Commencer une année de zéro"    );
+		this.btnAnnuler = new JButton ( "Retour"                         );
 
 		this.btnValider = new JButton ( "Valider" );
 
@@ -134,7 +134,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			{
 				if ( this.ctrl.nouvelleAnneeZero ( this.txtNom.getText ( ) ) )
 				{
-					JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
+					JOptionPane.showMessageDialog ( this, "Vous avez commencé une nouvelle année vide de donnée :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
 					AFrame.retourAccueil ( ctrl );
 					this.dispose ( );
 				}
@@ -157,7 +157,7 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			{
 				if ( this.ctrl.nouvelleAnnee ( this.txtNom.getText ( ) ) )
 				{
-					JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été effacées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
+					JOptionPane.showMessageDialog ( this, "Les données de l'année précédente ont été copiées :D", "Réussite !", JOptionPane.OK_CANCEL_OPTION );
 					AFrame.retourAccueil ( ctrl );
 					this.dispose ( );
 				}
