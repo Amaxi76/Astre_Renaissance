@@ -210,7 +210,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 
 		if ( nom.equals ( options[12] ) )
 		{
-			new FrameHistorique        ( this.ctrl );
+			new FrameHistorique   ( this.ctrl );
 			this.parent.dispose ( );
 		}
 	}
