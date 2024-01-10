@@ -1,5 +1,5 @@
 @echo off
-javac @option.list @compile.list
+javac @option-windows.list @compile.list
 
 cd class
 java astre.Controleur
