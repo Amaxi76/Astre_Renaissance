@@ -2,10 +2,10 @@ package astre.modele;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +21,14 @@ import astre.modele.elements.*;
 
 public class GenerateurFichier
 {
+	/** Demande à l'utilisateur de choisir un fichier
+	 *  @return String
+	 */
 	private static String choisirDossier ( )
 	{
         JFileChooser fileChooser = new JFileChooser ( );
-        fileChooser.setDialogTitle ( "Choisir un dossier" );
-        fileChooser.setFileSelectionMode ( JFileChooser.DIRECTORIES_ONLY );
+        fileChooser.setDialogTitle       ( "Choisir un dossier" );
+        fileChooser.setFileSelectionMode ( JFileChooser.DIRECTORIES_ONLY    );
 
         int userSelection = fileChooser.showDialog ( null, "Choisir" );
 
@@ -37,6 +40,27 @@ public class GenerateurFichier
 		else
 		{
             return null;
+        }
+    }
+
+	/** Copie un fichier dans d'un dossier à un autre 
+	 *  @param cheminSource
+	 *  @param destination
+	 */
+	public static void copierFichier ( String cheminSource, String destination ) throws IOException
+	{
+        File entree = new File ( cheminSource );
+        File sortie = new File ( destination  );
+
+        try ( FileInputStream inputStream = new FileInputStream ( entree ); FileOutputStream outputStream = new FileOutputStream ( sortie ) )
+		{
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ( ( bytesRead = inputStream.read ( buffer ) ) != -1 )
+			{
+                outputStream.write ( buffer, 0, bytesRead );
+            }
         }
     }
 	
@@ -161,6 +185,10 @@ public class GenerateurFichier
 		}
 	}
 
+	/** Genere la page Html d'un intervenant
+	 *  @param inter
+	 *  @param theme
+	 */
 	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
 	{
 		GenererHTMLIntervenant ( inter, theme, choisirDossier ( ) );
@@ -174,9 +202,9 @@ public class GenerateurFichier
 	public static void GenererHTMLIntervenant ( Intervenant inter, String theme, String chemin )
 	{
 		//String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
-		//String chemin = 
+		String dossier = chemin + "/recapIntervenant" + inter.getNom ( ) + ".html";
 
-		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
+		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( dossier ) ) )
 		{
 			// Accès à la base de données
 			BD bd = BD.getInstance ( );
@@ -187,7 +215,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                                +
 			"<head>\n"                                                                          +
 				"\t<meta charset=\"UTF-8\">\n"                                                  +
-				"\t<link href=\"./css/styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n" +
+				"\t<link href=\"styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n" +
 				"\t<title>Intervenant " + inter.getNom ( ).toUpperCase ( ) + " </title>\n"      +
 			"</head>\n"                                                                         +
 			"<body>\n"                                                                          ;
@@ -319,7 +347,6 @@ public class GenerateurFichier
 						
 			table += "\t\t<td class='heure'>" + somme + " heures</td>\n" +
 					 "\t</tr>\n";
-
 			ecrivain.write ( table );
 
 			//Écriture fermant les balises html
@@ -330,6 +357,8 @@ public class GenerateurFichier
 
 			ecrivain.write ( footer );
 
+			copierFichier("./modele_html/css/styleIntervenant" + theme +".css", chemin +"/styleIntervenant" + theme + ".css");
+
             System.out.println ( "Fichier HTML créé avec succès." );
         }
 		catch ( IOException e )
@@ -338,6 +367,10 @@ public class GenerateurFichier
         }
 	}
 
+	/** Genere la page Html d'un module
+	 *  @param module
+	 *  @param theme
+	 */
 	public static void GenererHTMLModule ( ModuleIUT module, String theme )
 	{
 		GenererHTMLModule ( module, theme, choisirDossier ( ) );
@@ -346,12 +379,14 @@ public class GenerateurFichier
 	/** Genere la page Html d'un module
 	 *  @param module
 	 *  @param theme
+	 *  @param chemin
 	 */
 	public static void GenererHTMLModule ( ModuleIUT module, String theme, String chemin )
 	{
 		//String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
+		String dossier = chemin + "/recapModule" + module.getCode ( ) + ".html";
 
-		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
+		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( dossier ) ) )
 		{
             // Ecriture de l'entête
 			String entete =
@@ -359,7 +394,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                                  +
 			"<head>\n"                                                                            +
 				"\t<meta charset=\"UTF-8\">\n"                                                    +
-				"\t<link href=\"./css/styleModule"+ theme +".css\" rel=\"stylesheet\">\n"                    +
+				"\t<link href=\"styleModule"+ theme +".css\" rel=\"stylesheet\">\n"               +
 				"\t<title>" + module.getCode ( ) + " - " + module.getLibCourt ( ) + " </title>\n" +
 			"</head>\n"                                                                           +
 			"<body>\n"                                                                            +
@@ -449,6 +484,8 @@ public class GenerateurFichier
 			"</html>\n"  ;
 
 			ecrivain.write ( footer );
+
+			copierFichier("./modele_html/css/styleModule" + theme +".css", chemin +"/styleModule" + theme + ".css");
 
             System.out.println ( "Fichier HTML créé avec succès." );
         } 
