@@ -239,6 +239,3 @@ INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
 ('HP','1.0'), 
 ('Tut','1.0'); 
 
-INSERT INTO ModuleIUT VALUES 
-('R1.01','Test','TEst','Ressource',false,1); 
-

@@ -2,7 +2,7 @@
 	@author Alizéa LEBARON
 	@version 1.1.0 - 12/12/2023 
 	@date 06/12/2023 
-	@description Script de création de la base de données
+	@description Script de création de la base de données 
 */
 
 /* ---------------------------------------------------- */
