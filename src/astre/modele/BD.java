@@ -159,7 +159,7 @@ public class BD
 				if (ligne.trim().endsWith(";")) 
 				{
 					// Affichez la requête avant de l'exécuter
-					// System.out.println(requete); //debug
+					System.out.println(requete); //debug
 
 					// Exécuter la requê e
 					st.executeUpdate(requete);
@@ -182,6 +182,47 @@ public class BD
 			e.printStackTrace ( );
 		}
 	}
+
+	public void executeScriptFonction (String cheminScript) 
+	{
+		try ( BufferedReader reader = new BufferedReader ( new FileReader(cheminScript, StandardCharsets.UTF_8 ) ) ) 
+		{
+			Statement st = co.createStatement();
+			StringBuilder scriptPart = new StringBuilder ( );
+			String ligne;
+			boolean estPLPGSQL = false;
+	
+			// Lire le script SQL ligne par ligne
+			while ((ligne = reader.readLine()) != null) {
+				scriptPart.append(ligne).append("\n");
+	
+				// Vérifier si nous sommes à l'intérieur d'un bloc PL/pgSQL
+				if (ligne.trim().startsWith("$$")) 
+				{
+					estPLPGSQL = !estPLPGSQL;
+				}
+	
+				// Si la ligne contient un point-virgule et nous ne sommes pas à l'intérieur d'un bloc PL/pgSQL,
+				// exécuter la partie du script SQL
+				if (ligne.contains(";") && !estPLPGSQL) 
+				{
+					// Affichez la requête avant de l'exécuter
+					System.out.println(scriptPart);
+	
+					// Exécuter la requête
+					st.executeUpdate(scriptPart.toString());
+	
+					// Réinitialiser la variable scriptPart
+					scriptPart = new StringBuilder();
+				}
+			}
+	
+			System.out.println("Script SQL exécuté avec succès.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	/*---------------------------------------*/
 	/*            RECUP GENERALE             */
