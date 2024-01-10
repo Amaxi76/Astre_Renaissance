@@ -26,12 +26,12 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	private static final String REPERTOIRE = "./data/images/";
 
 	// Identifiants des éléments du menu
-	private static final String MENU			= "M";
-	private static final String ITEM			= "I";
-	private static final String SEPARATEUR		= "S";
-	private static final String SOUS_MENU		= "m";
-	private static final String ITEM_SM			= "i";
-	private static final String SEPARATEUR_SM	= "s";
+	private static final String MENU            = "M";
+	private static final String ITEM            = "I";
+	private static final String SEPARATEUR      = "S";
+	private static final String SOUS_MENU       = "m";
+	private static final String ITEM_SM         = "i";
+	private static final String SEPARATEUR_SM   = "s";
 
 	// Position des éléments du menu dans le "modeleBar"
 	private static final int TYPE = 0;
@@ -48,8 +48,8 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	{
 		//Initialisation
 		super ( );
-		this.ctrl             = ctrl;
-		this.parent           = parent;
+		this.ctrl   = ctrl;
+		this.parent = parent;
 
 		this.initComposants ( );
 	} 
@@ -197,7 +197,6 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			
 		if ( nom.equals ( options[10] ) )
 		{
-			new FrameAccueil       ( this.ctrl );
 			new FrameNouvelleAnnee ( this.ctrl );
 			this.parent.dispose ( );
 		}

@@ -1,12 +1,15 @@
-package astre.vue.previsionnel.module;
+package astre.vue.previsionnel.module.sansGroupe;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.KeyListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import astre.vue.previsionnel.module.AbstractPanelRepartition;
+import astre.vue.previsionnel.module.FrameModule;
+import astre.vue.previsionnel.module.PanelVerticalSaisie;
 
 import java.util.HashMap;
 import java.util.Map;

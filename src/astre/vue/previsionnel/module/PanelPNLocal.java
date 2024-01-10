@@ -36,7 +36,7 @@ public class PanelPNLocal extends JPanel
 	private JTextField txtSommePromo;
 	private JTextField txtSommeEQTDPromo;
 
-	public PanelPNLocal ( FrameModule frameModule, Controleur ctrl, String nomTypeModule, String[] ensIntitule )
+	public PanelPNLocal ( Controleur ctrl, FrameModule frameModule, String nomTypeModule, String[] ensIntitule )
 	{
 		/* -------------------------- */
 		/*    Propriétés générales    */
