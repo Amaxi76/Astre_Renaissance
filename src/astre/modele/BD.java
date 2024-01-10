@@ -3,6 +3,7 @@ package astre.modele;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
@@ -103,8 +104,8 @@ public class BD
 		}
 		catch ( Exception e ){ e.printStackTrace ( ); }
 
-		this.urlWoody = "jdbc:postgresql://woody/"          + this.login;
-		this.urlLocal = "jdbc:postgresql://localhost:7777/" + this.login;
+		this.urlWoody = "jdbc:postgresql://woody/"          + this.login + "?useUnicode=true&characterEncoding=UTF-8";
+		this.urlLocal = "jdbc:postgresql://localhost:7777/" + this.login + "?useUnicode=true&characterEncoding=UTF-8";
 	}
 
 	public boolean estGenere ( )
@@ -141,7 +142,7 @@ public class BD
 	{
 		String requete = "";
 
-        try ( BufferedReader reader = new BufferedReader ( new FileReader ( cheminScript ) ) ) 
+        try ( BufferedReader reader = new BufferedReader ( new FileReader ( cheminScript, StandardCharsets.UTF_8 ) ) ) 
 		{
 			Statement st = co.createStatement();
 			//String requete = "";

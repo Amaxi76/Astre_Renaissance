@@ -245,7 +245,6 @@ INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
 ('Tut','1.0'); 
 
 INSERT INTO ModuleIUT VALUES 
-('R1.01','Initiation Développement','Init_Dev','Ressource',false,1), 
 ('R1.02','Développement interfaces Web','Dev_Web','Ressource',true,1), 
 ('S2.05','Gestion dun projet','Gestion_proj','SAE',false,2), 
 ('R3.05','Programmation Systéme','prog_sys','Ressource',false,3), 
@@ -254,7 +253,8 @@ INSERT INTO ModuleIUT VALUES
 ('R5.06','Programmation multimédia','prog_media','Ressource',false,5), 
 ('S5.01','Développement avancé','dev_avancé','SAE',false,5), 
 ('S6.01','évolution dune application','ev_appli','SAE',false,6), 
-('S6.ST','Stages','stages','Stage',false,6); 
+('S6.ST','Stages','stages','Stage',false,6), 
+('R1.01','Initiation Développement','Init_Dev','Ressource',true,1); 
 
 INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
 ('De la Fontaine','Jean',250,360,1), 
@@ -278,10 +278,10 @@ INSERT INTO Intervient VALUES
 (1,3,'R1.01',8,1,6,'null'); 
 
 INSERT INTO Horaire VALUES 
-(1,'R1.01',85,5,12), 
-(2,'R1.01',30,28,11), 
-(3,'R1.01',5,2,5), 
 (5,'S5.01',60,0,3), 
 (4,'S2.05',2,0,1), 
-(6,'S6.ST',6,0,3); 
+(6,'S6.ST',6,0,3), 
+(3,'R1.01',5,2,5), 
+(2,'R1.01',30,28,11), 
+(1,'R1.01',85,5,12); 
 
