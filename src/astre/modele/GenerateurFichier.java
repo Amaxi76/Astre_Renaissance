@@ -1,10 +1,15 @@
 package astre.modele;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import astre.modele.elements.*;
 
@@ -16,11 +21,31 @@ import astre.modele.elements.*;
 
 public class GenerateurFichier
 {
+	private static String choisirDossier ( )
+	{
+        JFileChooser fileChooser = new JFileChooser ( );
+        fileChooser.setDialogTitle ( "Choisir un dossier" );
+        fileChooser.setFileSelectionMode ( JFileChooser.DIRECTORIES_ONLY );
+
+        int userSelection = fileChooser.showDialog ( null, "Choisir" );
+
+        if ( userSelection == JFileChooser.APPROVE_OPTION )
+		{
+            File selectedDirectory = fileChooser.getSelectedFile ( );
+            return selectedDirectory.getAbsolutePath ( );
+        }
+		else
+		{
+            return null;
+        }
+    }
+	
 	/** Genere le ficher csv des intervenants
 	 */
 	public static void recapTtInter ( )
 	{
-        String chemin = "./fichierGenerer/recapTtIntervenant.csv";
+        //String chemin = "./fichierGenerer/recapTtIntervenant.csv";
+		String chemin = choisirDossier() + "/recapTtIntervenant.csv";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
@@ -98,11 +123,12 @@ public class GenerateurFichier
 	 */
 	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt, String theme )
 	{
+		String chemin = choisirDossier ( );
 		try 
 		{
 			for ( Intervenant i : ensInt )
 			{
-				GenererHTMLIntervenant ( i, theme );
+				GenererHTMLIntervenant ( i, theme, chemin );
 			}
 
 			System.out.println ( "Tous les intervenants on été exportés sous format HTML" );
@@ -119,11 +145,12 @@ public class GenerateurFichier
 	 */
 	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod, String theme )
 	{
+		String chemin = choisirDossier ( );
 		try 
 		{
 			for ( ModuleIUT m : ensMod )
 			{
-				GenererHTMLModule ( m, theme );
+				GenererHTMLModule ( m, theme, chemin );
 			}
 
 			System.out.println ( "Tous les modules on été exportés sous format HTML" );
@@ -134,13 +161,20 @@ public class GenerateurFichier
 		}
 	}
 
+	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
+	{
+		GenererHTMLIntervenant ( inter, theme, choisirDossier ( ) );
+	}
+
 	/** Genere la page Html d'un intervenant
 	 *  @param inter
 	 *  @param theme
+	 *  @param chemin
 	 */
-	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
+	public static void GenererHTMLIntervenant ( Intervenant inter, String theme, String chemin )
 	{
-		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
+		//String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
+		//String chemin = 
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
@@ -304,13 +338,18 @@ public class GenerateurFichier
         }
 	}
 
+	public static void GenererHTMLModule ( ModuleIUT module, String theme )
+	{
+		GenererHTMLModule ( module, theme, choisirDossier ( ) );
+	}
+
 	/** Genere la page Html d'un module
 	 *  @param module
 	 *  @param theme
 	 */
-	public static void GenererHTMLModule ( ModuleIUT module, String theme)
+	public static void GenererHTMLModule ( ModuleIUT module, String theme, String chemin )
 	{
-		String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
+		//String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{

@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import astre.modele.elements.*;
 import astre.modele.outils.ModeleTableau; // pour les constantes
 import astre.modele.outils.Utilitaire;
+import astre.vue.FrameIdentifiant;
 
 public class BD
 {
@@ -71,7 +72,8 @@ public class BD
 			catch ( ClassNotFoundException | SQLException e2 )
 			{
 				erreurConnexion += "Erreur de connexion à la base de données " + this.urlLocal + " : " + e2 ;
-				JOptionPane.showMessageDialog ( null, erreurConnexion, "Erreur de connexion", JOptionPane.ERROR_MESSAGE ); //de l'ihm glissé ici déso
+				JOptionPane.showMessageDialog ( null, erreurConnexion, "Erreur de connexion", JOptionPane.ERROR_MESSAGE );
+				new FrameIdentifiant ( );
 			}
 		}
 	}
