@@ -201,7 +201,6 @@ public class GenerateurFichier
 	 */
 	public static void GenererHTMLIntervenant ( Intervenant inter, String theme, String chemin )
 	{
-		//String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
 		String dossier = chemin + "/recapIntervenant" + inter.getNom ( ) + ".html";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( dossier ) ) )
@@ -212,10 +211,10 @@ public class GenerateurFichier
             // Ecriture de l'entête
 			String entete =
 			"<!DOCTYPE html>\n"                                                                 +
-			"<html lang=\"fr>\n"                                                                +
+			"<html lang=\"fr\">\n"                                                              +
 			"<head>\n"                                                                          +
 				"\t<meta charset=\"UTF-8\">\n"                                                  +
-				"\t<link href=\"styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n" +
+				"\t<link href=\"styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n"       +
 				"\t<title>Intervenant " + inter.getNom ( ).toUpperCase ( ) + " </title>\n"      +
 			"</head>\n"                                                                         +
 			"<body>\n"                                                                          ;
@@ -391,7 +390,7 @@ public class GenerateurFichier
             // Ecriture de l'entête
 			String entete =
 			"<!DOCTYPE html>\n"                                                                   +
-			"<html lang=\"fr>\n"                                                                  +
+			"<html lang=\"fr\">\n"                                                                +
 			"<head>\n"                                                                            +
 				"\t<meta charset=\"UTF-8\">\n"                                                    +
 				"\t<link href=\"styleModule"+ theme +".css\" rel=\"stylesheet\">\n"               +
