@@ -231,11 +231,11 @@ DELETE FROM Heure       CASCADE;
 (6,0,0,0,0); 
 
 INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
-('TD','1.0'), 
 ('TP','1.0'), 
-('CM','1.0'), 
-('HP','1.0'); 
-
-INSERT INTO ModuleIUT VALUES 
-('R1.01','Test','TEst','Ressource',false,1); 
+('TD','1.0'), 
+('CM','1.5'), 
+('REH','1.0'), 
+('SAE','1.0'), 
+('HP','1.0'), 
+('Tut','1.0'); 
 

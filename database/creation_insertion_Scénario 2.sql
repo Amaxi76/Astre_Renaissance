@@ -231,7 +231,7 @@ DELETE FROM Heure       CASCADE;
 (6,0,0,0,0); 
 
 INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
-('Séance Essai',40,70,'1.0'); 
+('S�ance d'essai',45,70,'1.0'); 
 
 INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
 ('TP','1.0'), 
@@ -240,8 +240,6 @@ INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
 ('REH','1.0'), 
 ('SAE','1.0'), 
 ('HP','1.0'), 
-('Tut','1.0'); 
-
-INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
-('LY','Clémentin',2,4,1); 
+('Tut','1.0'), 
+('Nom de l'heure','1.0'); 
 

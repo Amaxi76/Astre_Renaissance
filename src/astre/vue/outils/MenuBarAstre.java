@@ -15,6 +15,7 @@ import astre.vue.parametrage.FrameParametrage;
 import astre.vue.previsionnel.FramePrevisionnel;
 import astre.vue.nouvelleAnnee.FrameNouvelleAnnee;
 import astre.vue.etats.FrameEtats;
+import astre.vue.historique.FrameHistorique;
 
 /** Menu de l'application
   * @author : Maxime Lemoine
@@ -206,6 +207,12 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			new FrameEtats        ( this.ctrl );
 			this.parent.dispose ( );
 		}
+
+		if ( nom.equals ( options[12] ) )
+		{
+			new FrameHistorique   ( this.ctrl );
+			this.parent.dispose ( );
+		}
 	}
 
 	/**
@@ -277,10 +284,11 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			{			ITEM_SM,	"S4",				"",					"4" 			},
 			{			ITEM_SM,	"S5",				"",					"5" 			},
 			{			ITEM_SM,	"S6",				"",					"6" 			},
-			{		ITEM, 			"Intervenants",		"enseignants.png",	"I"				},
+			{		ITEM, 			"Intervenants",		"intervenant.png",	"I"				},
 			{		ITEM, 			"Nouvelle année",	"parametres.png",	"N"				},
 			{	MENU, 				"Affichage",		"",					"A"				},
-			{		ITEM, 			"Etats",			"apercu.png",		"E", "CTRL+P"	}
+			{		ITEM, 			"Etats",			"apercu.png",		"E", "CTRL+P"	},
+			{		ITEM, 			"Historique",		"historique.png",	"I", "CTRL+I"	}
 								};
 	}
 

@@ -39,7 +39,8 @@ BEGIN
 	RETURN QUERY
 		SELECT *
 		FROM   v_Module v
-		WHERE  v.Id_Semestre = $1;
+		WHERE  v.Id_Semestre = $1
+		ORDER BY Code_ModuleIUT;
 
 END;
 $$ LANGUAGE plpgsql;

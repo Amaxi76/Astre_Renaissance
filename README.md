@@ -25,4 +25,3 @@ Windows / Linux :
 1. javac '@option.list' '@compile.list'
 2. cd class
 3. java astre.Controleur
-
