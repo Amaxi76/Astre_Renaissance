@@ -51,7 +51,7 @@ public class Astre
 
 	/*---------------------------------------*/
 	/*                METHODES               */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	 * Met à jour la base de donnée en créant un nouvel objet avec chaque lignes de tabDonnéesBD
@@ -88,7 +88,7 @@ public class Astre
 		}
 		catch ( Exception e )
 		{
-			e.printStackTrace ( );
+			//e.printStackTrace ( );
 		}
 	}
 

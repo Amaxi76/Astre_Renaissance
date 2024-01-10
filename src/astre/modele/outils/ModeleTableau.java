@@ -86,7 +86,7 @@ public class ModeleTableau extends AbstractTableModel
 	 */
 	public void setEditable ( boolean modifiable )
 	{
-		for ( int i=decalage; i<this.ensEntete.length; i++ )
+		for ( int i = decalage; i < this.ensEntete.length; i++ )
 			this.ensModifiable[ i ] = modifiable;
 	}
 

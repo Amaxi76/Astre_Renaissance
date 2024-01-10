@@ -18,7 +18,6 @@ DROP TABLE Intervenant CASCADE;
 DROP TABLE Intervient  CASCADE;
 DROP TABLE Horaire     CASCADE;
 DROP TABLE Historique  CASCADE;
-DROP TABLE Totaux      CASCADE;
 
 /* ---------------------------------------------------- */
 /*                  Création des tables                 */
@@ -71,8 +70,8 @@ CREATE TABLE ModuleIUT
 	typeModule      VARCHAR(20),
 	valide          BOOLEAN,
 	Id_Semestre     INTEGER NOT NULL,
-	heurePN         DECIMAL(7,2),
-	heureAffecte    DECIMAL(7,2),
+	heurePN         DECIMAL(7,1),
+	heureAffecte    DECIMAL(7,1),
 
 	PRIMARY KEY(Code_ModuleIUT),
 	FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
@@ -99,7 +98,7 @@ CREATE TABLE Intervient
 	Code_ModuleIUT VARCHAR(5) ,
 	nbSemaine      INTEGER,
 	nbGroupe       INTEGER,
-	nbHeure        INTEGER,
+	nbHeure        DECIMAL(7,2),
 	commentaire    VARCHAR(50) ,
 
 	PRIMARY KEY(Id_Intervenant, Id_Heure, Code_ModuleIUT),
@@ -130,14 +129,6 @@ CREATE TABLE Historique
 
 	PRIMARY KEY(Id_Historique)
 );
-
-CREATE TABLE Totaux 
-(  
-	Code_ModuleIUT VARCHAR(5),
-	heurePN        INTEGER,
-	heureAffecte   INTEGER
-	FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) 
-)
 
 /* Création des trigger */
 
@@ -209,8 +200,8 @@ SELECT
 		f_selectNBHeureParSemestre ( 2, Id_Intervenant  ) AS s2,
 		f_selectNBHeureParSemestre ( 4, Id_Intervenant  ) AS s4,
 		f_selectNBHeureParSemestre ( 6, Id_Intervenant  ) AS s6,
-		f_selectNBHeureParSemestrePair(Id_Intervenant) AS totPai,
-		f_selectNBHeureParSemestreTot(Id_Intervenant) AS total
+		f_selectNBHeureParSemestrePair(Id_Intervenant)    AS totPai,
+		f_selectNBHeureParSemestreTot(Id_Intervenant)     AS total
 FROM
 		Intervenant i
 		JOIN Contrat c ON i.Id_Contrat = c.Id_Contrat
@@ -218,6 +209,7 @@ ORDER BY
 		Id_intervenant ASC;
 
 -- Vue des modules
-CREATE VIEW v_Module AS
-SELECT id_semestre, Code_ModuleIUT, libLong, (f_selectTotHeureRep(Code_ModuleIUT) || ' / ' || f_selectTotHeurePN(Code_ModuleIUT)) AS Recap, valide
+DROP VIEW IF EXISTS v_Module;
+CREATE OR REPLACE VIEW v_Module AS
+SELECT id_semestre, Code_ModuleIUT, libLong, heureAffecte || '/' || heurePN as recap, valide
 FROM   ModuleIUT;

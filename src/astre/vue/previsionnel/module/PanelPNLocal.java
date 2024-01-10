@@ -216,8 +216,12 @@ public class PanelPNLocal extends JPanel
 		this.majIHM ( );
 	}
 
+	/*---------------------------------------*/
+	/*        METHODES ACCES DONNEES         */
+	/*---------------------------------------*/
+
 	/**
-	 * Met à jour la base de donnée
+	 * Récupérer les données saisies
 	 */
 	public Object[][] getDonnees ( ) // ancien nom : setModule
 	{
@@ -232,11 +236,6 @@ public class PanelPNLocal extends JPanel
 
 		return heurePn;
 	}
-
-
-	/*---------------------------------------*/
-	/*        METHODES ACCES DONNEES         */
-	/*---------------------------------------*/
 
 	/**
 	 * Récupérer des informations utilisables sur les coefficients des heures
@@ -260,6 +259,21 @@ public class PanelPNLocal extends JPanel
 		catch ( Exception e )
 		{
 			return 0;
+		}
+	}
+
+	/**
+	 * Récupérer la valeur de la somme eqtd calculée par le panel
+	 */
+	public double getSommeEQTDPromo ( )
+	{
+		try
+		{
+			return Double.parseDouble ( this.txtSommeEQTDPromo.getText ( ) );
+		}
+		catch ( Exception e )
+		{
+			return 0.0;
 		}
 	}
 }

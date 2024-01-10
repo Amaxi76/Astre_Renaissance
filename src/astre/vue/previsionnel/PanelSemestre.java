@@ -13,8 +13,11 @@ import javax.swing.border.TitledBorder;
 import astre.Controleur;
 import astre.modele.elements.Semestre;
 import astre.vue.outils.ConstantesVue;
+import astre.vue.outils.Saisie;
 import astre.vue.outils.Tableau;
 import astre.vue.previsionnel.module.sansGroupe.PanelRepartitionSansGroupes;
+import astre.vue.rendus.OperationRenduTableauIntervenants;
+import astre.vue.rendus.OperationRenduTableauSemestre;
 
 /** Classe PanelEnsSemestre
   * @author : Maximeuuu et Amaxi76
@@ -49,12 +52,11 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 		/* ----------------------------- */
 		/*    Création des composants    */
-		/* -----------------------    -- */
-
-		this.txtNbGpTD      = new JTextField ( );
-		this.txtNbGpTP      = new JTextField ( );
-		this.txtNbEtud      = new JTextField ( );
-		this.txtNbSemaine   = new JTextField ( );
+		/* ----------------------------- */
+		this.txtNbGpTD      = Saisie.creerTextFieldEntier ( true );
+		this.txtNbGpTP      = Saisie.creerTextFieldEntier ( true );
+		this.txtNbEtud      = Saisie.creerTextFieldEntier ( true );
+		this.txtNbSemaine   = Saisie.creerTextFieldEntier ( true );
 		this.btnEnregistrer = new JButton ( "Enregistrer" );
 
 		//Met un délai de 3 secondes sur le message d'enregistrement
@@ -90,12 +92,13 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
+		for ( int i = 0; i < this.tableauEnsembleModule.getColumnCount ( ); i++ )
+			this.tableauEnsembleModule.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauSemestre ( ) );
+
 		// Ajout du titre et rend la liste défilable
 		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );
 		spTab.setBorder                  ( new TitledBorder ( "Liste des modules" )      );
 		spTab.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
-
-		//DEBUG:
 		
 		/* ----------------------------- */
 		/* Positionnement des composants */
@@ -144,7 +147,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 			int nbGpTP = Integer.parseInt ( this.txtNbGpTP   .getText ( ) );
 			int nbEtud = Integer.parseInt ( this.txtNbEtud   .getText ( ) );
 			int nbSem  = Integer.parseInt ( this.txtNbSemaine.getText ( ) );
-			
+
 			// Mise à jour de la base de donnée
 			this.ctrl.update ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
 
@@ -166,7 +169,5 @@ public class PanelSemestre extends JPanel implements ActionListener
 	public void majTableau ( )
 	{
 		this.tableauEnsembleModule.modifDonnees ( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
-		
 	}
-	
 }

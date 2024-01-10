@@ -15,7 +15,7 @@ public class Intervient
 	private ModuleIUT   module;
 	private int         nbSemaine;
 	private int         nbGroupe;
-	private int         nbHeure;
+	private double      nbHeure;
 	private String      commentaire;
 
 	/** Constructeur d'intervient
@@ -27,7 +27,7 @@ public class Intervient
 	 * @param nbHeure
 	 * @param commentaire
 	 */
-	private Intervient ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire ) 
+	private Intervient ( Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, double nbHeure, String commentaire ) 
 	{
 		this.intervenant = intervenant;
 		this.heure       = heure;
@@ -55,23 +55,23 @@ public class Intervient
 		boolean hOk   = ( h   instanceof Heure       );
 		boolean mOk   = ( m   instanceof ModuleIUT   );
 		boolean nbSOk = ( nbS instanceof Integer     );
-		boolean nbHOk = ( nbH instanceof Integer     );
+		boolean nbHOk = ( nbH instanceof Double      );
 		boolean nbGOk = ( nbG instanceof Integer     );
 		boolean cOk   = ( c   instanceof String      );
-
+ 
 		if ( !iOk || !hOk || !mOk || !nbSOk || !nbGOk || !nbHOk || !cOk )
 		{
 			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les données de l'intervient ne sont pas du bon type" );
 		}
 		
-		return Intervient.creation ( (Intervenant)i, (Heure)h, (ModuleIUT)m, (int)nbS, (int)nbG, (int)nbH, (String)c );
+		return Intervient.creation ( (Intervenant)i, (Heure)h, (ModuleIUT)m, (int)nbS, (int)nbG, (double)nbH, (String)c );
 	}
 
 	/** Crée un objet Intervient en prenant en paramètre un Intervenant, une Heure, un ModuleIUT, un nombre de semaine, un nombre de groupe, un nombre d'heure et un commentaire.
 	 * @return L'objet créée si les objets ne sont pas vides et que les valeurs numériques sont positives.
 	 */
-	public static Intervient creation ( Intervenant i, Heure h, ModuleIUT m, int nbS, int nbG, int nbH, String c )
+	public static Intervient creation ( Intervenant i, Heure h, ModuleIUT m, int nbS, int nbG, double nbH, String c )
 	{
 		if ( i == null || h == null || m == null || nbS < 0 || nbG < 0 || nbH < 0 )
 		{
@@ -114,7 +114,7 @@ public class Intervient
 	/** Retourne le nombre d'heure d'intervient
 	 * @return nbHeure
 	 */
-	public int         getNbHeure     ( ) { return nbHeure;     }
+	public double      getNbHeure     ( ) { return nbHeure;     }
 
 	/** Retourne le commentaire d'intervient
 	 * @return commentaire
@@ -153,7 +153,7 @@ public class Intervient
 	/** Permet de modifier le nombre d'heure
 	 * @param nbHeure the nbHeure to set
 	 */
-	public void setNbHeure     ( int         nbHeure     ) { this.nbHeure     = nbHeure;     }
+	public void setNbHeure     ( double      nbHeure     ) { this.nbHeure     = nbHeure;     }
 
 	/** Permet de modifier le commentaire
 	 * @param commentaire the commentaire to set

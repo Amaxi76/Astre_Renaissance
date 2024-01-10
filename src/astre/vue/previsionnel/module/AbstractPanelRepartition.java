@@ -60,6 +60,11 @@ public abstract class AbstractPanelRepartition extends JPanel
 	public abstract Object[][] getDonnees ( );
 
 	/**
+	 * Permet de récupérer la somme eqtd des heures affectées, calculée par le panel
+	 */
+	public abstract double getSommeEQTDAffecte ( );
+
+	/**
 	 * Permet de mettre à jour les parties modifiables de l'IHM avec des valeurs par défaut
 	 * @param tabRepartition : le tableau de répartition des heures
 	 */

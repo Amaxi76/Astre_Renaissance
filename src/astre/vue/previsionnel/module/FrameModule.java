@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -18,6 +19,7 @@ import astre.Controleur;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.Intervient;
 import astre.modele.elements.ModuleIUT;
+import astre.modele.elements.Semestre;
 import astre.modele.outils.Utilitaire;
 import astre.vue.outils.Saisie;
 import astre.vue.previsionnel.FramePrevisionnel;
@@ -246,29 +248,37 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 
 	/**
 	 * Met à jour la base de donnée
+	 * @throws Exception
 	 */
-	public void majDonnees ( char action )
+	public void majDonnees ( char action ) throws Exception
 	{
-		ModuleIUT module = ModuleIUT.creation ( this.panelModuleLabel.getDonnees ( ) ) ;
+		try
+		{
+			Object[] tabModule      = this.panelModuleLabel.getDonnees ( );
+
+			ModuleIUT module = ModuleIUT.creation ( ( Semestre ) tabModule[0], tabModule[1].toString ( ), tabModule[2].toString ( ), tabModule[3].toString ( ), tabModule[4].toString ( ), ( Boolean ) tabModule[5], this.panelPNLocal.getSommeEQTDPromo ( ), this.panelRepartition.getSommeEQTDAffecte ( ) );
 		
-		if ( action == 'A' )
-		{
-			this.ctrl.insert ( module );
+			if ( action == 'A' )
+			{
+				this.ctrl.insert ( module );
+			}
+			else if ( action == 'M' )
+			{
+				// Mise à jour de la CheckBox
+				module.setValide ( this.cbValidation.isSelected ( ) );
+				this.ctrl.update ( module );
+			}
+
+			Object[][] tabRepartition = this.panelAffectation.preparerTableau (                                           module );
+			Object[][] tabHorraire    = this.panelRepartition.preparerTableau ( action, this.panelPNLocal.getDonnees ( ), module );
+
+			this.ctrl.majTableauBD ( tabHorraire   , Horaire   .class );
+			this.ctrl.majTableauBD ( tabRepartition, Intervient.class );
 		}
-		else if ( action == 'M' )
+		catch ( Exception e )
 		{
-			// Mise à jour de la CheckBox
-			module.setValide ( this.cbValidation.isSelected ( ) );
-			this.ctrl.update ( module );
+			throw new Exception ( e.getMessage ( ) );
 		}
-
-		Object[][] tabRepartition = this.panelAffectation.preparerTableau (                                           module );
-		Object[][] tabHorraire    = this.panelRepartition.preparerTableau ( action, this.panelPNLocal.getDonnees ( ), module );
-
-		System.out.println(Utilitaire.afficherValeurs(tabHorraire));
-
-		this.ctrl.majTableauBD ( tabHorraire   , Horaire   .class );
-		this.ctrl.majTableauBD ( tabRepartition, Intervient.class );
 	}
 
 	public Map<String, Double> getSommesEQTD ( )

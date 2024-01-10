@@ -150,6 +150,12 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 		return donnees;
 	}
 
+	@Override
+	public double getSommeEQTDAffecte ( )
+	{
+		return this.pnlHeuresTotales.getValeurs ( )[2];
+	}
+
 	/**
 	 * @param module
 	 */
@@ -161,7 +167,7 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 			int val1 = Integer.parseInt ( tabRepartition[cpt][2].toString ( ) );
 			int val2 = Integer.parseInt ( tabRepartition[cpt][1].toString ( ) );
 			
-			if ( ! typeHeure.equals( "HP" ) ) 
+			if ( ! typeHeure.equals ( "HP" ) ) 
 				this.pnlRepartitionTypesHeures.setValeursTypeHeure ( typeHeure, val1, val2 );
 			else
 				this.pnlHeuresPonctuelles.setValeur ( 0, val2 );

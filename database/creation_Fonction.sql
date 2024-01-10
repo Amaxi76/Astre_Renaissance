@@ -291,7 +291,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Sélection de la somme des heures PN dans un module
--- Utilisée dans l'affichage du tableau des modules
+-- Utilisée dans l'affichage du tableau des modulesx
 
 DROP              FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) RETURNS INTEGER AS
@@ -858,7 +858,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP              FUNCTION f_selectIntervient ( code_Module VARCHAR );
-CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
+CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure DECIMAL(7,2), commentaire VARCHAR ) AS
 $$
 BEGIN
 
@@ -902,17 +902,16 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP              FUNCTION f_SommesEqtd ( code_Module VARCHAR );
-CREATE OR REPLACE FUNCTION f_SommesEqtd ( code_Module VARCHAR ) RETURNS TABLE ( id_heure INTEGER, nbHeurePn DOUBLE PRECISION, nbHeureRepartie DOUBLE PRECISION ) AS
+
+--TODO: Voir pour retirer cette méthode 
+/*DROP              FUNCTION f_SommesEqtd ( code_Module VARCHAR ) CASCADE;
+CREATE OR REPLACE FUNCTION f_SommesEqtd ( code_Module VARCHAR ) RETURNS SETOF TEXT AS
 $$
 BEGIN
-
 	RETURN QUERY
-	
-	SELECT ho.id_heure, ho.nbHeurePN * h.coeffTD, ho.nbHeureRepartie * h.coeffTD
-	FROM   Horaire ho JOIN Heure h     ON h.id_heure    = ho.id_heure
-	                  JOIN ModuleIUT m ON m.Code_ModuleIUT = ho.Code_ModuleIUT
-	WHERE  ho.Code_ModuleIUT = code_module;
+	SELECT ( t.heureAffecte || ' / ' || t.heurePN )
+	FROM   Totaux t
+	WHERE  t.Code_ModuleIUT = code_module;
 
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql;*/

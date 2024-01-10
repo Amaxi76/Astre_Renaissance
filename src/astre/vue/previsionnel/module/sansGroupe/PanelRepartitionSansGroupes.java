@@ -95,6 +95,12 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 		return donnees;
 	}
 
+	@Override
+	public double getSommeEQTDAffecte ( )
+	{
+		return this.pnlHeuresTotales.getValeurs ( )[1];
+	}
+
 //---------------------------------------------------------------------------------------//
 //---------------------------------------------------------------------------------------//
 

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import astre.Controleur;
@@ -63,9 +64,17 @@ public class PanelModuleBouton  extends JPanel implements ActionListener
 	{
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
-			this.frm.majDonnees ( this.action );
-			AFrame.fermerFenetreContenant ( this );
-			( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).majTableau ( );
+			try
+			{
+				this.frm.majDonnees ( this.action );
+				AFrame.fermerFenetreContenant ( this );
+				( ( FramePrevisionnel ) this.ctrl.getFrameActuelle ( ) ).majTableau ( );
+			}
+			catch (Exception ex)
+			{
+				JOptionPane.showMessageDialog ( null, ex.getMessage ( ), "Erreur de création ", JOptionPane.ERROR_MESSAGE );
+				//ex.printStackTrace ( );
+			}
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
