@@ -1,12 +1,15 @@
-package astre.vue.previsionnel.module;
+package astre.vue.previsionnel.module.sansGroupe;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.KeyListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import astre.vue.previsionnel.module.AbstractPanelRepartition;
+import astre.vue.previsionnel.module.FrameModule;
+import astre.vue.previsionnel.module.PanelVerticalSaisie;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +21,15 @@ import java.util.Map;
  */
 public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 {
-	private PanelRepartitionTypesHeures pnlEquivalencesTypesHeures;
+	private PanelRepartitionTypesHeures pnlRepartitionTypesHeures;
 	private PanelVerticalSaisie         pnlHeuresTotales;
+	
+	private String[]                    ensIntituleTypeHeure;
 
-	public PanelRepartitionSansGroupes ( KeyListener listenerModule )
+	public PanelRepartitionSansGroupes ( FrameModule listenerModule, String[] ensIntituleTypeHeure )
 	{
 		super ( listenerModule );
+		this.ensIntituleTypeHeure = ensIntituleTypeHeure;
 		this.initialiserPanels ( );
 	}
 
@@ -37,8 +43,8 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 		// Ajout du panel des repartition des heures
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		this.pnlEquivalencesTypesHeures = new PanelRepartitionTypesHeures ( );
-		this.add ( this.pnlEquivalencesTypesHeures, gbc );
+		this.pnlRepartitionTypesHeures = new PanelRepartitionTypesHeures ( );
+		this.add ( this.pnlRepartitionTypesHeures, gbc );
 
 		// Ajout du panel des heures totales
 		gbc.gridx = 1;
@@ -50,20 +56,43 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 	@Override
 	public void ajouterTypeHeure ( String typeHeure )
 	{
-		this.pnlEquivalencesTypesHeures.ajouterTypeHeure ( typeHeure );
+		this.pnlRepartitionTypesHeures.ajouterTypeHeure ( typeHeure );
 	}
 
 	@Override
 	public void supprimerTypeHeure ( String typeHeure )
 	{
-		this.pnlEquivalencesTypesHeures.supprimerTypeHeure ( typeHeure );
+		this.pnlRepartitionTypesHeures.supprimerTypeHeure ( typeHeure );
 	}
 
 	@Override
 	public void majIHM ( )
 	{
-		this.pnlEquivalencesTypesHeures.majIHM ( );
+		this.pnlRepartitionTypesHeures.majIHM ( );
 		//this.pnlHeuresTotales.majIHM ( );
+	}
+
+	@Override
+	public void setValeurs ( Object[][] donnees )
+	{
+		//TODO: 
+		System.out.println ( "setValeurs de panelRep (y'a rien) : " + donnees.length );
+	}
+
+	@Override
+	public Object[][] getDonnees ( )
+	{
+		Object [][] donnees = new Object[this.ensIntituleTypeHeure.length][2];
+
+		int i = 0;
+		for ( String typeHeure : this.ensIntituleTypeHeure )
+		{
+			donnees[i][0] = 1;
+			donnees[i][1] = this.pnlRepartitionTypesHeures.getValeur ( typeHeure );
+			i++;
+		}
+		
+		return donnees;
 	}
 
 //---------------------------------------------------------------------------------------//
@@ -78,7 +107,7 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 
 		public PanelRepartitionTypesHeures ( )
 		{
-			this.ensPnlTypeHeure = new HashMap <String, PanelVerticalSaisie>();
+			this.ensPnlTypeHeure = new HashMap <>();
 			
 			this.setLayout( new BoxLayout ( this, BoxLayout.X_AXIS ) );
 			this.setBorder( new EmptyBorder ( new Insets ( 0, 10, 0, 10 ) ) );
@@ -107,7 +136,7 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 			this.ensPnlTypeHeure.remove ( typeHeure );
 		}
 
-		public void setValeursTypeHeure ( String typeHeure, double val )
+		public void setValeursTypeHeure ( String typeHeure, int val )
 		{
 			this.ensPnlTypeHeure.get(typeHeure).setValeur ( 0, val );
 		}
@@ -128,10 +157,10 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 				double valeur = entry.getValue ( ).getValeurs ( )[0];
 				sommeHeures += valeur;
 
-				double operation =valeur * 1.5; //TODO: à remplacer par x ratio
+				double operation = valeur * 1.5; //TODO: à remplacer 1,5  par x ratio
 				sommeHeuresEQTD += operation;
 
-				entry.getValue().setValeur ( 1, operation );
+				entry.getValue ( ).setValeur ( 1, operation );
 			}
 
 			// maj des heures totales

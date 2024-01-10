@@ -31,8 +31,8 @@ public class PanelVerticalSaisie extends JPanel
 	{
 		this.ensTxt = new JTextField[ saisiesModifiables.length ];
 
-		this.setLayout ( new BoxLayout ( this, BoxLayout.Y_AXIS ) );
-		this.setBorder( new EmptyBorder( new Insets ( 5,5,5,5 ) ) );
+		this.setLayout ( new BoxLayout  ( this, BoxLayout.Y_AXIS ) );
+		this.setBorder ( new EmptyBorder( new Insets ( 5,5,5,5 ) ) );
 		
 		this.add ( new JLabel ( titreColonne ) );
 
@@ -45,13 +45,18 @@ public class PanelVerticalSaisie extends JPanel
 				this.ensTxt[i].addKeyListener ( listener );
 	
 			this.add ( this.ensTxt[i] );
-			this.add(Box.createRigidArea(new Dimension(0,5)));
+			this.add ( Box.createRigidArea(new Dimension ( 0,5 ) ) );
 		}
 	}
 
 	public void setValeur ( int index, double valeur )
 	{
 		this.ensTxt[ index ].setText ( Saisie.formaterDouble ( valeur ) );
+	}
+
+	public void setValeur ( int index, int valeur )
+	{
+		this.ensTxt[ index ].setText ( valeur + "" );
 	}
 
 	public double[] getValeurs ( )
@@ -66,7 +71,7 @@ public class PanelVerticalSaisie extends JPanel
 			}
 			catch ( NumberFormatException e )
 			{
-				valeurs[ i ] = 0.0;
+				valeurs[ i ] = 0;
 			}
 		}
 		return valeurs;

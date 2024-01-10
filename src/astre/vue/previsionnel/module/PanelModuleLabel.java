@@ -4,8 +4,6 @@ import astre.modele.elements.ModuleIUT;
 import astre.modele.elements.Semestre;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +27,7 @@ public class PanelModuleLabel  extends JPanel
 	private Controleur  ctrl;
 
 	private JTextField  txtType;
-	private JTextField  txtSemestre;;
+	private JTextField  txtSemestre;
 	private JTextField  txtCode;
 	private JTextField  txtLibLong;
 	private JTextField  txtLibCourt;
@@ -124,26 +122,15 @@ public class PanelModuleLabel  extends JPanel
 
 		gbc.gridx = 3;
 		this.add ( this.txtNbGpTP, gbc );
-
-		/* ------------------------------- */
-		/*    Activation des composants    */
-		/* ------------------------------- */
-
-		/*this.txtCode.addKeyListener ( new KeyListener ( )
-		{
-			public void keyTyped    ( KeyEvent e ) { majLabels ( ); }
-			public void keyPressed  ( KeyEvent e ) { }
-			public void keyReleased ( KeyEvent e ) { }
-		} );*/
 	}
 
-	private void formatTxt ( JTextField txt )
+	public void formatTxt ( JTextField txt )
 	{
 		txt.setEditable   ( false            );
 		txt.setBackground ( Color.LIGHT_GRAY );
 	}
 
-	public void majIhm ( Object[] module )
+	public void setValeurs ( Object[] module )
 	{
 		this.txtSemestre.setText ( "S" + ( ( Semestre ) module[0] ).getIdSemestre ( ) );
 		this.txtType    .setText ( ( String ) module[1] );
@@ -151,93 +138,24 @@ public class PanelModuleLabel  extends JPanel
 		this.txtLibLong .setText ( ( String ) module[3] );
 		this.txtLibCourt.setText ( ( String ) module[4] );
 	}
-
-	/*private void majLabels ( )
-	{
-		String code = this.txtCode.getText ( ).toUpperCase ( );
-		int valSemestre = -1;
-
-		if ( code.contains ( "ST" ) )
-		{
-			if ( !code.startsWith ( "ST" ) )
-			{
-				this.lblType.setText ( "Stage" );
-			}
-		}
-
-		else if ( code.startsWith ( "R" ) )
-		{
-			this.lblType.setText ( "Ressource" );
-		}
-
-		else if ( code.startsWith ( "S" ) )
-		{
-			this.lblType.setText ( "SAE" );
-		}
-
-		else if ( code.startsWith ( "PPP" ) )
-		{
-			this.lblType.setText ( "PPP" );
-		}
-
-		if ( !lblType.getText ( ).equals ( "PPP" ) )
-		{
-			valSemestre = ( code.length() > 1 ) ? Character.getNumericValue ( code.charAt ( 1 ) ) : -1;
-		}
-		else
-		{
-			valSemestre = ( code.length() > 4 ) ? Character.getNumericValue ( code.charAt ( 4) ) : -1;
-		}
-
-		if ( valSemestre >= 1 && valSemestre <= 6 )
-				this.lblSemestre.setText ( "S" + valSemestre );
-
-		attributsSemestre ( valSemestre );
-
-		this.frm.setVisiblePanels ( this.lblType.getText ( ) );
-	}*/
-
-	/*private void attributsSemestre ( int valSemestre )
-	{
-		Semestre sem = this.ctrl.getSemestre ( valSemestre );
-
-		if ( sem != null )
-		{
-			this.lblNbEtd .setText ( String.valueOf ( sem.getNbEtudiant ( ) ) );
-			this.lblNbGpTD.setText ( String.valueOf ( sem.getNbGroupeTD ( ) ) );
-			this.lblNbGpTP.setText ( String.valueOf ( sem.getNbGroupeTP ( ) ) );
-		}
-	}*/
-
-	/*public void setModule ( ModuleIUT module )
-	{
-		this.lblSemestre.setText ( "S" + module.getSemestre ( ).getIdSemestre ( ) );
-		this.lblType    .setText ( module.getTypeModule ( ) );
-		this.lblNbEtd   .setText ( module.getSemestre ( ).getNbEtudiant ( ) + "" );
-		this.lblNbGpTD  .setText ( module.getSemestre ( ).getNbGroupeTD ( ) + "" );
-		this.lblNbGpTP  .setText ( module.getSemestre ( ).getNbGroupeTP ( ) + "" );
-
-		this.txtLibLong .setText ( module.getLibLong  ( ) );
-		this.txtLibCourt.setText ( module.getLibCourt ( ) );
-		this.txtCode    .setText ( module.getCode     ( ) );
-	}*/
 	
-	public int       getNbEtud   ( ) { return Integer.parseInt ( this.txtNbEtd .getText ( ) );  }
-	public int       getNbGpTD   ( ) { return Integer.parseInt ( this.txtNbGpTD.getText ( ) );  }
-	public int       getNbGpTP   ( ) { return Integer.parseInt ( this.txtNbGpTP.getText ( ) );  }
-	public String    getCode     ( ) { return this.txtCode    .getText ( );                     }
-	public String    getLibLong  ( ) { return this.txtLibLong .getText ( );                     }
-	public String    getLibCourt ( ) { return this.txtLibCourt.getText ( );                     }
-	public ModuleIUT getModule   ( ) { return this.ctrl.getModule ( this.txtCode.getText ( ) ); }
+	public int        getNbEtud   ( ) { return Integer.parseInt ( this.txtNbEtd .getText ( ) );  }
+	public int        getNbGpTD   ( ) { return Integer.parseInt ( this.txtNbGpTD.getText ( ) );  }
+	public int        getNbGpTP   ( ) { return Integer.parseInt ( this.txtNbGpTP.getText ( ) );  }
+	public String     getCode     ( ) { return this.txtCode    .getText ( );                     }
+	public String     getLibLong  ( ) { return this.txtLibLong .getText ( );                     }
+	public String     getLibCourt ( ) { return this.txtLibCourt.getText ( );                     }
+	public ModuleIUT  getModule   ( ) { return this.ctrl.getModule ( this.txtCode.getText ( ) ); }
+	public JTextField getTxtCode  ( ) { return this.txtCode; }
 
 	public Object[] getDonnees ( )
 	{
 		Object[] moduleIUT = new Object[6];
 
 		moduleIUT[0] = this.ctrl.getSemestre ( Integer.parseInt ( this.txtSemestre.getText ( ).substring ( 1 ) ) );
-		moduleIUT[1] = this.txtType.getText ( );
-		moduleIUT[2] = this.txtCode.getText ( );
-		moduleIUT[3] = this.txtLibLong.getText ( );
+		moduleIUT[1] = this.txtType    .getText ( );
+		moduleIUT[2] = this.txtCode    .getText ( );
+		moduleIUT[3] = this.txtLibLong .getText ( );
 		moduleIUT[4] = this.txtLibCourt.getText ( );
 		moduleIUT[5] = false;
 

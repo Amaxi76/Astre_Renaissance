@@ -8,9 +8,6 @@ package astre.vue.previsionnel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.List;
-import java.awt.Panel;
-import java.util.ArrayList;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;

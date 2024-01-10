@@ -30,7 +30,7 @@ public class FiltreTextFieldEntier extends DocumentFilter
 	public void replace ( FilterBypass fb, int offset, int length, String text, AttributeSet attrs ) throws BadLocationException
 	{
 		// Permet uniquement les chiffres
-		if ( text.matches ( "\\d+" ) )
+		if ( text.matches ( "\\d+" ) || text.length ( ) > 1 )
 		{
 			super.replace ( fb, offset, length, text, attrs );
 		}

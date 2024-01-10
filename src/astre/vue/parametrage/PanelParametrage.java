@@ -15,10 +15,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
-import astre.modele.elements.Contrat;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
-import astre.vue.outils.AFrame;
 
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN

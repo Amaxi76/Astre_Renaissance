@@ -8,7 +8,6 @@ import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 
 import javax.swing.BorderFactory;
@@ -18,8 +17,7 @@ import javax.swing.JTextField;
 
 import astre.Controleur;
 import astre.modele.elements.Heure;
-import astre.modele.elements.ModuleIUT;
-import astre.vue.outils.FiltreTextFieldEntier;
+import astre.vue.outils.Saisie;
 
 /** Classe PanelModuleLabel
   * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
@@ -29,6 +27,7 @@ import astre.vue.outils.FiltreTextFieldEntier;
 public class PanelPNLocal extends JPanel
 {
 	private Controleur ctrl;
+	private FrameModule frm;
 
 	private String[] ensIntitule; //TODO: remplacer par une List<String> voir peut être à le supprimer ?
 	private Map<String, JTextField> ensTxtNbHeure;
@@ -37,13 +36,14 @@ public class PanelPNLocal extends JPanel
 	private JTextField txtSommePromo;
 	private JTextField txtSommeEQTDPromo;
 
-	public PanelPNLocal ( Controleur ctrl, String nomTypeModule, String[] ensIntitule )
+	public PanelPNLocal ( Controleur ctrl, FrameModule frameModule, String nomTypeModule, String[] ensIntitule )
 	{
 		/* -------------------------- */
 		/*    Propriétés générales    */
 		/* -------------------------- */
 
 		this.ctrl = ctrl;
+		this.frm  = frameModule;
 		this.setLayout ( new GridBagLayout ( ) );
 		this.setBorder ( BorderFactory.createLineBorder ( Color.GRAY, 1 ) );
 
@@ -83,35 +83,14 @@ public class PanelPNLocal extends JPanel
 
 		for ( String intitule : this.ensIntitule )
 		{
-			this.ensTxtNbHeure   .put ( intitule, creerTextField ( true  ) );
-			this.ensTxtTotalPromo.put ( intitule, creerTextField ( false ) );
+			this.ensTxtNbHeure   .put ( intitule, Saisie.creerTextFieldEntier ( true  ) );
+			this.ensTxtTotalPromo.put ( intitule, Saisie.creerTextFieldEntier ( false ) );
 		}
 
-		this.txtSommePromo     = creerTextField ( false );
-		this.txtSommeEQTDPromo = creerTextField ( false );
+		this.txtSommePromo     = Saisie.creerTextFieldEntier ( false );
+		this.txtSommeEQTDPromo = Saisie.creerTextFieldEntier ( false );
 	}
 
-	/**
-	 * Methode interne permettant de créer les TextField avec des paramètres par défaut
-	 */
-	private static JTextField creerTextField ( boolean editable )
-	{
-		JTextField txtTmp = new JTextField ( );
-		txtTmp.setPreferredSize ( new Dimension ( 55, 20 ) ); //de base : (40,15)
-
-		if ( editable )
-		{
-			FiltreTextFieldEntier.appliquer ( txtTmp );
-		}
-		else
-		{
-			txtTmp.setEditable   ( false            );
-			txtTmp.setBackground ( Color.LIGHT_GRAY );
-			//txtTmp.setForeground ( Color.BLACK      );
-		}
-		
-		return txtTmp;
-	}
 
 	/**
 	 * Ajouter tous les composants créés au panel
@@ -171,7 +150,7 @@ public class PanelPNLocal extends JPanel
 	{
 		@Override public void keyTyped   ( KeyEvent e ) { /* */         }
 		@Override public void keyPressed ( KeyEvent e ) { /* */         }
-		@Override public void keyReleased( KeyEvent e ) { majSomme ( ); }
+		@Override public void keyReleased( KeyEvent e ) { majIHM ( ); }
 	}
 	
 
@@ -183,7 +162,7 @@ public class PanelPNLocal extends JPanel
 	 * Méthode qui récupère toutes les informations nécessaires à la complétion du tableau des sommes et équivant TD
 	 */
 	//TODO: voir à déplacer cette méthode dans le métier (inutilement complexe)
-	private void majSomme ( )
+	public void majIHM ( )
 	{
 		double somme     = 0;
 		double sommeEQTD = 0;
@@ -195,8 +174,11 @@ public class PanelPNLocal extends JPanel
 			// Total des heures sans l'équivalent TD
 			somme += valeur;
 			
+			// Récupère le nombre de groupes en fonction du types d'heure par rapport au pnlLabel
+			int nbGroupes = this.frm.getNbGroupe ( intitule );
+
 			// Calcul de l'équivalent TD
-			double valeurEQTD = valeur * this.coeffHeure ( intitule );
+			double valeurEQTD = valeur * this.coeffHeure ( intitule ) * nbGroupes;
 			this.ensTxtTotalPromo.get ( intitule ).setText ( "" + valeurEQTD );
 
 			// Total de l'équivalent TD
@@ -208,7 +190,7 @@ public class PanelPNLocal extends JPanel
 	}
 
 	//TODO: ne prends pas en compte les ajouts ou modifications du nombre de types d'heure différentes
-	public void majIhm ( Object[][] donnees )
+	public void setValeurs ( Object[][] donnees )
 	{
 		// mettre à jour les zones de texte
 		for ( Object[] lig : donnees )
@@ -221,7 +203,7 @@ public class PanelPNLocal extends JPanel
 		}
 		
 		// mettre à jour les sommes
-		this.majSomme ( );
+		this.majIHM ( );
 	}
 
 	/**

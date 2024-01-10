@@ -111,44 +111,35 @@ public class PanelBouton extends JPanel implements ActionListener
 		if ( typeModule != null )
 		{
 			this.frameModule = new FrameModule ( this.ctrl, framePrevisionnel, typeModule, framePrevisionnel.getPanelEnsSemestre ( ).getSelectedIndex ( ), 'A' );
-			this.frameModule.setVisible( true );
+			this.frameModule.setVisible ( true );
 		}
 
 		// Gestion du cas si modification
 		if ( e.getSource ( ) == this.btnModifier )
 		{
-			if ( !this.framePrevisionnel.getModuleSelection( ).equals("pas de selection") )
+			if ( ! this.framePrevisionnel.getModuleSelection ( ).equals ( "pas de selection" ) )
 			{
 				ModuleIUT module = this.ctrl.getModule ( this.framePrevisionnel.getModuleSelection ( ) );
 				this.frameModule = new FrameModule ( this.ctrl, framePrevisionnel, module.getTypeModule ( ), framePrevisionnel.getPanelEnsSemestre ( ).getSelectedIndex ( ), 'M' );
-				this.frameModule.majPanel ( module.getCode ( ) );
-				this.frameModule.setVisible( true ); //important de le mettre après le majPanel
+				this.frameModule.setValeursPanel ( module.getCode ( ) );
+				this.frameModule.setVisible      ( true               );
 			}
 		}
 
 		// Gestion du cas si suppression
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
-			if ( !this.framePrevisionnel.getModuleSelection( ).equals ( "pas de selection" ) )
+			if ( !this.framePrevisionnel.getModuleSelection ( ).equals ( "pas de selection" ) )
 			{
-				//System.out.println("Module sélectionner : " + this.framePrevisionnel.getModuleSelection()); //debug
-
 				int idSemestre = this.ctrl.getModule ( this.framePrevisionnel.getModuleSelection ( ) ).getSemestre ( ).getIdSemestre ( );
 
-				//System.out.println("Id de semstre : " + id_semestre);//debug
 
 				Tableau ensSemestre = this.framePrevisionnel.getTableauSemetre ( idSemestre );
 				ensSemestre.supprimerLigne ( );
 
-				//System.out.println(Utilitaire.afficherValeurs(ensSemestre.getDonnees ( ) ) ); //debug
-
-				//System.out.println("Il est passé par ici"); //debug
-
 				this.ctrl.majTableauBD ( preparerTableau ( ensSemestre.getDonnees ( ) ), ModuleIUT.class );
 
 				ensSemestre.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE + " WHERE id_semestre = " + idSemestre ) );
-
-				//System.out.println("Il repassera par là"); //debug
 
 				ensSemestre.ajusterTailleColonnes ( );
 				this.repaint ( );
@@ -185,8 +176,6 @@ public class PanelBouton extends JPanel implements ActionListener
 	
 		}
 		
-		//System.out.println(Utilitaire.afficherValeurs(tab2));
-
 		return tab2;
 	}
 

@@ -12,7 +12,6 @@ import javax.swing.border.TitledBorder;
 
 import astre.Controleur;
 import astre.modele.elements.Semestre;
-import astre.modele.outils.Utilitaire;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
 
@@ -162,9 +161,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		}
 		return "pas de selection";
 	}
-
 	
-
 	public void majTableau ( )
 	{
 		this.tableauEnsembleModule.modifDonnees ( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );

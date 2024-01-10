@@ -24,7 +24,7 @@ public abstract class Saisie
 	}
 
 	/**
-	 * Methode permettant de créer les TextField avec des paramètres par défaut
+	 * Methode permettant de créer les TextField en précisant si c'est éditable
 	 */
 	public static JTextField creerTextFieldEntier ( boolean editable )
 	{
@@ -33,7 +33,8 @@ public abstract class Saisie
 
 		if ( editable )
 		{
-			FiltreTextFieldEntier.appliquer ( txtTmp ); //TODO: vérifier que les "." du décimal peuvent être saisis
+			FiltreTextFieldEntier.appliquer ( txtTmp );
+			txtTmp.setText ( "0" );
 		}
 		else
 		{

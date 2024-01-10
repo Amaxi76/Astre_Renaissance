@@ -1,15 +1,10 @@
 package astre.modele;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -30,13 +25,14 @@ public class Astre
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	public Object[][]    getTableau            ( Class<?>  type      ) { return this.bd.getTableau            ( type         ); }
-	public Object[][]    getTableauParticulier ( String nomRecherche ) { return this.bd.getTableauParticulier ( nomRecherche ); }
-	public Semestre      getSemestre           ( int    numSemestre  ) { return this.bd.getSemestre           ( numSemestre  ); }
-	public Heure         getHeure              ( int    nom          ) { return this.bd.getHeure              ( nom          ); } //TODO: nom de variable à retravailler
-	public Heure         getHeure              ( String nom          ) { return this.bd.getHeure              ( nom          ); }
-	public Contrat       getContrat            ( String nom          ) { return this.bd.getContrat            ( nom          ); }
-	public ModuleIUT     getModule             ( String nom          ) { return this.bd.getModule             ( nom          ); }
+	public Object[][]    getTableau            ( Class<?>  type          ) { return this.bd.getTableau            ( type         ); }
+	public Object[][]    getTableauParticulier ( String nomRecherche     ) { return this.bd.getTableauParticulier ( nomRecherche ); }
+	public Semestre      getSemestre           ( int    numSemestre      ) { return this.bd.getSemestre           ( numSemestre  ); }
+	public Heure         getHeure              ( int    id               ) { return this.bd.getHeure              ( id           ); }
+	public Intervenant   getIntervenant        ( int    id               ) { return this.bd.getIntervenant        ( id           ); }
+	public Heure         getHeure              ( String nom              ) { return this.bd.getHeure              ( nom          ); }
+	public Contrat       getContrat            ( String nom              ) { return this.bd.getContrat            ( nom          ); }
+	public ModuleIUT     getModule             ( String nom              ) { return this.bd.getModule             ( nom          ); }
 
 	public List<String>      getHistorique     (                 ) { return this.bd.getHistorique   (      ); }
 	public List<Contrat>     getContrats       (                 ) { return this.bd.getContrats     (      ); }
@@ -57,17 +53,6 @@ public class Astre
 	/*                METHODES               */
 	/*---------------------------------------*/ 
 
-	//TODO: à supprimer si bien inutile
-	/*public int sommeHeure ( String code, char typeHeure )
-	{
-		int somme = 0;
-
-		for ( Heure h : this.bd.getHeures ( code, typeHeure ).keySet (  ) )
-			somme += this.bd.getHeures ( code, typeHeure ).get ( h );
-
-		return somme;
-	}*/
-
 	/**
 	 * Met à jour la base de donnée en créant un nouvel objet avec chaque lignes de tabDonnéesBD
 	 */
@@ -77,25 +62,6 @@ public class Astre
 		{
 			Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
 			this.majObjetBD ( sousTab, type, ( char ) tabDonneeBD[i][0] );
-			/*try
-			{
-				Object[] sousTab = Arrays.copyOfRange ( tabDonneeBD[i], 1, tabDonneeBD[i].length );
-				
-				Object objet = type.getDeclaredMethod ( "creation", Object[].class ).invoke ( null, ( Object ) sousTab );
-
-				switch ( ( char ) tabDonneeBD[i][0] )
-				{
-					case ModeleTableau.AJOUTER   -> this.insert ( objet );
-					case ModeleTableau.MODIFIER  -> this.update ( objet );
-					case ModeleTableau.SUPPRIMER -> this.delete ( objet );
-				
-					default  -> { break; } // ModeleTableau.DEFAUT et ModeleTableau.IGNORER
-				}
-			}
-			catch ( Exception e )
-			{
-				e.printStackTrace ( );
-			}*/
 		}
 	}
 
@@ -141,7 +107,6 @@ public class Astre
 			e.printStackTrace ( );
 		}
 	}
-	
 	
 	public String        getAnnee             ( ) { return this.bd.getAnneeAct ( ) ; }
 	public List<String>  getEnsAnnee          ( ) { return this.bd.getEnsAnnee ( ) ; }

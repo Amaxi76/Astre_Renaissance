@@ -68,19 +68,19 @@ public class PanelSaisieSemaines extends JPanel
 
 	public void setValeurs ( String[] valeurs )
 	{
-		this.txtNbSemaine.setText ( valeurs[0] );
-		this.txtNbSemaine.setText ( valeurs[1] );
+		this.txtNbSemaine     .setText ( valeurs[0] );
+		this.txtNbHeureSemaine.setText ( valeurs[1] );
 	}
 
-	public double[] getValeurs ( )
+	public int[] getValeurs ( )
 	{
 		try
 		{
-			return new double[] { Double.parseDouble ( this.txtNbSemaine.getText ( ) ), Double.parseDouble ( this.txtNbHeureSemaine.getText ( ) ) };
+			return new int[] { Integer.parseInt ( this.txtNbSemaine.getText ( ) ), Integer.parseInt ( this.txtNbHeureSemaine.getText ( ) ) };
 		}
 		catch ( NumberFormatException e )
 		{
-			return new double[] { 0.0, 0.0 };
+			return new int[] { 0, 0 };
 		}
 	}
 }

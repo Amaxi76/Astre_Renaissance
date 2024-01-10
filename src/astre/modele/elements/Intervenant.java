@@ -169,6 +169,8 @@ public class Intervenant
 	 */
 	public String toString ( )
 	{
+		//return this.nom + " " + this.prenom; //ce toString est utilisé pour l'affichage dans la liste des intervenants des combobox
+		
 		String sRet = "";
 
 		sRet = String.format ( "Nom               : %20s - ",  this.nom          ) +

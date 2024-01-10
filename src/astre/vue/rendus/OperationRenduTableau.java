@@ -1,4 +1,4 @@
-package astre.vue.outils;
+package astre.vue.rendus;
 
 import astre.modele.outils.ModeleTableau;
 
@@ -10,15 +10,14 @@ import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-/** Menu de l'application
+/** Rendu des cellules de tous les tableaux
   * @author : Maxime Lemoine
   * @version : 1.0 - 19/12/2023
   * @date : 19/12/2023
   */
-//TODO: Ligne sélectionner en bleu
+
 public class OperationRenduTableau extends DefaultTableCellRenderer
 {
 	private static final Color COULEUR_MODIFIER  = new Color ( 174,214,241 );
@@ -143,14 +142,6 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				}
 			}
 		}
-
-		
-		/*// Mettre les cases à cocher
-		if ( valeur instanceof Boolean )
-		{
-			setHorizontalAlignment(SwingConstants.CENTER);
-			setSelected((Boolean) value);
-		}*/
 
 		return cellule;
 	}

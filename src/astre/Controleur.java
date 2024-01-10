@@ -6,16 +6,18 @@ package astre;
   * @date : 06/12/2023
   */
 
-import astre.modele.elements.*;
-
 import java.io.File;
 import java.util.List;
 
 import astre.vue.outils.AFrame;
+import astre.vue.outils.PopUpErreur;
 import astre.vue.FrameAccueil;
+
 import astre.vue.FrameIdentifiant;
 import astre.modele.*;
-import astre.vue.outils.PopUpErreur;
+import astre.modele.elements.*;
+
+//FIXME: enlever les TODO: et les FIXME: avant de rendre le projet
 
 public class Controleur
 {
@@ -34,7 +36,7 @@ public class Controleur
 
 		System.out.println("Base de données présente : " + this.metier.estGenere ( ) );
 		
-		if (! this.metier.estGenere ( ) )
+		if ( ! this.metier.estGenere ( ) )
 			this.metier.genererBDD ( );
 	}
 	
@@ -62,14 +64,14 @@ public class Controleur
 
 	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
-	public Semestre          getSemestre           ( int      numSemestre         ) { return this.metier.getSemestre           ( numSemestre    ); }
-	public Heure             getHeure              ( int      nom                 ) { return this.metier.getHeure              ( nom            ); }
-	public Heure             getHeure              ( String   nom                 ) { return this.metier.getHeure              ( nom            ); }
-	public Contrat           getContrat            ( String   nom                 ) { return this.metier.getContrat            ( nom            ); }
-	public ModuleIUT         getModule             ( String   nom                 ) { return this.metier.getModule             ( nom            ); }
+	public Semestre          getSemestre           ( int    numSemestre           ) { return this.metier.getSemestre           ( numSemestre    ); }
+	public Intervenant       getIntervenant        ( int    id                    ) { return this.metier.getIntervenant        ( id             ); }
+	public Heure             getHeure              ( int    id                    ) { return this.metier.getHeure              ( id             ); }
+	public Heure             getHeure              ( String nom                   ) { return this.metier.getHeure              ( nom            ); }
+	public Contrat           getContrat            ( String nom                   ) { return this.metier.getContrat            ( nom            ); }
+	public ModuleIUT         getModule             ( String nom                   ) { return this.metier.getModule             ( nom            ); }
 	public int               getNBHeureEQTD        ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD        ( code, nomHeure ); }
 	public List<String>      getHistorique         (                              ) { return this.metier.getHistorique         (                ); }
-
 	public Object[][]        getTableau            ( Class<?> type                ) { return this.metier.getTableau            ( type           ); }
 	public Object[][]        getTableauParticulier ( String nomRecherche          ) { return this.metier.getTableauParticulier ( nomRecherche   ); }
 
@@ -91,16 +93,16 @@ public class Controleur
 		String cheminFichier  = "./data/identifiant/identifiant.txt";
 		String cheminFichier2 = "../data/identifiant/identifiant.txt";
 
-        File fichier  = new File ( cheminFichier  );
+		File fichier  = new File ( cheminFichier  );
 		File fichier2 = new File ( cheminFichier2 );
 
-        if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
+		if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
 		{
-            new FrameIdentifiant ( );
-        }
+			new FrameIdentifiant ( );
+		}
 		else 
 		{
-            new Controleur ( );
-        }
+			new Controleur ( );
+		}
 	}
 }

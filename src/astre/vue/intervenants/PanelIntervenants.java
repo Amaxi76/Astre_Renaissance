@@ -3,14 +3,13 @@ package astre.vue.intervenants;
 import astre.Controleur;
 import astre.modele.elements.*;
 import astre.modele.outils.Utilitaire;
-import astre.vue.FrameAccueil;
 import astre.vue.outils.*;
+import astre.vue.rendus.OperationRenduTableauIntervenants;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -20,8 +19,6 @@ import java.awt.GridLayout;
   * @version : 2.0 - 21/12/23
   * @date : 06/12/2023
   */
-
-  //TODO: Faire la fraction "2/3" - jcrois pas non
 
   //TODO: Afficher les heures Réelles ou Théoriques ?
 
@@ -77,6 +74,9 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Création du tableau
 		this.tableau = Tableau.initialiserTableau ( NOMS_COL, DEFAUT_COL, MODIF_COL, DECALAGE, this.ctrl.getTableauParticulier ( REQUETE ) );
+
+		for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
+			this.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervenants ( ) );
 
 		//Ajout d'une JComboBox au tableau
 		JComboBox<String> cbEdit = new JComboBox<> ( );
@@ -143,8 +143,8 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		this.panelSud.add ( this.panelDiagramme );
 
 		this.add ( new JLabel ( "Liste des intervenants" ), BorderLayout.NORTH  );
-		this.add ( panelCentre                                 , BorderLayout.CENTER );
-		this.add ( panelSud                                    , BorderLayout.SOUTH  );
+		this.add ( panelCentre                            , BorderLayout.CENTER );
+		this.add ( panelSud                               , BorderLayout.SOUTH  );
 
 
 		/* ------------------------- */
@@ -159,7 +159,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//ajout du mouseListener
 		MouseAdapter adapter = 	new MouseAdapter ( )
-		{
+		{ //TODO: remplacer par addActionListener et un tableau.getSelectedRow ( )
 			@Override
 			public void mouseClicked ( MouseEvent e )
 			{

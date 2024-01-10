@@ -129,27 +129,6 @@ public abstract class Utilitaire
 	 */
 	public static Object[][] formater ( Object[][] tableau, int nbColonnes )
 	{
-		//TODO: supprimer ce commentaire si la méthode fonctionne correctement
-		/*Object[][] tableauTmp = new Object[tableau.length][nbColonnes];
-
-		for ( int lig = 0; lig < tableau.length; lig++ )
-		{
-			for ( int col = 0; col < nbColonnes; col++ )
-			{
-				if ( col < tableau[lig].length )
-				{
-					tableauTmp[lig][col] = tableau[lig][col];
-				}
-				else
-				{
-					// Ajoutez une valeur vide pour les nouvelles colonnes
-					tableauTmp[lig][col] = null;
-				}
-			}
-		}
-
-		return tableauTmp;*/
-
 		return Utilitaire.formater ( tableau, 0, nbColonnes-1 );
 	}
 
@@ -280,5 +259,36 @@ public abstract class Utilitaire
 		Object tmp = liste[ind1];
 		liste[ind1] = liste[ind2];
 		liste[ind2] = tmp;
+	}
+
+	//TODO: sur les méthodes typer, il n'y a peut être pas de copie profonde (le retour serait inutile)
+
+	/**
+	 * Permet de typer des objets d'un tableau en fonction du tableau de type passé en paramètres
+	 */
+	public static Object[][] typer ( Object[][] tableau, Class<?>[] types )
+	{
+		for ( int cptLig = 0; cptLig < tableau.length; cptLig++ )
+		{
+			Utilitaire.typer ( tableau[cptLig], types );
+		}
+
+		return tableau;
+	}
+
+	/**
+	 * Permet de typer des objets d'une liste en fonction du tableau de type passé en paramètres
+	 */
+	public static Object[] typer ( Object[] liste, Class<?>[] types )
+	{
+		for ( int cpt = 0; cpt < liste.length; cpt++ )
+		{
+			if ( liste[cpt] != null )
+			{
+				liste[cpt] = types[cpt].cast ( liste[cpt] );
+			}
+		}
+
+		return liste;
 	}
 }

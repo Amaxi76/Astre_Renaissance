@@ -210,3 +210,4 @@ ORDER BY
 CREATE VIEW v_Module AS
 SELECT id_semestre, Code_ModuleIUT, libLong, (f_selectTotHeureRep(Code_ModuleIUT) || ' / ' || f_selectTotHeurePN(Code_ModuleIUT)) AS Recap, valide
 FROM   ModuleIUT;
+
