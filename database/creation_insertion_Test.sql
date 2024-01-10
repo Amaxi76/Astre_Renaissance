@@ -2,7 +2,7 @@
 	@author Alizéa LEBARON
 	@version 1.1.0 - 12/12/2023 
 	@date 06/12/2023 
-	@description Script de création de la base de données 
+	@description Script de création de la base de données
 */
 
 /* ---------------------------------------------------- */
@@ -14,9 +14,9 @@ DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
 DROP TABLE ModuleIUT   CASCADE;
 DROP TABLE Intervenant CASCADE;
-DROP TABLE Intervient  CASCADE; 
+DROP TABLE Intervient  CASCADE;
 DROP TABLE Horaire     CASCADE;
-DROP TABLE Historique  CASCADE; 
+DROP TABLE Historique  CASCADE;
 
 /* ---------------------------------------------------- */
 /*                  Création des tables                 */
@@ -267,15 +267,16 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 
 INSERT INTO Intervient VALUES 
 (1,2,'R5.03',6,2,5,'null'), 
-(1,1,'R1.01',8,1,6,'null'), 
 (1,5,'S6.01',8,1,6,'null'), 
-(1,2,'R1.01',8,1,6,'null'), 
-(4,3,'R1.01',2,1,6,'3 CM 3H'), 
-(2,1,'R1.01',8,1,9,'commentaire'), 
 (3,6,'S2.05',1,1,9,'null'), 
 (6,1,'R5.06',12,2,2,'null'), 
 (3,4,'S6.ST',1,1,12,'null'), 
-(1,3,'R1.01',8,1,6,'null'); 
+(1,3,'R1.01',8,1,24,'null'), 
+(1,2,'R1.01',8,1,224,'null'), 
+(1,1,'R1.01',8,1,40,'null'), 
+(2,1,'R1.01',8,1,26,'commentaire'), 
+(4,3,'R1.01',2,1,6,'3 CM 3H'), 
+(3,1,'R1.01',1,5,16,'...'); 
 
 INSERT INTO Horaire VALUES 
 (5,'S5.01',60,0,3), 
@@ -284,3 +285,4 @@ INSERT INTO Horaire VALUES
 (3,'R1.01',5,2,5), 
 (2,'R1.01',30,28,11), 
 (1,'R1.01',85,5,12); 
+
