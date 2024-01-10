@@ -68,8 +68,10 @@ public class GenerateurFichier
 	 */
 	public static void recapTtInter ( )
 	{
-        //String chemin = "./fichierGenerer/recapTtIntervenant.csv";
-		String chemin = choisirDossier() + "/recapTtIntervenant.csv";
+		String chemin = choisirDossier ( );
+
+		if ( chemin == null ) return;
+		else chemin += "/recapTtIntervenant.csv";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
@@ -148,6 +150,9 @@ public class GenerateurFichier
 	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt, String theme )
 	{
 		String chemin = choisirDossier ( );
+
+		if ( chemin == null ) return;
+
 		try 
 		{
 			for ( Intervenant i : ensInt )
@@ -170,6 +175,9 @@ public class GenerateurFichier
 	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod, String theme )
 	{
 		String chemin = choisirDossier ( );
+
+		if ( chemin == null ) return;
+
 		try 
 		{
 			for ( ModuleIUT m : ensMod )
@@ -191,7 +199,11 @@ public class GenerateurFichier
 	 */
 	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
 	{
-		GenererHTMLIntervenant ( inter, theme, choisirDossier ( ) );
+		String chemin = choisirDossier ( );
+
+		if ( chemin == null ) return;
+
+		GenererHTMLIntervenant ( inter, theme, chemin );
 	}
 
 	/** Genere la page Html d'un intervenant
@@ -372,7 +384,11 @@ public class GenerateurFichier
 	 */
 	public static void GenererHTMLModule ( ModuleIUT module, String theme )
 	{
-		GenererHTMLModule ( module, theme, choisirDossier ( ) );
+		String chemin = choisirDossier ( );
+
+		if ( chemin == null ) return;
+
+		GenererHTMLModule ( module, theme, chemin );
 	}
 
 	/** Genere la page Html d'un module
@@ -382,7 +398,6 @@ public class GenerateurFichier
 	 */
 	public static void GenererHTMLModule ( ModuleIUT module, String theme, String chemin )
 	{
-		//String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
 		String dossier = chemin + "/recapModule" + module.getCode ( ) + ".html";
 
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( dossier ) ) )
