@@ -216,7 +216,7 @@ import astre.vue.rendus.OperationRenduTableauIntervient;
 		{
 			if ( ( int ) this.tableau.getDonnees ( ) [ligne][COLONNE_INTERVENANT] != 0 ) 
 			{
-				Heure       h = this.ctrl.getHeure                          ( this.tableau.getDonnees ( ) [ligne][COLONNE_HEURE]      .toString ( )   );				
+				Heure       h = this.ctrl.getHeure                          ( this.tableau.getDonnees ( ) [ligne][COLONNE_HEURE]      .toString ( )   );
 				Intervenant i = this.ctrl.getIntervenant ( Integer.parseInt ( this.tableau.getDonnees ( ) [ligne][COLONNE_INTERVENANT].toString ( ) ) );
 				Contrat     c = i.getContrat ( );
 				

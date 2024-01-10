@@ -73,7 +73,6 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 	public void setValeurs ( Object[][] donnees )
 	{
 		//TODO: 
-		System.out.println ( "setValeurs de panelRep (y'a rien) : " + donnees.length );
 	}
 
 	@Override
