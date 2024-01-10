@@ -16,7 +16,7 @@ DROP TABLE ModuleIUT   CASCADE;
 DROP TABLE Intervenant CASCADE;
 DROP TABLE Intervient  CASCADE;
 DROP TABLE Horaire     CASCADE;
-DROP TABLE Historique  CASCADE;
+DROP TABLE Historique  CASCADE; 
 
 /* ---------------------------------------------------- */
 /*                  Création des tables                 */
