@@ -2,40 +2,76 @@ package astre;
 
 /** Classe Controleur
   * @author : Maximilien Lesterlin, Maxime Lemoine, Mateo Sa et Clémentin Ly
-  * @version : 2.1 - 19/12/2023
+  * @version : 2.2 - 22/12/2023
   * @date : 06/12/2023
   */
 
-import astre.modele.elements.*;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
-import astre.modele.*;
-import astre.vue.*;
+import astre.vue.outils.AFrame;
 import astre.vue.outils.PopUpErreur;
+import astre.vue.FrameAccueil;
+
+import astre.vue.FrameIdentifiant;
+import astre.modele.*;
+import astre.modele.elements.*;
+
+//FIXME: enlever les TODO: et les FIXME: avant de rendre le projet
 
 public class Controleur
 {
-	private FrameAccueil ihm;
-	private Astre        metier;
+	//TODO: généraliser l'emplacement de ces constantes
+	public static final char AJOUTER   = 'A';
+	public static final char MODIFIER  = 'M';
+	public static final char SUPPRIMER = 'S';
+
+	private AFrame ihm;
+	private Astre  metier;
 
 	public Controleur ( )
 	{
-		this.ihm    = new FrameAccueil ( this );
 		this.metier = new Astre        (      );
+		this.ihm    = new FrameAccueil ( this );
+
+		System.out.println("Base de données présente : " + this.metier.estGenere ( ) );
+		
+		if ( ! this.metier.estGenere ( ) )
+			this.metier.genererBDD ( );
 	}
+	
+	/*---------------------------------------*/
+	/*               ACCES IHM               */
+	/*---------------------------------------*/ 
+
+	/**
+	 * Méthode permettant de mettre à jour la fenetre ouverte actuellement et utilisable par le controleur
+	 */
+	public void setFrameActuelle   ( AFrame fenetre ) { this.ihm = fenetre; }
+	public AFrame getFrameActuelle (                ) { return this.ihm;    }
+
+	/**
+	 * Ouvre une popup pour afficher une erreur
+	 */
+	public static void afficherErreur ( String titre, String message )
+	{
+		new PopUpErreur ( titre, message );
+	}
+
+	/*---------------------------------------*/
+	/*             ACCES METIER              */
+	/*---------------------------------------*/ 
 
 	public <T> List<T> getTable ( Class<T> type ) { return this.metier.getTable ( type ); }
 
-	public Semestre          getSemestre           ( int      numSemestre         ) { return this.metier.getSemestre           ( numSemestre    ); }
-	public Object[][]        getTableauModule      ( int      numSemestre         ) { return this.metier.getTableauModule      ( numSemestre    ); } //TODO: à refaire / enlever
-	public Heure             getHeure              ( int      nom                 ) { return this.metier.getHeure              ( nom            ); }
-	public Heure             getHeure              ( String   nom                 ) { return this.metier.getHeure              ( nom            ); }
-	public Contrat           getContrat            ( String   nom                 ) { return this.metier.getContrat            ( nom            ); }
-	public ModuleIUT         getModule             ( String   nom                 ) { return this.metier.getModule             ( nom            ); }
+	public Semestre          getSemestre           ( int    numSemestre           ) { return this.metier.getSemestre           ( numSemestre    ); }
+	public Intervenant       getIntervenant        ( int    id                    ) { return this.metier.getIntervenant        ( id             ); }
+	public Heure             getHeure              ( int    id                    ) { return this.metier.getHeure              ( id             ); }
+	public Heure             getHeure              ( String nom                   ) { return this.metier.getHeure              ( nom            ); }
+	public Contrat           getContrat            ( String nom                   ) { return this.metier.getContrat            ( nom            ); }
+	public ModuleIUT         getModule             ( String nom                   ) { return this.metier.getModule             ( nom            ); }
 	public int               getNBHeureEQTD        ( String code, String nomHeure ) { return this.metier.getNBHeureEQTD        ( code, nomHeure ); }
 	public List<String>      getHistorique         (                              ) { return this.metier.getHistorique         (                ); }
-
 	public Object[][]        getTableau            ( Class<?> type                ) { return this.metier.getTableau            ( type           ); }
 	public Object[][]        getTableauParticulier ( String nomRecherche          ) { return this.metier.getTableauParticulier ( nomRecherche   ); }
 
@@ -43,18 +79,30 @@ public class Controleur
 	public void insert ( Object o ) { this.metier.insert ( o ); }
 	public void delete ( Object o ) { this.metier.delete ( o ); }
 
-	public void majTableauBD ( Object[][] tab, Class<?> type ) { this.metier.majTableauBD ( tab, type ); }
+	public void majTableauBD ( Object[][] tab, Class<?> type                    ) { this.metier.majTableauBD ( tab, type ); }
+	public void majObjetBD   ( Object[]   ens, Class<?> type, char modification ) { this.metier.majObjetBD   ( ens, type, modification ); }
 
-	public static void afficherErreur ( String titre, String message )
-	{
-		new PopUpErreur ( titre, message );
-	}
-
-	public boolean nouvelleAnnee     ( ) { return this.metier.nouvelleAnnee    (); }
-	public boolean nouvelleAnneeZero ( ) { return this.metier.nouvelleAnneeZero(); }
+	public boolean      nouvelleAnnee     ( String nom ) { return this.metier.nouvelleAnnee     ( nom ); }
+	public boolean      nouvelleAnneeZero ( String nom ) { return this.metier.nouvelleAnneeZero ( nom ); }
+	public String       getAnnee          (            ) { return this.metier.getAnnee          (     ); }
+	public List<String> getEnsAnnee       (            ) { return this.metier.getEnsAnnee       (     ); }
+	public boolean      changerAnnee      ( String nom ) { return this.metier.changerAnnee      ( nom ); }
 
 	public static void main ( String[] args )
 	{
-		new Controleur ( );
+		String cheminFichier  = "./data/identifiant/identifiant.txt";
+		String cheminFichier2 = "../data/identifiant/identifiant.txt";
+
+		File fichier  = new File ( cheminFichier  );
+		File fichier2 = new File ( cheminFichier2 );
+
+		if ( !fichier.exists ( ) && !fichier2.exists ( ) ) 
+		{
+			new FrameIdentifiant ( );
+		}
+		else 
+		{
+			new Controleur ( );
+		}
 	}
 }

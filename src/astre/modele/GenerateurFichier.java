@@ -1,11 +1,15 @@
 package astre.modele;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import astre.modele.elements.*;
 
@@ -17,11 +21,56 @@ import astre.modele.elements.*;
 
 public class GenerateurFichier
 {
+	/** Demande à l'utilisateur de choisir un fichier
+	 *  @return String
+	 */
+	private static String choisirDossier ( )
+	{
+        JFileChooser fileChooser = new JFileChooser ( );
+        fileChooser.setDialogTitle       ( "Choisir un dossier" );
+        fileChooser.setFileSelectionMode ( JFileChooser.DIRECTORIES_ONLY    );
+
+        int userSelection = fileChooser.showDialog ( null, "Choisir" );
+
+        if ( userSelection == JFileChooser.APPROVE_OPTION )
+		{
+            File selectedDirectory = fileChooser.getSelectedFile ( );
+            return selectedDirectory.getAbsolutePath ( );
+        }
+		else
+		{
+            return null;
+        }
+    }
+
+	/** Copie un fichier dans d'un dossier à un autre 
+	 *  @param cheminSource
+	 *  @param destination
+	 */
+	public static void copierFichier ( String cheminSource, String destination ) throws IOException
+	{
+        File entree = new File ( cheminSource );
+        File sortie = new File ( destination  );
+
+        try ( FileInputStream inputStream = new FileInputStream ( entree ); FileOutputStream outputStream = new FileOutputStream ( sortie ) )
+		{
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ( ( bytesRead = inputStream.read ( buffer ) ) != -1 )
+			{
+                outputStream.write ( buffer, 0, bytesRead );
+            }
+        }
+    }
+	
+	/** Genere le ficher csv des intervenants
+	 */
 	public static void recapTtInter ( )
 	{
-        String chemin = "./fichierGenerer/recapTtIntervenant.csv";
+        //String chemin = "./fichierGenerer/recapTtIntervenant.csv";
+		String chemin = choisirDossier() + "/recapTtIntervenant.csv";
 
-		//veille version
 		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
 		{
             // Ecriture de l'entête du CSV
@@ -32,63 +81,78 @@ public class GenerateurFichier
 
 			BD bd = BD.getInstance ( );
 
-			//Object[][] elem = bd.getTableauParticulier ( "v_intervenant" );
-			Object[][] elem = bd.getTableau ( Intervenant.class );
+			ArrayList<Intervenant> lst = ( ArrayList<Intervenant> ) bd.getTable ( Intervenant.class );
 
-			for ( int i = 0; i < elem.length; i++ )
+			//Parcours la liste des intervenants
+			for ( int i = 0; i < lst.size ( ); i++ )
 			{
-				String[] s = new String[24];
+				Intervenant inter = lst.get ( i );
+				
+				//Ecriture des données d'un intervenant
+				ecrivain.write ( inter.getContrat      ( ).getNom     ( ) + "\t" );
+				ecrivain.write ( inter.getNom                         ( ) + "\t" );
+				ecrivain.write ( inter.getPrenom                      ( ) + "\t" );
+				ecrivain.write ( inter.getheureService                ( ) + "\t" );
+				ecrivain.write ( inter.getHeureMaximum                ( ) + "\t" );
+				ecrivain.write ( inter.getContrat      ( ).getRatioTP ( ) + "\t" );
 
-				for ( int j=0; j < 6; j++ )
+				double totalTheo = 0;
+				double totalReel = 0;
+
+				int tour = 1;
+				while ( tour < 3 )
 				{
-					s[j] = elem[i][j + 1].toString ( );
+					double sommeTheo = 0;
+					double sommeReel = 0;
+
+					for ( int j = tour; j < 5 + tour; j+=2 )
+					{
+						//Récupération des Intervients d'un intervenant selon un semestre
+						double theo = bd.getInterventionIntervenantTheo ( inter.getId ( ), j );
+						double reel = bd.getInterventionIntervenant     ( inter.getId ( ), j );
+
+						ecrivain.write ( theo + "\t" );
+						ecrivain.write ( reel + "\t" );
+
+						sommeTheo += theo;
+						sommeReel += reel;
+					}
+
+					ecrivain.write ( sommeTheo + "\t" );
+					ecrivain.write ( sommeReel + "\t" );
+
+					totalTheo += sommeTheo;
+					totalReel += sommeReel;
+
+					tour++;
 				}
+				
+				ecrivain.write ( totalTheo + "\t" );
+				ecrivain.write ( totalReel + "\t" );
 
-				//TODO faire avec la requete d'Alizéa mais risque d'etre compliquer
-				s[ 6] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
-				s[ 7] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 1 ) + "";
-				s[ 8] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
-				s[ 9] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 3 ) + "";
-				s[10] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
-				s[11] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 5 ) + "";
-
-				s[12] = Double.parseDouble ( s[6] ) + Double.parseDouble ( s[8] ) + Double.parseDouble ( s[10] ) + "";
-				s[13] = Double.parseDouble ( s[7] ) + Double.parseDouble ( s[9] ) + Double.parseDouble ( s[11] ) + "";
-
-				s[14] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 2 ) + "";
-				s[15] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 2 ) + "";
-				s[16] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 4 ) + "";
-				s[17] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 4 ) + "";
-				s[18] = bd.getInterventionIntervenantTheo ( Integer.parseInt ( elem[i][0].toString ( ) ), 6 ) + "";
-				s[19] = bd.getInterventionIntervenant     ( Integer.parseInt ( elem[i][0].toString ( ) ), 6 ) + "";
-
-				s[20] = Double.parseDouble ( s[14] ) + Double.parseDouble ( s[16] ) + Double.parseDouble ( s[18] ) + "";
-				s[21] = Double.parseDouble ( s[15] ) + Double.parseDouble ( s[17] ) + Double.parseDouble ( s[19] ) + "";
-
-				s[22] = Double.parseDouble ( s[12] ) + Double.parseDouble ( s[20] ) + "";
-				s[23] = Double.parseDouble ( s[13] ) + Double.parseDouble ( s[21] ) + "";
-
-				for( int cpt = 0; cpt < s.length; cpt++ )
-				{
-					ecrivain.write ( s[cpt] + "," );
-				}
-
-            	ecrivain.newLine ( );
+				ecrivain.newLine ( );
 			}
+
             System.out.println ( "Fichier CSV créé avec succès." );
-        } catch ( IOException e )
+        } 
+		catch ( IOException e )
 		{
             e.printStackTrace ( );
         }
 	}
 
-	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt )
+	/** Genere la page Html de tous les intervenants
+	 *  @param ensInt
+	 *  @param theme
+	 */
+	public static void GenererHTMLToutIntervenant ( List<Intervenant> ensInt, String theme )
 	{
+		String chemin = choisirDossier ( );
 		try 
 		{
 			for ( Intervenant i : ensInt )
 			{
-				GenererHTMLIntervenant ( i );
+				GenererHTMLIntervenant ( i, theme, chemin );
 			}
 
 			System.out.println ( "Tous les intervenants on été exportés sous format HTML" );
@@ -99,13 +163,18 @@ public class GenerateurFichier
 		}
 	}
 
-	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod )
+	/** Genere la page Html de tous les modules
+	 *  @param ensMod
+	 *  @param theme
+	 */
+	public static void GenererHTMLToutModule ( List<ModuleIUT> ensMod, String theme )
 	{
+		String chemin = choisirDossier ( );
 		try 
 		{
 			for ( ModuleIUT m : ensMod )
 			{
-				GenererHTMLModule ( m );
+				GenererHTMLModule ( m, theme, chemin );
 			}
 
 			System.out.println ( "Tous les modules on été exportés sous format HTML" );
@@ -116,33 +185,48 @@ public class GenerateurFichier
 		}
 	}
 
-	public static void GenererHTMLIntervenant ( Intervenant inter )
+	/** Genere la page Html d'un intervenant
+	 *  @param inter
+	 *  @param theme
+	 */
+	public static void GenererHTMLIntervenant ( Intervenant inter, String theme )
 	{
-		String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
+		GenererHTMLIntervenant ( inter, theme, choisirDossier ( ) );
+	}
 
-		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
+	/** Genere la page Html d'un intervenant
+	 *  @param inter
+	 *  @param theme
+	 *  @param chemin
+	 */
+	public static void GenererHTMLIntervenant ( Intervenant inter, String theme, String chemin )
+	{
+		//String chemin = "./fichierGenerer/recapIntervenant" + inter.getNom ( ) + ".html";
+		String dossier = chemin + "/recapIntervenant" + inter.getNom ( ) + ".html";
+
+		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( dossier ) ) )
 		{
 			// Accès à la base de données
 			BD bd = BD.getInstance ( );
 
             // Ecriture de l'entête
 			String entete =
-			"<!DOCTYPE html>\n"                                                           +
-			"<html lang=\"fr>\n"                                                          +
-			"<head>\n"                                                                    +
-				"\t<meta charset=\"UTF-8\">\n"                                            +
-				"\t<link href=\"./css/style.css\" rel=\"stylesheet\">\n"                  +
-				"\t<title>Intervenant " + inter.getNom ( ).toUpperCase ( ) + " </title>\n"    +
-			"</head>\n"                                                                   +
-			"<body>\n"                                                                    ;
+			"<!DOCTYPE html>\n"                                                                 +
+			"<html lang=\"fr>\n"                                                                +
+			"<head>\n"                                                                          +
+				"\t<meta charset=\"UTF-8\">\n"                                                  +
+				"\t<link href=\"styleIntervenant" + theme +".css\" rel=\"stylesheet\">\n" +
+				"\t<title>Intervenant " + inter.getNom ( ).toUpperCase ( ) + " </title>\n"      +
+			"</head>\n"                                                                         +
+			"<body>\n"                                                                          ;
 
 			// Ecriture du head et des paramètres
             ecrivain.write ( entete );
 			ecrivain.newLine ( );
 
-			String header = "<header>\r\n" +
+			String header = "<header>\r\n"                                                                              +
 								"\t\t<h1>" + inter.getPrenom ( ) + " " + inter.getNom ( ).toUpperCase ( ) + "</h1>\r\n" +
-							"</header>";
+							"</header>\n"                                                                                 ;
 
 			// Ecriture du header de la page
 			ecrivain.write ( header );
@@ -150,65 +234,65 @@ public class GenerateurFichier
 
 			//Ecriture du récapitulatif
 
-			String recap = 	"<table id=\"recap\">"  + "<tr> <th colspan=\"6\"> Récapitulatif </th> </tr>";
+			String recap = 	"<table id=\"recap\">"  + "<tr> <th colspan=\"6\"> Récapitulatif </th> </tr>\n";
 
-			recap += "<tr>" +
-						"<td>s1</td>" +
-						"<td>s3</td>" +
-						"<td>s5</td>" +
-						"<td>s2</td>" +
-						"<td>s4</td>" +
-						"<td>s6</td>" +
-					"</tr>" ;
+			recap += "\t<tr>\n"             +
+						"\t\t<td>s1</td>\n" +
+						"\t\t<td>s3</td>\n" +
+						"\t\t<td>s5</td>\n" +
+						"\t\t<td>s2</td>\n" +
+						"\t\t<td>s4</td>\n" +
+						"\t\t<td>s6</td>\n" +
+					"\t</tr>\n"             ;
 
-			recap += "<tr>" +
-						"<td>" + bd.getNBHeureParSemestre ( 1, inter.getId ( ) ) + "</td>" +
-						"<td>" + bd.getNBHeureParSemestre ( 3, inter.getId ( ) ) + "</td>" +
-						"<td>" + bd.getNBHeureParSemestre ( 5, inter.getId ( ) ) + "</td>" +
-						"<td>" + bd.getNBHeureParSemestre ( 2, inter.getId ( ) ) + "</td>" +
-						"<td>" + bd.getNBHeureParSemestre ( 4, inter.getId ( ) ) + "</td>" +
-						"<td>" + bd.getNBHeureParSemestre ( 6, inter.getId ( ) ) + "</td>" +
-					"</tr>" ;
+			recap += "\t<tr>\n"                                                                              +
+						"\t\t<td>" + bd.getNBHeureParSemestre ( 1, inter.getId ( ) ) + "</td>\n" +
+						"\t\t<td>" + bd.getNBHeureParSemestre ( 3, inter.getId ( ) ) + "</td>\n" +
+						"\t\t<td>" + bd.getNBHeureParSemestre ( 5, inter.getId ( ) ) + "</td>\n" +
+						"\t\t<td>" + bd.getNBHeureParSemestre ( 2, inter.getId ( ) ) + "</td>\n" +
+						"\t\t<td>" + bd.getNBHeureParSemestre ( 4, inter.getId ( ) ) + "</td>\n" +
+						"\t\t<td>" + bd.getNBHeureParSemestre ( 6, inter.getId ( ) ) + "</td>\n" +
+					"\t</tr>\n"                                                                              ;
 
 			int sommePaire   = bd.getHeureParSemestrePair   ( inter.getId ( ) );
 			int sommeImpaire = bd.getHeureParSemestreImpair ( inter.getId ( ) );
 			int sommeTot     = bd.getHeureParSemestreTotal  ( inter.getId ( ) );
 
-			recap += "<tr>" +
-						"<td colspan='3'> Total semestre impaires : " + sommeImpaire + " heures</td>" +
-						"<td colspan='3'> Total semestre paires : "   + sommePaire   + " heures</td>" +
-					 "</tr> " ;
+			recap += "\t<tr>\n"                                                                             +
+						"\t\t<td colspan='3'> Total semestre impaires : " + sommeImpaire + " heures</td>\n" +
+						"\t\t<td colspan='3'> Total semestre paires : "   + sommePaire   + " heures</td>\n" +
+					 "\t</tr>\n"                                                                            ;
 
-			recap += "<tr>" +
-						"<td colspan='6' class='total'> Total des heures réparties : " + sommeTot + " heures</td>" +
-					"</tr>";
+			recap += "\t<tr>\n"                                                                                          +
+						"\t\t<td colspan='6' class='total'> Total des heures réparties : " + sommeTot + " heures</td>\n" +
+					"\t</tr>\n"                                                                                          ;
 
-			recap += "</table>";
+			recap += "</table>\n";
 			ecrivain.write ( recap );
 
 			// Ecriture de la table des données principales
 
-			String table = "<table>";
+			String table = "<table>\n";
 
 			int nombreHeure = bd.getTable ( Heure.class ).size ( );
 
 			// Ecriture de la première ligne
-			table += "<tr>" +
-						"<th rowspan='2'>Numéro de ligne</th>"           +
-						"<th rowspan='2'>Code de la matière et nom</th>" +
-						"<th colspan=" + (nombreHeure + 1) + ">Heure dans la matière</th>"     +
-		   			 "</tr>";
+			table += "\t<tr>\n"                                                                  +
+						"\t\t<th rowspan='2'>Numéro de ligne</th>\n"                             +
+						"\t\t<th rowspan='2'>Code de la matière et nom</th>\n"                   +
+						"\t\t<th colspan=" + (nombreHeure + 1) + ">Heure dans la matière</th>\n" +
+		   			 "\t</tr>\n"                                                                 ;
 
 			//Ecriture de la seconde entete de tableau
 
-			table += "<tr>" ;
+			table += "\t<tr>\n" ;
 
 			for (Heure h : bd.getTable ( Heure.class ) )
 			{
-				table += "<th>" + h.getNom ( ) + "</th>";
+				table += "\t\t<th>" + h.getNom ( ) + "</th>\n";
 			}
 
-			table += "<th> Total </th> </tr>";
+			table += "\t\t<th> Total </th> </tr>\n";
 
 			//Ecriture des données de l'enseignants
 
@@ -222,21 +306,21 @@ public class GenerateurFichier
 				if (intervient.getIntervenant ( ).getId ( ) == inter.getId ( ) && !ensDejaTraite.contains ( intervient.getModule ( ).getCode ( ) ) )
 				{
 
-					table += "<tr>";
-					table += "<td class='num'>" + cpt++ + "</td>";
-					table += "<td class='mod'>" + intervient.getModule ( ).getCode ( ) + " - " + intervient.getModule ( ).getLibLong ( ) + "</td>";
+					table += "\t<tr>\n";
+					table += "\t\t<td class='num'>" + cpt++ + "</td>\n";
+					table += "\t\t<td class='mod'>" + intervient.getModule ( ).getCode ( ) + " - " + intervient.getModule ( ).getLibLong ( ) + "</td>\n";
 
 					for ( Heure h : bd.getTable ( Heure.class ) )
 					{
 						nbHeure = bd.getNBHeureParModule ( intervient.getModule( ).getCode( ), intervient.getIntervenant ( ).getId ( ), h.getId ( ) );
 
-						table += "<td class = 'heure'>" + nbHeure + "</td>";
+						table += "\t\t<td class = 'heure'>" + nbHeure + "</td>\n";
 
 						somme += nbHeure;
 					}
 
-					table += "<td class = 'heure'>" + somme + " heures </td>";
-					table += "</tr>";
+					table += "\t\t<td class = 'heure'>" + somme + " heures </td>\n";
+					table += "\t</tr>\n";
 
 					somme = 0;
 
@@ -245,9 +329,9 @@ public class GenerateurFichier
 				}
 			}
 
-			table += "<tr class = 'total'>" +
-						"<td class='num'>Total</td>" +
-						"<td class='mod'>&nbsp;</td>" ;
+			table += "\t<tr class = 'total'>\n"             +
+						"\t\t<td class='num'>Total</td>\n"  +
+						"\t\t<td class='mod'>&nbsp;</td>\n" ;
 			
 			nbHeure = 0;
 			somme = 0;
@@ -255,24 +339,25 @@ public class GenerateurFichier
 			{
 				nbHeure = bd.getTotalHeureParInter ( inter.getId ( ), h.getId ( ) );
 
-				table += "<td class = 'heure'>" + nbHeure + "</td>";
+				table += "\t\t<td class = 'heure'>" + nbHeure + "</td>\n";
 
 				somme += nbHeure;
 			}			
 			
 						
-			table += "<td class='heure'>" + somme + " heures</td>"    +
-					 "</tr>" ;
-
+			table += "\t\t<td class='heure'>" + somme + " heures</td>\n" +
+					 "\t</tr>\n";
 			ecrivain.write ( table );
 
 			//Écriture fermant les balises html
 			String footer =
-			"\t</table>" +
-			"</body>"  +
-			"</html>"  ;
+			"</table>\n" +
+			"</body>\n"  +
+			"</html>\n"  ;
 
 			ecrivain.write ( footer );
+
+			copierFichier("./modele_html/css/styleIntervenant" + theme +".css", chemin +"/styleIntervenant" + theme + ".css");
 
             System.out.println ( "Fichier HTML créé avec succès." );
         }
@@ -282,11 +367,26 @@ public class GenerateurFichier
         }
 	}
 
-	public static void GenererHTMLModule ( ModuleIUT module )
+	/** Genere la page Html d'un module
+	 *  @param module
+	 *  @param theme
+	 */
+	public static void GenererHTMLModule ( ModuleIUT module, String theme )
 	{
-		String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
+		GenererHTMLModule ( module, theme, choisirDossier ( ) );
+	}
 
-		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( chemin ) ) )
+	/** Genere la page Html d'un module
+	 *  @param module
+	 *  @param theme
+	 *  @param chemin
+	 */
+	public static void GenererHTMLModule ( ModuleIUT module, String theme, String chemin )
+	{
+		//String chemin = "./fichierGenerer/recapModule" + module.getCode ( ) + ".html";
+		String dossier = chemin + "/recapModule" + module.getCode ( ) + ".html";
+
+		try ( BufferedWriter ecrivain = new BufferedWriter ( new FileWriter ( dossier ) ) )
 		{
             // Ecriture de l'entête
 			String entete =
@@ -294,7 +394,7 @@ public class GenerateurFichier
 			"<html lang=\"fr>\n"                                                                  +
 			"<head>\n"                                                                            +
 				"\t<meta charset=\"UTF-8\">\n"                                                    +
-				"\t<link href=\"./css/styleModule.css\" rel=\"stylesheet\">\n"                    +
+				"\t<link href=\"styleModule"+ theme +".css\" rel=\"stylesheet\">\n"               +
 				"\t<title>" + module.getCode ( ) + " - " + module.getLibCourt ( ) + " </title>\n" +
 			"</head>\n"                                                                           +
 			"<body>\n"                                                                            +
@@ -353,25 +453,22 @@ public class GenerateurFichier
 
 			for ( Intervient inter : bd.getTable ( Intervient.class ) )
 			{
-				//System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom()); //debug
-
 				if (inter.getModule ( ).getCode ( ).equals ( module.getCode ( ) ) && !ensDejaTraite.contains(inter.getIntervenant ( ).getId ( ) ) )
 				{
-					System.out.println(inter.getIntervenant ( ).getId ( ) + " " + inter.getIntervenant ( ).getPrenom());
-					ecrivain.write("<tr>");
-					ecrivain.write("<td colspan=2>" + inter.getIntervenant ( ).getPrenom ( ) + " " + inter.getIntervenant ( ).getNom ( ).toUpperCase ( ) + "</td>");
+					ecrivain.write("\t\t<tr>\n");
+					ecrivain.write("\t\t\t<td colspan=2>" + inter.getIntervenant ( ).getPrenom ( ) + " " + inter.getIntervenant ( ).getNom ( ).toUpperCase ( ) + "</td>\n");
 
 					for (Heure h : bd.getTable ( Heure.class ) )
 					{
 						nbHeure = bd.getNBHeureParModule ( inter.getModule( ).getCode( ), inter.getIntervenant ( ).getId ( ), h.getId ( ) );
 
-						ecrivain.write ( "<td>" + nbHeure + "</td>" );
+						ecrivain.write ( "\t\t\t<td>" + nbHeure + "</td>\n" );
 
 						sommeAct += nbHeure;
 					}
 
-					ecrivain.write ( "<td>" + sommeAct + "</td>" );
-					ecrivain.write ( "</tr>" );
+					ecrivain.write ( "\t\t\t<td>" + sommeAct + "</td>\n" );
+					ecrivain.write ( "\t\t</tr>\n" );
 
 					sommeAct = 0;
 
@@ -382,11 +479,13 @@ public class GenerateurFichier
 
 			//Écriture fermant les balises html
 			String footer =
-			"\t</table>" +
-			"</body>"  +
-			"</html>"  ;
+			"\t</table>\n" +
+			"</body>\n"  +
+			"</html>\n"  ;
 
 			ecrivain.write ( footer );
+
+			copierFichier("./modele_html/css/styleModule" + theme +".css", chemin +"/styleModule" + theme + ".css");
 
             System.out.println ( "Fichier HTML créé avec succès." );
         } 

@@ -1,10 +1,14 @@
 package astre.vue.previsionnel.module;
 
-import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -12,437 +16,240 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import astre.Controleur;
-import astre.modele.BD;
 import astre.modele.elements.Heure;
-import astre.modele.elements.Horaire;
-import astre.modele.elements.ModuleIUT;
-import astre.vue.outils.FiltreTextFieldEntier;
+import astre.vue.outils.Saisie;
 
-/** Classe PanelPNLocal
- * @author : Clémentin Ly
-* @version : 2.0 - 14/12/2023
-* @date : 12/12/2023
-*/
-
+/** Classe PanelModuleLabel
+  * @author : Clémentin Ly, Maximilien Lesterlin, Maxime Lemoine
+  * @version : 3.0 - 22/12/2023
+  * @date : 11/12/2023
+  */
 public class PanelPNLocal extends JPanel
 {
-	/*-------------*/
-	/*--Attributs--*/
-	/*-------------*/
-
-	private Controleur  ctrl;
+	private Controleur ctrl;
 	private FrameModule frm;
 
-	private JTextField txtCM;
-	private JTextField txtTD;
-	private JTextField txtTP;
-	private JLabel     lblSomme;
+	private String[] ensIntitule; //TODO: remplacer par une List<String> voir peut être à le supprimer ?
+	private Map<String, JTextField> ensTxtNbHeure;
+	private Map<String, JTextField> ensTxtTotalPromo;
 
-	private JLabel lblTotalCM;
-	private JLabel lblTotalTD;
-	private JLabel lblTotalTP;
-	private JLabel lblTotalSomme;
+	private JTextField txtSommePromo;
+	private JTextField txtSommeEQTDPromo;
 
-	//TEST MODULABLE
-	private List<JLabel>     lstLabelsHeures      = new ArrayList<>();
-	private List<JTextField> lstTextFieldsHeures  = new ArrayList<>();
-	private List<JLabel>     lstLabelsTotalHeures = new ArrayList<>();
-
-	/*----------------*/
-	/*--Constructeur--*/
-	/*----------------*/
-
-	public PanelPNLocal(Controleur ctrl, FrameModule frm)
+	public PanelPNLocal ( Controleur ctrl, FrameModule frameModule, String nomTypeModule, String[] ensIntitule )
 	{
+		/* -------------------------- */
+		/*    Propriétés générales    */
+		/* -------------------------- */
+
 		this.ctrl = ctrl;
-		this.frm  = frm;
+		this.frm  = frameModule;
+		this.setLayout ( new GridBagLayout ( ) );
+		this.setBorder ( BorderFactory.createLineBorder ( Color.GRAY, 1 ) );
 
-		/* ------------------------- */
-		/* Création des composants   */
-		/* ------------------------- */
+		/* -------------------------- */
+		/*  Création des composants   */
+		/* -------------------------- */
 
-		this.setLayout ( new GridBagLayout() );
-		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		this.initialiserComposantsModule ( nomTypeModule, ensIntitule );
 
-		GridBagConstraints gbc = new GridBagConstraints();
+		/* -------------------------- */
+		/*    Ajout des composants    */
+		/* -------------------------- */
+
+		GridBagConstraints gbc = new GridBagConstraints ( );
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
+		this.placementComposantsModule ( gbc );
 
-		this.txtCM      = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtCM );
-		this.lstTextFieldsHeures.add ( txtCM );
+		/* -------------------------- */
+		/* Activation des composants  */
+		/* -------------------------- */
 
-		this.txtTD      = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtTD );
-		this.lstTextFieldsHeures.add ( txtTD );
-
-		this.txtTP      = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( txtTP );
-		this.lstTextFieldsHeures.add ( txtTP );
-		
-		this.lblSomme   = new JLabel();
-
-		this.lblTotalCM    = new JLabel();
-		this.lstLabelsTotalHeures.add ( lblTotalCM );
-
-		this.lblTotalTD    = new JLabel();
-		this.lstLabelsTotalHeures.add ( lblTotalTD );
-
-		this.lblTotalTP    = new JLabel();
-		this.lstLabelsTotalHeures.add ( lblTotalTP );
-		
-		this.lblTotalSomme = new JLabel();
-
-
-		gbc.gridy = 0;
-		gbc.gridx = 1;
-		this.add ( new JLabel ( "CM" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "CM" ) );
-
-		gbc.gridx = 2;
-		this.add ( new JLabel ( "TD" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "TD" ) );
-
-		gbc.gridx = 3;
-		this.add ( new JLabel ( "TP" ), gbc );
-		this.lstLabelsHeures.add ( new JLabel ( "TP" ) );
-
-		gbc.gridx = 4;
-		this.add ( new JLabel ( "Σ" ), gbc  );
-
-
-		gbc.gridy = 1;
-		gbc.gridx = 1;
-		this.add ( this.txtCM, gbc     );
-
-		gbc.gridx = 2;
-		this.add ( this.txtTD, gbc     );
-
-		gbc.gridx = 3;
-		this.add ( this.txtTP, gbc    );
-
-		gbc.gridx = 4;
-		this.add ( this.lblSomme, gbc );
-
-
-		gbc.gridy = 2;
-		gbc.gridx = 0;
-		this.add ( new JLabel ( "Total (eqtd) promo" ), gbc );
-
-		gbc.gridx = 1;
-		this.add ( this.lblTotalCM, gbc    );
-
-		gbc.gridx = 2;
-		this.add ( this.lblTotalTD, gbc    );
-
-		gbc.gridx = 3;
-		this.add ( this.lblTotalTP, gbc    );
-
-		gbc.gridx = 4;
-		this.add ( this.lblTotalSomme, gbc );
-
-		/* ------------------------- */
-		/* Activation des composants */
-		/* ------------------------- */
-
-		this.txtCM.addKeyListener ( new AjoutKeyListenerSomme() );
-		this.txtTD.addKeyListener ( new AjoutKeyListenerSomme() );
-		this.txtTP.addKeyListener ( new AjoutKeyListenerSomme() );
-
-
-		this.lblSomme.setBackground ( Color.LIGHT_GRAY );
-		this.lblSomme.setPreferredSize ( new Dimension ( 40, 15 ) );
-		this.lblSomme.setOpaque( true );
-
-		this.lblTotalCM.setBackground ( Color.LIGHT_GRAY );
-		this.lblTotalCM.setPreferredSize ( new Dimension ( 40, 15 ) );
-		this.lblTotalCM.setOpaque( true );
-
-		this.lblTotalTD.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTD.setPreferredSize( new Dimension ( 40, 15 ) );
-		this.lblTotalTD.setOpaque( true );
-
-		this.lblTotalTP.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalTP.setPreferredSize( new Dimension ( 40, 15 ) );
-		this.lblTotalTP.setOpaque( true );
-
-		this.lblTotalSomme.setBackground( Color.LIGHT_GRAY );
-		this.lblTotalSomme.setPreferredSize( new Dimension ( 40, 15 ) );
-		this.lblTotalSomme.setOpaque( true );
+		this.activationComposantsModule ( );
 	}
 
+	/*---------------------------------------*/
+	/*              METHODES IHM             */
+	/*---------------------------------------*/
+
+	/**
+	 * Créer tous les composants
+	 */
+	private void initialiserComposantsModule ( String nomTypeModule, String[] ensIntitule )
+	{
+		this.ensTxtNbHeure    = new HashMap<> ( );
+		this.ensTxtTotalPromo = new HashMap<> ( );
+		this.ensIntitule = ensIntitule;
+
+		for ( String intitule : this.ensIntitule )
+		{
+			this.ensTxtNbHeure   .put ( intitule, Saisie.creerTextFieldEntier ( true  ) );
+			this.ensTxtTotalPromo.put ( intitule, Saisie.creerTextFieldEntier ( false ) );
+		}
+
+		this.txtSommePromo     = Saisie.creerTextFieldEntier ( false );
+		this.txtSommeEQTDPromo = Saisie.creerTextFieldEntier ( false );
+	}
+
+
+	/**
+	 * Ajouter tous les composants créés au panel
+	 */
+	private void placementComposantsModule ( GridBagConstraints gbc )
+	{
+		//placement du commentaire
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		this.add ( new JLabel ( "Total (eqtd) promo" ) );
+
+		//placement des intitulés et leurs informations
+		for ( int cptColonnes = 0; cptColonnes < this.ensIntitule.length; cptColonnes++ )
+		{
+			gbc.gridx = cptColonnes+1;
+
+			String intitule = this.ensIntitule [ cptColonnes ];
+			
+			gbc.gridy = 0;
+			this.add ( new JLabel ( "h " + intitule ), gbc );
+			gbc.gridy = 1;
+			this.add ( this.ensTxtNbHeure   .get ( intitule ), gbc );
+			gbc.gridy = 2;
+			this.add ( this.ensTxtTotalPromo.get ( intitule ), gbc );
+		}
+
+		//placement de la colonne des sommes
+		gbc.gridx = this.ensIntitule.length + 1;
+		gbc.gridy = 0;
+		this.add ( new JLabel ( "Σ" ), gbc );
+		gbc.gridy = 1;
+		this.add ( this.txtSommePromo, gbc );
+		gbc.gridy = 2;
+		this.add ( this.txtSommeEQTDPromo, gbc );
+	}
+
+
+	/*---------------------------------------*/
+	/*           METHODES D'ECOUTE           */
+	/*---------------------------------------*/
+
+	/**
+	 * Activer la détection de la saisie sur les zones de saisie
+	 */
+	private void activationComposantsModule ( )
+	{
+		for ( String intitule : this.ensIntitule )
+		{
+			this.ensTxtNbHeure.get ( intitule ).addKeyListener ( new AjoutKeyListenerSomme ( ) );
+		}
+	}
+
+	/**
+	 * Classe interne permettant la détection à chaque caractères écrits
+	 */
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		public void keyTyped   ( KeyEvent e ) { majSomme();
-												majTotalHeure();}
-		public void keyPressed ( KeyEvent e ) {}
-		public void keyReleased( KeyEvent e ) {}
+		@Override public void keyTyped   ( KeyEvent e ) { /* */         }
+		@Override public void keyPressed ( KeyEvent e ) { /* */         }
+		@Override public void keyReleased( KeyEvent e ) { majIHM ( ); }
 	}
+	
 
-	private void majSomme()
+	/*---------------------------------------*/
+	/*              METHODES MAJ             */
+	/*---------------------------------------*/
+
+	/**
+	 * Méthode qui récupère toutes les informations nécessaires à la complétion du tableau des sommes et équivant TD
+	 */
+	//TODO: voir à déplacer cette méthode dans le métier (inutilement complexe)
+	public void majIHM ( )
 	{
-		try
+		double somme     = 0;
+		double sommeEQTD = 0;
+		
+		for ( String intitule : ensIntitule )
 		{
-			int CM    = 0;
-			int TD    = 0;
-			int TP    = 0;
+			int valeur = this.getSaisie ( intitule );
 			
-			//TEST MODULABLE
-			int nouvHeureValeur = 0;
+			// Total des heures sans l'équivalent TD
+			somme += valeur;
 			
-			if (!txtCM.getText().isEmpty() )
-			{
-				CM = Integer.parseInt ( txtCM.getText() );
-			}
+			// Récupère le nombre de groupes en fonction du types d'heure par rapport au pnlLabel
+			int nbGroupes = this.frm.getNbGroupe ( intitule );
 
-			if ( !txtTD.getText().isEmpty() )
-			{
-				TD = Integer.parseInt ( txtTD.getText() );
-			}
+			// Calcul de l'équivalent TD
+			double valeurEQTD = valeur * this.coeffHeure ( intitule ) * nbGroupes;
+			this.ensTxtTotalPromo.get ( intitule ).setText ( "" + valeurEQTD );
 
-			if (!txtTP.getText().isEmpty() )
-			{
-				TP = Integer.parseInt ( txtTP.getText() );
-			}
-
-			int somme = CM + TD + TP;
-
-			//TEST MODULABLE
-			for (int i = 3; i < lstTextFieldsHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
-			{
-				JTextField textField = lstTextFieldsHeures.get(i);
-				if ( !textField.getText().isEmpty() )
-				{
-					nouvHeureValeur = Integer.parseInt(textField.getText());
-					somme += nouvHeureValeur;
-				}
-			}
-
-			lblSomme.setText ( String.valueOf ( somme ) );
-
-
-			double totalCM = 0;
-			double totalTD = 0;
-			double totalTP = 0;
-
-			//TEST MODULABLE
-			double nouvTotalHeureValeur = 0;
-
-			if ( !lblTotalCM.getText().isEmpty() )
-			{
-				totalCM = Double.parseDouble ( lblTotalCM.getText() );
-			}
-
-			if ( !lblTotalTD.getText().isEmpty() )
-			{
-				totalTD = Double.parseDouble ( lblTotalTD.getText() );
-			}
-			
-			if ( !lblTotalTP.getText().isEmpty() )
-			{
-				totalTP = Double.parseDouble ( lblTotalTP.getText() );
-			}
-
-			double totalSomme = totalCM + totalTD + totalTP;
-
-			//TEST MODULABLE
-			for (int i = 3; i < lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
-			{
-				JLabel labelTotalHeure = lstLabelsTotalHeures.get(i);
-
-				if ( !labelTotalHeure.getText().isEmpty() )
-				{
-					nouvTotalHeureValeur = Double.parseDouble ( labelTotalHeure.getText() );
-					totalSomme += nouvTotalHeureValeur;
-				}
-			}
-
-			lblTotalSomme.setText ( String.valueOf ( totalSomme ) );
+			// Total de l'équivalent TD
+			sommeEQTD += valeurEQTD;
 		}
-		catch ( NumberFormatException ex )
-		{
-			lblSomme.setText ( "Erreur" );
-		}
+
+		this.txtSommePromo    .setText ( "" + somme     );
+		this.txtSommeEQTDPromo.setText ( "" + sommeEQTD );
 	}
 
-	private void majTotalHeure()
+	//TODO: ne prends pas en compte les ajouts ou modifications du nombre de types d'heure différentes
+	public void setValeurs ( Object[][] donnees )
 	{
-		try
+		// mettre à jour les zones de texte
+		for ( Object[] lig : donnees )
 		{
-			int CM = 0;
-			int TD = 0;
-			int TP = 0;
-	
-			if ( !txtCM.getText().isEmpty() )
+			if ( this.ensTxtNbHeure.containsKey ( lig [0] ) )
 			{
-				CM = getCM();
-				double coeffCM = coeffHeure ( "CM" );
-				double totalCM = CM * coeffCM;
-	
-				lblTotalCM.setText ( String.valueOf ( totalCM ) );
-			}
-
-			if (!txtTD.getText().isEmpty())
-			{
-				TD = getTD();
-				int nbGpTD = frm.getPanelModuleLabel().getNbGpTD();
-				double coeffTD = coeffHeure("TD");
-				double totalTD = TD * coeffTD * nbGpTD;
-
-				lblTotalTD.setText(String.valueOf(totalTD));
-			}
-
-			if ( !txtTP.getText().isEmpty() )
-			{
-				TP = getTP();
-				int nbGpTP = frm.getPanelModuleLabel().getNbGpTP();
-				double coeffTP = coeffHeure ( "TP" );
-				double totalTP = TP * coeffTP * nbGpTP;
-	
-				lblTotalTP.setText ( String.valueOf ( totalTP ) );
-			}
-			
-			//TEST MODULABLE
-			for ( int i = 3; i < this.lstTextFieldsHeures.size() && i < this.lstLabelsTotalHeures.size(); i++) //i = 3 car il y a déjà CM, TD et TP
-			{
-				JTextField textField       = this.lstTextFieldsHeures .get(i);
-				JLabel     labelTotalHeure = this.lstLabelsTotalHeures.get(i);
-	
-				if ( !textField.getText().isEmpty() )
-				{
-					//TODO: À MODIFIER CAR AUCUN COEFFICIENT ET AUCUNE MULTIPLICATION AUX ÉTUDIANTS
-					int heureValeur = Integer.parseInt ( textField.getText() );
-					labelTotalHeure.setText ( String.valueOf ( heureValeur ) );
-				}
+				JTextField txtTmp = this.ensTxtNbHeure.get ( lig [0] );
+				txtTmp.setText ( "" + lig[1] );
 			}
 		}
-		catch ( NumberFormatException ex )
-		{
-			lblTotalSomme.setText( "Erreur" );
-			ex.printStackTrace();
-		}
+		
+		// mettre à jour les sommes
+		this.majIHM ( );
 	}
-	
 
+	/**
+	 * Met à jour la base de donnée
+	 */
+	public Object[][] getDonnees ( ) // ancien nom : setModule
+	{
+		Object[][] heurePn = new Object[ this.ensIntitule.length ][2];
+
+		for ( int cpt = 0; cpt < this.ensIntitule.length; cpt++ )
+		{
+			String intitule = this.ensIntitule [ cpt ];
+			heurePn [ cpt ][0] = intitule;
+			heurePn [ cpt ][1] = this.getSaisie ( intitule );
+		}
+
+		return heurePn;
+	}
+
+
+	/*---------------------------------------*/
+	/*        METHODES ACCES DONNEES         */
+	/*---------------------------------------*/
+
+	/**
+	 * Récupérer des informations utilisables sur les coefficients des heures
+	 */
 	private double coeffHeure ( String nomHeure )
 	{
 		Heure heure = this.ctrl.getHeure ( nomHeure );
 
-		double coefficient = 0.0;
-
-		switch (nomHeure)
-		{
-			case "CM":
-				coefficient = heure.getCoefTd();
-				break;
-			case "TD":
-				coefficient = heure.getCoefTd();
-				break;
-			case "TP":
-				coefficient = heure.getCoefTd();
-				break;
-		
-			default:
-				break;
-		}
-
-		return coefficient;
+		return heure == null ? 0.0 : heure.getCoefTd ( );
 	}
 
-	public void setModule ( ModuleIUT module )
+	/**
+	 * Récupérer les valeurs entières sur les zones de texte
+	 */
+	public int getSaisie ( String nomHeure )
 	{
-		this.txtCM.setText( "0" );
-		this.txtTP.setText( "0" );
-		this.txtTD.setText( "0" );
-		
-		ArrayList<Horaire> lstHoraire = (ArrayList<Horaire>) BD.getInstance().getHoraires( module.getCode() );
-
-		for(Horaire h : lstHoraire)
+		try
 		{
-			switch( h.getHeure().getNom().toUpperCase() )
-			{
-				case "CM" : this.txtCM.setText( h.getNbHeurePN() + "" ); break;
-				case "TP" : this.txtTP.setText( h.getNbHeurePN() + "" ); break;
-				case "TD" : this.txtTD.setText( h.getNbHeurePN() + "" ); break;
-				default : ;
-			}
+			return Integer.parseInt ( this.ensTxtNbHeure.get ( nomHeure ).getText ( ) );
 		}
-
-		majSomme();
-		majTotalHeure();
-	}
-
-	public int getCM ( ) { return Integer.parseInt( this.txtCM.getText() ); }
-	public int getTD ( ) { return Integer.parseInt( this.txtTD.getText() ); }
-	public int getTP ( ) { return Integer.parseInt( this.txtTP.getText() ); }
-
-
-	//TEST MODULABLE
-	public void ajouterHeure ( String nomHeure )
-	{
-		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
+		catch ( Exception e )
 		{
-			if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
-			{
-				this.frm.messageErreurAjouter();
-				return;
-			}
-		}
-
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets ( 5, 5, 5, 5 );
-	
-		JLabel     labelNomHeure      = new JLabel ( nomHeure );
-
-		JTextField textFieldHeure  = new JTextField ( "", 2 );
-		FiltreTextFieldEntier.appliquer ( textFieldHeure );
-
-		JLabel     labelTotalHeure = new JLabel ( );
-		labelTotalHeure.setBackground ( Color.LIGHT_GRAY );
-		labelTotalHeure.setPreferredSize ( new Dimension ( 40, 15 ) );
-		labelTotalHeure.setOpaque( true );
-	
-		this.lstLabelsHeures     .add ( labelNomHeure   );
-		this.lstTextFieldsHeures .add ( textFieldHeure  );
-		this.lstLabelsTotalHeures.add ( labelTotalHeure );
-
-	
-		gbc.gridy = this.lstLabelsHeures.size();
-		gbc.gridx = 1;
-		this.add ( labelNomHeure, gbc );
-	
-		gbc.gridx = 2;
-		this.add ( textFieldHeure, gbc );
-
-		gbc.gridx = 3;
-		this.add ( labelTotalHeure, gbc );
-
-		textFieldHeure.addKeyListener ( new AjoutKeyListenerSomme() );
-
-		this.revalidate();
-	}
-
-	public void supprimerHeure ( String nomHeure )
-	{
-		for ( int i = 0; i < this.lstLabelsHeures.size(); i++)
-		{
-			if ( nomHeure.equals ( "CM" ) || nomHeure.equals ( "TD" ) || nomHeure.equals ( "TP" ) )
-			{
-				this.frm.messageErreurSupprimer();
-			}
-			else if ( nomHeure.equals ( lstLabelsHeures.get(i).getText() ) )
-			{
-				//Supprimer du Panel
-				this.remove ( lstLabelsHeures     .get(i) );
-				this.remove ( lstTextFieldsHeures .get(i) );
-				this.remove ( lstLabelsTotalHeures.get(i) );
-
-				//Supprimer de la liste
-				lstLabelsHeures     .remove(i);
-				lstTextFieldsHeures .remove(i);
-				lstLabelsTotalHeures.remove(i);
-
-				this.revalidate();
-			}
+			return 0;
 		}
 	}
 }

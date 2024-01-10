@@ -26,12 +26,12 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	private static final String REPERTOIRE = "./data/images/";
 
 	// Identifiants des éléments du menu
-	private static final String MENU			= "M";
-	private static final String ITEM			= "I";
-	private static final String SEPARATEUR		= "S";
-	private static final String SOUS_MENU		= "m";
-	private static final String ITEM_SM			= "i";
-	private static final String SEPARATEUR_SM	= "s";
+	private static final String MENU            = "M";
+	private static final String ITEM            = "I";
+	private static final String SEPARATEUR      = "S";
+	private static final String SOUS_MENU       = "m";
+	private static final String ITEM_SM         = "i";
+	private static final String SEPARATEUR_SM   = "s";
 
 	// Position des éléments du menu dans le "modeleBar"
 	private static final int TYPE = 0;
@@ -48,8 +48,8 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 	{
 		//Initialisation
 		super ( );
-		this.ctrl             = ctrl;
-		this.parent           = parent;
+		this.ctrl   = ctrl;
+		this.parent = parent;
 
 		this.initComposants ( );
 	} 
@@ -197,7 +197,6 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			
 		if ( nom.equals ( options[10] ) )
 		{
-			new FrameAccueil       ( this.ctrl );
 			new FrameNouvelleAnnee ( this.ctrl );
 			this.parent.dispose ( );
 		}
@@ -245,7 +244,7 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 
 		for ( String[] ligne : MenuBarAstre.getModeleBar ( ) )
 		{
-			if ( ligne[TYPE].equals ( ITEM ) )
+			if ( ligne[TYPE].equals ( ITEM ) || ligne[TYPE].equals ( ITEM_SM ) )
 			{
 				options.add ( ligne[NAME] );
 			}
@@ -278,10 +277,11 @@ public class MenuBarAstre extends JMenuBar implements ActionListener
 			{			ITEM_SM,	"S4",				"",					"4" 			},
 			{			ITEM_SM,	"S5",				"",					"5" 			},
 			{			ITEM_SM,	"S6",				"",					"6" 			},
-			{		ITEM, 			"Intervenants",		"enseignants.png",	"I"				},
+			{		ITEM, 			"Intervenants",		"intervenant.png",	"I"				},
 			{		ITEM, 			"Nouvelle année",	"parametres.png",	"N"				},
 			{	MENU, 				"Affichage",		"",					"A"				},
-			{		ITEM, 			"Etats",			"apercu.png",		"E", "CTRL+P"	}
+			{		ITEM, 			"Etats",			"apercu.png",		"E", "CTRL+P"	},
+			{		ITEM, 			"Historique",		"historique.png",	"I", "CTRL+I"	}
 								};
 	}
 

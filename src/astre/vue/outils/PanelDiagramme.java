@@ -1,7 +1,7 @@
 package astre.vue.outils;
 
 /** Classe PanelDiagramme
-  * @author : Maxime Lemoine
+  * @author : Maxime Lemoine, Matéo Sa
   * @version : 1.0 - 14/12/2023
   * @date : 06/12/2023
  */
@@ -36,12 +36,7 @@ public class PanelDiagramme extends JPanel
 
 	private Map donnees;
 
-	public PanelDiagramme ( )
-	{
-
-	}
-
-	public PanelDiagramme ( Map donnees, Color couleurMin, Color couleurMax, String titre, int taille )
+	private PanelDiagramme ( Map donnees, Color couleurMin, Color couleurMax, String titre, int taille )
 	{
 		this.donnees = donnees;
 		//this.setSize( new Dimension ( 200,50 ) );
@@ -59,7 +54,7 @@ public class PanelDiagramme extends JPanel
 
 		final JFreeChart pieChart = ChartFactory.createPieChart ( null, pieDataset, true, true, true );
 		final ChartPanel cPanel = new ChartPanel ( pieChart );
-		cPanel.setPreferredSize ( new Dimension(taille + 60, taille ) );
+		cPanel.setPreferredSize ( new Dimension ( taille + 60, taille ) );
 
 		// Ajout des couleurs
 		PiePlot plot = ( PiePlot ) pieChart.getPlot ( );
@@ -95,30 +90,6 @@ public class PanelDiagramme extends JPanel
 
 		this.add ( cPanel, BorderLayout.CENTER );
 		this.setVisible ( true );
-	}
-
-	public static void main ( String[] args )
-	{
-		// Donnees
-		//Map<String, Double> donnees = new LinkedHashMap<String,Double> ( );
-
-		/*donnees.put ( "TP", 56+56+12+12+0.0 );
-		donnees.put ( "TD", 28+28+9+9+19.5 );
-		donnees.put ( "CM", 28.0 );*/
-		/*donnees.put ( "A", 28.0 );
-		donnees.put ( "B", 28.0 );
-		donnees.put ( "C", 28.0 );*/
-		//donnees.put ( "NA", 20.0 ); //((int)(165.5))-(heuresTP+heuresTD+heuresCM)
-
-		// Generation
-		/*JFrame f = new JFrame ( );
-		f.setVisible ( true );
-		System.out.println ( "Diagramme généré" );
-		f.add ( new PanelDiagramme ( donnees, new Color ( 255,99,71 ), new Color ( 255,192,124 ) ) );
-		f.pack ( );*/
-
-		PanelDiagramme.genererCamembert( 1, 250 );
-		System.out.println( "mauvais main mec" );
 	}
 
 	public static PanelDiagramme genererCamembert ( int idIntervenant, int taille )

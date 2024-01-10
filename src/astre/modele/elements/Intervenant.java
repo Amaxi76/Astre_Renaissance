@@ -1,5 +1,7 @@
 package astre.modele.elements;
 
+import javax.swing.JOptionPane;
+
 /** Classe Intervenant 
   * @author : Maximilien Lesterlin, Alizéa Lebaron
   * @version : 1.0.1 - 12/12/2023
@@ -43,7 +45,10 @@ public class Intervenant
 		Object hm = intervenant[5];
 
 		if ( ( i != null && ! ( i instanceof Integer ) ) ||  ! ( n instanceof String ) || ! ( p instanceof String ) || ! ( c instanceof Contrat ) || ! ( hs instanceof Integer ) || ! ( hm instanceof Integer ))
+		{
+			JOptionPane.showMessageDialog ( null, "Les données de l'invervenant intervenant ne sont pas du bon type.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les données de l'invervenant intervenant ne sont pas du bon type" );
+		}
 		
 		int    id           = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
 		int    heureService = Integer.parseInt ( hs.toString ( ) );
@@ -58,19 +63,31 @@ public class Intervenant
 	public static Intervenant creation ( int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
 	{
 		if ( nom.equals ( "" ) || prenom.equals ( "" ) )
+		{
+			JOptionPane.showMessageDialog ( null, "Veuillez renseigner le nom et le prenom.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Veuillez renseigner le nom et le prenom" );
+		}
 
 		// Il n'a pas de contrat
 		if ( contrat == null )
+		{
+			JOptionPane.showMessageDialog ( null, "Veuillez renseigner un contrat pour l'intervenant.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Veuillez renseigner un contrat pour l'intervenant" );
+		}
 
 		//hserv > hmax
 		if ( heureService > heureMaximum )
+		{
+			JOptionPane.showMessageDialog ( null, "Les heures de services sont supérieur à ses heures max.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+		}
 
 		//hserv < 0 ou hmax < 0
 		if ( heureService < 0 || heureMaximum < 0 )
+		{
+			JOptionPane.showMessageDialog ( null, "Les heures de services ou maximums sont nuls.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
 			throw new IllegalArgumentException ( "Les heures de services ou maximums sont nuls" );
+		}
 		
 		return new Intervenant ( id, nom, prenom, contrat, heureService, heureMaximum );
 	}
@@ -152,6 +169,8 @@ public class Intervenant
 	 */
 	public String toString ( )
 	{
+		//return this.nom + " " + this.prenom; //ce toString est utilisé pour l'affichage dans la liste des intervenants des combobox
+		
 		String sRet = "";
 
 		sRet = String.format ( "Nom               : %20s - ",  this.nom          ) +

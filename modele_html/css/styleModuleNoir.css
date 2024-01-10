@@ -1,0 +1,74 @@
+html, body
+{
+	margin: 0;
+	padding: 0;
+}
+
+header
+{
+	background-color: #2e2e2e;
+	padding: 2vh;
+	color: aliceblue;
+}
+
+h1
+{
+	margin:0;
+	text-align: center;
+}
+
+table
+{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+td, th
+{
+	border: 1px solid black;
+	width: 5vh;
+	height: 5vh;
+	padding: 1vh;
+}
+
+.centre, .intervenant
+{
+	margin: 0 auto;
+	margin-top: 2vh;
+	width: 40%;
+}
+
+.intervenant
+{
+	margin-top: 4vh;
+	width: 60%;
+}
+
+.intervenant td, .intervenant th
+{
+	width: 7vh;
+	height: 7vh;
+	padding: 1vh;
+}
+
+.intervenant tr:nth-child(odd)
+{
+	background-color: #c7c7c7;
+}
+
+.centre tr th, .intervenant tr th
+{
+	background-color: #9b9b9b;
+}
+
+.centre tr th:first-child, .intervenant tr th:first-child
+{
+	background-color: #2e2e2e;
+	color: aliceblue;
+}
+
+.centre tr td:first-child
+{
+	background-color: #9b9b9b;
+}
+

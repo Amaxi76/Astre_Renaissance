@@ -3,9 +3,6 @@ package astre.modele.outils;
 import java.util.Arrays;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
-
-import astre.vue.outils.OperationRenduTableau;
 
 /**
  * Classe des données et d'affichage du tableau.
@@ -29,7 +26,7 @@ public class ModeleTableau extends AbstractTableModel
 	/*---------------------------------------*/
 	/*              CONSTRUCTEUR             */
 	/*---------------------------------------*/
-
+	
 	/**
 	 * Constructeur par défaut
 	 * Prends tout en paramètres
@@ -59,6 +56,7 @@ public class ModeleTableau extends AbstractTableModel
 	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
 	public Object     getObjet      ( int lig, int col ) { return this.tabDonnees[lig][col];  }
 	public Object[][] getDonnees    (                  ) { return this.tabDonnees;            }
+	public String[]   getEntete     (                  ) { return this.ensEntete;             }
 
 
 	/*---------------------------------------*/
