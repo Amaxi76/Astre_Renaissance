@@ -220,6 +220,8 @@ public class Astre
 				ecrivain.write ( ligne + "\n");
 			}
 
+			// Semestre
+
 			String semestre = 
 			"INSERT INTO Semestre VALUES \n" +
 			"(1, 0, 0, 0, 0), \n"            +
@@ -230,6 +232,20 @@ public class Astre
 			"(6, 0, 0, 0, 0); \n"            ;
    
 			ecrivain.write(semestre);
+
+			// Heure
+
+			String heure = 
+			"INSERT INTO Heure ( nomHeure, coeffTD ) VALUES" +
+			"('TP' , 1   )," +
+			"('TD' , 1   )," +
+			"('CM' , 1.5 )," +
+			"('REH', 1   )," +
+			"('SAE', 1   )," +
+			"('HP' , 1   )," +
+			"('Tut', 1   );" ;
+
+			ecrivain.write(heure);
 
 			ecrivain.close ( );
 
