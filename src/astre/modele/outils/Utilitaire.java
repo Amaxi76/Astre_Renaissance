@@ -288,4 +288,26 @@ public abstract class Utilitaire
 
 		return liste;
 	}
+
+	/**
+	 * Permet de supprimer une colonne d'un tableau
+	 */
+	public static Object[][] supprimerColonne ( Object[][] tableau, int index )
+	{
+		Object[][] tableauTmp = new Object[tableau.length][tableau[0].length-1];
+
+		for ( int cptLig = 0; cptLig < tableau.length; cptLig++ )
+		{
+			int cptColTmp = 0;
+			for ( int cptCol = 0; cptCol < tableau[cptLig].length; cptCol++ )
+			{
+				if ( cptCol != index )
+				{
+					tableauTmp[cptLig][cptColTmp++] = tableau[cptLig][cptCol];
+				}
+			}
+		}
+
+		return tableauTmp;
+	}
 }

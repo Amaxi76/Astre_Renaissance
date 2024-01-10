@@ -18,6 +18,8 @@ import astre.modele.*;
 import astre.modele.elements.*;
 
 //FIXME: enlever les TODO: et les FIXME: avant de rendre le projet
+//TODO: mettre des belles constantes pour les colonnes des tableaux
+//TODO: rajouter les bandeaux des parties du code
 
 public class Controleur
 {

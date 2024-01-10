@@ -7,22 +7,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-
 
 import astre.Controleur;
 import astre.modele.elements.Horaire;
 import astre.modele.elements.Intervient;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.outils.Utilitaire;
+import astre.vue.outils.Saisie;
 import astre.vue.previsionnel.FramePrevisionnel;
-import astre.vue.previsionnel.module.avecGroupe.PanelAffectationAvecGroupe;
+import astre.vue.previsionnel.module.avecGroupe.PanelAffectationAvecGroupes;
 import astre.vue.previsionnel.module.avecGroupe.PanelRepartitionAvecGroupes;
+import astre.vue.previsionnel.module.sansGroupe.PanelAffectationSansGroupes;
 import astre.vue.previsionnel.module.sansGroupe.PanelRepartitionSansGroupes;
 
 /** Classe FrameModule
@@ -30,9 +31,7 @@ import astre.vue.previsionnel.module.sansGroupe.PanelRepartitionSansGroupes;
  * @version : 3.0 - 27/12/2023
  * @date : 11/12/2023
  */
-
-//FIXME: Problème les nombres ne se mettent pas à droite (malgré l'application d'un style )
-
+//TODO: mettre des hashmap dans le panelModulelabel pour remplacer le getNbGp TP et TD et rendre modulable
 public class FrameModule extends JDialog implements KeyListener //JDialog pour garder le focus sur la fenêtre
 {
 	/*-------------*/
@@ -84,21 +83,30 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 		/* Création des composants   */
 		/* ------------------------- */
 
-		String  [] ensEntete     = new String [] { "action",  "idIntervenant", "Intervenant", "type", "nb sem", "nb Gp|nb H", "tot eqtd", "commentaire" };
-		Object  [] ensTypeDefaut = new Object [] {      'A',                0,            "",     "",        1,            0,          0,         "..." };
-		boolean [] ensModifiable = new boolean[] {     true,            false,          true,   true,     true,         true,      false,          true };
-
-		this.panelModuleLabel    = new PanelModuleLabel ( this.ctrl, typeModule, numSemestre + 1      );
+		this.panelModuleLabel    = new PanelModuleLabel ( this.ctrl,       typeModule, numSemestre + 1      );
 		this.panelPNLocal        = new PanelPNLocal     ( this.ctrl, this, typeModule, ensIntituleTypeHeure );
-		this.panelAffectation    = new PanelAffectationAvecGroupe ( this.ctrl, this, ensIntituleTypeHeure, ensEntete, ensTypeDefaut, ensModifiable );
 
-		if ( action == Controleur.MODIFIER ) this.panelModuleLabel.formatTxt ( this.panelModuleLabel.getTxtCode ( ) );
+		if ( action == Controleur.MODIFIER ) Saisie.JTextFieldToLabel ( this.panelModuleLabel.getTxtCode ( ) );
 
 		boolean avecGroupe = typeModule.equals ( "Ressource" );
 		if ( avecGroupe )
-			this.panelRepartition = new PanelRepartitionAvecGroupes ( this, this.ctrl, ensIntituleTypeHeure );
+		{
+			String  [] ensEntete     = new String [] { "action",  "idIntervenant", "Intervenant", "type", "nb sem", "nb Gp  |  nb H", "tot eqtd", "commentaire" };
+			Object  [] ensTypeDefaut = new Object [] {      'A',                0,            "",     "",        1,            0,          0,         "..." };
+			boolean [] ensModifiable = new boolean[] {     true,            false,          true,   true,     true,         true,      false,          true };
+			
+			this.panelAffectation = new PanelAffectationAvecGroupes ( this.ctrl, this, ensIntituleTypeHeure, ensEntete, ensTypeDefaut, ensModifiable );
+			this.panelRepartition = new PanelRepartitionAvecGroupes ( this.ctrl, this, ensIntituleTypeHeure );
+		}
 		else
-			this.panelRepartition = new PanelRepartitionSansGroupes ( this, ensIntituleTypeHeure );
+		{
+			String  [] ensEntete     = new String [] { "action",  "idIntervenant", "Intervenant", "type", "nb H", "tot eqtd", "commentaire" };
+			Object  [] ensTypeDefaut = new Object [] {      'A',                0,            "",     "",      0,          0,         "..." };
+			boolean [] ensModifiable = new boolean[] {     true,            false,          true,   true,   true,      false,          true };
+
+			this.panelAffectation = new PanelAffectationSansGroupes ( this.ctrl, this, ensIntituleTypeHeure, ensEntete, ensTypeDefaut, ensModifiable );
+			this.panelRepartition = new PanelRepartitionSansGroupes ( this.ctrl, this, ensIntituleTypeHeure );
+		}
 
 		this.panelModuleBouton   = new PanelModuleBouton   ( this.ctrl, this, action );
 
@@ -129,41 +137,76 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 
 		this.add ( panelNord, BorderLayout.NORTH );
 
+		//FIXME: mettre des trucs dans les machins poour que ça soit plus stylé dans les bidules (en gros on enlève le BorderLayout pour mettre un BoxLayout)
+		
+		/*JPanel panelPanelsModule = new JPanel ( new BoxLayout ( this, BoxLayout.Y_AXIS ) );
+		panelPanelsModule.add ( this.panelModuleLabel );
+		this.add ( panelPanelsModule, BorderLayout.NORTH );*/
+	
+
 		/*----------*/
 		/*  Centre  */
 		/*----------*/
 
-		//Pour gérer le panel centre et le tableau
-		JPanel panelContenu = new JPanel ( new FlowLayout ( ) );
-
-		//Pour gérer les panels pnLocal et repartition
-		JPanel panelCentre = new JPanel ( new GridBagLayout ( ) );
+		//Pour gérer les panels
+		JPanel panelContenu = new JPanel ( new GridBagLayout ( ) );
 
 		GridBagConstraints gbcC = new GridBagConstraints ( );
-		gbcC.insets = new Insets ( 5, 10, 15, 10 );
+	
+		/* ------------------*/
+		/*  Partie PN Local  */
+		/*-------------------*/
 
+		gbcC.anchor = GridBagConstraints.NORTHWEST;
+		gbcC.insets = new Insets ( 0, 0, 0, 0 );
+		
 		gbcC.gridy = 0;
 		gbcC.gridx = 0;
-		panelCentre.add ( this.panelPNLocal,    gbcC  );
+		panelContenu.add ( new JLabel ( "PN local (nb h tot/etd)" ), gbcC );
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 0;
-		panelCentre.add ( this.cbValidation    , gbcC );
+		panelContenu.add ( this.panelPNLocal,    gbcC  );
 
-		gbcC.anchor = GridBagConstraints.EAST;
+		gbcC.gridy = 2;
+		gbcC.gridx = 0;
+		panelContenu.add ( this.cbValidation    , gbcC );
+
+		/*--------------------*/
+		/* Partie répartition */
+		/*--------------------*/
+
+		gbcC.anchor = GridBagConstraints.NORTHWEST;
+		gbcC.insets = new Insets ( 0, 30, 0, 0 );
+
 		gbcC.gridy = 0;
 		gbcC.gridx = 1;
-		panelCentre.add ( this.panelRepartition, gbcC );
+		panelContenu.add ( new JLabel ( "Répartition" ), gbcC );
 
 		gbcC.gridy = 1;
 		gbcC.gridx = 1;
-		panelCentre.add ( this.lblMessageErreur, gbcC );
-		
-		panelContenu.add ( panelCentre );
-		
-		this.panelAffectation.setBorder ( new EmptyBorder ( 5, 170, 10, 30 ) );
-		panelContenu.add ( this.panelAffectation );
+		panelContenu.add ( this.panelRepartition, gbcC );
 
+		// Ajout des types d'heures aux panels
+		for ( String entetetypeHeure : ensIntituleTypeHeure )
+			this.panelRepartition.ajouterTypeHeure ( entetetypeHeure );
+
+		/*--------------------*/
+		/* Partie Affectation */
+		/*--------------------*/
+
+		gbcC.anchor = GridBagConstraints.NORTHWEST;
+		
+		gbcC.insets = new Insets ( 30, 30, 0, 0 );
+		gbcC.gridy = 2;
+		gbcC.gridx = 1;
+		panelContenu.add ( new JLabel ( "Affectation" ), gbcC );
+
+		gbcC.insets = new Insets ( 0, 30, 0, 0 );
+		gbcC.gridy = 3;
+		gbcC.gridx = 1;
+		panelContenu.add ( this.panelAffectation, gbcC );
+		
 		this.add ( panelContenu, BorderLayout.CENTER );
 
 		/*-------*/
@@ -172,10 +215,6 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 
 		this.add ( this.panelModuleBouton, BorderLayout.SOUTH );
 		this.setVisible ( false ); //très important (lié à l'utilisation de JDialog)
-
-		// Ajout des types d'heures aux panels
-		for ( String entetetypeHeure : ensIntituleTypeHeure )
-			this.panelRepartition.ajouterTypeHeure ( entetetypeHeure );
 	}
 
 	/**
@@ -210,58 +249,26 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 	 */
 	public void majDonnees ( char action )
 	{
+		ModuleIUT module = ModuleIUT.creation ( this.panelModuleLabel.getDonnees ( ) ) ;
+		
 		if ( action == 'A' )
-			this.ctrl.majObjetBD ( this.panelModuleLabel.getDonnees ( ), ModuleIUT.class, Controleur.AJOUTER );
+		{
+			this.ctrl.insert ( module );
+		}
 		else if ( action == 'M' )
 		{
 			// Mise à jour de la CheckBox
-			Object[] tabModule = this.panelModuleLabel.getDonnees ( );
-			tabModule[5] = this.cbValidation.isSelected ( );
-			this.ctrl.majObjetBD ( tabModule, ModuleIUT.class, Controleur.MODIFIER );
+			module.setValide ( this.cbValidation.isSelected ( ) );
+			this.ctrl.update ( module );
 		}
 
-		// Mise à jour de la répartion des heures
-		Object[][] heurePn        = this.panelPNLocal    .getDonnees ( );
-		Object[][] heureAffectees = this.panelRepartition.getDonnees ( );
-		Object[][] tabHorraire    = new Object[heureAffectees.length][6];
+		Object[][] tabRepartition = this.panelAffectation.preparerTableau (                                           module );
+		Object[][] tabHorraire    = this.panelRepartition.preparerTableau ( action, this.panelPNLocal.getDonnees ( ), module );
 
-		int indiceHP = heureAffectees.length - 1;
-		for ( int cpt = 0; cpt < heureAffectees.length; cpt++ )
-		{
-			// Cas des heures ponctuelles
-			if ( this.panelRepartition instanceof PanelRepartitionAvecGroupes && cpt == indiceHP )
-			{
-				tabHorraire[indiceHP][1] = this.ctrl.getHeure  ( "HP" ); // Heure (Objet)
-				tabHorraire[indiceHP][3] = 0;                            // nbHeurePN
-			}
-			else
-			{
-				tabHorraire[cpt][1] = this.ctrl.getHeure ( heurePn[cpt][0].toString ( ) ); // Heure (Objet)
-				tabHorraire[cpt][3] = heurePn [cpt][1];                                    // nbHeurePN
-			}
+		System.out.println(Utilitaire.afficherValeurs(tabHorraire));
 
-			tabHorraire[cpt][0] = action;                                                    // Action
-			tabHorraire[cpt][2] = this.ctrl.getModule ( this.panelModuleLabel.getCode ( ) ); // Module (Objet)
-			tabHorraire[cpt][4] = heureAffectees[cpt][0];                                    // NbSemaine
-			tabHorraire[cpt][5] = heureAffectees[cpt][1];                                    // nbHeureAffectees
-		}
-
-		this.ctrl.majTableauBD ( tabHorraire, Horaire.class );
-		
-		// Mise à jour des affectations
-		this.ctrl.majTableauBD ( this.panelAffectation.getValeurs ( ), Intervient.class );
-	}
-
-	public void messageErreurAjouter ( )
-	{
-		this.lblMessageErreur.setText ( "L'heure existe déjà" );
-		timerMessageErreur.start ( );
-	}
-
-	public void messageErreurSupprimer ( )
-	{
-		this.lblMessageErreur.setText ( "On ne peut pas supprimer une heure principale" );
-		timerMessageErreur.start ( );
+		this.ctrl.majTableauBD ( tabHorraire   , Horaire   .class );
+		this.ctrl.majTableauBD ( tabRepartition, Intervient.class );
 	}
 
 	public Map<String, Double> getSommesEQTD ( )
@@ -301,6 +308,6 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 	public void majIHM ( )
 	{
 		this.panelAffectation.majTotEqtd ( );
-		this.panelRepartition.majIHM ( );
+		this.panelRepartition.majIHM     ( );
 	}
 }

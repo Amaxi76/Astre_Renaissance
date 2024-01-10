@@ -24,7 +24,6 @@ public class PanelEnsParametre extends JTabbedPane
 		// Configuration
 		this.ctrl = ctrl;
 	
-		//this.setUI              ( new BasicTabbedPaneUI ( ) );
 		this.setTabLayoutPolicy ( JTabbedPane.SCROLL_TAB_LAYOUT );
 		this.setPreferredSize   ( ConstantesVue.DIMENSION_TAB );
 

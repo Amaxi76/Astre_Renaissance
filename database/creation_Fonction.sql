@@ -900,3 +900,18 @@ BEGIN
 
 END;
 $$ LANGUAGE plpgsql;
+
+DROP              FUNCTION f_SommesEqtd ( code_Module VARCHAR );
+CREATE OR REPLACE FUNCTION f_SommesEqtd ( code_Module VARCHAR ) RETURNS TABLE ( id_heure INTEGER, nbHeurePn DOUBLE PRECISION, nbHeureRepartie DOUBLE PRECISION ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+	
+	SELECT ho.id_heure, ho.nbHeurePN * h.coeffTD, ho.nbHeureRepartie * h.coeffTD
+	FROM   Horaire ho JOIN Heure h     ON h.id_heure    = ho.id_heure
+	                  JOIN ModuleIUT m ON m.Code_ModuleIUT = ho.Code_ModuleIUT
+	WHERE  ho.Code_ModuleIUT = code_module;
+
+END;
+$$ LANGUAGE plpgsql;

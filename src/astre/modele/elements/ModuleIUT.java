@@ -17,12 +17,12 @@ public class ModuleIUT
 
 	private ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide )
 	{
-		this.semestre          = semestre;
-		this.typeModule        = typeModule;
-		this.code              = code;
-		this.libLong           = libLong;
-		this.libCourt          = libCourt;
-		this.valide            = valide;
+		this.semestre   = semestre;
+		this.typeModule = typeModule;
+		this.code       = code;
+		this.libLong    = libLong;
+		this.libCourt   = libCourt;
+		this.valide     = valide;
 	}
 
 	public static ModuleIUT creation ( Object[] contrat )

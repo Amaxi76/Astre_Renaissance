@@ -21,7 +21,6 @@ import astre.Controleur;
 import astre.modele.elements.ModuleIUT;
 import astre.modele.outils.Utilitaire;
 
-//TODO: c'est une dinguerie de pas nommer ses variables en lowerCamelCase
 public class PanelBouton extends JPanel implements ActionListener
 {
 	/*-------------*/

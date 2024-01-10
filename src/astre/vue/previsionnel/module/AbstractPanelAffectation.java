@@ -1,11 +1,13 @@
 package astre.vue.previsionnel.module;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,8 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import astre.Controleur;
+import astre.modele.elements.Heure;
 import astre.modele.elements.Intervenant;
+import astre.modele.elements.Intervient;
+import astre.modele.elements.ModuleIUT;
+import astre.modele.outils.Utilitaire;
 import astre.vue.outils.Tableau;
+import astre.vue.previsionnel.module.avecGroupe.PanelAffectationAvecGroupes;
 
 /** Classe AbstractPanelAffectation
   * @author : Maxime Lemoine, Maximilien Lesterlin
@@ -29,10 +36,20 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 	/*---------------------*/
 	protected static final int DECALAGE_TABLEAU = 2;
 
-	protected static final int COL_MODIF          = 0;
-	protected static final int COL_ID_INTERVENANT = 1;
-	protected static final int COL_INTERVENANT    = 2;
-	protected static final int COL_HEURE          = 3;
+	/*-----------------------*/
+	/*--Colonnes du tableau--*/
+	/*-----------------------*/
+
+	protected int colModif         = 0;
+	protected int colIdIntervenant = 1;
+	protected int colIntervenant   = 2;
+	protected int colHeure         = 3;
+
+	//ces variables sont à définir dans les classes filles si nécessaire
+	protected int colNbSemaine;
+	protected int colNbHeureOuGroupe;
+	protected int colEqtd;
+	protected int colCommentaire;
 
 	/*-------------*/
 	/*--Attributs--*/
@@ -70,8 +87,8 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		/*    Paramètres du panel    */
 		/* ------------------------- */
 
-		this.setLayout        ( new BorderLayout ( )       );
-		this.setPreferredSize ( new Dimension ( 900, 500 ) );
+		this.setLayout        ( new BoxLayout ( this, BoxLayout.Y_AXIS ) );
+		this.setPreferredSize ( new Dimension ( 900,500                ) );
 
 		/* ------------------------- */
 		/*  Création des composants  */
@@ -83,11 +100,11 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 
 		//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditInter = creerCbIntervenant ( );
-		this.tableau.getColumnModel ( ).getColumn ( COL_INTERVENANT-DECALAGE_TABLEAU ).setCellEditor ( new DefaultCellEditor ( cbEditInter ) );
+		this.tableau.getColumnModel ( ).getColumn ( colIntervenant-DECALAGE_TABLEAU ).setCellEditor ( new DefaultCellEditor ( cbEditInter ) );
 
 				//Ajout d'une JComboBox pour les intervenants au tableau
 		JComboBox<String> cbEditHeure = creerCbHeure ( );
-		this.tableau.getColumnModel ( ).getColumn ( COL_HEURE-DECALAGE_TABLEAU ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );
+		this.tableau.getColumnModel ( ).getColumn ( colHeure-DECALAGE_TABLEAU ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );
 
 		// Création des boutons
 		this.btnAjouter   = new JButton ( "Ajouter"   );
@@ -97,12 +114,12 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		/* Postionnement des composants */
 		/* ---------------------------- */
 
-		JPanel panelBoutons = new JPanel ( );
+		JPanel panelBoutons = new JPanel ( new FlowLayout ( FlowLayout.LEFT ) );
 		panelBoutons.add ( this.btnAjouter   );
 		panelBoutons.add ( this.btnSupprimer );
 		
-		this.add ( this.scrollPane, BorderLayout.NORTH );
-		this.add ( panelBoutons   , BorderLayout.SOUTH );
+		this.add ( this.scrollPane );
+		this.add ( panelBoutons    );
 
 		/* ------------------------- */
 		/* Activation des composants */
@@ -110,6 +127,16 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 
 		this.btnAjouter  .addActionListener ( this );
 		this.btnSupprimer.addActionListener ( this );
+
+		cbEditInter.addActionListener ( e ->
+		{
+			int selectedRow = this.tableau.getSelectedRow ( );
+			if ( selectedRow != -1 )
+			{
+				Intervenant selectedIntervenant = this.ctrl.getTable ( Intervenant.class ).get ( cbEditInter.getSelectedIndex ( ) );
+				this.tableau.setValueAt ( selectedIntervenant.getId ( ), selectedRow, -1 );
+			}
+		} );
 
 		this.tableau.addKeyListener ( frmModule );
 	}
@@ -145,6 +172,20 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		return cbEditInter;
 	}
 
+	/**
+	 * Méthode qui permet de générer les map des intitules
+	 */
+	protected Map<String, Double> creerMapIntitule ( )
+	{
+		Map<String, Double> map = new HashMap<> ( );
+
+		// Initialisation des entetes par défaut
+		for ( String intitule : this.ensIntituleTypeHeure )
+			map.put ( intitule, 0.0 );
+
+		return map;
+	}
+
 
 	/* ------------------------- */
 	/*          Méthodes         */
@@ -165,11 +206,6 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 	}
 
 	/*
-	 * Méthode qui permet de récupérer les sommes des heures en eqtd
-	 */
-	public abstract Map<String, Double> getSommesEQTD ( );
-
-	/*
 	 * Méthode qui permet de mettre à jour les valeurs du tableau
 	 */
 	public void setValeurs ( Object[][] tabValeurs )
@@ -177,7 +213,65 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		this.tableau.modifDonnees ( tabValeurs );
 	}
 
+	/*
+	 * Méthode qui permet de récupérer les sommes des heures en eqtd
+	 */
+	public Map<String, Double> getSommesEQTD ( )
+	{
+		Map<String, Double> map = this.creerMapIntitule ( );
 
+		// Calcul des sommes par type d'heures
+		for ( int cpt = 0; cpt < this.tableau.getDonnees ( ).length; cpt++ )
+		{
+			if ( ( char ) this.tableau.getDonnees ( ) [cpt][0] != Controleur.SUPPRIMER )
+			{
+				String cle = this.tableau.getValueAt ( cpt, 1 ).toString ( );
+				Double val = Double.parseDouble ( this.tableau.getDonnees ( ) [cpt][colEqtd].toString ( ) );
+			
+				//dans le cas ou la clé est vide
+				if ( ! cle.equals ( "" ) )
+					map.put ( cle, map.get ( cle ) + val );
+			}
+		}
+
+		return map;
+	}
+
+	/* ------------------------- */
+	/*  Préparation des données  */
+	/* ------------------------- */
+
+	/**
+	 * Méthode qui permet de récupérer un tableau formater pour l'enregistrement dans la base de donnée
+	 */
+	public Object[][] preparerTableau ( ModuleIUT module )
+	{
+		// Informations ihm
+		Object[][] tabLocalIHM = this.tableau.getDonnees ( );
+
+		// Préparation du nouveau tableau
+		int nbAttributsIntervient = Intervient.class.getDeclaredFields ( ).length + 1; //+1 pck c com sa caractère de modification
+		Object[][] tab            = new Object [tabLocalIHM.length][nbAttributsIntervient];
+		
+		for ( int ligne = 0; ligne < tabLocalIHM.length; ligne++ )
+		{
+			Intervenant i = this.ctrl.getIntervenant ( ( int ) ( tabLocalIHM[ligne][colIdIntervenant]            ) );
+			Heure       h = this.ctrl.getHeure       (           tabLocalIHM[ligne][colHeure        ].toString ( ) );
+
+			tab [ligne][0] = tabLocalIHM[ligne][0];                                                                             // Caractère de l'action que la BD doit effectuer
+			tab [ligne][1] = i;                                                                                                 // Intevenant
+			tab [ligne][2] = h;                                                                                                 // Heure
+			tab [ligne][3] = module;                                                                                            // Module
+			tab [ligne][4] = ( this instanceof PanelAffectationAvecGroupes ) ? (int)tabLocalIHM[ligne][colNbSemaine] : (int) 1; // Nombre de semaine
+			tab [ligne][5] = tabLocalIHM[ligne][colNbHeureOuGroupe];                                                       // Nombre de groupe
+			tab [ligne][6] = Double.parseDouble(tabLocalIHM[ligne][colEqtd           ].toString ( ) );                    // Nombre d'heure //TODO: temporaire : mettre en double 
+			tab [ligne][7] = tabLocalIHM[ligne][colCommentaire    ];                                                            // Commentaire
+		}
+
+		return tab;
+	}
+
+	
 	/* ------------------------- */
 	/*          Listener         */
 	/* ------------------------- */

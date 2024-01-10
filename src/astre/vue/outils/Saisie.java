@@ -29,7 +29,7 @@ public abstract class Saisie
 	public static JTextField creerTextFieldEntier ( boolean editable )
 	{
 		JTextField txtTmp = new JTextField ( );
-		txtTmp.setPreferredSize ( new Dimension ( 55, 20 ) ); //de base : (40,15)
+		txtTmp.setPreferredSize ( new Dimension ( 55, 20 ) );
 
 		if ( editable )
 		{
@@ -38,11 +38,18 @@ public abstract class Saisie
 		}
 		else
 		{
-			txtTmp.setEditable   ( false            );
-			txtTmp.setBackground ( new Color ( 225,225,225 ) );
-			//txtTmp.setForeground ( Color.BLACK      );
+			JTextFieldToLabel ( txtTmp );
 		}
 		
 		return txtTmp;
 	}
+
+	public static void JTextFieldToLabel ( JTextField txt )
+	{
+		txt.setEditable   ( false            );
+		txt.setBackground ( new Color ( 225,225,225 ) );
+		txt.setForeground ( Color.BLACK      );
+		txt.setPreferredSize ( new Dimension ( 55, 20 ) );
+	}
+
 }

@@ -43,12 +43,6 @@ public class Horaire
 		Object nb = horaire[3];
 		Object nh = horaire[4];
 
-		/*System.out.println("Heure : " + ! ( h  instanceof Heure   ));
-		System.out.println("Module : " + ! ( m  instanceof ModuleIUT ));
-		System.out.println("Heure PN : " + ! ( hp instanceof Integer ));
-		System.out.println("Semaine : " + ! ( nb instanceof Integer   ));
-		System.out.println("nh : " + ! ( nh instanceof Number ));*/
-
 		if ( ! ( h  instanceof Heure   ) || ! ( m  instanceof ModuleIUT ) || ! ( hp instanceof Integer ) || 
 		     ! ( nb instanceof Integer ) || ! ( nh instanceof Number ) )
 		{

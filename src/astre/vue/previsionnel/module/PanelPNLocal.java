@@ -58,7 +58,6 @@ public class PanelPNLocal extends JPanel
 		/* -------------------------- */
 
 		GridBagConstraints gbc = new GridBagConstraints ( );
-		gbc.insets = new Insets ( 5, 5, 5, 5 );
 		this.placementComposantsModule ( gbc );
 
 		/* -------------------------- */
@@ -91,39 +90,50 @@ public class PanelPNLocal extends JPanel
 		this.txtSommeEQTDPromo = Saisie.creerTextFieldEntier ( false );
 	}
 
-
 	/**
 	 * Ajouter tous les composants créés au panel
 	 */
 	private void placementComposantsModule ( GridBagConstraints gbc )
 	{
+		//placement d'un label vide pour aligner tous les panels
+		gbc.insets = new Insets ( 5, 5, 5, 5 );
+		gbc.gridwidth = 5;
+		gbc.gridx     = 0;
+		gbc.gridy     = 0;
+		this.add ( new JLabel ( " " ), gbc );
+
+		gbc.gridwidth = 1;
+
 		//placement du commentaire
 		gbc.gridx = 0;
-		gbc.gridy = 2;
-		this.add ( new JLabel ( "Total (eqtd) promo" ) );
+		gbc.gridy = 3;
+		this.add ( new JLabel ( "Total (eqtd) promo" ), gbc );
 
 		//placement des intitulés et leurs informations
 		for ( int cptColonnes = 0; cptColonnes < this.ensIntitule.length; cptColonnes++ )
 		{
-			gbc.gridx = cptColonnes+1;
+			gbc.gridx = cptColonnes + 1;
 
 			String intitule = this.ensIntitule [ cptColonnes ];
 			
-			gbc.gridy = 0;
-			this.add ( new JLabel ( "h " + intitule ), gbc );
+			gbc.insets = new Insets ( 0,0,0,0 );
 			gbc.gridy = 1;
-			this.add ( this.ensTxtNbHeure   .get ( intitule ), gbc );
+			this.add ( new JLabel ( "h " + intitule ), gbc );
+
+			gbc.insets = new Insets ( 0, 5, 5, 5 );
 			gbc.gridy = 2;
+			this.add ( this.ensTxtNbHeure   .get ( intitule ), gbc );
+			gbc.gridy = 3;
 			this.add ( this.ensTxtTotalPromo.get ( intitule ), gbc );
 		}
 
 		//placement de la colonne des sommes
 		gbc.gridx = this.ensIntitule.length + 1;
-		gbc.gridy = 0;
-		this.add ( new JLabel ( "Σ" ), gbc );
 		gbc.gridy = 1;
-		this.add ( this.txtSommePromo, gbc );
+		this.add ( new JLabel ( "Σ" )    , gbc );
 		gbc.gridy = 2;
+		this.add ( this.txtSommePromo    , gbc );
+		gbc.gridy = 3;
 		this.add ( this.txtSommeEQTDPromo, gbc );
 	}
 
@@ -148,8 +158,8 @@ public class PanelPNLocal extends JPanel
 	 */
 	private class AjoutKeyListenerSomme implements KeyListener
 	{
-		@Override public void keyTyped   ( KeyEvent e ) { /* */         }
-		@Override public void keyPressed ( KeyEvent e ) { /* */         }
+		@Override public void keyTyped   ( KeyEvent e ) { /* */       }
+		@Override public void keyPressed ( KeyEvent e ) { /* */       }
 		@Override public void keyReleased( KeyEvent e ) { majIHM ( ); }
 	}
 	

@@ -14,6 +14,7 @@ import astre.Controleur;
 import astre.modele.elements.Semestre;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
+import astre.vue.previsionnel.module.sansGroupe.PanelRepartitionSansGroupes;
 
 /** Classe PanelEnsSemestre
   * @author : Maximeuuu et Amaxi76
@@ -165,6 +166,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 	public void majTableau ( )
 	{
 		this.tableauEnsembleModule.modifDonnees ( this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
+		
 	}
 	
 }
