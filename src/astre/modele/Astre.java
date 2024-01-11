@@ -51,7 +51,7 @@ public class Astre
 
 	/*---------------------------------------*/
 	/*                METHODES               */
-	/*---------------------------------------*/ 
+	/*---------------------------------------*/
 
 	/**
 	 * Met à jour la base de donnée en créant un nouvel objet avec chaque lignes de tabDonnéesBD
@@ -66,7 +66,11 @@ public class Astre
 	}
 
 	public boolean estGenere  ( ) { return this.bd.estGenere     (                                 ) ; }
-	public void    genererBDD ( ) {        this.bd.executeScript ( "./database/creation_debut.sql" ) ; }
+	public void    genererBDD ( ) 
+	{        
+		this.bd.executeScriptFonction         ( "./database/creation_Fonction.sql" ) ; 
+		this.bd.executeScript                 ( "./database/creation_debut.sql"    ) ; 
+	}
 
 	/**
 	 * Créée un objet du bon type à partir de ses attributs contenus dans tabObjet
@@ -88,7 +92,7 @@ public class Astre
 		}
 		catch ( Exception e )
 		{
-			e.printStackTrace ( );
+			//e.printStackTrace ( );
 		}
 	}
 

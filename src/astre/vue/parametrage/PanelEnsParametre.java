@@ -33,12 +33,15 @@ public class PanelEnsParametre extends JTabbedPane
 
 		Object[] tabObjectsContrat   = { ' ', 0, "Nom du contrat", 0, 0, 1.0 };
 		Object[] tabObjectsTypeHeure = { ' ', 0, "Nom de l'heure", 1.0       };
+			
+		boolean[] tabEditableContrat   = { false, false, true, true, true, true };
+		boolean[] tabEditableTypeHeure = { false, false, false , true           };
 
 		String   nomTabContrat   = "Liste des contrats";
 		String   nomTabTypeHeure = "Liste des types d'heures";
 
-		this.pnlContrat   = new PanelParametrage ( this.ctrl, enTeteContrat  , tabObjectsContrat  , this.ctrl.getTableau ( Contrat.class ), nomTabContrat  , Contrat.class );
-		this.pnlTypeHeure = new PanelParametrage ( this.ctrl, enTeteTypeHeure, tabObjectsTypeHeure, this.ctrl.getTableau ( Heure  .class ), nomTabTypeHeure, Heure  .class );
+		this.pnlContrat   = new PanelParametrage ( this.ctrl, enTeteContrat  , tabObjectsContrat  , this.ctrl.getTableau ( Contrat.class ), tabEditableContrat  , nomTabContrat  , Contrat.class );
+		this.pnlTypeHeure = new PanelParametrage ( this.ctrl, enTeteTypeHeure, tabObjectsTypeHeure, this.ctrl.getTableau ( Heure  .class ), tabEditableTypeHeure, nomTabTypeHeure, Heure  .class );
 
 		// Positionnement des composants
 		this.add ( "Contrat"   , this.pnlContrat   );

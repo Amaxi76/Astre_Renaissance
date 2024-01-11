@@ -29,14 +29,19 @@ table
 
 #recap
 {
-	width: 40%;
+	width: 50%;
 	margin-top: 6vh;
 }
 
 #recap tr td, #recap tr th
 {
-	width: 16.6%;
+	width: 8.33%;
 }
+
+.theo { background-color: #f7c5bc; }
+.reel { background-color: rgb(248, 206, 197); }
+.semestre { background-color: rgb(204, 145, 135);}
+.totalHeure { background-color: white;}
 
 th 
 {

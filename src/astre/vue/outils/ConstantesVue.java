@@ -1,8 +1,10 @@
 package astre.vue.outils;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import java.awt.Dimension;
 
 /** Classe ConstantesVue contenant les constantes liées aux vues
  * @author : Maximilien Lesterlin, Maxime Lemoine
@@ -19,6 +21,9 @@ public abstract class ConstantesVue
 	public static final Border MARGE_INTERIEURE_FENETRE   = new EmptyBorder ( 20,20,20,20 );
 	public static final int    MARGE_EXTERIEURE_COMPOSANT = 20;
 	public static final int    ESPACE_BOUTONS             = 10;
+
+	public static final Color VERT_VALIDATION = new Color ( 0, 109, 10 );
+	public static final Color ROUGE_ERREUR    = Color.RED;
 
 	public static final Dimension DIMENSION_TAB = new Dimension ( 350,400 );
 	public static final int NB_SEMESTRE = 6;
