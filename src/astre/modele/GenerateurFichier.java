@@ -424,7 +424,7 @@ public class GenerateurFichier
 
 			// Initialisation des variables à écrires
 			String nomHeure = ""                                 ;
-			String heureAct = "\t\t\t<td>Heures Actuelles</td>\n";
+			String heureAct = "\t\t\t<td>Heures Répartie</td>\n" ;
 			String heurePN  = "\t\t\t<td>Heures PN</td>\n"       ;
 
 			int sommePN  = 0;

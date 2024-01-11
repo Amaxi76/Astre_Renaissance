@@ -42,6 +42,7 @@ table
 .reel { background-color: rgb(248, 206, 197); }
 .semestre { background-color: rgb(204, 145, 135);}
 .totalHeure { background-color: white;}
+.totalSemestre { background-color: #f7c5bc;}
 
 th 
 {
