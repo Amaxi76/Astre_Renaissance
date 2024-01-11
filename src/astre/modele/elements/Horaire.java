@@ -68,7 +68,7 @@ public class Horaire
 		if ( nbHeurePN < 0 || nbSemaine < 0|| nbHeure < 0  )
 		{
 			JOptionPane.showMessageDialog ( null, "Les heures doivent être positif", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Le coef TP doit être supérieur à 0" );
+			throw new IllegalArgumentException ( "Les heures doivent être positif" );
 		}
 			
 		return new Horaire ( heure, module, nbHeurePN, nbSemaine, nbHeure );
