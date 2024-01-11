@@ -37,16 +37,16 @@ INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES
 ('Contractuel'          , 85 , 125, 0.66 );
 
 INSERT INTO ModuleIUT VALUES
-('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 'Ressource', false, 1),
-('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 'Ressource', true , 1),
-('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 'SAE'      , false, 2),
-('R3.05', 'Programmation Système'       , 'prog_sys'     , 'Ressource', false, 3),
-('S4.ST', 'Stages'                      , 'stages'       , 'Stage'    , false, 4),
-('R5.03', 'Politique de communication'  , 'comm'         , 'Ressource', false, 5),
-('R5.06', 'Programmation multimédia'    , 'prog_media'   , 'Ressource', false, 5),
-('S5.01', 'Développement avancé'        , 'dev_avancé'   , 'SAE'      , false, 5),
-('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , false, 6),
-('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , false, 6);
+('R1.01', 'Initiation Développement'    , 'Init_Dev'     , 'Ressource', false, 1, 0, 0),
+('R1.02', 'Développement interfaces Web', 'Dev_Web'      , 'Ressource', true , 1, 0, 0),
+('S2.05', 'Gestion dun projet'          , 'Gestion_proj' , 'SAE'      , false, 2, 0, 0),
+('R3.05', 'Programmation Système'       , 'prog_sys'     , 'Ressource', false, 3, 0, 0),
+('S4.ST', 'Stages'                      , 'stages'       , 'Stage'    , false, 4, 0, 0),
+('R5.03', 'Politique de communication'  , 'comm'         , 'Ressource', false, 5, 0, 0),
+('R5.06', 'Programmation multimédia'    , 'prog_media'   , 'Ressource', false, 5, 0, 0),
+('S5.01', 'Développement avancé'        , 'dev_avancé'   , 'SAE'      , false, 5, 0, 0),
+('S6.01', 'évolution dune application'  , 'ev_appli'     , 'SAE'      , false, 6, 0, 0),
+('S6.ST', 'Stages'                      , 'stages'       , 'Stage'    , false, 6, 0, 0);
 
 INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('De la Fontaine', 'Jean'   , 250, 360, 1 ),
@@ -73,7 +73,7 @@ INSERT INTO Intervient (Id_Intervenant, Id_Heure, Code_ModuleIUT, nbSemaine, nbG
 (1,  2, 'R1.01',    8,    1,    6, ''           ),
 (4,  3, 'R1.01',    2,    1,    6, '3 CM 3H'    ),
 (2,  1, 'R1.01',    8,    1,    9, 'commentaire'),
-(3,  6, 'S2.05',    1,    1,    9, ''           ),
+(3,  5, 'S2.05',    1,    1,    9, ''           ),
 (6,  1, 'R5.06',   12,    2,    2, ''           ),
 (3,  4, 'S6.ST',    1,    1,   12, ''           ),
 (1,  3, 'R1.01',    8,    1,    6, ''           );
@@ -84,5 +84,4 @@ INSERT INTO Horaire VALUES
 (3, 'R1.01',   5,  2,  5),
 (6, 'R1.01',   0,  5, 1 ),
 (5, 'S5.01',  60,  0,  3),
-(4, 'S2.05',   2,  0,  1),
 (6, 'S6.ST',   6,  0,  3);

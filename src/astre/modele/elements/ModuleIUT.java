@@ -14,28 +14,34 @@ public class ModuleIUT
 	String   libLong;
 	String   libCourt;
 	boolean  valide;
+	double   totalHeurePN;
+	double   totalHeureAffectee;
 
-	private ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide )
+	private ModuleIUT ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide, double totalHeurePN, double totalHeureAffectee )
 	{
-		this.semestre          = semestre;
-		this.typeModule        = typeModule;
-		this.code              = code;
-		this.libLong           = libLong;
-		this.libCourt          = libCourt;
-		this.valide            = valide;
+		this.semestre            = semestre;
+		this.typeModule          = typeModule;
+		this.code                = code;
+		this.libLong             = libLong;
+		this.libCourt            = libCourt;
+		this.valide              = valide;
+		this.totalHeurePN        = totalHeurePN;
+		this.totalHeureAffectee  = totalHeureAffectee;
 	}
 
 	public static ModuleIUT creation ( Object[] contrat )
 	{
-		Object s  = contrat[0];
-		Object tm = contrat[1];
-		Object c  = contrat[2];
-		Object ll = contrat[3];
-		Object lc = contrat[4];
-		Object v  = contrat[5];
+		Object s    = contrat[0];
+		Object tm   = contrat[1];
+		Object c    = contrat[2];
+		Object ll   = contrat[3];
+		Object lc   = contrat[4];
+		Object v    = contrat[5];
+		Object thPN = contrat[6];
+		Object thA  = contrat[7];
 
-		if ( ! ( s instanceof Semestre )  ||  ! ( tm instanceof String ) || ! ( c instanceof String ) || ! ( ll instanceof String ) ||
-		                                      ! ( lc instanceof String ) || ! ( v instanceof Boolean ) )
+		if ( ! ( s  instanceof Semestre ) || ! ( tm instanceof String ) || ! ( c    instanceof String ) || ! ( ll  instanceof String ) ||
+		     ! ( lc instanceof String   ) || ! ( v instanceof Boolean ) || ! ( thPN instanceof Number ) || ! ( thA instanceof Number ) )
 			throw new IllegalArgumentException ( "Les données du moduleIUT ne sont pas du bon type" );
 		
 		Semestre semestre          = ( Semestre ) s;
@@ -44,29 +50,30 @@ public class ModuleIUT
 		String   libLong           = ll.toString ( );
 		String   libCourt          = lc.toString ( );
 		boolean  valide            = ( Boolean ) v;
+		int      totalHeurePN      = ( Integer ) thPN;
+		int      totalHeureAffecter= ( Integer ) thA;
 
-		return ModuleIUT.creation ( semestre, typeModule, code, libLong, libCourt, valide );
+		return ModuleIUT.creation ( semestre, typeModule, code, libLong, libCourt, valide, totalHeurePN, totalHeureAffecter );
 	}
 
-	public static ModuleIUT creation ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide )
+	public static ModuleIUT creation ( Semestre semestre, String typeModule, String code, String libLong, String libCourt, boolean valide, double totalHeurePN, double totalHeureAffectee )
 	{
 		if ( typeModule.equals ( "" ) )
 			throw new IllegalArgumentException ( "Le typeModule n'est pas rempli" );
 
 		if ( code.equals ( "" ) )
-			throw new IllegalArgumentException ( "Le code n'est pas rempli" );
+			throw new IllegalArgumentException ( "Le code du module n'est pas rempli" );
 
 		if ( libLong.equals ( "" ) )
-			throw new IllegalArgumentException ( "Le libellé long n'est pas rempli" );
+			throw new IllegalArgumentException ( "Le libellé long du module n'est pas rempli" );
 		
 		if ( libCourt.equals ( "" ) )
-			throw new IllegalArgumentException ( "Le libellé court n'est pas rempli" );
+			throw new IllegalArgumentException ( "Le libellé court du module n'est pas rempli" );
 
-		// Coef TD
 		if ( ( Boolean ) valide == null )
 			throw new IllegalArgumentException ( "Pas d'indication pour la validation" );
 		
-		return new ModuleIUT ( semestre, typeModule, code, libLong, libCourt, valide );
+		return new ModuleIUT ( semestre, typeModule, code, libLong, libCourt, valide, totalHeurePN, totalHeureAffectee );
 	}
 
 	/*---------------------------------------*/
@@ -86,22 +93,32 @@ public class ModuleIUT
 	/** Retourne le type d'un module
 	 * @return typeModule
 	 */
-	public String              getTypeModule         ( ) { return this.typeModule;        }
+	public String              getTypeModule         ( ) { return this.typeModule;         }
 
 	/** Retourne le code d'un module
 	 * @return code
 	 */
-	public String              getCode               ( ) { return this.code;              }
+	public String              getCode               ( ) { return this.code;               }
 
 	/** Retourne le libellé long d'un module
 	 * @return libLong
 	 */
-	public String              getLibLong            ( ) { return this.libLong;           }
+	public String              getLibLong            ( ) { return this.libLong;            }
 
 	/** Retourne le libellé court d'un module
 	 * @return libCourt
 	 */
-	public String              getLibCourt           ( ) { return this.libCourt;          }
+	public String              getLibCourt           ( ) { return this.libCourt;           }
+
+	/** Retourne le total d'heure PN d'un module
+	 * @return totalHeurePN
+	 */
+	public double              getTotalHeurePN       ( ) { return this.totalHeurePN;       }
+
+	/** Retourne le total d'heure affectée d'un module
+	 * @return totalHeureAffecter
+	 */
+	public double              getTotalHeureAffectee ( ) { return this.totalHeureAffectee; }
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */

@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
   * @date : 06/12/2023
   */
 
+//FIXME: Faire correctement les choses du premier coup (quand on lève les exceptions, on peut récupérer les messages pour factoriser le code)
+
 public class Intervenant
 {
 	private int 	id;
@@ -85,8 +87,8 @@ public class Intervenant
 		//hserv < 0 ou hmax < 0
 		if ( heureService < 0 || heureMaximum < 0 )
 		{
-			JOptionPane.showMessageDialog ( null, "Les heures de services ou maximums sont nuls.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les heures de services ou maximums sont nuls" );
+			JOptionPane.showMessageDialog ( null, "Les heures de services ou maximums sont nuls ou négatives.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
+			throw new IllegalArgumentException ( "Les heures de services ou maximums sont ou négatives" );
 		}
 		
 		return new Intervenant ( id, nom, prenom, contrat, heureService, heureMaximum );

@@ -3,6 +3,7 @@ package astre.vue.rendus;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.JComponent;
 import javax.swing.JTable;
 
 import astre.modele.outils.ModeleTableau;
@@ -24,6 +25,28 @@ public class OperationRenduTableauIntervenants extends OperationRenduTableau
 			cellule.setForeground ( Color.GRAY );
 		else
 			cellule.setForeground ( tbl.getForeground ( ) );
+
+		/*
+		COLORATION DES CASES EN FONCTION DES HEURES MIN ET MAX
+		*/
+
+		//Récupération des données
+		ModeleTableau modele = ( ModeleTableau ) ( tbl.getModel ( ) );
+		Object[][] donnees   = modele.getDonnees ( );
+
+		//changement des couleurs de bordure pour alertes
+		if ( donnees.length != 0 )
+		{
+			JComponent jcellule = ( JComponent ) cellule;
+
+			int hmin  = Integer.parseInt ( donnees[lig][ 5].toString ( ) );
+			int hmax  = Integer.parseInt ( donnees[lig][ 6].toString ( ) );
+			int total = Integer.parseInt ( donnees[lig][16].toString ( ) );
+
+			if   ( hmin > total || hmax < total ) jcellule.setForeground ( Color.RED   );
+			else                                  jcellule.setForeground ( Color.BLACK );
+
+		}
 
 		return cellule;
 	}

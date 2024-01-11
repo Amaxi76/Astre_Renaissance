@@ -27,18 +27,17 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 
 	public FrameIdentifiant ( )
 	{
-		this.setTitle ( "Identifiant"           );
-		this.setSize  ( 500,250          );
-		this.setLocationRelativeTo    ( null        );
-		this.setDefaultCloseOperation ( EXIT_ON_CLOSE );
+		this.setTitle              ( "Identifiant" );
+		this.setSize               ( 500, 250      );
+		this.setLocationRelativeTo ( null          );
 
 		this.setLayout ( new GridBagLayout ( ) );
-		GridBagConstraints gbc = new GridBagConstraints ( );
+		GridBagConstraints gbc = new GridBagConstraints( );
 		gbc.insets = new Insets ( 5, 5, 5, 5 );
 
-		this.txtId  = new JTextField     ( 20 );
-		this.txtMdp = new JPasswordField ( 20 );
-		this.btnVal = new JButton ( "Valider"    );
+		this.txtId  = new JTextField     ( 20        );
+		this.txtMdp = new JPasswordField ( 20        );
+		this.btnVal = new JButton        ( "Valider" );
 
 		gbc.gridy = 0;
 		gbc.gridx = 0;
@@ -92,7 +91,7 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 
 					pw.close();
 				}
-				catch ( Exception x ){}
+				catch ( Exception x ) { }
 			}
 
 			

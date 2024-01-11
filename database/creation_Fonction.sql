@@ -10,7 +10,7 @@
 /* ------------------------------------------ */
 
 -- Sélection globale pour toutes les tables
-DROP              FUNCTION f_selectAll ( table_name VARCHAR );
+DROP FUNCTION IF EXISTS f_selectAll ( table_name VARCHAR );
 CREATE OR REPLACE FUNCTION f_selectAll ( table_name VARCHAR ) RETURNS TABLE ( result_row RECORD ) AS
 $$
 BEGIN
@@ -20,33 +20,23 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Sélection de tous les modules d'un semestre
-/*DROP              FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER );
-CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( result_row RECORD ) AS
-$$
-BEGIN
 
-	RETURN QUERY EXECUTE 'SELECT * FROM ModuleIUT WHERE Id_Semestre = ' || numSemestre;
-
-END;
-$$ LANGUAGE plpgsql;*/
 
 -- Sélection de tous les modules (vue particulière) d'un semestre
-DROP              FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER );
+DROP FUNCTION IF EXISTS f_selectModuleParSemestre ( numSemestre INTEGER );
 CREATE OR REPLACE FUNCTION f_selectModuleParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( id_semestre INTEGER, code_moduleiut VARCHAR, liblong VARCHAR, recap TEXT, valide BOOLEAN ) AS
 $$
 BEGIN
 	RETURN QUERY
 		SELECT *
 		FROM   v_Module v
-		WHERE  v.Id_Semestre = $1
-		ORDER BY Code_ModuleIUT;
+		WHERE  v.Id_Semestre = $1;
 
 END;
 $$ LANGUAGE plpgsql;
 
 -- Sélectionner un semestre en particulier
-DROP              FUNCTION f_selectUnSemestre ( numSemestre INTEGER );
+DROP FUNCTION IF EXISTS f_selectUnSemestre ( numSemestre INTEGER );
 CREATE OR REPLACE FUNCTION f_selectUnSemestre ( numSemestre INTEGER ) RETURNS TABLE ( result_row RECORD ) AS
 $$
 BEGIN
@@ -58,7 +48,7 @@ $$ LANGUAGE plpgsql;
 
 -- Sélectionner un contrat en particulier
 
-DROP              FUNCTION f_selectUnContrat ( numContrat INTEGER );
+DROP FUNCTION IF EXISTS f_selectUnContrat ( numContrat INTEGER );
 CREATE OR REPLACE FUNCTION f_selectUnContrat ( numContrat INTEGER ) RETURNS TABLE ( result_row RECORD ) AS
 $$
 BEGIN
@@ -69,7 +59,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Selecion des ModulesIUT par semestres
-DROP              FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER );
+DROP FUNCTION IF EXISTS f_selectModulesIUTParSemestre ( numSemestre INTEGER );
 CREATE OR REPLACE FUNCTION f_selectModulesIUTParSemestre ( numSemestre INTEGER ) RETURNS TABLE ( code_moduleiut VARCHAR, liblong VARCHAR, libcourt VARCHAR, typemodule VARCHAR, valide BOOLEAN, id_semestre INTEGER, nbgroupetp INTEGER, nbgroupetd INTEGER, nbetud INTEGER, nbsemaine INTEGER ) AS
 $$
 BEGIN
@@ -83,7 +73,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Selecion des heures par rapport à un module
-DROP              FUNCTION f_selectHoraireParModule ( code VARCHAR );
+DROP FUNCTION IF EXISTS f_selectHoraireParModule ( code VARCHAR );
 CREATE OR REPLACE FUNCTION f_selectHoraireParModule ( code VARCHAR ) RETURNS TABLE ( Id_heure INTEGER, nbHeurePn INTEGER, nbHeureRepartie INTEGER ) AS
 $$
 BEGIN
@@ -100,7 +90,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour un enseignant, un module et une heure précise
 -- Utilisée dans la génération HTML des modules
 
-DROP              FUNCTION f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_Intervenant INTEGER, s_Id_Heure INTEGER );
+DROP FUNCTION IF EXISTS f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_Intervenant INTEGER, s_Id_Heure INTEGER );
 CREATE OR REPLACE FUNCTION f_selectNBHeureParModule ( s_code VARCHAR(5), s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -122,7 +112,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure PN pour un module et une heure donnée
 -- Utilisée dans la génération HTML des modules
 
-DROP              FUNCTION f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER );
+DROP FUNCTION IF EXISTS f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER );
 CREATE OR REPLACE FUNCTION f_selectNBHeurePNParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -143,7 +133,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure Répartie pour un module et une heure donnée
 -- Utilisée dans la génération HTML des modules
 
-DROP              FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -164,7 +154,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestre ( s_Id_Semestre INTEGER, s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -184,7 +174,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestrePair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -208,7 +198,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreImpair (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -232,7 +222,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure pour une enseignant et un semestre
 -- Utilisé dans la génération de HTML Intervenant
 
-DROP              FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectNBHeureParSemestreTot (s_Id_Intervenant INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -254,7 +244,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection du nombre d'heure etqd
 -- Utilisé dans l'affectation et la répartition
 
-DROP              FUNCTION f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure VARCHAR ( 50 ) );
+DROP FUNCTION IF EXISTS f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure VARCHAR ( 50 ) );
 CREATE OR REPLACE FUNCTION f_selectNBHeureEQTD ( s_code VARCHAR(5), s_nomHeure VARCHAR ( 50 ) ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -274,7 +264,7 @@ $$ LANGUAGE plpgsql;
 -- Sélection de la somme des heures réparties dans un module
 -- Utilisée dans l'affichage du tableau des modules
 
-DROP              FUNCTION f_selectTotHeureRep ( s_code VARCHAR(5) ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectTotHeureRep ( s_code VARCHAR(5) ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectTotHeureRep ( s_code VARCHAR(5) ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -291,9 +281,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Sélection de la somme des heures PN dans un module
--- Utilisée dans l'affichage du tableau des modules
+-- Utilisée dans l'affichage du tableau des modulesx
 
-DROP              FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectTotHeurePN ( s_code VARCHAR(5) ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectTotHeurePN ( s_code VARCHAR(5) ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -312,7 +302,7 @@ $$ LANGUAGE plpgsql;
 -- Sélectionner le total d'heure d'un enseignant pour un type d'heure
 -- Utilisé dans la génération de fichier
 
-DROP              FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_selectTotHeureInter ( s_Id_Intervenant INTEGER, s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
@@ -331,7 +321,7 @@ $$ LANGUAGE plpgsql;
 
 
 --Permet de récupérer les doubles en string
-DROP              FUNCTION f_conversion ( s_Id_contrat INTEGER ) CASCADE;
+DROP FUNCTION IF EXISTS f_conversion ( s_Id_contrat INTEGER ) CASCADE;
 CREATE OR REPLACE FUNCTION f_conversion ( s_Id_contrat INTEGER ) RETURNS VARCHAR AS
 $$
 DECLARE
@@ -365,7 +355,7 @@ $$ LANGUAGE plpgsql;
 
 -- -- Sélectionner les heuresPN
 
--- DROP              FUNCTION f_selectNBHeurePN ( code VARCHAR(5) );
+-- DROP FUNCTION IF EXISTS f_selectNBHeurePN ( code VARCHAR(5) );
 -- CREATE OR REPLACE FUNCTION f_selectNBHeurePN ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
 -- $$
 -- BEGIN
@@ -381,7 +371,7 @@ $$ LANGUAGE plpgsql;
 
 -- -- Sélectionner les heureRepartie
 
--- DROP              FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) );
+-- DROP FUNCTION IF EXISTS f_selectNBHeureRepartie ( code VARCHAR(5) );
 -- CREATE OR REPLACE FUNCTION f_selectNBHeureRepartie ( code VARCHAR(5) ) RETURNS TABLE ( result_row RECORD ) AS
 -- $$
 -- BEGIN
@@ -403,7 +393,7 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer un contrat
 
-DROP              FUNCTION f_insertContrat ( i_nomContrat VARCHAR(50), i_hServiceContrat INTEGER, i_hMaxContrat INTEGER, i_ratioTP DOUBLE PRECISION );
+DROP FUNCTION IF EXISTS f_insertContrat ( i_nomContrat VARCHAR(50), i_hServiceContrat INTEGER, i_hMaxContrat INTEGER, i_ratioTP DOUBLE PRECISION );
 CREATE OR REPLACE FUNCTION f_insertContrat ( i_nomContrat VARCHAR(50), i_hServiceContrat INTEGER, i_hMaxContrat INTEGER, i_ratioTP DOUBLE PRECISION ) RETURNS VOID AS
 $$
 BEGIN
@@ -415,7 +405,7 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer une heure
 
-DROP              FUNCTION f_insertHeure ( i_nomHeure VARCHAR(50), i_coeffTD DOUBLE PRECISION );
+DROP FUNCTION IF EXISTS f_insertHeure ( i_nomHeure VARCHAR(50), i_coeffTD DOUBLE PRECISION );
 CREATE OR REPLACE FUNCTION f_insertHeure ( i_nomHeure VARCHAR(50), i_coeffTD DOUBLE PRECISION ) RETURNS VOID AS
 $$
 BEGIN
@@ -427,7 +417,7 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer un Module
 
-DROP              FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_typeModule VARCHAR(20), i_Id_Semestre INTEGER);
+DROP FUNCTION IF EXISTS f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_typeModule VARCHAR(20), i_Id_Semestre INTEGER);
 CREATE OR REPLACE FUNCTION f_insertModule ( i_Code_ModuleIUT VARCHAR(5), i_libLong VARCHAR(60),  i_libCourt VARCHAR(15), i_typeModule VARCHAR(20), i_Id_Semestre INTEGER ) RETURNS VOID AS
 $$
 BEGIN
@@ -440,7 +430,7 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer un Intervenanti_inte
 
-DROP              FUNCTION f_insertIntervenant ( i_nom VARCHAR(50), i_prenom VARCHAR(50), i_hService INTEGER, i_hMax INTEGER, i_Id_Contrat INTEGER );
+DROP FUNCTION IF EXISTS f_insertIntervenant ( i_nom VARCHAR(50), i_prenom VARCHAR(50), i_hService INTEGER, i_hMax INTEGER, i_Id_Contrat INTEGER );
 CREATE OR REPLACE FUNCTION f_insertIntervenant ( i_nom VARCHAR(50), i_prenom VARCHAR(50), i_hService INTEGER, i_hMax INTEGER, i_Id_Contrat INTEGER ) RETURNS VOID AS
 $$
 BEGIN
@@ -454,7 +444,7 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer dans intervient
 
-DROP              FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50));
+DROP FUNCTION IF EXISTS f_insertIntervient ( i_Id_Intervenant INTEGER, i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50));
 CREATE OR REPLACE FUNCTION f_insertIntervient ( i_Id_Intervenant INTEGER, i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbSemaine INTEGER, i_nbGroupe INTEGER, i_nbHeure INTEGER, i_commentaire VARCHAR(50)) RETURNS VOID AS
 $$
 BEGIN
@@ -467,7 +457,7 @@ $$ LANGUAGE plpgsql;
 
 -- Insérer dans horaire
 
-DROP              FUNCTION f_insertHoraire ( i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
+DROP FUNCTION IF EXISTS f_insertHoraire ( i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50));
 CREATE OR REPLACE FUNCTION f_insertHoraire ( i_Id_Heure INTEGER, i_Code_ModuleIUT VARCHAR(5), i_nbHeurePN INTEGER, i_nbHeureRepartie INTEGER, i_nbSemaine VARCHAR(50)) RETURNS VOID AS
 $$
 BEGIN
@@ -483,7 +473,7 @@ $$ LANGUAGE plpgsql;
 /* ------------------------------------------ */
 
 -- Update de semestre
-DROP              FUNCTION f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeTP INTEGER, u_nbGroupeTD INTEGER, u_nbEtud INTEGER, u_nbSemaine INTEGER );
+DROP FUNCTION IF EXISTS f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeTP INTEGER, u_nbGroupeTD INTEGER, u_nbEtud INTEGER, u_nbSemaine INTEGER );
 CREATE OR REPLACE FUNCTION f_updateSemestre ( u_Id_Semestre INTEGER, u_nbGroupeTP INTEGER, u_nbGroupeTD INTEGER, u_nbEtud INTEGER, u_nbSemaine INTEGER )
 RETURNS VOID AS
 $$
@@ -500,7 +490,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Update Semestre nouvelle année
-DROP              FUNCTION f_updateAnneeSemestre ( );
+DROP FUNCTION IF EXISTS f_updateAnneeSemestre ( );
 CREATE OR REPLACE FUNCTION f_updateAnneeSemestre ( )
 RETURNS VOID AS
 $$
@@ -515,7 +505,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Update de contrat
-DROP              FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION );
+DROP FUNCTION IF EXISTS f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION );
 CREATE OR REPLACE FUNCTION f_updateContrat ( u_id_contrat INTEGER, u_nomContrat VARCHAR(50), u_hServiceContrat INTEGER, u_hMaxContrat INTEGER, u_ratioTP DOUBLE PRECISION )
 RETURNS VOID AS
 $$
@@ -533,7 +523,7 @@ $$ LANGUAGE plpgsql;
 
 -- Update de Heure
 
-DROP              FUNCTION f_updateHeure ( u_Id_Heure INTEGER, u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION );
+DROP FUNCTION IF EXISTS f_updateHeure ( u_Id_Heure INTEGER, u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION );
 CREATE OR REPLACE FUNCTION f_updateHeure ( u_Id_Heure INTEGER, u_nomHeure VARCHAR(50), u_coeffTD DOUBLE PRECISION )
 RETURNS VOID AS
 $$
@@ -548,7 +538,7 @@ $$ LANGUAGE plpgsql;
 
 -- Update des modules
 
-DROP              FUNCTION f_updateModuleIUT ( u_Code_ModuleIUT VARCHAR(50), u_libLong VARCHAR(60), u_libCourtModuleIUT VARCHAR(15), u_typeModule VARCHAR(20), u_Id_Semestre INTEGER );
+DROP FUNCTION IF EXISTS f_updateModuleIUT ( u_Code_ModuleIUT VARCHAR(50), u_libLong VARCHAR(60), u_libCourtModuleIUT VARCHAR(15), u_typeModule VARCHAR(20), u_Id_Semestre INTEGER );
 CREATE OR REPLACE FUNCTION f_updateModuleIUT ( u_Code_ModuleIUT VARCHAR(50), u_libLong VARCHAR(60), u_libCourtModuleIUT VARCHAR(15), u_typeModule VARCHAR(20), u_Id_Semestre INTEGER )
 RETURNS VOID AS
 $$
@@ -566,7 +556,7 @@ $$ LANGUAGE plpgsql;
 
 -- Update d'intervenant
 
-DROP              FUNCTION f_updateIntervenant ( u_Id_Intervenant INTEGER, u_nom VARCHAR(50), u_prenom VARCHAR(50), u_hService INTEGER, u_hMax INTEGER, u_Id_Contrat INTEGER );
+DROP FUNCTION IF EXISTS f_updateIntervenant ( u_Id_Intervenant INTEGER, u_nom VARCHAR(50), u_prenom VARCHAR(50), u_hService INTEGER, u_hMax INTEGER, u_Id_Contrat INTEGER );
 CREATE OR REPLACE FUNCTION f_updateIntervenant ( u_Id_Intervenant INTEGER, u_nom VARCHAR(50), u_prenom VARCHAR(50), u_hService INTEGER, u_hMax INTEGER, u_Id_Contrat INTEGER )
 RETURNS VOID AS
 $$
@@ -585,7 +575,7 @@ $$ LANGUAGE plpgsql;
 
 -- Update d'intervient
 
-DROP              FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_Id_Heure INTEGER, u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) );
+DROP FUNCTION IF EXISTS f_updateIntervient ( u_Id_Intervenant INTEGER, u_Id_Heure INTEGER, u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) );
 CREATE OR REPLACE FUNCTION f_updateIntervient ( u_Id_Intervenant INTEGER, u_Id_Heure INTEGER, u_Code_ModuleIUT VARCHAR(5), u_nbSemaine INTEGER, u_nbGroupe INTEGER, u_nbHeure INTEGER, u_commentaire VARCHAR(50) )
 RETURNS VOID AS
 $$
@@ -603,7 +593,7 @@ $$ LANGUAGE plpgsql;
 
 -- Update d'horaire
 
-DROP              FUNCTION f_updateHoraire ( u_Id_Heure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER );
+DROP FUNCTION IF EXISTS f_updateHoraire ( u_Id_Heure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER );
 CREATE OR REPLACE FUNCTION f_updateHoraire ( u_Id_Heure VARCHAR(50), u_Code_ModuleIUT VARCHAR(5), u_nbHeurePN INTEGER, u_nbHeureRepartie INTEGER, u_nbSemaine INTEGER )
 RETURNS VOID AS
 $$
@@ -620,9 +610,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'intervenant
 
-DROP              FUNCTION f_update_historique_Intervenant() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_Intervenant() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Intervenant()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		INSERT INTO Historique (dateModification, commentaire)
@@ -639,9 +630,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'un contrat
 
-DROP              FUNCTION f_update_historique_Contrat() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_Contrat() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Contrat()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		INSERT INTO Historique (dateModification, commentaire)
@@ -658,9 +650,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'un semestre
 
-DROP              FUNCTION f_update_historique_Semestre() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_Semestre() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Semestre()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		INSERT INTO Historique (dateModification, commentaire)
@@ -678,9 +671,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'une heure
 
-DROP              FUNCTION f_update_historique_Heure() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_Heure() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Heure()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		INSERT INTO Historique (dateModification, commentaire)
@@ -696,9 +690,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'un moduleIUT
 
-DROP              FUNCTION f_update_historique_ModuleIUT() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_ModuleIUT() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_ModuleIUT()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		INSERT INTO Historique (dateModification, commentaire)
@@ -714,9 +709,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'intervient
 
-DROP              FUNCTION f_update_historique_Intervient() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_Intervient() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Intervient()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
@@ -735,9 +731,10 @@ $$ LANGUAGE plpgsql;
 
 -- Update de l'historique d'horaire
 
-DROP              FUNCTION f_update_historique_Horaire() CASCADE;
+DROP FUNCTION IF EXISTS f_update_historique_Horaire() CASCADE;
 CREATE OR REPLACE FUNCTION f_update_historique_Horaire()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS 
+$$
 BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		INSERT INTO Historique (dateModification, commentaire)
@@ -757,7 +754,7 @@ $$ LANGUAGE plpgsql;
 /* ------------------------------------------ */
 
 -- Supprimer TOUTES les données
-DROP              FUNCTION f_deleteAll ( );
+DROP FUNCTION IF EXISTS f_deleteAll ( );
 CREATE OR REPLACE FUNCTION f_deleteAll ( ) RETURNS VOID AS 
 $$
 BEGIN
@@ -775,7 +772,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer un contrat
 
-DROP              FUNCTION f_deleteContrat ( d_id_contrat INTEGER );
+DROP FUNCTION IF EXISTS f_deleteContrat ( d_id_contrat INTEGER );
 CREATE OR REPLACE FUNCTION f_deleteContrat ( d_id_contrat INTEGER ) RETURNS VOID AS 
 $$
 BEGIN
@@ -787,7 +784,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer une heure
 
-DROP              FUNCTION f_deleteHeure ( d_nomHeure VARCHAR(50) );
+DROP FUNCTION IF EXISTS f_deleteHeure ( d_nomHeure VARCHAR(50) );
 CREATE OR REPLACE FUNCTION f_deleteHeure ( d_nomHeure VARCHAR(50) ) RETURNS VOID AS
 $$
 BEGIN
@@ -799,7 +796,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer un ModuleIUT
 
-DROP              FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) );
+DROP FUNCTION IF EXISTS f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) );
 CREATE OR REPLACE FUNCTION f_deleteModuleIUT ( d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
@@ -811,7 +808,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer un intervenant
 
-DROP              FUNCTION f_deleteIntervenant ( d_Id_Intervenant INTEGER );
+DROP FUNCTION IF EXISTS f_deleteIntervenant ( d_Id_Intervenant INTEGER );
 CREATE OR REPLACE FUNCTION f_deleteIntervenant ( d_Id_Intervenant INTEGER ) RETURNS VOID AS
 $$
 BEGIN
@@ -823,7 +820,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer dans intervient
 
-DROP              FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) );
+DROP FUNCTION IF EXISTS f_deleteIntervient ( d_Id_Intervenant INTEGER, d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) );
 CREATE OR REPLACE FUNCTION f_deleteIntervient ( d_Id_Intervenant INTEGER, d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
@@ -835,7 +832,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer une année 
 
-DROP              FUNCTION f_deleteIntervient ( );
+DROP FUNCTION IF EXISTS f_deleteIntervient ( );
 CREATE OR REPLACE FUNCTION f_deleteIntervient ( ) RETURNS VOID AS
 $$
 BEGIN
@@ -847,7 +844,7 @@ $$ LANGUAGE plpgsql;
 
 -- Supprimer dans horaire
 
-DROP              FUNCTION f_deleteHoraire ( d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) );
+DROP FUNCTION IF EXISTS f_deleteHoraire ( d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) );
 CREATE OR REPLACE FUNCTION f_deleteHoraire ( d_Id_Heure INTEGER, d_Code_ModuleIUT VARCHAR(5) ) RETURNS VOID AS
 $$
 BEGIN
@@ -857,7 +854,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP              FUNCTION f_selectIntervient ( code_Module VARCHAR );
+DROP FUNCTION IF EXISTS f_selectIntervient ( code_Module VARCHAR );
 CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
 $$
 BEGIN
@@ -872,7 +869,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP              FUNCTION f_selectHoraire ( code_Module VARCHAR );
+DROP FUNCTION IF EXISTS f_selectHoraire ( code_Module VARCHAR );
 CREATE OR REPLACE FUNCTION f_selectHoraire ( code_Module VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeurePN INTEGER ) AS
 $$
 BEGIN
@@ -887,7 +884,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP              FUNCTION f_selectHoraireBis ( code_Module VARCHAR );
+DROP FUNCTION IF EXISTS f_selectHoraireBis ( code_Module VARCHAR );
 CREATE OR REPLACE FUNCTION f_selectHoraireBis ( code_Module VARCHAR ) RETURNS TABLE ( nomHeure VARCHAR, nbHeureRepartie INTEGER, nbSemaine INTEGER ) AS
 $$
 BEGIN
@@ -900,4 +897,4 @@ BEGIN
 	WHERE  ho.Code_ModuleIUT = code_module;
 
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql;*/

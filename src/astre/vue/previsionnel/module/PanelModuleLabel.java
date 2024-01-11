@@ -2,6 +2,7 @@ package astre.vue.previsionnel.module;
 
 import astre.modele.elements.ModuleIUT;
 import astre.modele.elements.Semestre;
+import astre.vue.outils.Saisie;
 
 import java.awt.*;
 
@@ -64,11 +65,11 @@ public class PanelModuleLabel  extends JPanel
 		this.txtNbGpTP = new JTextField ( "" + this.ctrl.getSemestre ( numSemestre ).getNbGroupeTP ( ), 3 );
 
 		// Formatage des JLabels pour indiquer la non-modification
-		this.formatTxt ( this.txtType     );
-		this.formatTxt ( this.txtSemestre );
-		this.formatTxt ( this.txtNbEtd    );
-		this.formatTxt ( this.txtNbGpTD   );
-		this.formatTxt ( this.txtNbGpTP   );
+		Saisie.JTextFieldToLabel ( this.txtType     );
+		Saisie.JTextFieldToLabel ( this.txtSemestre );
+		Saisie.JTextFieldToLabel ( this.txtNbEtd    );
+		Saisie.JTextFieldToLabel ( this.txtNbGpTD   );
+		Saisie.JTextFieldToLabel ( this.txtNbGpTP   );
 
 		/* ------------------------------- */
 		/*  Positionnement des composants  */
@@ -122,12 +123,6 @@ public class PanelModuleLabel  extends JPanel
 
 		gbc.gridx = 3;
 		this.add ( this.txtNbGpTP, gbc );
-	}
-
-	public void formatTxt ( JTextField txt )
-	{
-		txt.setEditable   ( false            );
-		txt.setBackground ( Color.LIGHT_GRAY );
 	}
 
 	public void setValeurs ( Object[] module )

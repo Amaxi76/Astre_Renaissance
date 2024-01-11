@@ -24,99 +24,101 @@ DROP TABLE Historique  CASCADE;
 
 CREATE TABLE Semestre
 (
-   Id_Semestre SERIAL,
-   nbGroupeTP  INTEGER NOT NULL,
-   nbGroupeTD  INTEGER NOT NULL,
-   nbEtud      INTEGER,
-   nbSemaine   INTEGER,
+	Id_Semestre SERIAL,
+	nbGroupeTP  INTEGER NOT NULL,
+	nbGroupeTD  INTEGER NOT NULL,
+	nbEtud      INTEGER,
+	nbSemaine   INTEGER,
 
-   PRIMARY KEY(Id_Semestre)
+	PRIMARY KEY(Id_Semestre)
 );
 
 CREATE TABLE Contrat
 ( 
-   Id_Contrat      SERIAL,
-   nomContrat      VARCHAR(50)  NOT NULL,
-   hServiceContrat INTEGER,
-   hMaxContrat     INTEGER,
-   ratioTP         DOUBLE PRECISION,
+	Id_Contrat      SERIAL,
+	nomContrat      VARCHAR(50)  NOT NULL,
+	hServiceContrat INTEGER,
+	hMaxContrat     INTEGER,
+	ratioTP         DOUBLE PRECISION,
 
-   PRIMARY KEY(Id_Contrat)
+	PRIMARY KEY(Id_Contrat)
 );
 
 CREATE TABLE Heure
 (
-   Id_Heure SERIAL,
-   nomHeure VARCHAR(50),
-   coeffTD  DOUBLE PRECISION,
+	Id_Heure SERIAL,
+	nomHeure VARCHAR(50),
+	coeffTD  DOUBLE PRECISION,
 
-   PRIMARY KEY(Id_Heure)
+	PRIMARY KEY(Id_Heure)
 );
 
 CREATE TABLE ModuleIUT
 (
-   Code_ModuleIUT  VARCHAR(5),
-   libLong         VARCHAR(60),
-   libCourt        VARCHAR(15),
-   typeModule      VARCHAR(20),
-   valide          BOOLEAN,
-   Id_Semestre     INTEGER NOT NULL,
+	Code_ModuleIUT  VARCHAR(5),
+	libLong         VARCHAR(60),
+	libCourt        VARCHAR(15),
+	typeModule      VARCHAR(20),
+	valide          BOOLEAN,
+	Id_Semestre     INTEGER NOT NULL,
+	heurePN         DECIMAL(7,1),
+	heureAffecte    DECIMAL(7,1),
 
-   PRIMARY KEY(Code_ModuleIUT),
-   FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
+	PRIMARY KEY(Code_ModuleIUT),
+	FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
 );
 
 
 CREATE TABLE Intervenant
 (
-   Id_Intervenant SERIAL,
-   nom            VARCHAR(50)  NOT NULL,
-   prenom         VARCHAR(50)  NOT NULL,
-   hService       INTEGER      NOT NULL,
-   hMax           INTEGER      NOT NULL,
-   Id_Contrat     INTEGER      NOT NULL,
+	Id_Intervenant SERIAL,
+	nom            VARCHAR(50)  NOT NULL,
+	prenom         VARCHAR(50)  NOT NULL,
+	hService       INTEGER      NOT NULL,
+	hMax           INTEGER      NOT NULL,
+	Id_Contrat     INTEGER      NOT NULL,
 
-   PRIMARY KEY(Id_Intervenant),
-   FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat)
+	PRIMARY KEY(Id_Intervenant),
+	FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat)
 );
 
 CREATE TABLE Intervient
 (
-   Id_Intervenant INTEGER,
-   Id_Heure       INTEGER ,
-   Code_ModuleIUT VARCHAR(5) ,
-   nbSemaine      INTEGER,
-   nbGroupe       INTEGER,
-   nbHeure        INTEGER,
-   commentaire    VARCHAR(50) ,
+	Id_Intervenant INTEGER,
+	Id_Heure       INTEGER ,
+	Code_ModuleIUT VARCHAR(5) ,
+	nbSemaine      INTEGER,
+	nbGroupe       INTEGER,
+	nbHeure        DECIMAL(7,2),
+	commentaire    VARCHAR(50) ,
 
-   PRIMARY KEY(Id_Intervenant, Id_Heure, Code_ModuleIUT),
-   FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
-   FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)            ,
-   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)  
+	PRIMARY KEY(Id_Intervenant, Id_Heure, Code_ModuleIUT),
+	FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
+	FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)            ,
+	FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)  
 );
 
 
 CREATE TABLE Horaire
 ( 
-   Id_Heure             INTEGER,
-   Code_ModuleIUT       VARCHAR(5),
-   nbHeurePN            INTEGER,
-   nbHeureRepartie      INTEGER,
-   nbSemaine            INTEGER,
-   
-   PRIMARY KEY(Id_Heure, Code_ModuleIUT),
-   FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)           ,
-   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) 
+	Id_Heure             INTEGER,
+	Code_ModuleIUT       VARCHAR(5),
+	nbHeurePN            INTEGER,
+	nbHeureRepartie      INTEGER,
+	nbSemaine            INTEGER,
+	
+	PRIMARY KEY(Id_Heure, Code_ModuleIUT),
+	FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)           ,
+	FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) 
 );
 
 CREATE TABLE Historique
 (
-   Id_Historique      SERIAL,
-   dateModification   TIMESTAMP     NOT NULL,
-   commentaire        VARCHAR(150)  NOT NULL,
+	Id_Historique      SERIAL,
+	dateModification   TIMESTAMP     NOT NULL,
+	commentaire        VARCHAR(150)  NOT NULL,
 
-   PRIMARY KEY(Id_Historique)
+	PRIMARY KEY(Id_Historique)
 );
 
 /* Création des trigger */
@@ -198,8 +200,9 @@ ORDER BY
       Id_intervenant ASC;
 
 -- Vue des modules
-CREATE VIEW v_Module AS
-SELECT id_semestre, Code_ModuleIUT, libLong, (f_selectTotHeureRep(Code_ModuleIUT) || ' / ' || f_selectTotHeurePN(Code_ModuleIUT)) AS Recap, valide
+DROP VIEW IF EXISTS v_Module;
+CREATE OR REPLACE VIEW v_Module AS
+SELECT id_semestre, Code_ModuleIUT, libLong, heureAffecte || '/' || heurePN as recap, valide
 FROM   ModuleIUT;
 /*
 	@author Alizéa LEBARON
@@ -222,67 +225,11 @@ DELETE FROM Heure       CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
- INSERT INTO Semestre VALUES 
-(1,5,6,85,10), 
-(2,5,6,66,20), 
-(3,8,6,58,30), 
-(4,8,6,45,40), 
-(5,10,6,25,50), 
-(6,10,6,10,60); 
-
-INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
-('Enseignant 2nd degrès',250,360,'1.0'), 
-('Enseignant chercheur',25,389,'0.66'), 
-('Contractuel',85,125,'0.66'); 
-
-INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
-('TP','1.0'), 
-('TD','1.0'), 
-('CM','1.5'), 
-('REH','1.0'), 
-('SAE','1.0'), 
-('HP','1.0'), 
-('Tut','1.0'); 
-
-INSERT INTO ModuleIUT VALUES 
-('R1.02','Développement interfaces Web','Dev_Web','Ressource',true,1), 
-('S2.05','Gestion dun projet','Gestion_proj','SAE',false,2), 
-('R3.05','Programmation Systéme','prog_sys','Ressource',false,3), 
-('S4.ST','Stages','stages','Stage',false,4), 
-('R5.03','Politique de communication','comm','Ressource',false,5), 
-('R5.06','Programmation multimédia','prog_media','Ressource',false,5), 
-('S5.01','Développement avancé','dev_avancé','SAE',false,5), 
-('S6.01','évolution dune application','ev_appli','SAE',false,6), 
-('S6.ST','Stages','stages','Stage',false,6), 
-('R1.01','Initiation Développement','Init_Dev','Ressource',true,1); 
-
-INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
-('De la Fontaine','Jean',250,360,1), 
-('Orwell','Georges',25,389,2), 
-('Lovecraft','Howard',85,125,2), 
-('Maupassant','Guy',2,4,1), 
-('De Balzac','Honoré',65,89,3), 
-('Lovelace','Ada',102,365,3), 
-('Toriyama','Akira',420,478,2); 
-
-INSERT INTO Intervient VALUES 
-(1,2,'R5.03',6,2,5,'null'), 
-(1,5,'S6.01',8,1,6,'null'), 
-(3,6,'S2.05',1,1,9,'null'), 
-(6,1,'R5.06',12,2,2,'null'), 
-(3,4,'S6.ST',1,1,12,'null'), 
-(1,3,'R1.01',8,1,24,'null'), 
-(1,2,'R1.01',8,1,224,'null'), 
-(1,1,'R1.01',8,1,40,'null'), 
-(2,1,'R1.01',8,1,26,'commentaire'), 
-(4,3,'R1.01',2,1,6,'3 CM 3H'), 
-(3,1,'R1.01',1,5,16,'...'); 
-
-INSERT INTO Horaire VALUES 
-(5,'S5.01',60,0,3), 
-(4,'S2.05',2,0,1), 
-(6,'S6.ST',6,0,3), 
-(3,'R1.01',5,2,5), 
-(2,'R1.01',30,28,11), 
-(1,'R1.01',85,5,12); 
-
+INSERT INTO Semestre VALUES 
+(1, 0, 0, 0, 0), 
+(2, 0, 0, 0, 0), 
+(3, 0, 0, 0, 0), 
+(4, 0, 0, 0, 0), 
+(5, 0, 0, 0, 0), 
+(6, 0, 0, 0, 0); 
+INSERT INTO Heure ( nomHeure, coeffTD ) VALUES('TP' , 1   ),('TD' , 1   ),('CM' , 1.5 ),('REH', 1   ),('SAE', 1   ),('HP' , 1   ),('Tut', 1   );

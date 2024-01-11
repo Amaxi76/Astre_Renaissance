@@ -25,9 +25,7 @@ import java.util.Map;
  * @date : 27/12/2023
  */
 public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
-{
-	private Controleur ctrl;
-	
+{	
 	private PanelRepartitionTypesHeures  pnlRepartitionTypesHeures;
 	private PanelEquivalencesTypesHeures pnlEquivalencesTypesHeures;
 	private PanelVerticalSaisie          pnlHeuresPonctuelles;
@@ -35,10 +33,9 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 
 	private String[] ensIntituleTypeHeure;
 
-	public PanelRepartitionAvecGroupes ( FrameModule listenerModule, Controleur ctrl, String[] ensIntituleTypeHeure )
+	public PanelRepartitionAvecGroupes ( Controleur ctrl, FrameModule listenerModule, String[] ensIntituleTypeHeure )
 	{
-		super ( listenerModule );
-		this.ctrl = ctrl;
+		super ( ctrl, listenerModule );
 		this.ensIntituleTypeHeure = ensIntituleTypeHeure;
 		this.initialiserPanels ( );
 	}
@@ -153,6 +150,12 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 		return donnees;
 	}
 
+	@Override
+	public double getSommeEQTDAffecte ( )
+	{
+		return this.pnlHeuresTotales.getValeurs ( )[2];
+	}
+
 	/**
 	 * @param module
 	 */
@@ -164,7 +167,7 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 			int val1 = Integer.parseInt ( tabRepartition[cpt][2].toString ( ) );
 			int val2 = Integer.parseInt ( tabRepartition[cpt][1].toString ( ) );
 			
-			if ( ! typeHeure.equals( "HP" ) ) 
+			if ( ! typeHeure.equals ( "HP" ) ) 
 				this.pnlRepartitionTypesHeures.setValeursTypeHeure ( typeHeure, val1, val2 );
 			else
 				this.pnlHeuresPonctuelles.setValeur ( 0, val2 );
@@ -269,7 +272,6 @@ public class PanelRepartitionAvecGroupes extends AbstractPanelRepartition
 			this.ensPnlTypeHeure = new HashMap <> ( );
 
 			this.setLayout ( new BoxLayout ( this, BoxLayout.X_AXIS ) );
-			//this.setBorder( new EmptyBorder ( new Insets ( 80, 2, 2, 2 ) ) );
 		}
 
 		/**

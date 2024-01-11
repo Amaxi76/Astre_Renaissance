@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import astre.Controleur;
 import astre.vue.previsionnel.module.AbstractPanelRepartition;
 import astre.vue.previsionnel.module.FrameModule;
 import astre.vue.previsionnel.module.PanelVerticalSaisie;
@@ -26,9 +27,9 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 	
 	private String[]                    ensIntituleTypeHeure;
 
-	public PanelRepartitionSansGroupes ( FrameModule listenerModule, String[] ensIntituleTypeHeure )
+	public PanelRepartitionSansGroupes ( Controleur ctrl, FrameModule listenerModule, String[] ensIntituleTypeHeure )
 	{
-		super ( listenerModule );
+		super ( ctrl, listenerModule );
 		this.ensIntituleTypeHeure = ensIntituleTypeHeure;
 		this.initialiserPanels ( );
 	}
@@ -69,14 +70,13 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 	public void majIHM ( )
 	{
 		this.pnlRepartitionTypesHeures.majIHM ( );
-		//this.pnlHeuresTotales.majIHM ( );
 	}
 
 	@Override
 	public void setValeurs ( Object[][] donnees )
 	{
-		//TODO: 
-		System.out.println ( "setValeurs de panelRep (y'a rien) : " + donnees.length );
+		for ( int i = 0; i < donnees.length; i++ )
+			this.pnlRepartitionTypesHeures.setValeursTypeHeure ( this.ensIntituleTypeHeure[i], ( int ) donnees[i][1] );
 	}
 
 	@Override
@@ -93,6 +93,12 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 		}
 		
 		return donnees;
+	}
+
+	@Override
+	public double getSommeEQTDAffecte ( )
+	{
+		return this.pnlHeuresTotales.getValeurs ( )[1];
 	}
 
 //---------------------------------------------------------------------------------------//
@@ -152,19 +158,19 @@ public class PanelRepartitionSansGroupes extends AbstractPanelRepartition
 			double sommeHeuresEQTD = 0.0;
 
 			// maj des equivalents
-			for ( Map.Entry<String, PanelVerticalSaisie> entry : this.ensPnlTypeHeure.entrySet ( ) )
+			for ( String typeHeure : this.ensPnlTypeHeure.keySet ( ) )
 			{
-				double valeur = entry.getValue ( ).getValeurs ( )[0];
+				double valeur = this.ensPnlTypeHeure.get ( typeHeure ).getValeurs ( )[0];
 				sommeHeures += valeur;
 
-				double operation = valeur * 1.5; //TODO: à remplacer 1,5  par x ratio
+				double operation = PanelRepartitionSansGroupes.super.frameModule.getSommesEQTD ( ).get ( typeHeure );
 				sommeHeuresEQTD += operation;
 
-				entry.getValue ( ).setValeur ( 1, operation );
+				this.ensPnlTypeHeure.get ( typeHeure ).setValeur ( 1, operation );
 			}
 
 			// maj des heures totales
-			PanelRepartitionSansGroupes.this.pnlHeuresTotales.setValeur ( 0, sommeHeures );
+			PanelRepartitionSansGroupes.this.pnlHeuresTotales.setValeur ( 0, sommeHeures     );
 			PanelRepartitionSansGroupes.this.pnlHeuresTotales.setValeur ( 1, sommeHeuresEQTD );
 		}
 	}
