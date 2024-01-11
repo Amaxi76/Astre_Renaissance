@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import astre.Controleur;
 import astre.vue.outils.AFrame;
 
-
 public class FrameAccueil extends AFrame implements ActionListener
 {
 	/*-------------*/
