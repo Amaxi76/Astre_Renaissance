@@ -733,7 +733,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getModule (int m ) : " + e );
+			System.out.println ( "Erreur getModule (String m ) : " + e );
 		}
 
 		return module;

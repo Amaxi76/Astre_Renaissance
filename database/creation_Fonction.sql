@@ -137,17 +137,17 @@ DROP FUNCTION IF EXISTS f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_He
 CREATE OR REPLACE FUNCTION f_selectNBHeureRepParModule ( s_code VARCHAR(5), s_Id_Heure INTEGER ) RETURNS INTEGER AS
 $$
 DECLARE
-	v_result INTEGER;
+	v_resultat INTEGER;
 BEGIN
    
-	SELECT nbHeureRepartie
-	INTO v_result
-	FROM Horaire
+	SELECT SUM (nbSemaine * nbGroupe * nbHeure)
+	INTO v_resultat
+	FROM Intervient
 	WHERE Code_ModuleIUT = s_code AND 
 		  Id_Heure = s_Id_Heure;
 
 	-- Retourner le résultat et si la requête est nulle, on renvoie 0
-	RETURN COALESCE(v_result, 0);
+	RETURN COALESCE(v_resultat, 0);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -855,7 +855,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS f_selectIntervient ( code_Module VARCHAR );
-CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
+CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure NUMERIC(7,2), commentaire VARCHAR ) AS
 $$
 BEGIN
 
@@ -897,4 +897,4 @@ BEGIN
 	WHERE  ho.Code_ModuleIUT = code_module;
 
 END;
-$$ LANGUAGE plpgsql;*/
+$$ LANGUAGE plpgsql;
