@@ -5,15 +5,16 @@
 Le projet ASTRE prend place dans le cadre d'un travail scolaire. 
 Il a été demandé aux étudiants, regroupés par groupe de 5 à 6 personnes, de mettre en place une application permettant de gérer les heures attribuées aux intervenants selon les cours et projets proposés.
 
+Fork du projet : https://github.com/Maximeuuu/Astre
+- Extension du projet Astre
+- amélioration, factorisation, modularité ...
 
-## Membres du groupe 
 
-	Groupe 7 :
-	- Alizéa     Lebaron
+## Collaborateurs
+
+	- projet initial : https://github.com/Maximeuuu/Astre
 	- Maxime     Lemoine
 	- Maximilien Lesterlin
-	- Clémentin  Ly
-	- Matéo      Sa
 
 
 ## Installation et Exécution
