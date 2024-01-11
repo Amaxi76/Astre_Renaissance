@@ -103,7 +103,7 @@ public class BD
 		catch ( Exception e )
 		{
 			JOptionPane.showMessageDialog ( null, e.toString(), "Identifiants introuvables", JOptionPane.ERROR_MESSAGE );
-			e.printStackTrace ( );
+			e.getMessage ( );
 		}
 
 		this.urlWoody = "jdbc:postgresql://woody/"          + this.login + "?useUnicode=true&characterEncoding=UTF-8";
@@ -133,7 +133,7 @@ public class BD
 		catch ( SQLException e )
 		{
 			JOptionPane.showMessageDialog ( null, e.toString(), "erreur estGenere() : ", JOptionPane.ERROR_MESSAGE );
-			e.printStackTrace ( );
+			e.getMessage ( );
 		}
 		
 		return estCree;
@@ -179,7 +179,7 @@ public class BD
 		catch ( Exception e ) 
 		{
 			JOptionPane.showMessageDialog ( null, e.toString ( ), "erreur executeScript ( ) : ", JOptionPane.ERROR_MESSAGE );
-			e.printStackTrace ( );
+			e.getMessage ( );
 		}
 	}
 
@@ -219,7 +219,7 @@ public class BD
 	
 			System.out.println("Script SQL exécuté avec succès.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 	}
 	
@@ -272,7 +272,7 @@ public class BD
 				}
 				catch ( Exception e )
 				{
-					e.printStackTrace ( );
+					e.getMessage ( );
 				}
 
 			}
@@ -280,7 +280,7 @@ public class BD
 		catch ( SQLException e )
 		{
 			JOptionPane.showMessageDialog ( null, e.toString(), "erreur geTable() : ", JOptionPane.ERROR_MESSAGE );
-			e.printStackTrace ( );
+			e.getMessage ( );
 		}
 
 		return lst;
@@ -402,7 +402,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "getHoraire ( )" +  e );
+			System.out.println ( "getHoraire ( )" +  e.getMessage ( ) );
 		}
 
 		return ensHoraire;
@@ -432,7 +432,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "getHoraire ( )" +  e );
+			System.out.println ( "getHoraire ( )" +  e.getMessage ( ) );
 		}
 
 		return ensAnnee;
@@ -454,7 +454,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "getAnnee ( )" +  e );
+			System.out.println ( "getAnnee ( )" +  e.getMessage ( ) );
 			nom = "Aucune année en cours";
 		}
 
@@ -483,7 +483,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getSemestre(int c) : " + e );
+			System.out.println ( "Erreur getSemestre(int c) : " + e.getMessage ( ) );
 		}
 
 		return semestre;
@@ -509,7 +509,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getIntervient(int c) : " + e );
+			System.out.println ( "Erreur getIntervient(int c) : " + e.getMessage ( ) );
 		}
 
 		return inter;
@@ -531,7 +531,7 @@ public class BD
 				}
 				catch (Exception e)
 				{
-					System.out.println ( "Erreur création de contrat : " + e );
+					System.out.println ( "Erreur création de contrat : " + e.getMessage ( ) );
 				}
 			}
 
@@ -540,7 +540,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getContrat(int c) : " + e );
+			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
 		}
 
 		return contrat;
@@ -562,14 +562,14 @@ public class BD
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace ( );
+					e.getMessage ( );
 				}
 
 			}
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getContrat(int c) : " + e );
+			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
 		}
 
 		return contrat;
@@ -603,7 +603,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getContrat(int c) : " + e );
+			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
 		}
 
 		return result;
@@ -633,7 +633,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getContrat(int c) : " + e );
+			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
 		}
 
 		return result;
@@ -654,7 +654,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getIntervenant(int c) : " + e );
+			System.out.println ( "Erreur getIntervenant(int c) : " + e.getMessage ( ) );
 		}
 
 		return intervenant;
@@ -676,14 +676,14 @@ public class BD
 				}
 				catch ( Exception e )
 				{
-					e.printStackTrace ( );
+					e.getMessage ( );
 				}
 
 			}
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getHeure(int h) : " + e );
+			System.out.println ( "Erreur getHeure(int h) : " + e.getMessage ( ) );
 		}
 
 		return heure;
@@ -705,14 +705,14 @@ public class BD
 				}
 				catch ( Exception e )
 				{
-					e.printStackTrace ( );
+					e.getMessage ( );
 				}
 
 			}
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getHeure(int h) : " + e );
+			System.out.println ( "Erreur getHeure(int h) : " + e.getMessage ( ) );
 		}
 
 		return heure;
@@ -733,7 +733,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getModule (String m ) : " + e );
+			System.out.println ( "Erreur getModule (String m ) : " + e.getMessage ( ) );
 		}
 
 		return module;
@@ -754,7 +754,7 @@ public class BD
 		}
 		catch ( Exception e )
 		{
-			System.out.println ( "Erreur  getNBHeureParModule (String code, int Id_Inter, int Id_Heure) : " + e );
+			System.out.println ( "Erreur  getNBHeureParModule (String code, int Id_Inter, int Id_Heure) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -776,7 +776,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "getNBHeureEQTD (String code, String nomHeure) : " + e );
+			System.out.println ( "getNBHeureEQTD (String code, String nomHeure) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -798,7 +798,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "Erreur getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant) : " + e );
+			System.out.println ( "Erreur getNBHeureParSemestre (int Id_Semestre, int Id_Intervenant) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -820,7 +820,7 @@ public class BD
 		}
 		catch ( Exception e )
 		{
-			System.out.println ( "Erreur getNBHeurePNParModule (String code, int Id_Heure) : " + e );
+			System.out.println ( "Erreur getNBHeurePNParModule (String code, int Id_Heure) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -842,7 +842,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "Erreur getNBHeureRepParModule (String code, int Id_Heure) : " + e );
+			System.out.println ( "Erreur getNBHeureRepParModule (String code, int Id_Heure) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -864,7 +864,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "Erreur getHeureParSemestreImpair ( int id ) : " + e );
+			System.out.println ( "Erreur getHeureParSemestreImpair ( int id ) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -886,7 +886,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "Erreur getHeureParSemestrePair ( int id ) : " + e );
+			System.out.println ( "Erreur getHeureParSemestrePair ( int id ) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -908,7 +908,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "Erreur getHeureParSemestreTotal ( int id ) : " + e );
+			System.out.println ( "Erreur getHeureParSemestreTotal ( int id ) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -930,7 +930,7 @@ public class BD
 		}
 		catch (Exception e)
 		{
-			System.out.println ( "Erreur getTotalHeureParInter ( int idInter, int idHeure ) : " + e );
+			System.out.println ( "Erreur getTotalHeureParInter ( int idInter, int idHeure ) : " + e.getMessage ( ) );
 		}
 
 		return somme;
@@ -951,7 +951,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getNbTuple ( String table ) : " + e );
+			System.out.println ( "Erreur getNbTuple ( String table ) : " + e.getMessage ( ) );
 		}
 
 		return nbTuple;
@@ -972,7 +972,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getFonction ( String fonction ) : " + e );
+			System.out.println ( "Erreur getFonction ( String fonction ) : " + e.getMessage ( ) );
 		}
 
 		return o;
@@ -1029,7 +1029,7 @@ public class BD
 					}
 					catch ( Exception e )
 					{
-						System.out.println ( "Ptit problème de conversion : getTableauParticulier ( ) " + e );
+						System.out.println ( "Ptit problème de conversion : getTableauParticulier ( ) " + e.getMessage ( ) );
 					}
 				}
 				cpt++;
@@ -1037,7 +1037,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur getTableauParticulier ( String nomRecherche ) : " + e );
+			System.out.println ( "Erreur getTableauParticulier ( String nomRecherche ) : " + e.getMessage ( ) );
 		}
 
 		return tabObjet;
@@ -1062,7 +1062,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur 1 getHistorique () : " + e );
+			System.out.println ( "Erreur 1 getHistorique () : " + e.getMessage ( ) );
 		}
 
 		return lst;
@@ -1085,7 +1085,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insertAnnee ( String nom ) : " + e );
+			System.out.println ( "Erreur insertAnnee ( String nom ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1105,7 +1105,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert ( Contrat c ) : " + e );
+			System.out.println ( "Erreur insert ( Contrat c ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1123,7 +1123,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert ( Heure h ) : " +  e );
+			System.out.println ( "Erreur insert ( Heure h ) : " +  e.getMessage ( ) );
 		}
 	}
 
@@ -1148,7 +1148,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert(moduleIUT m) : " + e );
+			System.out.println ( "Erreur insert(moduleIUT m) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1169,7 +1169,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert ( Intervenant i ) : " + e );
+			System.out.println ( "Erreur insert ( Intervenant i ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1192,7 +1192,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur insert ( Intervient e ) : " + x );
+			System.out.println ( "Erreur insert ( Intervient e ) : " + x.getMessage ( ) );
 		}
 	}
 
@@ -1213,7 +1213,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur insert ( Horaire h ) : " + e );
+			System.out.println ( "Erreur insert ( Horaire h ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1320,7 +1320,7 @@ public class BD
 		}
 		catch ( SQLException ex )
 		{
-			System.out.println ( ex );
+			System.out.println ( ex.getMessage ( ) );
 		}
 	}
 
@@ -1339,7 +1339,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( e );
+			System.out.println ( e.getMessage ( ) );
 		}
 	}
 
@@ -1381,7 +1381,7 @@ public class BD
 		}
 		catch ( SQLException ex )
 		{
-			System.out.println ( ex );
+			System.out.println ( ex.getMessage ( ) );
 		}
 	}
 
@@ -1417,7 +1417,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur setAnneeActuelle ( String nom ) : " + e );
+			System.out.println ( "Erreur setAnneeActuelle ( String nom ) : " + e.getMessage ( ) );
 		}
 	}
 	
@@ -1438,7 +1438,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Semestre s ) : " + e );
+			System.out.println ( "Erreur update ( Semestre s ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1459,7 +1459,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Contrat c ) : " + e );
+			System.out.println ( "Erreur update ( Contrat c ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1477,7 +1477,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Heure h ) : " + e );
+			System.out.println ( "Erreur update ( Heure h ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1501,7 +1501,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( ModuleIUT m ) : " + e);
+			System.out.println ( "Erreur update ( ModuleIUT m ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1523,7 +1523,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Intervenant i ) : " + e);
+			System.out.println ( "Erreur update ( Intervenant i ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1546,7 +1546,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur update ( Intervient e ) : " + x );
+			System.out.println ( "Erreur update ( Intervient e ) : " + x.getMessage ( ) );
 		}
 	}
 
@@ -1567,7 +1567,7 @@ public class BD
 		}
 		catch ( SQLException e )
 		{
-			System.out.println ( "Erreur update ( Horaire h ) : " + e );
+			System.out.println ( "Erreur update ( Horaire h ) : " + e.getMessage ( ) );
 		}
 	}
 
@@ -1594,7 +1594,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x );
+			System.out.println ( "Erreur nouvelleAnnee ( ) : " + x.getMessage ( ) );
 			return false;
 		}
 	}
@@ -1617,7 +1617,7 @@ public class BD
 		}
 		catch ( SQLException x )
 		{
-			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x );
+			System.out.println ( "Erreur nouvelleAnneeZero ( ) : " + x.getMessage ( ) );
 			return false;
 		}
 	}

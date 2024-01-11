@@ -233,9 +233,6 @@ DELETE FROM Heure       CASCADE;
 (5,0,0,0,0), 
 (6,0,0,0,0); 
 
-INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
-('Nom du contrat',0,0,'1.0'); 
-
 INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
 ('TP','1.0'), 
 ('TD','1.0'), 
