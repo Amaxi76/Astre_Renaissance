@@ -56,6 +56,8 @@ CREATE TABLE ModuleIUT
    typeModule      VARCHAR(20),
    valide          BOOLEAN,
    Id_Semestre     INTEGER NOT NULL,
+   heurePN         DECIMAL(7,1),
+	heureAffecte    DECIMAL(7,1),
 
    PRIMARY KEY(Code_ModuleIUT),
    FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
