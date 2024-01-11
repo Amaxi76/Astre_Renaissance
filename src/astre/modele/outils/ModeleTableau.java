@@ -23,6 +23,10 @@ public class ModeleTableau extends AbstractTableModel
 	private Object[][] tabDonnees;
 	private int        decalage;
 
+	//permet de définir les lignes qui ne sont pas modifiables
+	private boolean[]  ensEditableLigne;
+	//TODO: pareil pour les colonnes un jour
+
 	/*---------------------------------------*/
 	/*              CONSTRUCTEUR             */
 	/*---------------------------------------*/
@@ -152,7 +156,7 @@ public class ModeleTableau extends AbstractTableModel
 		char action = ( char ) this.tabDonnees[index][0];
 
 		// changer le type de donnée
-		if ( action != AJOUTER && action !=  SUPPRIMER )
+		if ( action != AJOUTER && action !=  SUPPRIMER && action != IGNORER )
 			this.tabDonnees[index][0] = MODIFIER;
 
 		// mettre à jour les nouvelles valeurs
