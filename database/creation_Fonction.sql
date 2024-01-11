@@ -855,7 +855,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS f_selectIntervient ( code_Module VARCHAR );
-CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure INTEGER, commentaire VARCHAR ) AS
+CREATE OR REPLACE FUNCTION f_selectIntervient ( code_Module VARCHAR ) RETURNS TABLE ( id_intervenant INTEGER, nom_Intervenant TEXT, nom_Heure VARCHAR, nbSemaine INTEGER, nbGroupe INTEGER, nbHeure NUMERIC(7,2), commentaire VARCHAR ) AS
 $$
 BEGIN
 
@@ -897,4 +897,4 @@ BEGIN
 	WHERE  ho.Code_ModuleIUT = code_module;
 
 END;
-$$ LANGUAGE plpgsql;*/
+$$ LANGUAGE plpgsql;
