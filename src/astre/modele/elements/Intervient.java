@@ -160,10 +160,10 @@ public class Intervient
 	 */
 	public void setCommentaire ( String      commentaire ) { this.commentaire = commentaire; }
 
+	
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
-
 
 	/** Renvoie le descriptif des attributs d'intervient
 	 * @return descriptif des attributs d'intervient
