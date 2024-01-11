@@ -27,7 +27,7 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 
 	public FrameIdentifiant ( )
 	{
-		this.setTitle              ( "Identifiant" );
+		this.setTitle              ( "Connectez-vous" );
 		this.setSize               ( 500, 250      );
 		this.setLocationRelativeTo ( null          );
 
@@ -94,7 +94,7 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 				catch ( Exception x ) { }
 			}
 
-			
+			this.setVisible ( false );
 			new Controleur ( );
 			this.dispose ( );
 		}

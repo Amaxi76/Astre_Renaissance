@@ -1,2 +1,2 @@
 @echo off
-java -jar SAE_AquaLink.jar
+java -jar Astre.jar
