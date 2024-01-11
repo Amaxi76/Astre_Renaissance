@@ -225,11 +225,39 @@ DELETE FROM Heure       CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
-INSERT INTO Semestre VALUES 
-(1, 0, 0, 0, 0), 
-(2, 0, 0, 0, 0), 
-(3, 0, 0, 0, 0), 
-(4, 0, 0, 0, 0), 
-(5, 0, 0, 0, 0), 
-(6, 0, 0, 0, 0); 
-INSERT INTO Heure ( nomHeure, coeffTD ) VALUES('TP' , 1   ),('TD' , 1   ),('CM' , 1.5 ),('REH', 1   ),('SAE', 1   ),('HP' , 1   ),('Tut', 1   );
+ INSERT INTO Semestre VALUES 
+(2,0,0,0,0), 
+(3,0,0,0,0), 
+(4,0,0,0,0), 
+(5,0,0,0,0), 
+(6,0,0,0,0), 
+(1,4,2,80,5); 
+
+INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
+('Nom du contrat',5,10,'1.0'); 
+
+INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
+('TP','1.0'), 
+('TD','1.0'), 
+('CM','1.5'), 
+('REH','1.0'), 
+('SAE','1.0'), 
+('HP','1.0'), 
+('Tut','1.0'); 
+
+INSERT INTO ModuleIUT VALUES 
+('r2','dsds','sdsd','Ressource',false,1); 
+
+INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
+('dsds','yeah',0,0,1); 
+
+INSERT INTO Intervient VALUES 
+(1,6,'r2',5,7,35.0,'...'), 
+(1,3,'r2',1,2,3.0,'...'); 
+
+INSERT INTO Horaire VALUES 
+(3,'r2',20,1,55), 
+(2,'r2',4,1,5), 
+(1,'r2',0,0,0), 
+(6,'r2',0,7,1); 
+
