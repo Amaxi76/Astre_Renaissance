@@ -198,9 +198,6 @@ public abstract class Utilitaire
 		Object[][] test = { {5, 5}, {5, 6}, {7, 3} };
 		Object[]   lign = { 5, 6 };
 		
-		//Object[][] copie = copier ( test, lign );
-		//System.out.println ( test[1].length + " = " + copie[1].length );
-		
 		Object[][] formatage = formater ( test, 10 );
 	}
 
@@ -234,14 +231,6 @@ public abstract class Utilitaire
 
 		return values.toArray();
 	}
-
-	/*public static void main(String[] args)
-	{
-		Object contrat = astre.modele.elements.Contrat.creation( 1, "UnContrat", 6, 15, 1.5);
-		Object[] attributs = Utilitaire.toArray ( contrat );
-	
-		System.out.println ( afficherTableau(attributs) );
-	}*/
 
 
 	/*---------------------------------------*/

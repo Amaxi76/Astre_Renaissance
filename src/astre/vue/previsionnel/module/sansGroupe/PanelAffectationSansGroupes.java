@@ -41,18 +41,26 @@ public class PanelAffectationSansGroupes extends AbstractPanelAffectation
 	{
 		for ( int ligne = 0; ligne < this.tableau.getDonnees ( ).length; ligne++ )
 		{
+			double valeur = 0.0;
 			if ( ( int ) this.tableau.getDonnees ( ) [ligne][colIdIntervenant] != 0 ) 
 			{
 				Heure       h = this.ctrl.getHeure                          ( this.tableau.getDonnees ( ) [ligne][colHeure]        .toString ( )   );
 				Intervenant i = this.ctrl.getIntervenant ( Integer.parseInt ( this.tableau.getDonnees ( ) [ligne][colIdIntervenant].toString ( ) ) );
-				Contrat     c = i.getContrat ( );
 				
-				double coefHeure       = h.getCoefTd ( );
-				double coefIntervenant = h.getNom ( ).equals ( "TP" ) ? c.getRatioTP ( ) : 1;
-				double nbHeure         = Double.parseDouble ( this.tableau.getDonnees ( ) [ligne][colNbHeureOuGroupe] .toString ( ) );
+				if ( i != null && ( char ) this.tableau.getDonnees ( ) [ligne][colModif] != 'S' && ( char ) this.tableau.getDonnees ( ) [ligne][colModif] != 'I' )
+				{
+					Contrat     c = i.getContrat ( );
+				
+					double coefHeure       = h.getCoefTd ( );
+					double coefIntervenant = h.getNom ( ).equals ( "TP" ) ? c.getRatioTP ( ) : 1;
+					double nbHeure         = Double.parseDouble ( this.tableau.getDonnees ( ) [ligne][colNbHeureOuGroupe] .toString ( ) );
 
-				this.tableau.setValueAt ( coefHeure * coefIntervenant * nbHeure, ligne, colEqtd - DECALAGE_TABLEAU );
+					valeur = coefHeure * coefIntervenant * nbHeure;
+				}
 			}
+
+			this.tableau.setValueAt ( valeur, ligne, colEqtd - DECALAGE_TABLEAU );
+
 		}
 	}
 

@@ -139,6 +139,7 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		} );
 
 		this.tableau.addKeyListener ( frmModule );
+
 	}
 	
 	
@@ -286,5 +287,7 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 
 		if ( e.getSource ( ) == this.btnSupprimer )
 			this.tableau.supprimerLigne ( );
+			
+		this.frmModule.majIHM ( );
 	}
 }

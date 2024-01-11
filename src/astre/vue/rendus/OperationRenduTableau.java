@@ -68,6 +68,7 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 				case ModeleTableau.IGNORER   :
 				case ModeleTableau.SUPPRIMER :
 					cellule.setBackground ( COULEUR_SUPPRIMER );
+					//cellule.setEditable(false); TODO: mettre avec le modele et pas le component
 					cellule.setForeground ( Color.BLACK       );
 					break;
 
