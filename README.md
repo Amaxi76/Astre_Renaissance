@@ -16,12 +16,36 @@ Il a été demandé aux étudiants, regroupés par groupe de 5 à 6 personnes, d
 	- Matéo      Sa
 
 
-## Utilisation
-Linux :
-1. chmod u+x astre.sh
-2. ./astre.sh
+## Installation et Exécution
 
-Windows / Linux :
-1. javac '@option.list' '@compile.list'
-2. cd class
-3. java astre.Controleur
+### Linux
+
+1. Décompressez Astre.tar
+2. Accédez au dossier obtenu en utilisant la commande suivante dans le terminal :
+
+   ```bash
+   cd Astre
+
+3. Donnez-vous les droits en utilisant la commande suivante dans le terminal :
+
+   ```bash
+   chmod u+x astre.sh
+
+4. Exécutez l'application en utilisant la commande suivante dans le terminal :
+
+   ```bash
+   ./astre.sh
+
+
+### Windows
+
+1. Décompressez Astre.rar
+2. Accédez au dossier obtenu en utilisant la commande suivante dans le terminal :
+
+   ```bash
+   cd Astre
+
+3. Exécutez l'application en utilisant la commande suivante dans le terminal :
+
+   ```bash
+   astre.bat
