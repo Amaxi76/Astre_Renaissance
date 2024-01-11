@@ -222,7 +222,7 @@ DELETE FROM Heure       CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
- INSERT INTO Semestre VALUES 
+INSERT INTO Semestre VALUES 
 (1,0,0,0,0), 
 (2,0,0,0,0), 
 (3,0,0,0,0), 

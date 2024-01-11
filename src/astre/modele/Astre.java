@@ -241,9 +241,9 @@ public class Astre
 
 			String heure = 
 			"INSERT INTO Heure ( nomHeure, coeffTD ) VALUES" +
-			"('TP' , 1   )," +
-			"('TD' , 1   )," +
 			"('CM' , 1.5 )," +
+			"('TD' , 1   )," +
+			"('TP' , 1   )," +
 			"('REH', 1   )," +
 			"('SAE', 1   )," +
 			"('HP' , 1   )," +

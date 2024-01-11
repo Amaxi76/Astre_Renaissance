@@ -232,4 +232,5 @@ INSERT INTO Semestre VALUES
 (4, 0, 0, 0, 0), 
 (5, 0, 0, 0, 0), 
 (6, 0, 0, 0, 0); 
-INSERT INTO Heure ( nomHeure, coeffTD ) VALUES('TP' , 1   ),('TD' , 1   ),('CM' , 1.5 ),('REH', 1   ),('SAE', 1   ),('HP' , 1   ),('Tut', 1   );
+
+INSERT INTO Heure ( nomHeure, coeffTD ) VALUES('CM' , 1.5 ),('TD' , 1   ),('TP' , 1   ),('REH', 1   ),('SAE', 1   ),('HP' , 1   ),('Tut', 1   );
