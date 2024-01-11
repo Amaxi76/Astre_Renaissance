@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import astre.modele.elements.*;
 
@@ -134,8 +135,6 @@ public class GenerateurFichier
 
 				ecrivain.newLine ( );
 			}
-
-            System.out.println ( "Fichier CSV créé avec succès." );
         } 
 		catch ( IOException e )
 		{
@@ -159,12 +158,10 @@ public class GenerateurFichier
 			{
 				GenererHTMLIntervenant ( i, theme, chemin );
 			}
-
-			System.out.println ( "Tous les intervenants on été exportés sous format HTML" );
 		} 
 		catch ( Exception e ) 
 		{
-			System.out.println ( "Erreur lors de la création d'un fichier HTML" );
+			JOptionPane.showMessageDialog ( null, "Erreur lors de la création d'un fichier HTML" );
 		}
 	}
 
@@ -184,12 +181,10 @@ public class GenerateurFichier
 			{
 				GenererHTMLModule ( m, theme, chemin );
 			}
-
-			System.out.println ( "Tous les modules on été exportés sous format HTML" );
 		} 
 		catch ( Exception e ) 
 		{
-			System.out.println ( "Erreur lors de la création d'un fichier HTML" );
+			JOptionPane.showMessageDialog(null, "Erreur lors de la création d'un fichier HTML");
 		}
 	}
 
@@ -369,8 +364,6 @@ public class GenerateurFichier
 			ecrivain.write ( footer );
 
 			copierFichier("./modele_html/css/styleIntervenant" + theme +".css", chemin +"/styleIntervenant" + theme + ".css");
-
-            System.out.println ( "Fichier HTML créé avec succès." );
         }
 		catch ( IOException e )
 		{
@@ -424,7 +417,7 @@ public class GenerateurFichier
 
 			// Initialisation des variables à écrires
 			String nomHeure = ""                                 ;
-			String heureAct = "\t\t\t<td>Heures Actuelles</td>\n";
+			String heureAct = "\t\t\t<td>Heures Répartie</td>\n" ;
 			String heurePN  = "\t\t\t<td>Heures PN</td>\n"       ;
 
 			int sommePN  = 0;
@@ -500,8 +493,6 @@ public class GenerateurFichier
 			ecrivain.write ( footer );
 
 			copierFichier("./modele_html/css/styleModule" + theme +".css", chemin +"/styleModule" + theme + ".css");
-
-            System.out.println ( "Fichier HTML créé avec succès." );
         } 
 		catch ( IOException e )
 		{

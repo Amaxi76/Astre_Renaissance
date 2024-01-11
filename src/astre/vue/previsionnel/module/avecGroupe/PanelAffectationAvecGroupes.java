@@ -58,7 +58,7 @@ public class PanelAffectationAvecGroupes extends AbstractPanelAffectation
 	{
 		Map<String, Double> map = super.creerMapIntitule ( );
 
-		map.put ( "HP", 1.0 );
+		map.put ( "HP", 0.0 );
 
 		return map;
 	}
@@ -72,22 +72,30 @@ public class PanelAffectationAvecGroupes extends AbstractPanelAffectation
 	 */
 	@Override
 	public void majTotEqtd ( )
-	{		
+	{
+		
 		for ( int ligne = 0; ligne < this.tableau.getDonnees ( ).length; ligne++ )
 		{
-			if ( ( int ) this.tableau.getDonnees ( ) [ligne][colIdIntervenant] != 0 ) 
+			double valeur = 0.0;
+			if ( ( int ) this.tableau.getDonnees ( ) [ligne][colIdIntervenant] != 0 )
 			{
 				Heure       h = this.ctrl.getHeure       (         this.tableau.getDonnees ( ) [ligne][colHeure        ] .toString ( ) );
 				Intervenant i = this.ctrl.getIntervenant ( ( int ) this.tableau.getDonnees ( ) [ligne][colIdIntervenant]               );
-				Contrat     c = i.getContrat ( );
 
-				double coefHeure       = h.getCoefTd ( );
-				double coefIntervenant = h.getNom ( ).equals ( "TP" ) ? c.getRatioTP ( ) : 1;
-				double nbSemaine       = Double.parseDouble ( this.tableau.getDonnees ( ) [ligne][colNbSemaine].toString ( ) );
-				double nbHeure         = h.getNom ( ).equals ( "HP" ) ? 1 : this.frmModule.getNbHeureSemaine ( h.getNom ( ) );
-				double nbGroupe        = Double.parseDouble ( this.tableau.getDonnees ( ) [ligne][colNbHeureOuGroupe].toString ( ) );
+				if ( i != null && ( char ) this.tableau.getDonnees ( ) [ligne][colModif] != 'S' && ( char ) this.tableau.getDonnees ( ) [ligne][colModif] != 'I' )
+				{
+					Contrat     c = i.getContrat ( );
+
+					double coefHeure       = h.getCoefTd ( );
+					double coefIntervenant = h.getNom ( ).equals ( "TP" ) ? c.getRatioTP ( ) : 1;
+					double nbSemaine       = Double.parseDouble ( this.tableau.getDonnees ( ) [ligne][colNbSemaine].toString ( ) );
+					double nbHeure         = h.getNom ( ).equals ( "HP" ) ? 1 : this.frmModule.getNbHeureSemaine ( h.getNom ( ) );
+					double nbGroupe        = Double.parseDouble ( this.tableau.getDonnees ( ) [ligne][colNbHeureOuGroupe].toString ( ) );
+
+					valeur = coefHeure * coefIntervenant * nbSemaine * nbHeure * nbGroupe;
+				}
 				
-				this.tableau.setValueAt ( coefHeure * coefIntervenant * nbSemaine * nbHeure * nbGroupe, ligne, colEqtd - DECALAGE_TABLEAU );
+				this.tableau.setValueAt ( valeur, ligne, colEqtd - DECALAGE_TABLEAU );
 			}
 		}
 	}
