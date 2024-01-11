@@ -38,9 +38,6 @@ public class ModeleTableau extends AbstractTableModel
 		this.ensModifiable = ensModifiable;
 		this.decalage      = decalage;
 		this.tabDonnees    = tabDonnees;
-
-		// affichage des tableaux pour les tests
-		// System.out.println(this.toString());
 	}
 
 	/*---------------------------------------*/

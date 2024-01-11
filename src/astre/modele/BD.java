@@ -206,9 +206,6 @@ public class BD
 				// exécuter la partie du script SQL
 				if (ligne.contains(";") && !estPLPGSQL) 
 				{
-					// Affichez la requête avant de l'exécuter
-					System.out.println(scriptPart);
-	
 					// Exécuter la requête
 					st.executeUpdate(scriptPart.toString());
 	
@@ -216,8 +213,6 @@ public class BD
 					scriptPart = new StringBuilder();
 				}
 			}
-	
-			System.out.println("Script SQL exécuté avec succès.");
 		} catch (Exception e) {
 			e.getMessage();
 		}
