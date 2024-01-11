@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -125,6 +126,23 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
+		if ( this.txtNom.getText() == null || this.txtNom.getText( ).equals("") )
+		{
+			JOptionPane.showConfirmDialog ( this, "Impossible de créer une année sans nom",  "Création Impossible", JOptionPane.OK_CANCEL_OPTION );
+			return;
+		}
+		
+		//empeche de creer 2 années avec le meme nom
+		ArrayList<String> lst = (ArrayList<String>) this.ctrl.getEnsAnnee();
+		for ( String s : lst )
+		{
+			if ( s.equals( this.txtNom.getText ( ) ) )
+			{
+				JOptionPane.showConfirmDialog ( this, "Impossible de créer 2 années avec le meme nom !",  "Création Impossible", JOptionPane.OK_CANCEL_OPTION );
+				return;
+			}
+		}
+		
 		if ( e.getSource ( ) == this.btnZero ) 
 		{
 			int retour1 = JOptionPane.showConfirmDialog ( this, "ATTENTION \n Cela lancera une nouvelle année sans aucune données !",  "Êtes-vous certains de vouloir commencer une nouvelle année ?", JOptionPane.OK_CANCEL_OPTION );

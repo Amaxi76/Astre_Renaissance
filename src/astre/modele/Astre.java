@@ -357,13 +357,30 @@ public class Astre
 
 		// Gestion des semestres
 
-		String semestre = "INSERT INTO Semestre VALUES \n";
-
+		String semestre = "";
 		boolean firstIteration = true;
-		for (Semestre s : this.bd.getSemestres ( ) )
+
+		if ( ! this.bd.getSemestres ( ).isEmpty ( ) )
 		{
-			if ( !firstIteration ) { semestre += ", \n"; } else { firstIteration = false; }
-			semestre += "(" + s.getIdSemestre ( ) + "," + s.getNbGroupeTP ( ) + "," + s.getNbGroupeTD ( ) + "," + s.getNbEtudiant ( ) + "," + s.getNbSemaine ( ) + ")";
+			semestre = "INSERT INTO Semestre VALUES \n";
+
+			for (Semestre s : this.bd.getSemestres ( ) )
+			{
+				if ( !firstIteration ) { semestre += ", \n"; } else { firstIteration = false; }
+				semestre += "(" + s.getIdSemestre ( ) + "," + s.getNbGroupeTP ( ) + "," + s.getNbGroupeTD ( ) + "," + s.getNbEtudiant ( ) + "," + s.getNbSemaine ( ) + ")";
+			}
+
+		}
+		else
+		{
+			semestre = 
+			"INSERT INTO Semestre VALUES \n" +
+			"(1, 0, 0, 0, 0), \n"            +
+			"(2, 0, 0, 0, 0), \n"            +
+			"(3, 0, 0, 0, 0), \n"            +
+			"(4, 0, 0, 0, 0), \n"            +
+			"(5, 0, 0, 0, 0), \n"            +
+			"(6, 0, 0, 0, 0); \n"            ;
 		}
 
 		semestre += "; \n\n";

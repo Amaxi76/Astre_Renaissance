@@ -94,7 +94,7 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 				catch ( Exception x ) { }
 			}
 
-			
+			this.setVisible ( false );
 			new Controleur ( );
 			this.dispose ( );
 		}
