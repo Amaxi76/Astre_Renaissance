@@ -9,6 +9,14 @@
 /*                  Création des tables                 */
 /* ---------------------------------------------------- */
 
+CREATE TABLE Annee
+(
+	nom      VARCHAR(15),
+	actuelle BOOLEAN,
+
+	PRIMARY KEY  (nom)
+);
+
 CREATE TABLE Semestre
 (
 	Id_Semestre SERIAL,

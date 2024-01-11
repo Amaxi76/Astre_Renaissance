@@ -126,20 +126,36 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 
 	public void actionPerformed ( ActionEvent e )
 	{
-		if ( this.txtNom.getText() == null || this.txtNom.getText( ).equals("") )
+		if ( e.getSource ( ) == this.btnValider && this.cbAnnee.getSelectedIndex( ) != -1 ) 
 		{
-			JOptionPane.showConfirmDialog ( this, "Impossible de créer une année sans nom",  "Création Impossible", JOptionPane.OK_CANCEL_OPTION );
-			return;
+			this.ctrl.changerAnnee ( this.cbAnnee.getSelectedItem ( ).toString ( ) );
+			AFrame.retourAccueil ( ctrl );
+			this.dispose ( );
 		}
-		
-		//empeche de creer 2 années avec le meme nom
-		ArrayList<String> lst = (ArrayList<String>) this.ctrl.getEnsAnnee();
-		for ( String s : lst )
+
+		if ( e.getSource ( ) == this.btnAnnuler ) 
 		{
-			if ( s.equals( this.txtNom.getText ( ) ) )
+			AFrame.retourAccueil ( ctrl );
+			this.dispose ( );
+		}
+
+		if ( e.getSource ( ) == this.btnZero || e.getSource ( ) == this.btnNew )
+		{
+			if ( this.txtNom.getText() == null || this.txtNom.getText( ).equals("") )
 			{
-				JOptionPane.showConfirmDialog ( this, "Impossible de créer 2 années avec le meme nom !",  "Création Impossible", JOptionPane.OK_CANCEL_OPTION );
+				JOptionPane.showConfirmDialog ( this, "Impossible de créer une année sans nom",  "Création Impossible", JOptionPane.OK_CANCEL_OPTION );
 				return;
+			}
+			
+			//empeche de creer 2 années avec le meme nom
+			ArrayList<String> lst = (ArrayList<String>) this.ctrl.getEnsAnnee();
+			for ( String s : lst )
+			{
+				if ( s.equals( this.txtNom.getText ( ) ) )
+				{
+					JOptionPane.showConfirmDialog ( this, "Impossible de créer 2 années avec le meme nom !",  "Création Impossible", JOptionPane.OK_CANCEL_OPTION );
+					return;
+				}
 			}
 		}
 		
@@ -187,20 +203,5 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 			}
 
 		}
-
-		if ( e.getSource ( ) == this.btnValider && this.cbAnnee.getSelectedIndex( ) != -1 ) 
-		{
-			this.ctrl.changerAnnee ( this.cbAnnee.getSelectedItem ( ).toString ( ) );
-			AFrame.retourAccueil ( ctrl );
-			this.dispose ( );
-		}
-
-		if ( e.getSource ( ) == this.btnAnnuler ) 
-		{
-			AFrame.retourAccueil ( ctrl );
-			this.dispose ( );
-		}
 	}
-
-	
 }
