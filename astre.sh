@@ -1,4 +1,1 @@
-javac @option.list @compile.list
-
-cd class
-java astre.Controleur
+java -jar SAE_AquaLink.jar

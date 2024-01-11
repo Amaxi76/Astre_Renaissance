@@ -21,7 +21,5 @@ Linux :
 1. chmod u+x astre.sh
 2. ./astre.sh
 
-Windows / Linux :
-1. javac '@option.list' '@compile.list'
-2. cd class
-3. java astre.Controleur
+Windows :
+1. astre.bat
