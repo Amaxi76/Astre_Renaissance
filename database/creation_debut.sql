@@ -9,109 +9,103 @@
 /*                  Création des tables                 */
 /* ---------------------------------------------------- */
 
-CREATE TABLE Annee
-(
-   nom      VARCHAR(15),
-   actuelle BOOLEAN,
-
-   PRIMARY KEY  (nom)
-);
-
 CREATE TABLE Semestre
 (
-   Id_Semestre SERIAL,
-   nbGroupeTP  INTEGER NOT NULL,
-   nbGroupeTD  INTEGER NOT NULL,
-   nbEtud      INTEGER,
-   nbSemaine   INTEGER,
+	Id_Semestre SERIAL,
+	nbGroupeTP  INTEGER NOT NULL,
+	nbGroupeTD  INTEGER NOT NULL,
+	nbEtud      INTEGER,
+	nbSemaine   INTEGER,
 
-   PRIMARY KEY(Id_Semestre)
+	PRIMARY KEY(Id_Semestre)
 );
 
 CREATE TABLE Contrat
 ( 
-   Id_Contrat      SERIAL,
-   nomContrat      VARCHAR(50)  NOT NULL,
-   hServiceContrat INTEGER,
-   hMaxContrat     INTEGER,
-   ratioTP         DOUBLE PRECISION,
+	Id_Contrat      SERIAL,
+	nomContrat      VARCHAR(50)  NOT NULL,
+	hServiceContrat INTEGER,
+	hMaxContrat     INTEGER,
+	ratioTP         DOUBLE PRECISION,
 
-   PRIMARY KEY(Id_Contrat)
+	PRIMARY KEY(Id_Contrat)
 );
 
 CREATE TABLE Heure
 (
-   Id_Heure SERIAL,
-   nomHeure VARCHAR(50),
-   coeffTD  DOUBLE PRECISION,
+	Id_Heure SERIAL,
+	nomHeure VARCHAR(50),
+	coeffTD  DOUBLE PRECISION,
 
-   PRIMARY KEY(Id_Heure)
+	PRIMARY KEY(Id_Heure)
 );
 
 CREATE TABLE ModuleIUT
 (
-   Code_ModuleIUT  VARCHAR(5),
-   libLong         VARCHAR(60),
-   libCourt        VARCHAR(15),
-   typeModule      VARCHAR(20),
-   valide          BOOLEAN,
-   Id_Semestre     INTEGER NOT NULL,
+	Code_ModuleIUT  VARCHAR(5),
+	libLong         VARCHAR(60),
+	libCourt        VARCHAR(15),
+	typeModule      VARCHAR(20),
+	valide          BOOLEAN,
+	Id_Semestre     INTEGER NOT NULL,
+	heurePN         DECIMAL(7,1),
+	heureAffecte    DECIMAL(7,1),
 
-   PRIMARY KEY(Code_ModuleIUT),
-   FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
+	PRIMARY KEY(Code_ModuleIUT),
+	FOREIGN KEY(Id_Semestre) REFERENCES Semestre(Id_Semestre)
 );
 
 
 CREATE TABLE Intervenant
 (
-   Id_Intervenant SERIAL,
-   nom            VARCHAR(50)  NOT NULL,
-   prenom         VARCHAR(50)  NOT NULL,
-   hService       INTEGER      NOT NULL,
-   hMax           INTEGER      NOT NULL,
-   Id_Contrat     INTEGER      NOT NULL,
+	Id_Intervenant SERIAL,
+	nom            VARCHAR(50)  NOT NULL,
+	prenom         VARCHAR(50)  NOT NULL,
+	hService       INTEGER      NOT NULL,
+	hMax           INTEGER      NOT NULL,
+	Id_Contrat     INTEGER      NOT NULL,
 
-   PRIMARY KEY(Id_Intervenant),
-   FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat)
+	PRIMARY KEY(Id_Intervenant),
+	FOREIGN KEY(Id_Contrat) REFERENCES Contrat(Id_Contrat)
 );
 
 CREATE TABLE Intervient
 (
-   Id_Intervenant INTEGER,
-   Id_Heure       INTEGER ,
-   Code_ModuleIUT VARCHAR(5) ,
-   nbSemaine      INTEGER,
-   nbGroupe       INTEGER,
-   nbHeure        INTEGER,
-   commentaire    VARCHAR(50) ,
+	Id_Intervenant INTEGER,
+	Id_Heure       INTEGER ,
+	Code_ModuleIUT VARCHAR(5) ,
+	nbSemaine      INTEGER,
+	nbGroupe       INTEGER,
+	nbHeure        DECIMAL(7,2),
+	commentaire    VARCHAR(50) ,
 
-   PRIMARY KEY(Id_Intervenant, Id_Heure, Code_ModuleIUT),
-   FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
-   FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)            ,
-   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)  
+	PRIMARY KEY(Id_Intervenant, Id_Heure, Code_ModuleIUT),
+	FOREIGN KEY(Id_Intervenant) REFERENCES Intervenant(Id_Intervenant),
+	FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)            ,
+	FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT)  
 );
 
 
 CREATE TABLE Horaire
 ( 
-   Id_Heure             INTEGER,
-   Code_ModuleIUT       VARCHAR(5),
-   nbHeurePN            INTEGER,
-   nbHeureRepartie      INTEGER,
-   nbSemaine            INTEGER,
-   
-   PRIMARY KEY(Id_Heure, Code_ModuleIUT),
-   FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)           ,
-   FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) 
+	Id_Heure             INTEGER,
+	Code_ModuleIUT       VARCHAR(5),
+	nbHeurePN            INTEGER,
+	nbHeureRepartie      INTEGER,
+	nbSemaine            INTEGER,
+	
+	PRIMARY KEY(Id_Heure, Code_ModuleIUT),
+	FOREIGN KEY(Id_Heure)       REFERENCES Heure(Id_Heure)           ,
+	FOREIGN KEY(Code_ModuleIUT) REFERENCES ModuleIUT(Code_ModuleIUT) 
 );
 
 CREATE TABLE Historique
 (
-   Id_Historique      SERIAL,
-   dateModification   TIMESTAMP     NOT NULL,
-   commentaire        VARCHAR(150)  NOT NULL,
+	Id_Historique      SERIAL,
+	dateModification   TIMESTAMP     NOT NULL,
+	commentaire        VARCHAR(150)  NOT NULL,
 
-   PRIMARY KEY(Id_Historique)
+	PRIMARY KEY(Id_Historique)
 );
 
 /* Création des trigger */
