@@ -222,10 +222,24 @@ DELETE FROM Heure       CASCADE;
 /*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
-INSERT INTO Semestre VALUES 
-(1, 0, 0, 0, 0), 
-(2, 0, 0, 0, 0), 
-(3, 0, 0, 0, 0), 
-(4, 0, 0, 0, 0), 
-(5, 0, 0, 0, 0), 
-(6, 0, 0, 0, 0); 
+ INSERT INTO Semestre VALUES 
+(1,0,0,0,0), 
+(2,0,0,0,0), 
+(3,0,0,0,0), 
+(4,0,0,0,0), 
+(5,0,0,0,0), 
+(6,0,0,0,0); 
+
+INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
+('S�ance d'essai',45,70,'1.0'); 
+
+INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
+('TP','1.0'), 
+('TD','1.0'), 
+('CM','1.5'), 
+('REH','1.0'), 
+('SAE','1.0'), 
+('HP','1.0'), 
+('Tut','1.0'), 
+('Nom de l'heure','1.0'); 
+
