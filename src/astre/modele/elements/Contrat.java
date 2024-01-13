@@ -1,10 +1,8 @@
 package astre.modele.elements;
 
-import javax.swing.JOptionPane;
-
-/** Classe Contrat 
+/** Classe Contrat
   * @author : Maximilien Lesterlin, Alizéa Lebaron
-  * @version : 1.0 - 19/12/2023
+  * @version : 2.0 - 13/01/2024
   * @date : 06/12/2023
   */
 
@@ -17,11 +15,11 @@ public class Contrat
 	private double ratioTP;
 
 	/** Constructeur unique de contrat
-	 * @param id
-	 * @param nom
-	 * @param heureServiceContrat
-	 * @param heureMaxContrat
-	 * @param ratioTP
+	 * @param id identifiant du contrat
+	 * @param nom nom du contrat
+	 * @param heureServiceContrat nombre d'heure de service du contrat
+	 * @param heureMaxContrat nombre d'heure maximum du contrat
+	 * @param ratioTP ratio TP du contrat
 	 */
 	private Contrat ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
@@ -32,66 +30,69 @@ public class Contrat
 		this.ratioTP             = ratioTP;
 	}
 
+
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	/** Retourne l'ID d'un contrat
-	 * @return
+	/** Retourne l'identifiant d'un contrat
+	 * @return L'identifiant du contrat
 	 */
 	public int    getId                  ( ) { return this.id;                  }
 
 	/** Retourne le nom d'un contrat
-	 * @return
+	 * @return Le nom du contrat
 	 */
 	public String getNom                 ( ) { return this.nom;                 }
 
 	/** Retourne le nombre d'heure service d'un contrat
-	 * @return
+	 * @return Le nombre d'heure service du contrat
 	 */
 	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
 
-	/** Retourne le nombre d'heure Maximales d'un contrat
-	 * @return
+	/** Retourne le nombre d'heure maximales d'un contrat
+	 * @return Le nombre d'heure maximales du contrat
 	 */
 	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
 
 	/** Retourne le ratio TP d'un contrat
-	 * @return
+	 * @return Le ratio TP du contrat
 	 */
 	public double getRatioTP             ( ) { return this.ratioTP;             }
+
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/** Permet de modifier les heure de service d'un contrat
-	 * @param heureServiceContrat
+	/** Permet de modifier l'ID
+	 * @param id l'ID
 	 */
-	public void setHeureServiceContrat ( int    heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
-
+	public void setId                  ( int    id                  ) { this.id                  = id;                  }
+	
 	/** Permet de modifier le nom d'un contrat
-	 * @param nom
+	 * @param nom le nom du contrat
 	 */
 	public void setNom                 ( String nom                 ) { this.nom                 = nom;                 }
 
+	/** Permet de modifier les heure de service d'un contrat
+	 * @param heureServiceContrat le nombre d'heure de service
+	 */
+	public void setHeureServiceContrat ( int    heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
+
 	/** Permet de modifier le nombre d'heure maximum d'un contrat
-	 * @param heureMaxContrat
+	 * @param heureMaxContrat le nombre d'heure maximum
 	 */
 	public void setHeureMaxContrat     ( int    heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
 
 	/** Permet de modifier le ratio TP d'un contrat 
-	 * @param ratioTP
+	 * @param ratioTP le ratio TP
 	 */
 	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
 
-	/** Permet de modifier l'ID
-	 * @param id
-	 */
-	public void setId                  ( int    id                  ) { this.id                  = id;                  }
 
 	/*---------------------------------------*/
-	/*                METHODES               */
+	/*                FACTORY                */
 	/*---------------------------------------*/
 
 	/** Fabrique de contrat à partir d'un tableau
@@ -106,15 +107,15 @@ public class Contrat
 		Object hmc = contrat[3];
 		Object rt  = contrat[4];
 
-		if ( ( i != null && ! ( i instanceof Integer ) ) ||  ! ( n instanceof String ) || ! ( hsc instanceof Integer ) || ! ( hmc instanceof Integer ) || ! ( rt instanceof Number ) )
-		{
-			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les données du contrat ne sont pas du bon type" );
-		}
+		if ( ( i != null && ! ( i instanceof Integer ) ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
+		if ( ! ( n   instanceof String )                 ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
+		if ( ! ( hsc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
+		if ( ! ( hmc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
+		if ( ! ( rt  instanceof Number )                 ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
 		
-		int    id                  = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
-		int    heureServiceContrat = Integer.parseInt ( hsc.toString ( ) );
-		int    heureMaxContrat     = Integer.parseInt ( hmc.toString ( ) );
+		int    id                  = ( i == null ) ? 0 : ( int ) i;
+		int    heureServiceContrat = ( int ) hsc;
+		int    heureMaxContrat     = ( int ) hmc;
 		String nom                 = n.toString ( );
 		double ratioTP             = Double.parseDouble ( rt.toString ( ) );
 
@@ -122,59 +123,53 @@ public class Contrat
 	}
 
 	/** Fabrique de contrat prenant en paramètres toutes les données d'un contrat
-	 * @param id
-	 * @param nom
-	 * @param heureServiceContrat
-	 * @param heureMaxContrat
-	 * @param ratioTP
+	 * @param id l'indentifiant du contrat
+	 * @param nom le nom du contrat
+	 * @param heureServiceContrat le nombre d'heure de service du contrat
+	 * @param heureMaxContrat le nombre d'heure maximum du contrat
+	 * @param ratioTP le ratio TP du contrat
 	 * @return Le contrat en question
 	 */
 	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
-		if ( nom.equals ( "" ) )
-		{
-			JOptionPane.showMessageDialog ( null, "Une des données est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Une des données est vide" );
-		}
+		// Teste la validité du nom (non vide)
+		if ( nom.equals ( "" )                     ) throw new IllegalArgumentException ( "Le nom du contrat n'est pas rempli"                     );
 			
-		//hserv < 0 ou hmax < 0
-		if ( heureServiceContrat < 0 || heureMaxContrat < 0 )
-		{
-			JOptionPane.showMessageDialog ( null, "Les heures de services et heures max doivent etre touts 2 supérieur à 0.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les heures de services et heures max doivent etre touts 2 supérieur à 0" );
-		}
-			
-		//hserv > hmax
-		if ( heureServiceContrat > heureMaxContrat )
-		{
-			JOptionPane.showMessageDialog ( null, "Les heures de services sont supérieur à ses heures max.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
-		}
+		// Teste la validité des heures du service du contrat pour qu'elles soient supérieur à 0
+		if ( heureServiceContrat < 0               ) throw new IllegalArgumentException ( "Les heures de services doivent être supérieur à 0"      );
+
+		// Teste la validité des heures max du contrat pour qu'elles soient supérieur à 0
+		if ( heureMaxContrat     <= 0              ) throw new IllegalArgumentException ( "Les heures max doivent être supérieur à 0"              );
+
+		// Teste si les heures de services sont supérieur aux heures max
+		if ( heureServiceContrat > heureMaxContrat ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
 
 		// Coef TD
-		if ( ratioTP <= 0 )
-		{
-			JOptionPane.showMessageDialog ( null, "Le coef TD ne peut pas être de 0.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0" );
-		}
+		if ( ratioTP <= 0 )                          throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0"                       );
 		
 		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
-	/** Donne une description d'un contrat
-	 * @return
+	/*---------------------------------------*/
+	/*                METHODES               */
+	/*---------------------------------------*/
+
+	/** Indique si deux contrats sont égaux
+	 * @return true si les deux contrats sont égaux, false sinon
 	 */
 	@Override
 	public boolean equals ( Object o )
 	{
-		if ( o == null ) return false;
-		if ( o == this ) return true;
-
-		if ( !( o instanceof Contrat ) ) return false;
+		if ( ! ( o instanceof Contrat ) ) return false;
+		if ( o == this                  ) return true;
 
 		Contrat c = ( Contrat ) o;
 
-		return this.id == c.id && this.nom.equals ( c.nom ) && this.heureServiceContrat == c.heureServiceContrat && this.heureMaxContrat == c.heureMaxContrat && this.ratioTP == c.ratioTP;
+		return this.id                  == c.id                  &&
+		       this.nom.equals ( c.nom )                         &&
+		       this.heureServiceContrat == c.heureServiceContrat &&
+		       this.heureMaxContrat     == c.heureMaxContrat     &&
+		       this.ratioTP             == c.ratioTP;
 	}
 
 	/** Donne une description d'un contrat
@@ -183,10 +178,6 @@ public class Contrat
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "Nom : %-22s - "                 , this.nom                 ) +
-		       String.format ( "Heure Service Contrat : %02d - ", this.heureServiceContrat ) +
-		       String.format ( "Heure Max Contrat : %02d - "    , this.heureMaxContrat     ) +
-		       String.format ( "Ratio TP : %,.2f"               , this.ratioTP             ) ;
+		return String.format( "Contrat%nNom                   : %-22s%nHeure service contrat : %02d%nHeure max contrat     : %02d%nRatio TP              : %,.2f", this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
 	}
-	
 }

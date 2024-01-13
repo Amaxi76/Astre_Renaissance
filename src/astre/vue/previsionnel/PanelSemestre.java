@@ -15,8 +15,6 @@ import astre.modele.elements.Semestre;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Saisie;
 import astre.vue.outils.Tableau;
-import astre.vue.previsionnel.module.sansGroupe.PanelRepartitionSansGroupes;
-import astre.vue.rendus.OperationRenduTableauIntervenants;
 import astre.vue.rendus.OperationRenduTableauSemestre;
 
 /** Classe PanelEnsSemestre
@@ -85,7 +83,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 		// Ajout d'une bordure vide pour aerer et améliorer l'ergonomie
 		JPanel pnlListeModule = new JPanel ( new BorderLayout ( ) );
-		pnlListeModule.setBorder ( new EmptyBorder( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
+		pnlListeModule.setBorder ( new EmptyBorder ( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
 		Object[] typeDefaut = { "", 0, "", "", "", false };
 		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
@@ -159,7 +157,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 
 	public String getModuleSelection ( )
 	{
-		if ( this.tableauEnsembleModule.getSelectedRow ( ) != -1)
+		if ( this.tableauEnsembleModule.getSelectedRow ( ) != -1 )
 		{
 			return this.tableauEnsembleModule.getValueAt ( this.tableauEnsembleModule.getSelectedRow ( ), 0 ).toString ( );
 		}

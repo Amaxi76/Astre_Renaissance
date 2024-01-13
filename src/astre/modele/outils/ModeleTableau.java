@@ -17,8 +17,8 @@ public class ModeleTableau extends AbstractTableModel
 	public static final char AJOUTER   = 'A';
 	public static final char DEFAUT    = 'D';
 
-	private String[]   ensEntete;
-	private Object[]   ensDefaut;
+	private String []  ensEntete;
+	private Object []  ensDefaut;
 	private boolean[]  ensModifiable;
 	private Object[][] tabDonnees;
 	private int        decalage;
@@ -204,6 +204,4 @@ public class ModeleTableau extends AbstractTableModel
 
 		return sRet;
 	}
-
-
 }
