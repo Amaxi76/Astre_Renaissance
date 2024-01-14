@@ -242,7 +242,7 @@ public class BD
 				try
 				{
 					if ( type.equals ( Semestre.class )     )
-						lst.add ( type.cast ( new Semestre ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ),rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+						lst.add ( type.cast ( Semestre.creation ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 
 					if ( type.equals ( Contrat.class )      )
 						lst.add ( type.cast ( Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) ) );

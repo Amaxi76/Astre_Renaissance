@@ -2,6 +2,7 @@ package astre.modele.outils;
 
 import astre.modele.elements.Contrat;
 import astre.modele.elements.Heure;
+import astre.modele.elements.Semestre;
 
 public class ClasseDeTest
 {
@@ -30,6 +31,10 @@ public class ClasseDeTest
 
 		System.out.println(h);
 		System.out.println(h2);
+
+		Semestre s = Semestre.creation(0, 0, 0, 0, 0);
+
+		System.out.println(s);
 
 	}
 }

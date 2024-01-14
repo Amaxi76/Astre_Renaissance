@@ -30,7 +30,8 @@ public class Heure
 	/*                FACTORY                */
 	/*---------------------------------------*/
 
-	/** Crée une heure en prenant en paramètre un tableau d'objet.
+	/** Fabrique d'heure à partir d'un tableau
+	 * @param heure Prend un tableau d'objet définissant l'heure
 	 * @return L'heure créée si les données du tableau sont correctes.
 	 */
 	public static Heure creation ( Object[] heure )
@@ -50,7 +51,10 @@ public class Heure
 		return Heure.creation ( id, nom, coef );
 	}
 
-	/** Crée une heure en prenant en paramètre un id, un nom et un coefficient équivalent TD.
+	/** Fabrique d'heure à partir de données
+	 * @param id l'identifiant de l'heure
+	 * @param nom le nom de l'heure
+	 * @param coefTD le coefficient équivalent TD de l'heure
 	 * @return L'heure créée si les données ont une valeur et que le coefficient TD est positif.
 	 */
 	public static Heure creation ( int id, String nom, double coefTD )

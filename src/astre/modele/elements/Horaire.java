@@ -35,7 +35,8 @@ public class Horaire
 	/*                FACTORY                */
 	/*---------------------------------------*/
 
-	/** Crée un horraire en prenant en paramètre un tableau d'objet.
+	/** Fabrique d'horaire à partir d'un tableau
+	 * @param horaire Prend un tableau d'objet définissant l'horaire
 	 * @return L'horaire créée si les données du tableau sont correctes.
 	 */
 	public static Horaire creation ( Object[] horaire )
@@ -61,7 +62,12 @@ public class Horaire
 		return Horaire.creation ( heure, module, nbHeurePN, nbHeureRepartie, nbSemaine );
 	}
 
-	/** Crée un horaire en prenant en paramètre une heure, un module, un nombre d'heure PN, un nombre de semaine et un nombre d'heure répartie.
+	/** Fabrique d'horaire à partir de données
+	 * @param heure l'heure de l'horaire
+	 * @param module le module de l'horaire
+	 * @param nbHeurePN le nombre d'heure PN de l'horaire
+	 * @param nbSemaine le nombre de semaine de l'horaire
+	 * @param nbHeure le nombre d'heure répartie de l'horaire
 	 * @return L'horaire créée si les données ont une valeur et que le nombre d'heure PN, le nombre de semaine et le nombre d'heure répartie sont positifs.
 	 */
 	public static Horaire creation ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureRepartie, int nbSemaine )

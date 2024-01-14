@@ -38,6 +38,10 @@ public class Intervenant
 	/*                FACTORY                */
 	/*---------------------------------------*/
 
+	/** Fabrique d'intervenant à partir d'un tableau
+	 * @param intervenant Prend un tableau d'objet définissant l'intervenant
+	 * @return L'intervenant crée si les données du tableau sont correctes.
+	 */
 	public static Intervenant creation ( Object[] intervenant )
 	{
 		Object i  = intervenant[0];
@@ -64,6 +68,15 @@ public class Intervenant
 		return Intervenant.creation ( id, nom, prenom, heureService, heureMaximum, contrat);
 	}
 
+	/** Fabrique d'intervenant prenant en paramètres toutes les données d'un intervenant
+	 * @param id l'identifiant de l'intervenant
+	 * @param nom le nom de l'intervenant
+	 * @param prenom le prénom de l'intervenant
+	 * @param heureService le nombre d'heure de service de l'intervenant
+	 * @param heureMaximum le nombre d'heure maximum de l'intervenant
+	 * @param contrat le contrat de l'intervenant
+	 * @return L'intervenant crée si les données ont une valeur et que le nombre d'heure de service et le nombre d'heure maximum sont positifs.
+	 */
 	public static Intervenant creation ( int id, String nom, String prenom, int heureService, int heureMaximum, Contrat contrat)
 	{
 		if ( nom   .equals ( "" )        ) throw new IllegalArgumentException ( "Le nom doit être reseigné"                              );
