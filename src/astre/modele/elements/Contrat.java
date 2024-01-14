@@ -29,6 +29,66 @@ public class Contrat
 		this.heureMaxContrat     = heureMaxContrat;
 		this.ratioTP             = ratioTP;
 	}
+	
+
+	/*---------------------------------------*/
+	/*                FACTORY                */
+	/*---------------------------------------*/
+
+	/** Fabrique de contrat à partir d'un tableau
+	 * @param contrat Prend un tableau d'objet définissant le contrat
+	 * @return Le contrat contenu dans le tableau d'objet
+	 */
+	public static Contrat creation ( Object[] contrat )
+	{
+		Object i   = contrat[0];
+		Object n   = contrat[1];
+		Object hsc = contrat[2];
+		Object hmc = contrat[3];
+		Object rt  = contrat[4];
+
+		if ( ( i != null && ! ( i instanceof Integer ) ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
+		if ( ! ( n   instanceof String )                 ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
+		if ( ! ( hsc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
+		if ( ! ( hmc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
+		if ( ! ( rt  instanceof Number )                 ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
+		
+		int    id                  = ( i == null ) ? 0 : ( int ) i;
+		int    heureServiceContrat = ( int ) hsc;
+		int    heureMaxContrat     = ( int ) hmc;
+		String nom                 = n.toString ( );
+		double ratioTP             = Double.parseDouble ( rt.toString ( ) );
+
+		return Contrat.creation ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
+	}
+
+	/** Fabrique de contrat prenant en paramètres toutes les données d'un contrat
+	 * @param id l'indentifiant du contrat
+	 * @param nom le nom du contrat
+	 * @param heureServiceContrat le nombre d'heure de service du contrat
+	 * @param heureMaxContrat le nombre d'heure maximum du contrat
+	 * @param ratioTP le ratio TP du contrat
+	 * @return Le contrat en question
+	 */
+	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
+	{
+		// Teste la validité du nom (non vide)
+		if ( nom.equals ( "" )                     ) throw new IllegalArgumentException ( "Le nom du contrat n'est pas rempli"                     );
+			
+		// Teste la validité des heures du service du contrat pour qu'elles soient supérieur à 0
+		if ( heureServiceContrat < 0               ) throw new IllegalArgumentException ( "Les heures de services doivent être supérieur à 0"      );
+
+		// Teste la validité des heures max du contrat pour qu'elles soient supérieur à 0
+		if ( heureMaxContrat     <= 0              ) throw new IllegalArgumentException ( "Les heures max doivent être supérieur à 0"              );
+
+		// Teste si les heures de services sont supérieur aux heures max
+		if ( heureServiceContrat > heureMaxContrat ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+
+		// Coef TD
+		if ( ratioTP <= 0 )                          throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0"                       );
+		
+		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
+	}
 
 
 	/*---------------------------------------*/
@@ -91,64 +151,6 @@ public class Contrat
 	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
 
 
-	/*---------------------------------------*/
-	/*                FACTORY                */
-	/*---------------------------------------*/
-
-	/** Fabrique de contrat à partir d'un tableau
-	 * @param contrat Prend un tableau d'objet définissant le contrat
-	 * @return Le contrat contenu dans le tableau d'objet
-	 */
-	public static Contrat creation ( Object[] contrat )
-	{
-		Object i   = contrat[0];
-		Object n   = contrat[1];
-		Object hsc = contrat[2];
-		Object hmc = contrat[3];
-		Object rt  = contrat[4];
-
-		if ( ( i != null && ! ( i instanceof Integer ) ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
-		if ( ! ( n   instanceof String )                 ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
-		if ( ! ( hsc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
-		if ( ! ( hmc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
-		if ( ! ( rt  instanceof Number )                 ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
-		
-		int    id                  = ( i == null ) ? 0 : ( int ) i;
-		int    heureServiceContrat = ( int ) hsc;
-		int    heureMaxContrat     = ( int ) hmc;
-		String nom                 = n.toString ( );
-		double ratioTP             = Double.parseDouble ( rt.toString ( ) );
-
-		return Contrat.creation ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
-	}
-
-	/** Fabrique de contrat prenant en paramètres toutes les données d'un contrat
-	 * @param id l'indentifiant du contrat
-	 * @param nom le nom du contrat
-	 * @param heureServiceContrat le nombre d'heure de service du contrat
-	 * @param heureMaxContrat le nombre d'heure maximum du contrat
-	 * @param ratioTP le ratio TP du contrat
-	 * @return Le contrat en question
-	 */
-	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
-	{
-		// Teste la validité du nom (non vide)
-		if ( nom.equals ( "" )                     ) throw new IllegalArgumentException ( "Le nom du contrat n'est pas rempli"                     );
-			
-		// Teste la validité des heures du service du contrat pour qu'elles soient supérieur à 0
-		if ( heureServiceContrat < 0               ) throw new IllegalArgumentException ( "Les heures de services doivent être supérieur à 0"      );
-
-		// Teste la validité des heures max du contrat pour qu'elles soient supérieur à 0
-		if ( heureMaxContrat     <= 0              ) throw new IllegalArgumentException ( "Les heures max doivent être supérieur à 0"              );
-
-		// Teste si les heures de services sont supérieur aux heures max
-		if ( heureServiceContrat > heureMaxContrat ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
-
-		// Coef TD
-		if ( ratioTP <= 0 )                          throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0"                       );
-		
-		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
-	}
 
 	/*---------------------------------------*/
 	/*                METHODES               */
