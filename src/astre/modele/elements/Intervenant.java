@@ -84,13 +84,27 @@ public class Intervenant
 	 * @param contrat le contrat de l'intervenant
 	 * @return L'intervenant crée si les données ont une valeur et que le nombre d'heure de service et le nombre d'heure maximum sont positifs.
 	 */
-	public static Intervenant creation ( int id, String nom, String prenom, int heureService, int heureMaximum, double coefficient, Contrat contrat)
+	public static Intervenant creation ( int id, String nom, String prenom, int heureService, int heureMaximum, double coefficient, Contrat contrat )
 	{
+		// Teste que l'identifiant est correct
+		if ( id < 0                       ) throw new IllegalArgumentException ( "L'identifiant est incorrecte"                           );
+
+		// Teste que le nom est correct
 		if ( nom   .equals ( "" )         ) throw new IllegalArgumentException ( "Le nom doit être reseigné"                              );
+
+		// Teste que le prénom est correct
 		if ( prenom.equals ( "" )         ) throw new IllegalArgumentException ( "Le prénom doit être reseigné"                           );
+
+		// Teste que le nombre d'heure de service est correct
 		if ( heureService >  heureMaximum ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+
+		// Teste que le nombre d'heure de service est correct
 		if ( heureService <  0            ) throw new IllegalArgumentException ( "Les heures de services sont négatives"                  );
+
+		// Teste que le nombre d'heure maximum est correct
 		if ( heureMaximum <  0            ) throw new IllegalArgumentException ( "Les heures maximums sont négatives"                     );
+
+		// Teste que le coefficient est correct
 		if ( coefficient  <= 0            ) throw new IllegalArgumentException ( "Le coefficient est négatif ou nul"                      );
 
 		return new Intervenant ( id, nom, prenom, heureService, heureMaximum, coefficient, contrat );

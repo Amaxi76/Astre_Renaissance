@@ -59,10 +59,15 @@ public class Heure
 	 */
 	public static Heure creation ( int id, String nom, double coefTD )
 	{
-		// Teste si le nom
-		if ( nom.equals ( "" ) ) throw new IllegalArgumentException ( "Une des données est vide"           );
+		// Teste que l'identifiant est correct
+		if ( id < 0            ) throw new IllegalArgumentException ( "L'identifiant est incorrect"        );
+
+		// Teste que le nom est correct
+		if ( nom.equals ( "" ) ) throw new IllegalArgumentException ( "Le nom de l'heure n'est pas rentré" );
+
+		// Teste que le coefficient TD est correct
 		if ( coefTD <= 0       ) throw new IllegalArgumentException ( "Le coef TP doit être supérieur à 0" );
-			
+
 		return new Heure ( id, nom, coefTD );
 	}
 

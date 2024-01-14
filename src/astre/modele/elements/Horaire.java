@@ -72,8 +72,19 @@ public class Horaire
 	 */
 	public static Horaire creation ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureRepartie, int nbSemaine )
 	{
+		// Teste que l'heure est correcte
+		if ( heure       == null ) throw new IllegalArgumentException ( "L'heure ne peut pas être null"                );
+
+		// Teste que le module est correct
+		if ( module      == null ) throw new IllegalArgumentException ( "Le module ne peut pas être null"              );
+
+		// Teste que le nombre d'heure PN est correct
 		if ( nbHeurePN       < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure PN doit être supérieur à 0" );
+
+		// Teste que le nombre d'heure répartie est correct
 		if ( nbHeureRepartie < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure doit être supérieur à 0"    );
+
+		// Teste que le nombre de semaine est correct
 		if ( nbSemaine       < 0 ) throw new IllegalArgumentException ( "Le nombre de semaine doit être supérieur à 0" );
 
 		return new Horaire ( heure, module, nbHeurePN, nbHeureRepartie, nbSemaine );

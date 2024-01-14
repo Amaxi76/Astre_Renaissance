@@ -76,9 +76,19 @@ public class Semestre
 	 */
 	public static Semestre creation ( int idSemestre, int nbGroupeTP, int nbGroupeTD, int nbEtudiant, int nbSemaine )
 	{
+		// Teste que l'identifiant est correct
+		if ( idSemestre < 0 ) throw new IllegalArgumentException ( "L'identifiant est incorrecte"       );
+
+		// Teste que le nombre de groupe TP est correct
 		if ( nbGroupeTP < 0 ) throw new IllegalArgumentException ( "Le nombre de groupe TP est négatif" );
+
+		// Teste que le nombre de groupe TD est correct
 		if ( nbGroupeTD < 0 ) throw new IllegalArgumentException ( "Le nombre de groupe TD est négatif" );
+
+		// Teste que le nombre d'étudiant est correct
 		if ( nbEtudiant < 0 ) throw new IllegalArgumentException ( "Le nombre d'étudiant est négatif"   );
+
+		// Teste que le nombre de semaine est correct
 		if ( nbSemaine  < 0 ) throw new IllegalArgumentException ( "Le nombre de semaine est négatif"   );
 
 		return new Semestre ( idSemestre, nbGroupeTP, nbGroupeTD, nbEtudiant, nbSemaine );

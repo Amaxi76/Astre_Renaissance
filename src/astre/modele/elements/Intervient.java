@@ -85,12 +85,25 @@ public class Intervient
 	 */
 	public static Intervient creation ( Intervenant i, Heure h, ModuleIUT m, int nbS, int nbG, double nbH, String c )
 	{
+		// Teste que l'identifiant est correct
 		if ( i == null ) throw new IllegalArgumentException ( "L'intervenant est vide"           );
+
+		// Teste que l'heure est correct
 		if ( h == null ) throw new IllegalArgumentException ( "L'heure est vide"                 );
+
+		// Teste que le module est correct
 		if ( m == null ) throw new IllegalArgumentException ( "Le module est vide"               );
+
+		// Teste que le nombre de semaine est correct
 		if ( nbS < 0   ) throw new IllegalArgumentException ( "Le nombre de semaine est négatif" );
+
+		// Teste que le nombre de groupe est correct
 		if ( nbG < 0   ) throw new IllegalArgumentException ( "Le nombre de groupe est négatif"  );
+
+		// Teste que le nombre d'heure est correct
 		if ( nbH < 0   ) throw new IllegalArgumentException ( "Le nombre d'heure est négatif"    );
+
+		// Teste que le commentaire est correct
 		if ( c == null ) throw new IllegalArgumentException ( "Le commentaire est vide"          );
 		
 		return new Intervient ( i, h, m, nbS, nbG, nbH, c );

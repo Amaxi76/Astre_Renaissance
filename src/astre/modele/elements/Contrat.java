@@ -72,6 +72,9 @@ public class Contrat
 	 */
 	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
 	{
+		// Teste que l'identifiant est correct
+		if ( id < 0                                ) throw new IllegalArgumentException ( "L'identifiant est incorrect"                            );
+		
 		// Teste la validité du nom (non vide)
 		if ( nom.equals ( "" )                     ) throw new IllegalArgumentException ( "Le nom du contrat n'est pas rempli"                     );
 			

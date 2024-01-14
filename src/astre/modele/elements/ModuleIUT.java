@@ -93,12 +93,28 @@ public class ModuleIUT
 	 */
 	public static ModuleIUT creation ( String code, String libLong, String libCourt, String typeModule, boolean valide, Semestre semestre, double totalHeurePN, double totalHeureAffectee )
 	{
+		// Teste que le code est correct
 		if ( code      .equals ( "" )   ) throw new IllegalArgumentException ( "Le code du module n'est pas rempli"          );
+
+		// Teste que les libellés sont corrects
 		if ( libLong   .equals ( "" )   ) throw new IllegalArgumentException ( "Le libellé long du module n'est pas rempli"  );
+
+		// Teste que les libellés sont corrects
 		if ( libCourt  .equals ( "" )   ) throw new IllegalArgumentException ( "Le libellé court du module n'est pas rempli" );
+
+		// Teste que le type de module est correct
 		if ( typeModule.equals ( "" )   ) throw new IllegalArgumentException ( "Le typeModule n'est pas rempli"              );
+
+		// Teste que la validité est correcte
 		if ( ( Boolean ) valide == null ) throw new IllegalArgumentException ( "Pas d'indication pour la validation"         );
+
+		// Teste que le semestre est correct
+		if ( semestre  == null          ) throw new IllegalArgumentException ( "Pas de semestre"                             );
+
+		// Teste que le total d'heure affectée est correct
 		if ( totalHeureAffectee < 0     ) throw new IllegalArgumentException ( "Le total d'heure affectée est négatif"       );
+
+		// Teste que le total d'heure PN est correct
 		if ( totalHeurePN       < 0     ) throw new IllegalArgumentException ( "Le total d'heure PN est négatif"             );
 		
 		return new ModuleIUT ( code, libLong, libCourt, typeModule, valide, semestre, totalHeurePN, totalHeureAffectee );
