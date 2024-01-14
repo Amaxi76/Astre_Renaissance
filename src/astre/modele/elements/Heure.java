@@ -97,13 +97,13 @@ public class Heure
 	 */
 	public void setCoefTd ( double coefTd ) { this.coefTd = coefTd; }
 
-	
+
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/** Indique si deux contrats sont égaux
-	 * @return true si les deux contrats sont égaux, false sinon
+	/** Indique si deux heures sont égals
+	 * @return true si les deux heures sont égals, false sinon
 	 */
 	@Override
 	public boolean equals ( Object o )
@@ -118,7 +118,7 @@ public class Heure
 		       this.coefTd              == c.coefTd;
 	}
 
-	/** Donne une description d'un contrat
+	/** Donne une description d'une heure
 	 * @return
 	 */
 	@Override

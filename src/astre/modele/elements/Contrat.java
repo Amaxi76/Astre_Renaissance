@@ -47,13 +47,13 @@ public class Contrat
 		Object hmc = contrat[3];
 		Object rt  = contrat[4];
 
-		if ( ( i != null && ! ( i instanceof Integer ) ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
-		if ( ! ( n   instanceof String )                 ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
-		if ( ! ( hsc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
-		if ( ! ( hmc instanceof Integer )                ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
-		if ( ! ( rt  instanceof Number )                 ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
+		if ( ! ( i   instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
+		if ( ! ( n   instanceof String  ) ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
+		if ( ! ( hsc instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
+		if ( ! ( hmc instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
+		if ( ! ( rt  instanceof Number  ) ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
 		
-		int    id                  = ( i == null ) ? 0 : ( int ) i;
+		int    id                  = ( int ) i;
 		int    heureServiceContrat = ( int ) hsc;
 		int    heureMaxContrat     = ( int ) hmc;
 		String nom                 = n.toString ( );
