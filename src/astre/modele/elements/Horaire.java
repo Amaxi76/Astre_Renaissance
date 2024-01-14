@@ -1,10 +1,8 @@
 package astre.modele.elements;
 
-import javax.swing.JOptionPane;
-
 /** Classe Horaire
-  * @author : Alizéa Lebaron
-  * @version : 1.1 - 19/12/2023
+  * @author : Alizéa Lebaron, Maxmilien Lesterlin
+  * @version : 2.0 - 14/01/2024
   * @date : 12/12/2023
   */
 
@@ -12,25 +10,30 @@ public class Horaire
 {
 	private Heure     heure;
 	private ModuleIUT module;
-	private int       nbHeurePN;
+	private double    nbHeurePN;
+	private double    nbHeureRepartie;
 	private int       nbSemaine;
-	private int       nbHeure;
 
 	/** Constructeur d'horaire
-	 * @param heure
-	 * @param module
-	 * @param nbHeurePN
-	 * @param nbSemaine
-	 * @param nbHeure
+	 * @param heure l'heure de l'horaire
+	 * @param module le module de l'horaire
+	 * @param nbHeurePN le nombre d'heure PN de l'horaire
+	 * @param nbSemaine le nombre de semaine de l'horaire
+	 * @param nbHeure le nombre d'heure répartie de l'horaire
 	 */
-	private Horaire ( Heure heure, ModuleIUT module, int nbHeurePN, int nbSemaine, int nbHeure )
+	private Horaire ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureRepartie, int nbSemaine )
 	{
-		this.heure     = heure;
-		this.module    = module;
-		this.nbHeurePN = nbHeurePN;
-		this.nbSemaine = nbSemaine;
-		this.nbHeure   = nbHeure;
+		this.heure           = heure;
+		this.module          = module;
+		this.nbHeurePN       = nbHeurePN;
+		this.nbHeureRepartie = nbHeureRepartie;
+		this.nbSemaine       = nbSemaine;
 	}
+
+
+	/*---------------------------------------*/
+	/*                FACTORY                */
+	/*---------------------------------------*/
 
 	/** Crée un horraire en prenant en paramètre un tableau d'objet.
 	 * @return L'horaire créée si les données du tableau sont correctes.
@@ -40,101 +43,118 @@ public class Horaire
 		Object h  = horaire[0];
 		Object m  = horaire[1];
 		Object hp = horaire[2];
-		Object nb = horaire[3];
-		Object nh = horaire[4];
+		Object nr = horaire[3];
+		Object ns = horaire[4];
 
-		if ( ! ( h  instanceof Heure   ) || ! ( m  instanceof ModuleIUT ) || ! ( hp instanceof Integer ) || 
-		     ! ( nb instanceof Integer ) || ! ( nh instanceof Number ) )
-		{
-			JOptionPane.showMessageDialog ( null, "Une des données n'est pas du bon type ou est vide.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les données de l'horaire ne sont pas du bon type" );
-		}
+		if ( ! ( h  instanceof Heure     ) ) throw new IllegalArgumentException ( "L'heure n'est pas du bon type"                    );
+		if ( ! ( m  instanceof ModuleIUT ) ) throw new IllegalArgumentException ( "Le module n'est pas du bon type"                  );
+		if ( ! ( hp instanceof Number    ) ) throw new IllegalArgumentException ( "Le nombre d'heure PN n'est pas du bon type"       );
+		if ( ! ( nr instanceof Number    ) ) throw new IllegalArgumentException ( "Le nombre d'heure repartie n'est pas du bon type" );
+		if ( ! ( ns instanceof Integer   ) ) throw new IllegalArgumentException ( "Le nombre de semaine n'est pas du bon type"       );
 		
-		Heure     heure     = ( Heure     ) h;
-		ModuleIUT module    = ( ModuleIUT ) m;
-		int       nbHeurePN = (int) Double.parseDouble ( hp.toString ( ) );
-		int       nbSemaine = (int) Double.parseDouble ( nb.toString ( ) );
-		int       nbHeure   = (int) Double.parseDouble ( nh.toString ( ) );
-		
+		Heure     heure             = ( Heure     ) h;
+		ModuleIUT module            = ( ModuleIUT ) m;
+		double    nbHeurePN         = Double.parseDouble ( hp.toString ( ) );
+		double    nbHeureRepartie   = Double.parseDouble ( nr.toString ( ) );
+		int       nbSemaine         = (int) ns;
 
-		return Horaire.creation ( heure, module, nbHeurePN, nbSemaine, nbHeure );
+		return Horaire.creation ( heure, module, nbHeurePN, nbHeureRepartie, nbSemaine );
 	}
 
 	/** Crée un horaire en prenant en paramètre une heure, un module, un nombre d'heure PN, un nombre de semaine et un nombre d'heure répartie.
 	 * @return L'horaire créée si les données ont une valeur et que le nombre d'heure PN, le nombre de semaine et le nombre d'heure répartie sont positifs.
 	 */
-	public static Horaire creation ( Heure heure, ModuleIUT module, int nbHeurePN, int nbSemaine, int nbHeure )
+	public static Horaire creation ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureRepartie, int nbSemaine )
 	{
-		if ( nbHeurePN < 0 || nbSemaine < 0|| nbHeure < 0  )
-		{
-			JOptionPane.showMessageDialog ( null, "Les heures doivent être positif", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les heures doivent être positif" );
-		}
-			
-		return new Horaire ( heure, module, nbHeurePN, nbSemaine, nbHeure );
+		if ( nbHeurePN       < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure PN doit être supérieur à 0" );
+		if ( nbHeureRepartie < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure doit être supérieur à 0"    );
+		if ( nbSemaine       < 0 ) throw new IllegalArgumentException ( "Le nombre de semaine doit être supérieur à 0" );
+
+		return new Horaire ( heure, module, nbHeurePN, nbHeureRepartie, nbSemaine );
 	}
 
+	
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
 	/** Retourne l'heure d'une horaire
-	 * @return heure
+	 * @return l'heure
 	 */
-	public Heure  getHeure     ( ) { return heure;     }
+	public Heure     getHeure             ( ) { return this.heure;             }
 
 	/** Retourne le module d'une horaire
-	 * @return the module
+	 * @return le module
 	 */
-	public ModuleIUT getModule ( ) { return module;    }
+	public ModuleIUT getModule            ( ) { return this.module;            }
 
 	/** Retourne le nombre d'heure PN d'une horaire
-	 * @return the nbHeurePN
+	 * @return le nombre d'heure PN
 	 */
-	public int    getNbHeurePN ( ) { return nbHeurePN; }
-
-	/** Retourne le nombre de semaine d'une horaire
-	 * @return the nbSemaine
-	 */
-	public int    getNbSemaine ( ) { return nbSemaine; }
+	public double    getNbHeurePN         ( ) { return this.nbHeurePN;         }
 
 	/** Retourne le nombre d'heure répartie d'une horaire
-	 * @return the nbHeure
+	 * @return le nombre d'heure repartie
 	 */
-	public int    getNbHeure   ( ) { return nbHeure;   }
-
+	public double    getNbHeureRepartie   ( ) { return this.nbHeureRepartie;   }
+	
+	/** Retourne le nombre de semaine d'une horaire
+	 * @return le nombreb de semaine
+	 */
+	public int       getNbSemaine         ( ) { return this.nbSemaine;         }
+	
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
 	/** Permet de modifier l'heure
-	 * @param heure the heure to set
+	 * @param heure l'heure à modifier
 	 */
-	public void setHeure     ( Heure  heure        ) { this.heure     = heure;     }
+	public void setHeure             ( Heure  heure                ) { this.heure           = heure;             }
 
 	/** Permet de modifier le module
-	 * @param module the module to set
+	 * @param module le module à modifier
 	 */
-	public void setModule    ( ModuleIUT module    ) { this.module    = module;    }
+	public void setModule            ( ModuleIUT module            ) { this.module          = module;            }
 
 	/** Permet de modifier le nombre d'heure PN
-	 * @param nbHeurePN the nbHeurePN to set
+	 * @param nbHeurePN le nombre d'heure PN à modifier
 	 */
-	public void setNbHeurePN ( int    nbHeurePN    ) { this.nbHeurePN = nbHeurePN; }
-
-	/** Permet de modifier le nombre de semaine
-	 * @param nbSemaine the nbSemaine to set
-	 */
-	public void setNbSemaine ( int    nbSemaine    ) { this.nbSemaine = nbSemaine; }
+	public void setNbHeurePN         ( double    nbHeurePN         ) { this.nbHeurePN       = nbHeurePN;         }
 
 	/** Permet de modifier le nombre d'heure répartie
-	 * @param nbHeure the nbHeure to set
+	 * @param nbHeure le nombre d'heure à modifier
 	 */
-	public void setNbHeure   ( int    nbHeure      ) { this.nbHeure = nbHeure;     }
-
+	public void setNbHeureRepartie   ( double    nbHeureRepartie   ) { this.nbHeureRepartie = nbHeureRepartie;   }
+	
+	/** Permet de modifier le nombre de semaine
+	 * @param nbSemaine le nombre de semaine à modifier
+	 */
+	public void setNbSemaine         ( int       nbSemaine         ) { this.nbSemaine       = nbSemaine;         }
+	
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
+
+	/** Indique si deux heures sont égals
+	 * @return true si les deux heures sont égals, false sinon
+	 */
+	@Override
+	public boolean equals ( Object o )
+	{
+		if ( ! ( o instanceof Horaire ) ) return false;
+		if ( o == this                  ) return true;
+
+		Horaire c = ( Horaire ) o;
+
+		return this.heure .equals ( c.heure  )           &&
+		       this.module.equals ( c.module )           &&
+		       this.nbHeurePN       == c.nbHeurePN       &&
+		       this.nbHeureRepartie == c.nbHeureRepartie &&
+		       this.nbSemaine       == c.nbSemaine;
+
+	
+	}
 
 	/** Renvoie la description et le contenu d'une horaire
 	 * @return Une description du contenue d'une horaire
@@ -142,12 +162,6 @@ public class Horaire
 	@Override
 	public String toString ( )
 	{
-		String sRet = "";
-
-		sRet += "("                       + this.heure.getNom ( ) + ") "             + this.module.getLibLong ( ) + " | NB Heure PN : " + this.nbHeurePN +
-		        " | Nombre de semaine : " + this.nbSemaine      + " | NB Heure : " + this.nbHeure;
-
-		return sRet;
+		return String.format( "Horaire%nHeure           : %s%nModule          : %s%nNombre d'heure PN       : %,.2f%nNombre d'heure repartie : %,.2f%nNombre de semaine       : %d", this.heure, this.module, this.nbHeurePN, this.nbHeureRepartie, this.nbSemaine );
 	}
-
 }
