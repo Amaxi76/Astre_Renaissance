@@ -210,5 +210,4 @@ public class Intervenant
 	{
 		return String.format ( "Intervenant%nId              : %d%nNom             : %s%nPrénom          : %s%nHeure de service : %d%nHeure maximum    : %d%nCoefficient      : %f%nContrat          : %s", this.id, this.nom, this.prenom, this.heureService, this.heureMaximum, this.coefficientTD, this.contrat );
 	}
-	
 }
