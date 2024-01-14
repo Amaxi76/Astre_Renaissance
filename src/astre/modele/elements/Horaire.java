@@ -11,7 +11,7 @@ public class Horaire
 	private Heure     heure;
 	private ModuleIUT module;
 	private double    nbHeurePN;
-	private double    nbHeureRepartie;
+	private double    nbHeureSemaine;
 	private int       nbSemaine;
 
 	/** Constructeur d'horaire
@@ -21,13 +21,13 @@ public class Horaire
 	 * @param nbSemaine le nombre de semaine de l'horaire
 	 * @param nbHeure le nombre d'heure répartie de l'horaire
 	 */
-	private Horaire ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureRepartie, int nbSemaine )
+	private Horaire ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureSemaine, int nbSemaine )
 	{
-		this.heure           = heure;
-		this.module          = module;
-		this.nbHeurePN       = nbHeurePN;
-		this.nbHeureRepartie = nbHeureRepartie;
-		this.nbSemaine       = nbSemaine;
+		this.heure          = heure;
+		this.module         = module;
+		this.nbHeurePN      = nbHeurePN;
+		this.nbHeureSemaine = nbHeureSemaine;
+		this.nbSemaine      = nbSemaine;
 	}
 
 
@@ -53,13 +53,13 @@ public class Horaire
 		if ( ! ( nr instanceof Number    ) ) throw new IllegalArgumentException ( "Le nombre d'heure repartie n'est pas du bon type" );
 		if ( ! ( ns instanceof Integer   ) ) throw new IllegalArgumentException ( "Le nombre de semaine n'est pas du bon type"       );
 		
-		Heure     heure             = ( Heure     ) h;
-		ModuleIUT module            = ( ModuleIUT ) m;
-		double    nbHeurePN         = Double.parseDouble ( hp.toString ( ) );
-		double    nbHeureRepartie   = Double.parseDouble ( nr.toString ( ) );
-		int       nbSemaine         = (int) ns;
+		Heure     heure          = ( Heure     ) h;
+		ModuleIUT module         = ( ModuleIUT ) m;
+		double    nbHeurePN      = Double.parseDouble ( hp.toString ( ) );
+		double    nbHeureSemaine = Double.parseDouble ( nr.toString ( ) );
+		int       nbSemaine      = (int) ns;
 
-		return Horaire.creation ( heure, module, nbHeurePN, nbHeureRepartie, nbSemaine );
+		return Horaire.creation ( heure, module, nbHeurePN, nbHeureSemaine, nbSemaine );
 	}
 
 	/** Fabrique d'horaire à partir de données
@@ -67,10 +67,10 @@ public class Horaire
 	 * @param module le module de l'horaire
 	 * @param nbHeurePN le nombre d'heure PN de l'horaire
 	 * @param nbSemaine le nombre de semaine de l'horaire
-	 * @param nbHeure le nombre d'heure répartie de l'horaire
+	 * @param nbHeureSemaine le nombre d'heure répartie de l'horaire
 	 * @return L'horaire créée si les données ont une valeur et que le nombre d'heure PN, le nombre de semaine et le nombre d'heure répartie sont positifs.
 	 */
-	public static Horaire creation ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureRepartie, int nbSemaine )
+	public static Horaire creation ( Heure heure, ModuleIUT module, double nbHeurePN, double nbHeureSemaine, int nbSemaine )
 	{
 		// Teste que l'heure est correcte
 		if ( heure       == null ) throw new IllegalArgumentException ( "L'heure ne peut pas être null"                );
@@ -82,12 +82,12 @@ public class Horaire
 		if ( nbHeurePN       < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure PN doit être supérieur à 0" );
 
 		// Teste que le nombre d'heure répartie est correct
-		if ( nbHeureRepartie < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure doit être supérieur à 0"    );
+		if ( nbHeureSemaine  < 0 ) throw new IllegalArgumentException ( "Le nombre d'heure doit être supérieur à 0"    );
 
 		// Teste que le nombre de semaine est correct
 		if ( nbSemaine       < 0 ) throw new IllegalArgumentException ( "Le nombre de semaine doit être supérieur à 0" );
 
-		return new Horaire ( heure, module, nbHeurePN, nbHeureRepartie, nbSemaine );
+		return new Horaire ( heure, module, nbHeurePN, nbHeureSemaine, nbSemaine );
 	}
 
 	
@@ -98,27 +98,27 @@ public class Horaire
 	/** Retourne l'heure d'une horaire
 	 * @return l'heure
 	 */
-	public Heure     getHeure             ( ) { return this.heure;             }
+	public Heure     getHeure             ( ) { return this.heure;         }
 
 	/** Retourne le module d'une horaire
 	 * @return le module
 	 */
-	public ModuleIUT getModule            ( ) { return this.module;            }
+	public ModuleIUT getModule            ( ) { return this.module;        }
 
 	/** Retourne le nombre d'heure PN d'une horaire
 	 * @return le nombre d'heure PN
 	 */
-	public double    getNbHeurePN         ( ) { return this.nbHeurePN;         }
+	public double    getNbHeurePN         ( ) { return this.nbHeurePN;     }
 
-	/** Retourne le nombre d'heure répartie d'une horaire
-	 * @return le nombre d'heure repartie
+	/** Retourne le nombre d'heure par semaine d'une horaire
+	 * @return le nombre d'heure par semaine
 	 */
-	public double    getNbHeureRepartie   ( ) { return this.nbHeureRepartie;   }
+	public double    getnbHeureSemaine   ( ) { return this.nbHeureSemaine; }
 	
 	/** Retourne le nombre de semaine d'une horaire
 	 * @return le nombreb de semaine
 	 */
-	public int       getNbSemaine         ( ) { return this.nbSemaine;         }
+	public int       getNbSemaine         ( ) { return this.nbSemaine;     }
 	
 
 	/*---------------------------------------*/
@@ -128,27 +128,27 @@ public class Horaire
 	/** Permet de modifier l'heure
 	 * @param heure l'heure à modifier
 	 */
-	public void setHeure             ( Heure  heure                ) { this.heure           = heure;             }
+	public void setHeure             ( Heure  heure                ) { this.heure           = heure;         }
 
 	/** Permet de modifier le module
 	 * @param module le module à modifier
 	 */
-	public void setModule            ( ModuleIUT module            ) { this.module          = module;            }
+	public void setModule            ( ModuleIUT module            ) { this.module          = module;        }
 
 	/** Permet de modifier le nombre d'heure PN
 	 * @param nbHeurePN le nombre d'heure PN à modifier
 	 */
-	public void setNbHeurePN         ( double    nbHeurePN         ) { this.nbHeurePN       = nbHeurePN;         }
+	public void setNbHeurePN         ( double    nbHeurePN         ) { this.nbHeurePN       = nbHeurePN;     }
 
-	/** Permet de modifier le nombre d'heure répartie
-	 * @param nbHeure le nombre d'heure à modifier
+	/** Permet de modifier le nombre d'heure par semaine
+	 * @param nbHeure le nombre d'heure par semaine à modifier
 	 */
-	public void setNbHeureRepartie   ( double    nbHeureRepartie   ) { this.nbHeureRepartie = nbHeureRepartie;   }
+	public void setnbHeureSemaine   ( double    nbHeureSemaine   ) { this.nbHeureSemaine = nbHeureSemaine;   }
 	
 	/** Permet de modifier le nombre de semaine
 	 * @param nbSemaine le nombre de semaine à modifier
 	 */
-	public void setNbSemaine         ( int       nbSemaine         ) { this.nbSemaine       = nbSemaine;         }
+	public void setNbSemaine         ( int       nbSemaine         ) { this.nbSemaine       = nbSemaine;     }
 	
 
 	/*---------------------------------------*/
@@ -166,11 +166,11 @@ public class Horaire
 
 		Horaire c = ( Horaire ) o;
 
-		return this.heure .equals ( c.heure  )           &&
-		       this.module.equals ( c.module )           &&
-		       this.nbHeurePN       == c.nbHeurePN       &&
-		       this.nbHeureRepartie == c.nbHeureRepartie &&
-		       this.nbSemaine       == c.nbSemaine;
+		return this.heure .equals ( c.heure  )         &&
+		       this.module.equals ( c.module )         &&
+		       this.nbHeurePN      == c.nbHeurePN      &&
+		       this.nbHeureSemaine == c.nbHeureSemaine &&
+		       this.nbSemaine      == c.nbSemaine;
 	}
 
 	/** Renvoie la description et le contenu de l'intervenant
@@ -179,6 +179,6 @@ public class Horaire
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "Horaire%nHeure           : %s%nModule          : %s%nNombre d'heure PN       : %,.2f%nNombre d'heure repartie : %,.2f%nNombre de semaine       : %d", this.heure, this.module, this.nbHeurePN, this.nbHeureRepartie, this.nbSemaine );
+		return String.format ( "Horaire%nHeure           : %s%nModule          : %s%nNombre d'heure PN       : %,.2f%nNombre d'heure par semaine : %,.2f%nNombre de semaine       : %d", this.heure, this.module, this.nbHeurePN, this.nbHeureSemaine, this.nbSemaine );
 	}
 }

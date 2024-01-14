@@ -8,6 +8,7 @@ package astre.modele.elements;
 
 public class ModuleIUT
 {
+	private int      idModuleIUT;
 	private String   code;
 	private String   libLong;
 	private String   libCourt;
@@ -18,6 +19,7 @@ public class ModuleIUT
 	private double   totalHeureAffectee;
 
 	/** Constructeur d'un module
+	 * @param idModuleIUT l'identifiant du module
 	 * @param code le code du module
 	 * @param libLong le libellé long du module
 	 * @param libCourt le libellé court du module
@@ -27,8 +29,9 @@ public class ModuleIUT
 	 * @param totalHeurePN le total d'heure PN du module
 	 * @param totalHeureAffectee le total d'heure affectée du module
 	 */
-	private ModuleIUT ( String code, String libLong, String libCourt, String typeModule, boolean valide, Semestre semestre, double totalHeurePN, double totalHeureAffectee )
+	private ModuleIUT ( int idModuleIUT, String code, String libLong, String libCourt, String typeModule, boolean valide, Semestre semestre, double totalHeurePN, double totalHeureAffectee )
 	{
+		this.idModuleIUT         = idModuleIUT;
 		this.code                = code;
 		this.libLong             = libLong;
 		this.libCourt            = libCourt;
@@ -50,15 +53,17 @@ public class ModuleIUT
 	 */
 	public static ModuleIUT creation ( Object[] moduleIUT )
 	{
-		Object c    = moduleIUT[0];
-		Object ll   = moduleIUT[1];
-		Object lc   = moduleIUT[2];
-		Object tm   = moduleIUT[3];
-		Object v    = moduleIUT[4];
-		Object s    = moduleIUT[5];
-		Object thPN = moduleIUT[6];
-		Object thA  = moduleIUT[7];
+		Object i    = moduleIUT[0];
+		Object c    = moduleIUT[1];
+		Object ll   = moduleIUT[2];
+		Object lc   = moduleIUT[3];
+		Object tm   = moduleIUT[4];
+		Object v    = moduleIUT[5];
+		Object s    = moduleIUT[6];
+		Object thPN = moduleIUT[7];
+		Object thA  = moduleIUT[8];
 
+		if ( ! ( i    instanceof Integer  ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"             );
 		if ( ! ( c    instanceof String   ) ) throw new IllegalArgumentException ( "Le code n'est pas du bon type"                   );
 		if ( ! ( ll   instanceof String   ) ) throw new IllegalArgumentException ( "Le libellé long n'est pas du bon type"           );
 		if ( ! ( lc   instanceof String   ) ) throw new IllegalArgumentException ( "Le libellé court n'est pas du bon type"          );
@@ -68,6 +73,7 @@ public class ModuleIUT
 		if ( ! ( thPN instanceof Number   ) ) throw new IllegalArgumentException ( "Le total d'heure PN n'est pas du bon type"       );
 		if ( ! ( thA  instanceof Number   ) ) throw new IllegalArgumentException ( "Le total d'heure affectée n'est pas du bon type" );
 		
+		int      idModuleIUT       = ( int ) i;
 		String   code              = c .toString ( );
 		String   libLong           = ll.toString ( );
 		String   libCourt          = lc.toString ( );
@@ -77,10 +83,11 @@ public class ModuleIUT
 		int      totalHeurePN      = ( int ) thPN;
 		int      totalHeureAffecter= ( int ) thA;
 
-		return ModuleIUT.creation ( code, libLong, libCourt, typeModule, valide, semestre, totalHeurePN, totalHeureAffecter );
+		return ModuleIUT.creation ( idModuleIUT, code, libLong, libCourt, typeModule, valide, semestre, totalHeurePN, totalHeureAffecter );
 	}
 
-	/** Fabrique de module à partir d'un tableau
+	/** Fabrique de module à partir de ses attributs
+	 * @param idModuleIUT l'identifiant du module
 	 * @param code le code du module
 	 * @param libLong le libellé long du module
 	 * @param libCourt le libellé court du module
@@ -91,8 +98,11 @@ public class ModuleIUT
 	 * @param totalHeureAffectee le total d'heure affectée du module
 	 * @return Le module crée si les données du tableau sont correctes.
 	 */
-	public static ModuleIUT creation ( String code, String libLong, String libCourt, String typeModule, boolean valide, Semestre semestre, double totalHeurePN, double totalHeureAffectee )
+	public static ModuleIUT creation ( int idModuleIUT, String code, String libLong, String libCourt, String typeModule, boolean valide, Semestre semestre, double totalHeurePN, double totalHeureAffectee )
 	{
+		// Teste que l'identifiant est correct
+		if ( idModuleIUT < 0            ) throw new IllegalArgumentException ( "L'identifiant du module est incorrecte"       );
+		
 		// Teste que le code est correct
 		if ( code      .equals ( "" )   ) throw new IllegalArgumentException ( "Le code du module n'est pas rempli"          );
 
@@ -117,13 +127,18 @@ public class ModuleIUT
 		// Teste que le total d'heure PN est correct
 		if ( totalHeurePN       < 0     ) throw new IllegalArgumentException ( "Le total d'heure PN est négatif"             );
 		
-		return new ModuleIUT ( code, libLong, libCourt, typeModule, valide, semestre, totalHeurePN, totalHeureAffectee );
+		return new ModuleIUT ( idModuleIUT, code, libLong, libCourt, typeModule, valide, semestre, totalHeurePN, totalHeureAffectee );
 	}
 
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
+
+	/** Retourne l'identifiant d'un module
+	 * @return l'identifiant
+	 */
+	public int                 getIdModuleIUT        ( ) { return this.idModuleIUT;        }
 
 	/** Retourne le code d'un module
 	 * @return le code
@@ -170,35 +185,40 @@ public class ModuleIUT
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
+	/** Permet de modifier l'identifiant d'un module
+	 * @param idModuleIUT l'identifiant à modifier
+	 */
+	public void setIdModuleIUT        ( int        idModuleIUT    ) { this.idModuleIUT         = idModuleIUT;       }
+
 	/** Permet de modifier le code d'un module
 	 * @param code le code à modifier
 	 */
-	public void setCode       ( String     code       ) { this.code       = code;       }
+	public void setCode               ( String     code           ) { this.code               = code;               }
 
 	/** Permet de modifier le libellé long d'un module
 	 * @param libLong le libellé long à modifier
 	 */
-	public void setLibLong    ( String     libLong    ) { this.libLong    = libLong;    }
+	public void setLibLong            ( String     libLong        ) { this.libLong            = libLong;            }
 
 	/** Permet de modifier le libellé court d'un module
 	 * @param libCourt le libellé court à modifier
 	 */
-	public void setLibCourt   ( String     libCourt   ) { this.libCourt   = libCourt;   }
+	public void setLibCourt           ( String     libCourt       ) { this.libCourt           = libCourt;           }
 
 	/** Permet de modifier le type de module
 	 * @param typeModule le type de module à modifier
 	 */
-	public void setTypeModule ( String     typeModule ) { this.typeModule = typeModule; }
+	public void setTypeModule         ( String     typeModule     ) { this.typeModule         = typeModule;         }
 
 	/** Permet de modifier la validité d'un module
 	 * @param choix le choix à modifier
 	 */
-	public void setValide     ( boolean    choix      ) { this.valide     = choix;      }
+	public void setValide             ( boolean    choix          ) { this.valide             = choix;              }
 
 	/** Permet de modifier le semestre
 	 * @param semestre le semestre à modifier
 	 */
-	public void setSemestre   ( Semestre   semestre   ) { this.semestre   = semestre;   }
+	public void setSemestre           ( Semestre   semestre       ) { this.semestre           = semestre;           }
 	
 	/** Permet de modifier le total d'heure PN
 	 * @param totalHeurePN le totalHeurePN à modifier
@@ -226,7 +246,8 @@ public class ModuleIUT
 
 		ModuleIUT c = ( ModuleIUT ) o;
 
-		return this.code              .equals ( c.code              ) &&
+		return this.idModuleIUT        ==     c.idModuleIUT           &&
+		       this.code              .equals ( c.code              ) &&
 		       this.libLong           .equals ( c.libLong           ) &&
 		       this.libCourt          .equals ( c.libCourt          ) &&
 		       this.typeModule        .equals ( c.typeModule        ) &&
@@ -242,6 +263,6 @@ public class ModuleIUT
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "ModuleIUT%nCode               : %s%nLibellé long       : %s%nLibellé court      : %s%nType de module     : %s%nValidité           : %b%nSemestre           : %s%nTotal d'heure PN   : %f%nTotal d'heure affectée : %f", this.code, this.libLong, this.libCourt, this.typeModule, this.valide, this.semestre, this.totalHeurePN, this.totalHeureAffectee );
+		return String.format ( "ModuleIUT%nId                 : %d%nCode               : %s%nLibellé long       : %s%nLibellé court      : %s%nType de module     : %s%nValidité           : %b%nSemestre           : %s%nTotal d'heure PN   : %f%nTotal d'heure affectée : %f", this.idModuleIUT, this.code, this.libLong, this.libCourt, this.typeModule, this.valide, this.semestre, this.totalHeurePN, this.totalHeureAffectee );
 	}
 }

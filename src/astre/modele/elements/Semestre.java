@@ -1,6 +1,6 @@
 package astre.modele.elements;
 
-/** Classe Semestre 
+/** Classe Semestre
   * @author : Alizéa LEBARON, Maximilien Lesterlin
   * @version : 2.0 - 14/01/2024
   * @date : 06/12/2023
@@ -33,6 +33,7 @@ public class Semestre
 		this.nbEtudiant = nbEtudiant;
 		this.nbSemaine  = nbSemaine ;
 	}
+
 
 	/*---------------------------------------*/
 	/*                FACTORY                */

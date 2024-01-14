@@ -1,8 +1,8 @@
 package astre.modele.elements;
 
 /** Classe Intervient
-  * @author : Alizéa Lebaron
-  * @version : 1.0 - 12/12/2023
+  * @author : Alizéa Lebaron, Maximilien Lesterlin
+  * @version : 2.0 - 14/01/2024
   * @date : 12/12/2023
   */
 
