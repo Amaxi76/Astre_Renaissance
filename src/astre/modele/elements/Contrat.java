@@ -180,6 +180,6 @@ public class Contrat
 	@Override
 	public String toString ( )
 	{
-		return String.format( "Contrat%nNom                   : %-22s%nHeure service contrat : %02d%nHeure max contrat     : %02d%nRatio TP              : %,.2f", this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
+		return String.format ( "Contrat%nNom                   : %-22s%nHeure service contrat : %02d%nHeure max contrat     : %02d%nRatio TP              : %,.2f", this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
 	}
 }

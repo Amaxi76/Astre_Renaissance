@@ -103,6 +103,7 @@ public class Horaire
 	 */
 	public int       getNbSemaine         ( ) { return this.nbSemaine;         }
 	
+
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
@@ -132,12 +133,13 @@ public class Horaire
 	 */
 	public void setNbSemaine         ( int       nbSemaine         ) { this.nbSemaine       = nbSemaine;         }
 	
+
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/** Indique si deux heures sont égals
-	 * @return true si les deux heures sont égals, false sinon
+	/** Indique si deux intervenants sont égaux
+	 * @return true si les deux intervenants sont égaux, false sinon
 	 */
 	@Override
 	public boolean equals ( Object o )
@@ -152,16 +154,14 @@ public class Horaire
 		       this.nbHeurePN       == c.nbHeurePN       &&
 		       this.nbHeureRepartie == c.nbHeureRepartie &&
 		       this.nbSemaine       == c.nbSemaine;
-
-	
 	}
 
-	/** Renvoie la description et le contenu d'une horaire
-	 * @return Une description du contenue d'une horaire
+	/** Renvoie la description et le contenu de l'intervenant
+	 * @return Une description du contenue de l'intervenant
 	 */
 	@Override
 	public String toString ( )
 	{
-		return String.format( "Horaire%nHeure           : %s%nModule          : %s%nNombre d'heure PN       : %,.2f%nNombre d'heure repartie : %,.2f%nNombre de semaine       : %d", this.heure, this.module, this.nbHeurePN, this.nbHeureRepartie, this.nbSemaine );
+		return String.format ( "Horaire%nHeure           : %s%nModule          : %s%nNombre d'heure PN       : %,.2f%nNombre d'heure repartie : %,.2f%nNombre de semaine       : %d", this.heure, this.module, this.nbHeurePN, this.nbHeureRepartie, this.nbSemaine );
 	}
 }

@@ -1,18 +1,14 @@
 package astre.modele.elements;
 
-import javax.swing.JOptionPane;
-
 /** Classe Intervenant 
   * @author : Maximilien Lesterlin, Alizéa Lebaron
-  * @version : 1.0.1 - 12/12/2023
+  * @version : 2.0 - 14/01/2024
   * @date : 06/12/2023
   */
 
-//FIXME: Faire correctement les choses du premier coup (quand on lève les exceptions, on peut récupérer les messages pour factoriser le code)
-
 public class Intervenant
 {
-	private int 	id;
+	private int     id;
 	private String  nom;
 	private String  prenom;
 	private int     heureService;
@@ -20,187 +16,167 @@ public class Intervenant
 	private Contrat contrat;
 
 	/** Constructeur d'intervenant
-	 * @param id
-	 * @param nom
-	 * @param prenom
-	 * @param contrat
-	 * @param heureService
-	 * @param heureMaximum
+	 * @param id l'indentifiant de l'intervenant
+	 * @param nom le nom de l'intervenant
+	 * @param prenom le prénom de l'intervenant
+	 * @param contrat le contrat de l'intervenant
+	 * @param heureService le nombre d'heure de service de l'intervenant
+	 * @param heureMaximum le nombre d'heure maximum de l'intervenant
 	 */
-	private Intervenant ( int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
+	private Intervenant ( int id, String nom, String prenom,int heureService, int heureMaximum, Contrat contrat)
 	{
 		this.id           = id;
 		this.nom          = nom;
 		this.prenom       = prenom;
-		this.contrat      = contrat;
 		this.heureService = heureService;
 		this.heureMaximum = heureMaximum;
+		this.contrat      = contrat;
 	}
+
+
+	/*---------------------------------------*/
+	/*                FACTORY                */
+	/*---------------------------------------*/
 
 	public static Intervenant creation ( Object[] intervenant )
 	{
 		Object i  = intervenant[0];
 		Object n  = intervenant[1];
 		Object p  = intervenant[2];
-		Object c  = intervenant[3];
-		Object hs = intervenant[4];
-		Object hm = intervenant[5];
+		Object hs = intervenant[3];
+		Object hm = intervenant[4];
+		Object c  = intervenant[5];
 
-		if ( ( i != null && ! ( i instanceof Integer ) ) ||  ! ( n instanceof String ) || ! ( p instanceof String ) || ! ( c instanceof Contrat ) || ! ( hs instanceof Integer ) || ! ( hm instanceof Integer ))
-		{
-			JOptionPane.showMessageDialog ( null, "Les données de l'invervenant intervenant ne sont pas du bon type.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les données de l'invervenant intervenant ne sont pas du bon type" );
-		}
+		if ( ! ( i  instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                );
+		if ( ! ( n  instanceof String  ) ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                       );
+		if ( ! ( p  instanceof String  ) ) throw new IllegalArgumentException ( "Le prénom n'est pas du bon type"                    );
+		if ( ! ( hs instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heure de service n'est pas du bon type" );
+		if ( ! ( hm instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heure maximum n'est pas du bon type"    );
+		if ( ! ( c  instanceof Contrat ) ) throw new IllegalArgumentException ( "Le contrat n'est pas du bon type"                   );
 		
-		int    id           = ( i == null ) ? 0 : Integer.parseInt ( i.toString ( ) );
-		int    heureService = Integer.parseInt ( hs.toString ( ) );
-		int    heureMaximum = Integer.parseInt ( hm.toString ( ) );
+		int    id           = ( int ) i ;
 		String nom          = n.toString ( );
 		String prenom       = p.toString ( );
+		int    heureService = ( int ) hs;
+		int    heureMaximum = ( int ) hm;
 		Contrat contrat     = ( Contrat ) c ; 
 
-		return Intervenant.creation ( id, nom, prenom, contrat, heureService, heureMaximum );
+		return Intervenant.creation ( id, nom, prenom, heureService, heureMaximum, contrat);
 	}
 
-	public static Intervenant creation ( int id, String nom, String prenom, Contrat contrat, int heureService, int heureMaximum )
+	public static Intervenant creation ( int id, String nom, String prenom, int heureService, int heureMaximum, Contrat contrat)
 	{
-		if ( nom.equals ( "" ) || prenom.equals ( "" ) )
-		{
-			JOptionPane.showMessageDialog ( null, "Veuillez renseigner le nom et le prenom.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Veuillez renseigner le nom et le prenom" );
-		}
+		if ( nom   .equals ( "" )        ) throw new IllegalArgumentException ( "Le nom doit être reseigné"                              );
+		if ( prenom.equals ( "" )        ) throw new IllegalArgumentException ( "Le prénom doit être reseigné"                           );
+		if ( heureService > heureMaximum ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+		if ( heureService < 0            ) throw new IllegalArgumentException ( "Les heures de services sont négatives"                  );
+		if ( heureMaximum < 0            ) throw new IllegalArgumentException ( "Les heures maximums sont négatives"                     );
 
-		// Il n'a pas de contrat
-		if ( contrat == null )
-		{
-			JOptionPane.showMessageDialog ( null, "Veuillez renseigner un contrat pour l'intervenant.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Veuillez renseigner un contrat pour l'intervenant" );
-		}
-
-		//hserv > hmax
-		if ( heureService > heureMaximum )
-		{
-			JOptionPane.showMessageDialog ( null, "Les heures de services sont supérieur à ses heures max.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
-		}
-
-		//hserv < 0 ou hmax < 0
-		if ( heureService < 0 || heureMaximum < 0 )
-		{
-			JOptionPane.showMessageDialog ( null, "Les heures de services ou maximums sont nuls ou négatives.", "Création Impossible", JOptionPane.ERROR_MESSAGE );
-			throw new IllegalArgumentException ( "Les heures de services ou maximums sont ou négatives" );
-		}
-		
-		return new Intervenant ( id, nom, prenom, contrat, heureService, heureMaximum );
+		return new Intervenant ( id, nom, prenom, heureService, heureMaximum, contrat );
 	}
+
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
 	/** Retourne l'id de l'intervenant
-	 * @return id
+	 * @return l'indentifiant
 	 */
 	public int     getId           ( ) { return this.id;           }
 
 	/** Retourne le nom de l'intervenant
-	 * @return nom
+	 * @return le nom
 	 */
 	public String  getNom          ( ) { return this.nom;          }
 
 	/** Retourne le prénom de l'intervenant
-	 * @return prenom
+	 * @return le prenom
 	 */
 	public String  getPrenom       ( ) { return this.prenom;       }
 
 	/** Retourne le contrat de l'intervenant
-	 * @return contrat
+	 * @return le contrat
 	 */
 	public Contrat getContrat      ( ) { return this.contrat;      }
 
 	/** Retourne le nombre d'heure de service de l'intervenant
-	 * @return heureService
+	 * @return le nombre d'heure de service
 	 */
 	public int     getheureService ( ) { return this.heureService; }
 
 	/** Retourne le nombre d'heure maximum de l'intervenant
-	 * @return heureMaximum
+	 * @return le nombre d'heure maximum
 	 */
 	public int     getHeureMaximum ( ) { return this.heureMaximum; }
+
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
 	/** Permet de modifier l'id
-	 * @param id the id to set
+	 * @param id l'identifiant à modifier
 	 */
 	public void setId           ( int     id           ) { this.id           = id;           }
 
 	/** Permet de modifier le nom
-	 * @param nom the nom to set
+	 * @param nom le nom à modifier
 	 */
 	public void setNom          ( String  nom          ) { this.nom          = nom;          }
 
 	/** Permet de modifier le prénom
-	 * @param prenom the prenom to set
+	 * @param prenom le prénom à modifier
 	 */
 	public void setPrenom       ( String  prenom       ) { this.prenom       = prenom;       }
 
+	/** Permet de modifier le nombre d'heure de service
+	 * @param heureService le nombre d'heure de service à modifier
+	 */
+	public void setheureService ( int     heureService ) { this.heureService = heureService; }
+	
+	/** Permet de modifier le nombre d'heure maximum
+	 * @param heureMaximum le nombre d'heure maximum à modifier
+	 */
+	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
+	
 	/** Permet de modifier le contrat
-	 * @param contrat the contrat to set
+	 * @param contrat le contrat à modifier
 	 */
 	public void setContrat      ( Contrat contrat      ) { this.contrat      = contrat;      }
 
-	/** Permet de modifier le nombre d'heure de service
-	 * @param heureService the heureService to set
-	 */
-	public void setheureService ( int     heureService ) { this.heureService = heureService; }
-
-	/** Permet de modifier le nombre d'heure maximum
-	 * @param heureMaximum the heureMaximum to set
-	 */
-	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
 
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
 
-	/** Renvoie le descriptif des attributs d'intervenants
-	 * @return descriptif des attributs d'intervenants
+	/** Indique si deux heures sont égals
+	 * @return true si les deux heures sont égals, false sinon
 	 */
-	public String toString ( )
-	{
-		//return this.nom + " " + this.prenom; //ce toString est utilisé pour l'affichage dans la liste des intervenants des combobox
-		
-		String sRet = "";
-
-		sRet = String.format ( "Nom               : %20s - ",  this.nom          ) +
-			   String.format ( "Prénom            : %20s - ",  this.prenom       ) +
-			   String.format ( "heureService      : %3d  - ",  this.heureService ) +
-			   String.format ( "Heure Max         : %3d  - ",  this.heureMaximum ) ;
-
-		return sRet;
-	}
-
 	@Override
-	/** Compare l'égalité entre l'intervenant passé en paramètre et l'invernant passé par le constructeur
-	 * @return true si les deux intervenants sont égaux, sinon false
-	 */
 	public boolean equals ( Object o )
 	{
-		if ( o == null ) return false;
-		if ( o == this ) return true;
-		
-		if ( o instanceof Intervenant )
-		{
-			Intervenant i = ( Intervenant ) o;
+		if ( ! ( o instanceof Intervenant ) ) return false;
+		if ( o == this                      ) return true;
 
-			if ( this.id == i.getId ( ) && this.nom.equals ( i.getNom ( ) ) && this.prenom.equals ( i.getPrenom ( ) ) && this.heureService == i.getheureService ( ) && this.heureMaximum == i.getHeureMaximum ( ) )
-				return true;
-		}
-		
-		return false;
+		Intervenant c = ( Intervenant ) o;
+
+		return this.id           == c.id                    &&
+		       this.nom          .equals ( c.nom          ) &&
+		       this.prenom       .equals ( c.prenom       ) &&
+		       this.heureService == c.heureService          &&
+		       this.heureMaximum == c.heureMaximum          &&
+		       this.contrat      .equals ( c.contrat      );
+
+	}
+
+	/** Renvoie la description et le contenu d'une horaire
+	 * @return Une description du contenue d'une horaire
+	 */
+	@Override
+	public String toString ( )
+	{
+		return String.format ( "Intervenant%nId              : %d%nNom             : %s%nPrénom          : %s%nHeure de service : %d%nHeure maximum    : %d%nContrat          : %s", this.id, this.nom, this.prenom, this.heureService, this.heureMaximum, this.contrat );
 	}
 	
 }
