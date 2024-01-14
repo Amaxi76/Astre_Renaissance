@@ -45,19 +45,19 @@ public class ModuleIUT
 	/*---------------------------------------*/
 
 	/** Fabrique de module à partir d'un tableau
-	 * @param contrat Prend un tableau d'objet définissant le module
+	 * @param moduleIUT Prend un tableau d'objet définissant le module
 	 * @return Le module crée si les données du tableau sont correctes.
 	 */
-	public static ModuleIUT creation ( Object[] contrat )
+	public static ModuleIUT creation ( Object[] moduleIUT )
 	{
-		Object c    = contrat[0];
-		Object ll   = contrat[1];
-		Object lc   = contrat[2];
-		Object tm   = contrat[3];
-		Object v    = contrat[4];
-		Object s    = contrat[5];
-		Object thPN = contrat[6];
-		Object thA  = contrat[7];
+		Object c    = moduleIUT[0];
+		Object ll   = moduleIUT[1];
+		Object lc   = moduleIUT[2];
+		Object tm   = moduleIUT[3];
+		Object v    = moduleIUT[4];
+		Object s    = moduleIUT[5];
+		Object thPN = moduleIUT[6];
+		Object thA  = moduleIUT[7];
 
 		if ( ! ( c    instanceof String   ) ) throw new IllegalArgumentException ( "Le code n'est pas du bon type"                   );
 		if ( ! ( ll   instanceof String   ) ) throw new IllegalArgumentException ( "Le libellé long n'est pas du bon type"           );
@@ -104,7 +104,7 @@ public class ModuleIUT
 		return new ModuleIUT ( code, libLong, libCourt, typeModule, valide, semestre, totalHeurePN, totalHeureAffectee );
 	}
 
-	
+
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
@@ -221,7 +221,7 @@ public class ModuleIUT
 	}
 
 	/** Renvoie la description et le contenu d'un ModuleIUT
-	 * @return Une description du contenue d'unModuleIUT
+	 * @return Une description du contenue d'un ModuleIUT
 	 */
 	@Override
 	public String toString ( )
