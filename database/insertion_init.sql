@@ -1,9 +1,9 @@
-/*
-	@author Alizéa LEBARON, Maxime LEMOINE
-	@version 1.0.0 - 14/01/2024
-	@date 11/12/2023
-	@description Script permettant d'insérer les données essentielles à une premiere utilisation de l'application
-*/
+/**
+ * Insérer les données essentielles à une premiere d'ASTRE
+ * @author Alizéa LEBARON, Maxime LEMOINE
+ * @version 1.0.0 - 14/01/2024
+ * @date 11/12/2023
+ */
 
 INSERT INTO Semestre VALUES 
 ( 1, 0, 0, 0, 0 ),

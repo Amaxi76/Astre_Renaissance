@@ -1,50 +1,50 @@
+/**
+ * Permet de créer les triggers d'ASTRE
+ * @author Maxime LEMOINE
+ * @version 2.0.0 - 14/01/2024
+ * @date 11/12/2023
+ * @description 
+ */
 
-
--- Pour les intervenants
-CREATE TRIGGER tr_update_Intervenant
-AFTER INSERT OR UPDATE OR DELETE
-ON Intervenant
-FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_Intervenant();
-
--- Pour les Semestre
-CREATE TRIGGER tr_update_Semestre
+-- pour la maj de l'historique
+CREATE TRIGGER tr_update_ASTRE
 AFTER INSERT OR UPDATE OR DELETE
 ON Semestre
 FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_Semestre();
+EXECUTE FUNCTION f_update_historique ( );
 
--- Pour les Contrat
-CREATE TRIGGER tr_update_Contrat
+CREATE TRIGGER tr_update_ASTRE
 AFTER INSERT OR UPDATE OR DELETE
 ON Contrat
 FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_Contrat();
+EXECUTE FUNCTION f_update_historique ( );
 
--- Pour les heures
-CREATE TRIGGER tr_update_Heure
+CREATE TRIGGER tr_update_ASTRE
 AFTER INSERT OR UPDATE OR DELETE
 ON Heure
 FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_Heure();
+EXECUTE FUNCTION f_update_historique ( );
 
--- Pour les modules
-CREATE TRIGGER tr_update_ModuleIUT
+CREATE TRIGGER tr_update_ASTRE
 AFTER INSERT OR UPDATE OR DELETE
 ON ModuleIUT
 FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_ModuleIUT();
+EXECUTE FUNCTION f_update_historique ( );
 
--- Pour intervient
-CREATE TRIGGER tr_update_Intervient
+CREATE TRIGGER tr_update_ASTRE
+AFTER INSERT OR UPDATE OR DELETE
+ON Intervenant
+FOR EACH ROW
+EXECUTE FUNCTION f_update_historique ( );
+
+CREATE TRIGGER tr_update_ASTRE
 AFTER INSERT OR UPDATE OR DELETE
 ON Intervient
 FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_Intervient();
+EXECUTE FUNCTION f_update_historique ( );
 
--- Pour horaire
-CREATE TRIGGER tr_update_Horaire
+CREATE TRIGGER tr_update_ASTRE
 AFTER INSERT OR UPDATE OR DELETE
 ON Horaire
 FOR EACH ROW
-EXECUTE FUNCTION f_update_historique_Horaire();
+EXECUTE FUNCTION f_update_historique ( );

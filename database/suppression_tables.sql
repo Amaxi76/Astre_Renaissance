@@ -1,13 +1,9 @@
-/*
-	@author Maxime LEMOINE
-	@version 1.0.0 - 14/01/2024
-	@date 14/01/2024
-	@description Script permettant de drop la database
-*/
-
-/* ---------------------------------------------------- */
-/*          Suppression des tables existantes           */
-/* ---------------------------------------------------- */ 
+/**
+ * Permet supprimer toutes les tables d'ASTRE
+ * @author Maxime LEMOINE
+ * @version 1.0.0 - 14/01/2024
+ * @date 14/01/2024
+ */
 
 DROP TABLE Annee       CASCADE;
 DROP TABLE Semestre    CASCADE;
