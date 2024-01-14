@@ -9,6 +9,7 @@
 /*          Suppression des tables existantes           */
 /* ---------------------------------------------------- */ 
 
+DROP TABLE Annee       CASCADE;
 DROP TABLE Semestre    CASCADE;
 DROP TABLE Contrat     CASCADE;
 DROP TABLE Heure       CASCADE;
@@ -21,6 +22,14 @@ DROP TABLE Historique  CASCADE;
 /* ---------------------------------------------------- */
 /*                  Création des tables                 */
 /* ---------------------------------------------------- */
+
+CREATE TABLE Annee
+(
+	nom      VARCHAR(15),
+	actuelle BOOLEAN,
+
+	PRIMARY KEY  (nom)
+);
 
 CREATE TABLE Semestre
 (
@@ -177,87 +186,30 @@ EXECUTE FUNCTION f_update_historique_Horaire();
 -- Vue intervenant
 CREATE VIEW v_Intervenant AS
 SELECT
-      Id_Intervenant,
-      nomContrat,
-      nom,
-      prenom,
-      hService,
-      hMax,
-      f_conversion ( c.Id_Contrat ) AS ratioTP,
-      f_selectNBHeureParSemestre ( 1, Id_Intervenant  ) AS s1,
-      f_selectNBHeureParSemestre ( 3, Id_Intervenant  ) AS s3,
-      f_selectNBHeureParSemestre ( 5, Id_Intervenant  ) AS s5,
-      f_selectNBHeureParSemestreImpair(Id_Intervenant ) AS totImp,
-      f_selectNBHeureParSemestre ( 2, Id_Intervenant  ) AS s2,
-      f_selectNBHeureParSemestre ( 4, Id_Intervenant  ) AS s4,
-      f_selectNBHeureParSemestre ( 6, Id_Intervenant  ) AS s6,
-      f_selectNBHeureParSemestrePair(Id_Intervenant) AS totPai,
-      f_selectNBHeureParSemestreTot(Id_Intervenant) AS total
+		Id_Intervenant,
+		nomContrat,
+		nom,
+		prenom,
+		hService,
+		hMax,
+		f_conversion ( c.Id_Contrat ) AS ratioTP,
+		f_selectNBHeureParSemestre ( 1, Id_Intervenant  ) AS s1,
+		f_selectNBHeureParSemestre ( 3, Id_Intervenant  ) AS s3,
+		f_selectNBHeureParSemestre ( 5, Id_Intervenant  ) AS s5,
+		f_selectNBHeureParSemestreImpair(Id_Intervenant ) AS totImp,
+		f_selectNBHeureParSemestre ( 2, Id_Intervenant  ) AS s2,
+		f_selectNBHeureParSemestre ( 4, Id_Intervenant  ) AS s4,
+		f_selectNBHeureParSemestre ( 6, Id_Intervenant  ) AS s6,
+		f_selectNBHeureParSemestrePair(Id_Intervenant)    AS totPai,
+		f_selectNBHeureParSemestreTot(Id_Intervenant)     AS total
 FROM
-      Intervenant i
-      JOIN Contrat c ON i.Id_Contrat = c.Id_Contrat
+		Intervenant i
+		JOIN Contrat c ON i.Id_Contrat = c.Id_Contrat
 ORDER BY
-      Id_intervenant ASC;
+		Id_intervenant ASC;
 
 -- Vue des modules
 DROP VIEW IF EXISTS v_Module;
 CREATE OR REPLACE VIEW v_Module AS
 SELECT id_semestre, Code_ModuleIUT, libLong, heureAffecte || '/' || heurePN as recap, valide
 FROM   ModuleIUT;
-/*
-	@author Alizéa LEBARON
-	@description Script d'insertion pour cette année
-*/
-
-/* ---------------------------------------------------- */
-/*          Suppression des tuples existantes           */
-/* ---------------------------------------------------- */ 
-
-DELETE FROM Intervient  CASCADE; 
-DELETE FROM Horaire     CASCADE;
-DELETE FROM ModuleIUT   CASCADE;
-DELETE FROM Semestre    CASCADE;
-DELETE FROM Intervenant CASCADE;
-DELETE FROM Contrat     CASCADE;
-DELETE FROM Heure       CASCADE;
-
-/* ---------------------------------------------------- */
-/*                  Création des tuples                 */
-/* ---------------------------------------------------- */
-
- INSERT INTO Semestre VALUES 
-(2,0,0,0,0), 
-(3,0,0,0,0), 
-(4,0,0,0,0), 
-(5,0,0,0,0), 
-(6,0,0,0,0), 
-(1,4,2,80,5); 
-
-INSERT INTO Contrat (nomContrat, hServiceContrat, hMaxContrat, ratioTP) VALUES 
-('Nom du contrat',5,10,'1.0'); 
-
-INSERT INTO Heure ( nomHeure, coeffTD ) VALUES 
-('TP','1.0'), 
-('TD','1.0'), 
-('CM','1.5'), 
-('REH','1.0'), 
-('SAE','1.0'), 
-('HP','1.0'), 
-('Tut','1.0'); 
-
-INSERT INTO ModuleIUT VALUES 
-('r2','dsds','sdsd','Ressource',false,1); 
-
-INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
-('dsds','yeah',0,0,1); 
-
-INSERT INTO Intervient VALUES 
-(1,6,'r2',5,7,35.0,'...'), 
-(1,3,'r2',1,2,3.0,'...'); 
-
-INSERT INTO Horaire VALUES 
-(3,'r2',20,1,55), 
-(2,'r2',4,1,5), 
-(1,'r2',0,0,0), 
-(6,'r2',0,7,1); 
-
