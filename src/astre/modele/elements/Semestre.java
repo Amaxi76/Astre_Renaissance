@@ -50,11 +50,11 @@ public class Semestre
 		Object e  = semestre[3];
 		Object s  = semestre[4];
 
-		if ( ! ( i  instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type" );
+		if ( ! ( i  instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"          );
 		if ( ! ( tp instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre de groupe TP n'est pas du bon type" );
 		if ( ! ( td instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre de groupe TD n'est pas du bon type" );
-		if ( ! ( e  instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'étudiant n'est pas du bon type" );
-		if ( ! ( s  instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre de semaine n'est pas du bon type" );
+		if ( ! ( e  instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'étudiant n'est pas du bon type"   );
+		if ( ! ( s  instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre de semaine n'est pas du bon type"   );
 		
 		int idSemestre = ( int ) i ;
 		int nbGroupeTP = ( int ) tp;

@@ -1,6 +1,6 @@
 package astre.modele.elements;
 
-/** Classe Intervenant 
+/** Classe Intervenant
   * @author : Maximilien Lesterlin, Alizéa Lebaron
   * @version : 2.0 - 14/01/2024
   * @date : 06/12/2023
@@ -13,24 +13,27 @@ public class Intervenant
 	private String  prenom;
 	private int     heureService;
 	private int     heureMaximum;
+	private double  coefficientTD;
 	private Contrat contrat;
 
 	/** Constructeur d'intervenant
 	 * @param id l'indentifiant de l'intervenant
 	 * @param nom le nom de l'intervenant
 	 * @param prenom le prénom de l'intervenant
-	 * @param contrat le contrat de l'intervenant
 	 * @param heureService le nombre d'heure de service de l'intervenant
 	 * @param heureMaximum le nombre d'heure maximum de l'intervenant
+	 * @param coefficient le coefficient équivalent TD de l'intervenant
+	 * @param contrat le contrat de l'intervenant
 	 */
-	private Intervenant ( int id, String nom, String prenom,int heureService, int heureMaximum, Contrat contrat)
+	private Intervenant ( int id, String nom, String prenom,int heureService, int heureMaximum, double coefficientTD, Contrat contrat)
 	{
-		this.id           = id;
-		this.nom          = nom;
-		this.prenom       = prenom;
-		this.heureService = heureService;
-		this.heureMaximum = heureMaximum;
-		this.contrat      = contrat;
+		this.id            = id;
+		this.nom           = nom;
+		this.prenom        = prenom;
+		this.heureService  = heureService;
+		this.heureMaximum  = heureMaximum;
+		this.coefficientTD = coefficientTD;
+		this.contrat       = contrat;
 	}
 
 
@@ -49,13 +52,15 @@ public class Intervenant
 		Object p  = intervenant[2];
 		Object hs = intervenant[3];
 		Object hm = intervenant[4];
-		Object c  = intervenant[5];
+		Object co = intervenant[5];
+		Object c  = intervenant[6];
 
 		if ( ! ( i  instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                );
 		if ( ! ( n  instanceof String  ) ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                       );
 		if ( ! ( p  instanceof String  ) ) throw new IllegalArgumentException ( "Le prénom n'est pas du bon type"                    );
 		if ( ! ( hs instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heure de service n'est pas du bon type" );
 		if ( ! ( hm instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heure maximum n'est pas du bon type"    );
+		if ( ! ( co instanceof Number  ) ) throw new IllegalArgumentException ( "Le coefficient n'est pas du bon type"               );
 		if ( ! ( c  instanceof Contrat ) ) throw new IllegalArgumentException ( "Le contrat n'est pas du bon type"                   );
 		
 		int    id           = ( int ) i ;
@@ -63,9 +68,10 @@ public class Intervenant
 		String prenom       = p.toString ( );
 		int    heureService = ( int ) hs;
 		int    heureMaximum = ( int ) hm;
+		double coefficient  = Double.parseDouble ( co.toString ( ) );
 		Contrat contrat     = ( Contrat ) c ; 
 
-		return Intervenant.creation ( id, nom, prenom, heureService, heureMaximum, contrat);
+		return Intervenant.creation ( id, nom, prenom, heureService, heureMaximum, coefficient, contrat);
 	}
 
 	/** Fabrique d'intervenant prenant en paramètres toutes les données d'un intervenant
@@ -74,18 +80,20 @@ public class Intervenant
 	 * @param prenom le prénom de l'intervenant
 	 * @param heureService le nombre d'heure de service de l'intervenant
 	 * @param heureMaximum le nombre d'heure maximum de l'intervenant
+	 * @param coefficient le coefficient équivalent TD de l'intervenant
 	 * @param contrat le contrat de l'intervenant
 	 * @return L'intervenant crée si les données ont une valeur et que le nombre d'heure de service et le nombre d'heure maximum sont positifs.
 	 */
-	public static Intervenant creation ( int id, String nom, String prenom, int heureService, int heureMaximum, Contrat contrat)
+	public static Intervenant creation ( int id, String nom, String prenom, int heureService, int heureMaximum, double coefficient, Contrat contrat)
 	{
-		if ( nom   .equals ( "" )        ) throw new IllegalArgumentException ( "Le nom doit être reseigné"                              );
-		if ( prenom.equals ( "" )        ) throw new IllegalArgumentException ( "Le prénom doit être reseigné"                           );
-		if ( heureService > heureMaximum ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
-		if ( heureService < 0            ) throw new IllegalArgumentException ( "Les heures de services sont négatives"                  );
-		if ( heureMaximum < 0            ) throw new IllegalArgumentException ( "Les heures maximums sont négatives"                     );
+		if ( nom   .equals ( "" )         ) throw new IllegalArgumentException ( "Le nom doit être reseigné"                              );
+		if ( prenom.equals ( "" )         ) throw new IllegalArgumentException ( "Le prénom doit être reseigné"                           );
+		if ( heureService >  heureMaximum ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
+		if ( heureService <  0            ) throw new IllegalArgumentException ( "Les heures de services sont négatives"                  );
+		if ( heureMaximum <  0            ) throw new IllegalArgumentException ( "Les heures maximums sont négatives"                     );
+		if ( coefficient  <= 0            ) throw new IllegalArgumentException ( "Le coefficient est négatif ou nul"                      );
 
-		return new Intervenant ( id, nom, prenom, heureService, heureMaximum, contrat );
+		return new Intervenant ( id, nom, prenom, heureService, heureMaximum, coefficient, contrat );
 	}
 
 
@@ -108,22 +116,27 @@ public class Intervenant
 	 */
 	public String  getPrenom       ( ) { return this.prenom;       }
 
-	/** Retourne le contrat de l'intervenant
-	 * @return le contrat
-	 */
-	public Contrat getContrat      ( ) { return this.contrat;      }
-
 	/** Retourne le nombre d'heure de service de l'intervenant
 	 * @return le nombre d'heure de service
 	 */
 	public int     getheureService ( ) { return this.heureService; }
-
+	
 	/** Retourne le nombre d'heure maximum de l'intervenant
 	 * @return le nombre d'heure maximum
 	 */
 	public int     getHeureMaximum ( ) { return this.heureMaximum; }
 
+	/** Retourne le coefficient équivalent TD de l'intervenant
+	 * @return le coefficient équivalent TD
+	 */
+	public double  getCoefficient  ( ) { return this.coefficientTD; }
+	
+	/** Retourne le contrat de l'intervenant
+	 * @return le contrat
+	 */
+	public Contrat getContrat      ( ) { return this.contrat;      }
 
+	
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
@@ -152,6 +165,11 @@ public class Intervenant
 	 * @param heureMaximum le nombre d'heure maximum à modifier
 	 */
 	public void setHeureMaximum ( int     heureMaximum ) { this.heureMaximum = heureMaximum; }
+
+	/** Permet de modifier le coefficient équivalent TD
+	 * @param coefficient le coefficient équivalent TD à modifier
+	 */
+	public void setCoefficient  ( double  coefficient  ) { this.coefficientTD = coefficient;  }
 	
 	/** Permet de modifier le contrat
 	 * @param contrat le contrat à modifier
@@ -177,8 +195,9 @@ public class Intervenant
 		return this.id           == c.id                    &&
 		       this.nom          .equals ( c.nom          ) &&
 		       this.prenom       .equals ( c.prenom       ) &&
-		       this.heureService == c.heureService          &&
-		       this.heureMaximum == c.heureMaximum          &&
+		       this.heureService  == c.heureService         &&
+		       this.heureMaximum  == c.heureMaximum         &&
+		       this.coefficientTD == c.coefficientTD        &&
 		       this.contrat      .equals ( c.contrat      );
 
 	}
@@ -189,7 +208,7 @@ public class Intervenant
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "Intervenant%nId              : %d%nNom             : %s%nPrénom          : %s%nHeure de service : %d%nHeure maximum    : %d%nContrat          : %s", this.id, this.nom, this.prenom, this.heureService, this.heureMaximum, this.contrat );
+		return String.format ( "Intervenant%nId              : %d%nNom             : %s%nPrénom          : %s%nHeure de service : %d%nHeure maximum    : %d%nCoefficient      : %f%nContrat          : %s", this.id, this.nom, this.prenom, this.heureService, this.heureMaximum, this.coefficientTD, this.contrat );
 	}
 	
 }
