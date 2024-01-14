@@ -5,10 +5,6 @@
 	@description Script permettant d'insérer les données essentielles à une premiere utilisation de l'application
 */
 
-/* ---------------------------------------------------- */
-/*                  Création des tuples                 */
-/* ---------------------------------------------------- */
-
 INSERT INTO Semestre VALUES 
 ( 1, 0, 0, 0, 0 ),
 ( 2, 0, 0, 0, 0 ),
