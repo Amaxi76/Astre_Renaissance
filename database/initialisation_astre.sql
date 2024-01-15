@@ -5,8 +5,10 @@
  * @date 15/01/2024
  */
 
-\i database/creation_schemas.sql
-\i database/creation_tables.sql
-\i database/creation_fonctions.sql
-\i database/creation_vues.sql
-\i database/creation_triggers.sql
+\i creation/creation_schemas.sql
+\i creation/creation_tables.sql
+\i creation/creation_fonctions.sql
+\i creation/creation_vues.sql
+\i creation/creation_triggers.sql
+
+\i insertion/insertion_init.sql
