@@ -12,9 +12,9 @@ Fork du projet : https://github.com/Maximeuuu/Astre
 
 ## Collaborateurs
 
-	- projet initial : https://github.com/Maximeuuu/Astre
-	- Maxime     Lemoine
-	- Maximilien Lesterlin
+- projet initial : https://github.com/Maximeuuu/Astre
+- Maxime     Lemoine
+- Maximilien Lesterlin
 
 
 ## Installation et Exécution
