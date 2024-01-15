@@ -1,11 +1,11 @@
 /**
  * Permet de créer toutes les tables d'ASTRE
  * @author Alizéa LEBARON, Maxime LEMOINE
- * @version 2.0.0 - 14/01/2024
+ * @version 2.1.0 - 15/01/2024
  * @date 06/12/2023 
  */
 
-CREATE TABLE Annee
+CREATE TABLE astre.Annee
 (
 	idAnnee  SERIAL                                          ,
 	nom      VARCHAR ( 30 ) NOT NULL DEFAULT 'Nouvelle année',
@@ -14,7 +14,7 @@ CREATE TABLE Annee
 	PRIMARY KEY ( idAnnee )
 );
 
-CREATE TABLE Semestre
+CREATE TABLE astre.Semestre
 (
 	idSemestre SERIAL                    ,
 	nbGroupeTP INTEGER NOT NULL DEFAULT 0,
@@ -25,7 +25,7 @@ CREATE TABLE Semestre
 	PRIMARY KEY ( idSemestre )
 );
 
-CREATE TABLE Contrat
+CREATE TABLE astre.Contrat
 (
 	idContrat       SERIAL                             ,
 	nom             VARCHAR ( 50   ) NOT NULL          ,
@@ -36,7 +36,7 @@ CREATE TABLE Contrat
 	PRIMARY KEY ( idContrat )
 );
 
-CREATE TABLE Heure
+CREATE TABLE astre.Heure
 (
 	idHeure  SERIAL                             ,
 	nom      VARCHAR ( 20 )   NOT NULL          ,
@@ -45,7 +45,7 @@ CREATE TABLE Heure
 	PRIMARY KEY ( idHeure )
 );
 
-CREATE TABLE ModuleIUT
+CREATE TABLE astre.ModuleIUT
 (
 	idModuleIUT        SERIAL                                  ,
 	code               VARCHAR ( 5  )    NOT NULL              ,
@@ -58,10 +58,10 @@ CREATE TABLE ModuleIUT
 	totalHeureAffectee DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0    ,
 
 	PRIMARY KEY ( idModuleIUT ),
-	FOREIGN KEY ( idSemestre ) REFERENCES Semestre ( idSemestre )
+	FOREIGN KEY ( idSemestre ) REFERENCES astre.Semestre ( idSemestre )
 );
 
-CREATE TABLE Intervenant
+CREATE TABLE astre.Intervenant
 (
 	idIntervenant   SERIAL                             ,
 	nom             VARCHAR ( 50 )   NOT NULL          ,
@@ -72,10 +72,10 @@ CREATE TABLE Intervenant
 	idContrat       INTEGER          NOT NULL          ,
 
 	PRIMARY KEY ( idIntervenant ),
-	FOREIGN KEY ( idContrat ) REFERENCES Contrat ( idContrat )
+	FOREIGN KEY ( idContrat ) REFERENCES astre.Contrat ( idContrat )
 );
 
-CREATE TABLE Intervient
+CREATE TABLE astre.Intervient
 (
 	idIntervenant INTEGER          NOT NULL          ,
 	idHeure       INTEGER          NOT NULL          ,
@@ -86,12 +86,12 @@ CREATE TABLE Intervient
 	commentaire   VARCHAR ( 50 )   NOT NULL          ,
 
 	PRIMARY KEY ( idIntervenant, idHeure, idModuleIUT ),
-	FOREIGN KEY ( idIntervenant ) REFERENCES Intervenant ( idIntervenant ),
-	FOREIGN KEY ( idHeure       ) REFERENCES Heure       ( idHeure       ),
-	FOREIGN KEY ( idModuleIUT   ) REFERENCES ModuleIUT   ( idModuleIUT   )
+	FOREIGN KEY ( idIntervenant ) REFERENCES astre.Intervenant ( idIntervenant ),
+	FOREIGN KEY ( idHeure       ) REFERENCES astre.Heure       ( idHeure       ),
+	FOREIGN KEY ( idModuleIUT   ) REFERENCES astre.ModuleIUT   ( idModuleIUT   )
 );
 
-CREATE TABLE Horaire
+CREATE TABLE astre.Horaire
 ( 
 	idHeure         INTEGER          NOT NULL          ,
 	idModuleIUT     INTEGER          NOT NULL          ,
@@ -100,15 +100,15 @@ CREATE TABLE Horaire
 	nbSemaine       INTEGER          NOT NULL DEFAULT 0,
 	
 	PRIMARY KEY ( idHeure, idModuleIUT ),
-	FOREIGN KEY ( idHeure     ) REFERENCES Heure     ( idHeure     ),
-	FOREIGN KEY ( idModuleIUT ) REFERENCES ModuleIUT ( idModuleIUT )
+	FOREIGN KEY ( idHeure     ) REFERENCES astre.Heure     ( idHeure     ),
+	FOREIGN KEY ( idModuleIUT ) REFERENCES astre.ModuleIUT ( idModuleIUT )
 );
 
-CREATE TABLE Historique
+CREATE TABLE astre.Historique
 (
-	idHistorique     SERIAL                                            ,
-	dateModification TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	commentaire      VARCHAR ( 150 ) NOT NULL                          ,
+	idHistorique     SERIAL                                      ,
+	dateModification TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	commentaire      TEXT      NOT NULL                          ,
 
 	PRIMARY KEY ( idHistorique )
 );

@@ -5,7 +5,7 @@
  * @date 11/12/2023
  */
 
-INSERT INTO Semestre VALUES 
+INSERT INTO astre.Semestre VALUES 
 ( 1, 0, 0, 0, 0 ),
 ( 2, 0, 0, 0, 0 ),
 ( 3, 0, 0, 0, 0 ),
@@ -13,7 +13,7 @@ INSERT INTO Semestre VALUES
 ( 5, 0, 0, 0, 0 ),
 ( 6, 0, 0, 0, 0 );
 
-INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
+INSERT INTO astre.Heure ( nom, coefEQTD ) VALUES
 ( 'TP' , 1   ),
 ( 'TD' , 1   ),
 ( 'CM' , 1.5 ),

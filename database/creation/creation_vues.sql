@@ -1,9 +1,16 @@
---FIXME: SIMPLE COPIE DE LE L'ANCIEN
+/**
+ * Permet de créer les vues d'ASTRE
+ * @author Maxime LEMOINE
+ * @version 1.0.0 - 15/01/2024
+ * @date 15/01/2024
+ * @warning : FIXME: SIMPLE COPIE DE LE L'ANCIEN
+ */
+
 /* Création de vue */
 
 -- Vue intervenant
 --TODO: voir à mettre une vue à la place de tous les f_selectNBHeureParSemestre
-CREATE VIEW v_Intervenant AS
+CREATE VIEW astre.v_Intervenant AS
 SELECT
 	i.idIntervenant,
 	c.nom AS nomContrat,
