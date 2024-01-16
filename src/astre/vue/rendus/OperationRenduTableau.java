@@ -51,8 +51,15 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 
 		if ( tbl.getModel ( ).getColumnClass ( col ) == Fraction.class )
 		{
-			Fraction fraction = new Fraction ( valeur );
-			setText ( fraction.toString ( ) );
+			try
+			{
+				Fraction fraction = new Fraction ( valeur.toString() );
+				setText ( fraction.toString ( ) );
+			}
+			catch ( NumberFormatException e )
+			{
+				setText ( "" );
+			}
 		}
 		
 		// par défaut il y a une alternance de couleurs
