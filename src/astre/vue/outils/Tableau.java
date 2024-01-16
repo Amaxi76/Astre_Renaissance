@@ -192,7 +192,8 @@ public class Tableau extends JTable
 	*/
 	public Object[][] getDonnees ( ) { return this.modele.getDonnees ( ); }
 
-	public ModeleTableau getModeleTableau ( ) { return this.modele; }
+	//public ModeleTableau getModeleTableau ( ) { return this.modele; } //FIXME: c'est une dinguerie de pas utiliser les méthodes existantes de JTable
+	@Override public ModeleTableau getModel ( ) { return this.modele; }
 
 
 	/*---------------------------------------*/
