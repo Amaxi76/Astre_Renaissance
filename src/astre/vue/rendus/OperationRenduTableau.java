@@ -1,5 +1,6 @@
 package astre.vue.rendus;
 
+import astre.modele.outils.Fraction;
 import astre.modele.outils.ModeleTableau;
 
 import java.awt.Color;
@@ -37,6 +38,21 @@ public class OperationRenduTableau extends DefaultTableCellRenderer
 			checkBox.setBackground          ( tbl.getSelectionBackground ( ) );
 			checkBox.setForeground          ( tbl.getSelectionForeground ( ) );
 			cellule = checkBox;
+		}
+
+		//TODO: verifier si c'est utile
+		if ( valeur instanceof String )
+		{
+			String texte = ( String ) valeur;
+			if ( texte == null )
+				texte = "";
+			setText ( texte );
+		}
+
+		if ( tbl.getModel ( ).getColumnClass ( col ) == Fraction.class )
+		{
+			Fraction fraction = new Fraction ( valeur );
+			setText ( fraction.toString ( ) );
 		}
 		
 		// par défaut il y a une alternance de couleurs
