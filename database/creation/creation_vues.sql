@@ -10,7 +10,7 @@
 
 -- Vue intervenant
 --TODO: voir à mettre une vue à la place de tous les f_selectNBHeureParSemestre
-CREATE VIEW astre.v_Intervenant AS
+/*CREATE VIEW astre.v_Intervenant AS
 SELECT
 	i.idIntervenant,
 	c.nom AS nomContrat,
@@ -18,24 +18,24 @@ SELECT
 	i.prenom,
 	i.nbHeureService AS hServ,
 	i.maxHeureService AS hMax,
-	f_conversion ( c.idContrat ) AS ratioTP,
-	f_selectNBHeureParSemestre       ( 1, Id_Intervenant  ) AS s1,
-	f_selectNBHeureParSemestre       ( 3, Id_Intervenant  ) AS s3,
-	f_selectNBHeureParSemestre       ( 5, Id_Intervenant  ) AS s5,
-	f_selectNBHeureParSemestreImpair ( Id_Intervenant     ) AS totImp,
-	f_selectNBHeureParSemestre       ( 2, Id_Intervenant  ) AS s2,
-	f_selectNBHeureParSemestre       ( 4, Id_Intervenant  ) AS s4,
-	f_selectNBHeureParSemestre       ( 6, Id_Intervenant  ) AS s6,
-	f_selectNBHeureParSemestrePair   ( Id_Intervenant     ) AS totPai,
-	f_selectNBHeureParSemestreTot    ( Id_Intervenant     ) AS total
+	astre.f_conversion ( c.idContrat ) AS ratioTP,
+	astre.f_selectNBHeureParSemestre       ( 1, idIntervenant  ) AS s1,
+	astre.f_selectNBHeureParSemestre       ( 3, idIntervenant  ) AS s3,
+	astre.f_selectNBHeureParSemestre       ( 5, idIntervenant  ) AS s5,
+	astre.f_selectNBHeureParSemestreImpair ( idIntervenant     ) AS totImp,
+	astre.f_selectNBHeureParSemestre       ( 2, idIntervenant  ) AS s2,
+	astre.f_selectNBHeureParSemestre       ( 4, idIntervenant  ) AS s4,
+	astre.f_selectNBHeureParSemestre       ( 6, idIntervenant  ) AS s6,
+	astre.f_selectNBHeureParSemestrePair   ( idIntervenant     ) AS totPai,
+	astre.f_selectNBHeureParSemestreTot    ( idIntervenant     ) AS total
 FROM
-	Intervenant i
-	JOIN Contrat c ON i.Id_Contrat = c.Id_Contrat
+	astre.Intervenant i
+	JOIN astre.Contrat c ON i.idContrat = c.idContrat
 ORDER BY
-	Id_intervenant ASC;
+	idIntervenant ASC;*/
 
 -- Vue des modules
 DROP VIEW IF EXISTS v_Module;
 CREATE OR REPLACE VIEW v_Module AS
-SELECT id_semestre, Code_ModuleIUT, libLong, heureAffecte || '/' || heurePN as recap, valide
-FROM   ModuleIUT;
+SELECT idSemestre, code, libLong, totalHeureAffectee || '/' || totalHeurePN AS recap, valide
+FROM   astre.ModuleIUT;
