@@ -10,8 +10,8 @@ public class Contrat
 {
 	private int    id;
 	private String nom;
-	private int    heureServiceContrat;
-	private int    heureMaxContrat;
+	private double heureServiceContrat;
+	private double heureMaxContrat;
 	private double ratioTP;
 
 	/** Constructeur unique de contrat
@@ -21,7 +21,7 @@ public class Contrat
 	 * @param heureMaxContrat nombre d'heure maximum du contrat
 	 * @param ratioTP ratio TP du contrat
 	 */
-	private Contrat ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
+	private Contrat ( int id, String nom, double heureServiceContrat, double heureMaxContrat, double ratioTP )
 	{
 		this.id                  = id;
 		this.nom                 = nom;
@@ -49,13 +49,13 @@ public class Contrat
 
 		if ( ! ( i   instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
 		if ( ! ( n   instanceof String  ) ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
-		if ( ! ( hsc instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
-		if ( ! ( hmc instanceof Integer ) ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
+		if ( ! ( hsc instanceof Number  ) ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
+		if ( ! ( hmc instanceof Number  ) ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
 		if ( ! ( rt  instanceof Number  ) ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
 		
 		int    id                  = ( int ) i;
-		int    heureServiceContrat = ( int ) hsc;
-		int    heureMaxContrat     = ( int ) hmc;
+		double heureServiceContrat = Double.parseDouble ( hsc.toString ( ) );
+		double heureMaxContrat     = Double.parseDouble ( hmc.toString ( ) );
 		String nom                 = n.toString ( );
 		double ratioTP             = Double.parseDouble ( rt.toString ( ) );
 
@@ -70,7 +70,7 @@ public class Contrat
 	 * @param ratioTP le ratio TP du contrat
 	 * @return Le contrat en question
 	 */
-	public static Contrat creation ( int id, String nom, int heureServiceContrat, int heureMaxContrat, double ratioTP )
+	public static Contrat creation ( int id, String nom, double heureServiceContrat, double heureMaxContrat, double ratioTP )
 	{
 		// Teste que l'identifiant est correct
 		if ( id < 0                                ) throw new IllegalArgumentException ( "L'identifiant est incorrect"                            );
@@ -111,12 +111,12 @@ public class Contrat
 	/** Retourne le nombre d'heure service d'un contrat
 	 * @return Le nombre d'heure service du contrat
 	 */
-	public int    getHeureServiceContrat ( ) { return this.heureServiceContrat; }
+	public double getHeureServiceContrat ( ) { return this.heureServiceContrat; }
 
 	/** Retourne le nombre d'heure maximales d'un contrat
 	 * @return Le nombre d'heure maximales du contrat
 	 */
-	public int    getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
+	public double getHeureMaxContrat     ( ) { return this.heureMaxContrat;     }
 
 	/** Retourne le ratio TP d'un contrat
 	 * @return Le ratio TP du contrat
@@ -141,12 +141,12 @@ public class Contrat
 	/** Permet de modifier les heure de service d'un contrat
 	 * @param heureServiceContrat le nombre d'heure de service
 	 */
-	public void setHeureServiceContrat ( int    heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
+	public void setHeureServiceContrat ( double heureServiceContrat ) { this.heureServiceContrat = heureServiceContrat; }
 
 	/** Permet de modifier le nombre d'heure maximum d'un contrat
 	 * @param heureMaxContrat le nombre d'heure maximum
 	 */
-	public void setHeureMaxContrat     ( int    heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
+	public void setHeureMaxContrat     ( double heureMaxContrat     ) { this.heureMaxContrat     = heureMaxContrat;     }
 
 	/** Permet de modifier le ratio TP d'un contrat 
 	 * @param ratioTP le ratio TP
@@ -183,6 +183,6 @@ public class Contrat
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "Contrat%nNom                   : %-22s%nHeure service contrat : %02d%nHeure max contrat     : %02d%nRatio TP              : %,.2f", this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
+		return String.format ( "Contrat%nNom                   : %-22s%nHeure service contrat : %,.2f%nHeure max contrat     : %,.2f%nRatio TP              : %,.2f", this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
 	}
 }
