@@ -143,7 +143,7 @@ public class Horaire
 	/** Permet de modifier le nombre d'heure par semaine
 	 * @param nbHeure le nombre d'heure par semaine à modifier
 	 */
-	public void setnbHeureSemaine   ( double    nbHeureSemaine   ) { this.nbHeureSemaine = nbHeureSemaine;   }
+	public void setnbHeureSemaine   ( double    nbHeureSemaine    ) { this.nbHeureSemaine = nbHeureSemaine;  }
 	
 	/** Permet de modifier le nombre de semaine
 	 * @param nbSemaine le nombre de semaine à modifier

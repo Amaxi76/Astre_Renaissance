@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 /** Page de gestion de la base de données
   * @author : Matéo Sa, Alizéa Lebaron, Maximilien Lesterlin, Maxime Lemoine et Clémentin Ly
-  * @version : 1.0 - 09/01/2023
+  * @version : 19.0 - 17/01/2024
   * @date : 06/12/2023
   */
 
@@ -32,8 +32,6 @@ import astre.vue.FrameIdentifiant;
 
 public class BD
 {
-	private static final String JDBC = "org.postgresql.Driver";
-
 	private String login;
 	private String password;
 
@@ -42,30 +40,28 @@ public class BD
 
 	private static BD dbInstance;
 
-	Connection co;
-	PreparedStatement ps;
+	private Connection co;
+	private PreparedStatement ps;
 
 	private BD ( )
 	{
-		setIndentifiant ( );
+		this.setIndentifiant ( );
 		
 		String erreurConnexion = "";
 
 		try
 		{
-			Class.forName ( JDBC );
 			co = DriverManager.getConnection ( this.urlWoody , this.login, this.password );
 		}
-		catch ( ClassNotFoundException | SQLException e1 )
+		catch ( SQLException e1 )
 		{
 			erreurConnexion += "Erreur de connexion à la base de données " + this.urlWoody + " : " + e1 + "\n";
 
 			try
 			{
-				Class.forName ( "org.postgresql.Driver" );
-				co = DriverManager.getConnection( this.urlLocal, this.login, this.password );
+				co = DriverManager.getConnection ( this.urlLocal, this.login, this.password );
 			}
-			catch ( ClassNotFoundException | SQLException e2 )
+			catch ( SQLException e2 )
 			{
 				erreurConnexion += "Erreur de connexion à la base de données " + this.urlLocal + " : " + e2 ;
 				JOptionPane.showMessageDialog ( null, erreurConnexion, "Erreur de connexion", JOptionPane.ERROR_MESSAGE );
@@ -102,8 +98,7 @@ public class BD
 		}
 		catch ( Exception e )
 		{
-			JOptionPane.showMessageDialog ( null, e.toString(), "Identifiants introuvables", JOptionPane.ERROR_MESSAGE );
-			e.getMessage ( );
+			JOptionPane.showMessageDialog ( null, e.getMessage ( ), "Identifiants introuvables", JOptionPane.ERROR_MESSAGE );
 		}
 
 		this.urlWoody = "jdbc:postgresql://woody/"          + this.login + "?useUnicode=true&characterEncoding=UTF-8";
@@ -122,7 +117,7 @@ public class BD
 
 			rs.next ( );
 
-			estCree = rs.getBoolean(1);
+			estCree = rs.getBoolean ( 1 );
 
 			rs.close ( );
 			st.close ( );
@@ -139,91 +134,10 @@ public class BD
 		return estCree;
 	}
 
-	/* Script de création */
-
-	public void executeScript (String cheminScript) 
-	{
-		String requete = "";
-
-		try ( BufferedReader reader = new BufferedReader ( new FileReader ( cheminScript, StandardCharsets.UTF_8 ) ) ) 
-		{
-			Statement st = co.createStatement();
-			String ligne;
-
-			// Lire le script SQL ligne par ligne
-			while ((ligne = reader.readLine()) != null) 
-			{
-				requete += ligne + "\n";
-
-				// Si la ligne se termine par un point-virgule, exécuter la requête
-				if (ligne.trim().endsWith(";")) 
-				{
-					// Affichez la requête avant de l'exécuter
-					System.out.println(requete); //debug
-
-					// Exécuter la requê e
-					st.executeUpdate(requete);
-
-					// Réinitialiser la variable requete
-					requete = "";
-				}
-			}
-
-
-			// Exécuter le script SQL
-			//st.executeUpdate ( script.toString ( ) );
-			co.commit();
-
-			System.out.println ( "Script SQL exécuté avec succès." );
-		} 
-		catch ( Exception e ) 
-		{
-			JOptionPane.showMessageDialog ( null, e.toString ( ), "erreur executeScript ( ) : ", JOptionPane.ERROR_MESSAGE );
-			e.getMessage ( );
-		}
-	}
-
-	public void executeScriptFonction (String cheminScript) 
-	{
-		try ( BufferedReader reader = new BufferedReader ( new FileReader(cheminScript, StandardCharsets.UTF_8 ) ) ) 
-		{
-			Statement st = co.createStatement();
-			StringBuilder scriptPart = new StringBuilder ( );
-			String ligne;
-			boolean estPLPGSQL = false;
-	
-			// Lire le script SQL ligne par ligne
-			while ((ligne = reader.readLine()) != null) {
-				scriptPart.append(ligne).append("\n");
-	
-				// Vérifier si nous sommes à l'intérieur d'un bloc PL/pgSQL
-				if (ligne.trim().startsWith("$$")) 
-				{
-					estPLPGSQL = !estPLPGSQL;
-				}
-	
-				// Si la ligne contient un point-virgule et nous ne sommes pas à l'intérieur d'un bloc PL/pgSQL,
-				// exécuter la partie du script SQL
-				if (ligne.contains(";") && !estPLPGSQL) 
-				{
-					// Exécuter la requête
-					st.executeUpdate(scriptPart.toString());
-	
-					// Réinitialiser la variable scriptPart
-					scriptPart = new StringBuilder();
-				}
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
-	
-
 	/*---------------------------------------*/
 	/*            RECUP GENERALE             */
 	/*---------------------------------------*/
 
-	//TODO: mettre les factories pour tous les types
 	/** Méthode générique pour la récupération de table
 	 * Exemple d'utilisation : ArrayList<Semestre> ensS= new ArrayList<> (getTable ( "Semestre", Semestre.class ) ) ;
 	 */
@@ -241,47 +155,43 @@ public class BD
 			{
 				try
 				{
-					if ( type.equals ( Semestre.class )     )
-						lst.add ( type.cast ( Semestre.creation ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+					if ( type.equals ( Semestre    .class ) )
+						lst.add ( type.cast ( Semestre   .creation ( rs.getInt ( 1 ), rs.getInt ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
 
-					if ( type.equals ( Contrat.class )      )
-						lst.add ( type.cast ( Contrat.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) ) );
+					if ( type.equals ( Contrat    .class ) )
+						lst.add ( type.cast ( Contrat    .creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getDouble ( 5 ) ) ) );
 
-					if ( type.equals ( Heure.class )        )
-						lst.add ( type.cast ( Heure.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
+					if ( type.equals ( Heure      .class ) )
+						lst.add ( type.cast ( Heure      .creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getDouble ( 3 ) ) ) );
 
-					if ( type.equals ( Intervenant.class )  )
-						lst.add ( type.cast ( Intervenant.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), getContrat ( rs.getInt ( 6 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ) ) ) );
+					if ( type.equals ( Intervenant.class ) )
+						lst.add ( type.cast ( Intervenant.creation ( rs.getInt ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), rs.getDouble ( 4 ), rs.getDouble ( 5 ), rs.getDouble ( 6 ), this.getContrat ( rs.getInt ( 7 ) ) ) ) );
 
-					if ( type.equals ( ModuleIUT.class )  )
-						lst.add ( type.cast ( ModuleIUT.creation ( getSemestre ( rs.getInt ( 6 ) ), rs.getString ( 4 ) , rs.getString ( 1 ), rs.getString ( 2 ), rs.getString ( 3 ), rs.getBoolean ( 5 ), rs.getInt ( 7 ), rs.getInt ( 8 ) ) ) );
+					if ( type.equals ( ModuleIUT  .class ) )
+						lst.add ( type.cast ( ModuleIUT  .creation ( rs.getInt ( 1 ), rs.getString ( 2 ) , rs.getString ( 3 ), rs.getString ( 4 ), rs.getString ( 5 ), rs.getBoolean ( 6 ), this.getSemestre ( rs.getInt ( 7 ) ), rs.getDouble ( 7 ), rs.getDouble ( 8 ) ) ) );
 
-					if ( type.equals ( Horaire.class )  )
-						lst.add ( type.cast ( Horaire.creation ( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
+					if ( type.equals ( Horaire    .class ) )
+						lst.add ( type.cast ( Horaire    .creation ( getHeure ( rs.getInt ( 1 ) ), getModule (rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 5 ), rs.getInt ( 4 ) ) ) );
 
-					if ( type.equals ( Intervient.class )  )
-						lst.add ( type.cast ( Intervient.creation ( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
-						// Intervenant intervenant, Heure heure, ModuleIUT module, int nbSemaine, int nbGroupe, int nbHeure, String commentaire
-
-				// Ajouter d'autres conditions pour d'autres classes si nécessaire
+					if ( type.equals ( Intervient .class ) )
+						lst.add ( type.cast ( Intervient .creation ( getIntervenant ( rs.getInt ( 1 ) ), getHeure ( rs.getInt ( 2 ) ) , getModule (rs.getString ( 3 ) ), rs.getInt ( 4 ), rs.getInt ( 5 ), rs.getInt ( 6 ), rs.getString(7) ) ) );
 				}
 				catch ( Exception e )
 				{
 					e.getMessage ( );
 				}
-
 			}
+
+			rs.close ( );
+			st.close ( );
 		}
 		catch ( SQLException e )
 		{
-			JOptionPane.showMessageDialog ( null, e.toString(), "erreur geTable() : ", JOptionPane.ERROR_MESSAGE );
-			e.getMessage ( );
+			JOptionPane.showMessageDialog ( null, e.getMessage ( ), "erreur getTable ( ) : ", JOptionPane.ERROR_MESSAGE );
 		}
 
 		return lst;
 	}
-
-	//TODO: J4EN SUIS LA
 
 	public List<Semestre>    getSemestres    ( ) { return this.getTable ( Semestre   .class ); }
 	public List<Intervenant> getIntervenants ( ) { return this.getTable ( Intervenant.class ); }
@@ -290,118 +200,6 @@ public class BD
 	public List<Intervient>  getIntervients  ( ) { return this.getTable ( Intervient .class ); }
 	public List<ModuleIUT>   getModuleIUTs   ( ) { return this.getTable ( ModuleIUT  .class ); }
 	public List<Horaire>     getHoraires     ( ) { return this.getTable ( Horaire    .class ); }
-
-
-	/*public List<ModuleIUT> getModules ( int numeroSemestre )
-	{
-
-		ArrayList<ModuleIUT> ensModules = new ArrayList<> ( );
-
-		String REQUETE = "SELECT * FROM f_selectModulesIUTParSemestre(?)";
-
-		try
-		{
-			Statement         st = co.createStatement  (         );
-			PreparedStatement ps = co.prepareStatement ( REQUETE );
-
-			ps.setInt ( 1, numeroSemestre );
-
-			ResultSet rs = ps.executeQuery ( );
-
-			while ( rs.next ( ) )
-			{
-				int iS = 6;
-				int iM = 1;
-
-				Semestre  semestre  = new Semestre   ( rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS++ ), rs.getInt ( iS ) );
-				ModuleIUT moduleIUT = ModuleIUT.creation ( semestre, rs.getString ( 4 ), rs.getString ( iM++ ), rs.getString ( iM++ ), rs.getString ( iM ), rs.getBoolean ( 5 ) );
-
-				ensModules.add ( moduleIUT );
-			}
-
-			rs.close ( );
-			ps.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "getModules ( )" +  e );
-		}
-
-		return ensModules;
-	}
-
-	public Map<Heure, Integer> getHeures ( String code, char typeHeure ) //typeHeure = 'P' ou 'R'
-	{
-		HashMap<Heure, Integer> hm = new HashMap<> ( );
-
-		Heure heure    = null;
-		String REQUETE = "SELECT * FROM f_selectHoraireParModule(?)";
-
-		try
-		{
-			Statement         st = co.createStatement (         );
-			PreparedStatement ps = co.prepareStatement( REQUETE );
-
-			ps.setString ( 1, code );
-
-			ResultSet rs = ps.executeQuery ( );
-
-			while ( rs.next ( ) )
-			{
-				for ( Heure h : this.getHeures ( ) )
-					if ( h.getNom ( ).equals ( rs.getString ( 1 ) ) )
-						heure = h;
-
-				int heureS = ( typeHeure == 'P' ) ? 2 : 3;
-
-				hm.put ( heure, rs.getInt ( heureS ) );
-			}
-
-			rs.close ( );
-			ps.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( e );
-		}
-
-		return hm;
-	}*/
-
-	public List<Horaire> getHoraires ( String module )
-	{
-		ArrayList<Horaire> ensHoraire = new ArrayList<> ( );
-
-		final String REQUETE = "SELECT * FROM Horaire where Code_ModuleIUT = ?";
-
-		try
-		{
-			Statement         st = co.createStatement  (         );
-			PreparedStatement ps = co.prepareStatement ( REQUETE );
-
-			ps.setString ( 1, module );
-
-			ResultSet rs = ps.executeQuery ( );
-
-			while ( rs.next ( ) )
-			{
-				Horaire h = Horaire.creation ( getHeure ( rs.getInt ( 1 ) ), getModule ( rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 ) );
-				ensHoraire.add ( h );
-			}
-
-			rs.close ( );
-			ps.close ( );
-			st.close ( );
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "getHoraire ( )" +  e.getMessage ( ) );
-		}
-
-		return ensHoraire;
-	}
 
 	public List<String> getEnsAnnee ( )
 	{
@@ -459,6 +257,43 @@ public class BD
 	/*---------------------------------------*/
 	/*             RECUP UNITAIRE            */
 	/*---------------------------------------*/
+
+	/*---------------------------------------*/
+	/*       RECUP AVEC UN IDENTIFIANT       */
+	/*---------------------------------------*/
+
+	public List<Horaire> getHoraires ( String module )
+	{
+		ArrayList<Horaire> ensHoraire = new ArrayList<> ( );
+
+		final String REQUETE = "SELECT * FROM Horaire where Code_ModuleIUT = ?";
+
+		try
+		{
+			Statement         st = co.createStatement  (         );
+			PreparedStatement ps = co.prepareStatement ( REQUETE );
+
+			ps.setString ( 1, module );
+
+			ResultSet rs = ps.executeQuery ( );
+
+			while ( rs.next ( ) )
+			{
+				Horaire h = Horaire.creation ( getHeure ( rs.getInt ( 1 ) ), getModule ( rs.getString ( 2 ) ), rs.getInt ( 3 ), rs.getInt ( 4 ), rs.getInt ( 5 ) );
+				ensHoraire.add ( h );
+			}
+
+			rs.close ( );
+			ps.close ( );
+			st.close ( );
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "getHoraire ( )" +  e.getMessage ( ) );
+		}
+
+		return ensHoraire;
+	}
 
 	public Semestre getSemestre ( int c )
 	{
@@ -570,70 +405,6 @@ public class BD
 		return contrat;
 	}
 
-	public double getInterventionIntervenant ( int inter, int semes )
-	{
-		double result = 0;
-		double ligne;
-
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
-			                                 "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
-			                                 "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
-			                                 "Where  Id_Semestre      = "+ semes +" AND " +
-											 "       i.Id_intervenant = " + inter );
-			while ( rs.next( ) )
-			{
-				ligne = 0;
-				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
-
-				if ( getHeure ( rs.getInt ( 5 ) ).getNom ( ).equals ( "TP" ) )
-				{
-					ligne *= getIntervenant ( rs.getInt (4 ) ).getContrat ( ).getRatioTP ( );
-				}
-
-				result += ligne;
-			}
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
-		}
-
-		return result;
-	}
-
-	//meme méthode qu'au dessus mais sans prendre en compte les coeff tp
-	public double getInterventionIntervenantTheo ( int inter, int semes )
-	{
-		double result = 0;
-		double ligne;
-
-		try
-		{
-			Statement st = co.createStatement ( );
-			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
-											 "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
-											 "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
-											 "Where  Id_Semestre      = "+ semes +" AND " +
-											 "       i.Id_intervenant = " + inter );
-			while ( rs.next ( ) )
-			{
-				ligne = 0;
-				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt ( 3 ) * getHeure ( rs.getInt ( 5 ) ).getCoefTd ( );
-
-				result += ligne;
-			}
-		}
-		catch ( SQLException e )
-		{
-			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
-		}
-
-		return result;
-	}
-
 	public Intervenant getIntervenant ( int i )
 	{
 		Intervenant intervenant = null;
@@ -733,6 +504,72 @@ public class BD
 
 		return module;
 	}
+
+	public double getInterventionIntervenant ( int inter, int semes )
+	{
+		double result = 0;
+		double ligne;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
+			                                 "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
+			                                 "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
+			                                 "Where  Id_Semestre      = "+ semes +" AND " +
+											 "       i.Id_intervenant = " + inter );
+			while ( rs.next( ) )
+			{
+				ligne = 0;
+				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt(3) * getHeure(rs.getInt(5)).getCoefTd();
+
+				if ( getHeure ( rs.getInt ( 5 ) ).getNom ( ).equals ( "TP" ) )
+				{
+					ligne *= getIntervenant ( rs.getInt (4 ) ).getContrat ( ).getRatioTP ( );
+				}
+
+				result += ligne;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
+		}
+
+		return result;
+	}
+
+	//meme méthode qu'au dessus mais sans prendre en compte les coeff tp
+	public double getInterventionIntervenantTheo ( int inter, int semes )
+	{
+		double result = 0;
+		double ligne;
+
+		try
+		{
+			Statement st = co.createStatement ( );
+			ResultSet rs = st.executeQuery ( "SELECT nbSemaine, nbGroupe, nbHeure, i.id_intervenant, Id_Heure " +
+											 "FROM   Intervenant i JOIN Intervient t  ON i.Id_Intervenant  = t.Id_Intervenant " +
+											 "                     JOIN ModuleIUT m   ON m.Code_ModuleIUT = t.Code_ModuleIUT " +
+											 "Where  Id_Semestre      = "+ semes +" AND " +
+											 "       i.Id_intervenant = " + inter );
+			while ( rs.next ( ) )
+			{
+				ligne = 0;
+				ligne += rs.getInt ( 1 ) * rs.getInt ( 2 ) * rs.getInt ( 3 ) * getHeure ( rs.getInt ( 5 ) ).getCoefTd ( );
+
+				result += ligne;
+			}
+		}
+		catch ( SQLException e )
+		{
+			System.out.println ( "Erreur getContrat(int c) : " + e.getMessage ( ) );
+		}
+
+		return result;
+	}
+
+	
 
 	public int getNBHeureParModule ( String code, int Id_Inter, int Id_Heure )
 	{

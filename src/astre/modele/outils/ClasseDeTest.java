@@ -36,5 +36,6 @@ public class ClasseDeTest
 
 		System.out.println(s);
 
+		System.out.println(Semestre.class.getDeclaredFields().length);
 	}
 }
