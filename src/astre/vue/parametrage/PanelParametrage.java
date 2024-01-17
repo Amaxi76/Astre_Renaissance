@@ -46,9 +46,9 @@ public class PanelParametrage extends JPanel implements ActionListener
 		/*  Création des composants  */
 		/* ------------------------- */
 
-		JPanel pnlContenu   = new JPanel ( new BorderLayout (                  ) );
-		JPanel pnlBouttonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
-		JPanel pnlBoutton   = new JPanel ( new GridLayout   ( 1, 2             ) );
+		JPanel pnlContenu  = new JPanel ( new BorderLayout (                  ) );
+		JPanel pnlBoutonBD = new JPanel ( new FlowLayout   ( FlowLayout.RIGHT ) );
+		JPanel pnlBouton   = new JPanel ( new GridLayout   ( 1, 2             ) );
 		
 		this.tab = Tableau.initialiserTableau ( enTete, tabObjects, estModifiable, 2, tabDonnee );
 
@@ -72,18 +72,18 @@ public class PanelParametrage extends JPanel implements ActionListener
 		this.centrerTexte ( this.btnEnregistrer );
 		this.centrerTexte ( this.btnAnnuler     );
 
-		pnlBouttonBD.setBorder ( new EmptyBorder ( ConstantesVue.MARGE_EXTERIEURE_COMPOSANT, 0, 0, 0 ) );
+		pnlBoutonBD.setBorder ( new EmptyBorder ( ConstantesVue.MARGE_EXTERIEURE_COMPOSANT, 0, 0, 0 ) );
 
-		pnlBouttonBD.add ( this.btnEnregistrer );
-		pnlBouttonBD.add ( this.btnAnnuler     );
+		pnlBoutonBD.add ( this.btnEnregistrer );
+		pnlBoutonBD.add ( this.btnAnnuler     );
 
 		if ( classe != Heure.class )
-			pnlBoutton.add ( new PanelBouton ( this.ctrl, this ) );
+			pnlBouton.add ( new PanelBouton ( this.ctrl, this ) );
 		
-		pnlBoutton.add ( pnlBouttonBD                        );
+		pnlBouton.add ( pnlBoutonBD                        );
 
-		pnlContenu.add ( spTab     , BorderLayout.CENTER );
-		pnlContenu.add ( pnlBoutton, BorderLayout.SOUTH  );
+		pnlContenu.add ( spTab    , BorderLayout.CENTER );
+		pnlContenu.add ( pnlBouton, BorderLayout.SOUTH  );
 
 		this.add ( pnlContenu );
 
@@ -95,6 +95,7 @@ public class PanelParametrage extends JPanel implements ActionListener
 		this.btnAnnuler    .addActionListener ( this );
 	}
 
+	//TODO: déplacer cette méthode dans une classe utilitaiare Swing
 	private void centrerTexte ( JButton btn )
 	{
 		btn.setHorizontalAlignment ( JButton.CENTER );
@@ -107,14 +108,10 @@ public class PanelParametrage extends JPanel implements ActionListener
 		{
 			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
 			this.tab.modifDonnees  ( this.ctrl.getTableau ( this.classe ) );
-			/*AFrame.fermer        ( this      );
-			new FrameParametrage ( this.ctrl );*/
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			/*AFrame.fermer        ( this );
-			new FrameParametrage ( this.ctrl );*/
 			this.tab.modifDonnees ( this.ctrl.getTableau ( this.classe ) );
 		}
 	}
