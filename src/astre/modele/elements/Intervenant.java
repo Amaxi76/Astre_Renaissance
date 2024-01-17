@@ -133,12 +133,12 @@ public class Intervenant
 	/** Retourne le nombre d'heure de service de l'intervenant
 	 * @return le nombre d'heure de service
 	 */
-	public double  getnbHeureService  ( ) { return this.nbHeureService;  }
+	public double  getNbHeureService  ( ) { return this.nbHeureService;  }
 	
 	/** Retourne le nombre d'heure maximum de l'intervenant
 	 * @return le nombre d'heure maximum
 	 */
-	public double  getmaxHeureService ( ) { return this.maxHeureService; }
+	public double  getMaxHeureService ( ) { return this.maxHeureService; }
 
 	/** Retourne le coefficient équivalent TD de l'intervenant
 	 * @return le coefficient équivalent TD
