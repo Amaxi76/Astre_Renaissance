@@ -15,7 +15,7 @@ import astre.modele.elements.Semestre;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Saisie;
 import astre.vue.outils.Tableau;
-import astre.vue.rendus.OperationRenduTableauSemestre;
+import astre.vue.rendus.RenduCelluleTableauSemestre;
 
 /** Classe PanelEnsSemestre
   * @author : Maximeuuu et Amaxi76
@@ -90,9 +90,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
-		//FIXME: on peut pas encore faire ça
-		/*for ( int i = 0; i < this.tableauEnsembleModule.getColumnCount ( ); i++ )
-			this.tableauEnsembleModule.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauSemestre ( ) );*/
+		this.tableauEnsembleModule.setRenduCellule ( new RenduCelluleTableauSemestre ( ) );
 
 		// Ajout du titre et rend la liste défilable
 		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );

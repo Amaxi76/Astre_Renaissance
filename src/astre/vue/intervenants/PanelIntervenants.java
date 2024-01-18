@@ -5,7 +5,7 @@ import astre.modele.elements.*;
 import astre.modele.maths.ValeurFractionnable;
 import astre.modele.outils.Utilitaire;
 import astre.vue.outils.*;
-import astre.vue.rendus.OperationRenduTableauIntervenants;
+import astre.vue.rendus.RenduCelluleTableauIntervenants;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -79,10 +79,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 
 		//Création du tableau
 		this.tableau = Tableau.initialiserTableau ( NOMS_COL, this.defautCol, MODIF_COL, DECALAGE, this.ctrl.getTableauParticulier ( REQUETE ) );
-
-		//FIXME: pour l'instant le Tableau ne peut pas prendre en compte de nouveaux rendus - Je corrigerais ça - Maxime
-		/*for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
-			this.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervenants ( ) );*/
+		this.tableau.setRenduCellule ( new RenduCelluleTableauIntervenants ( ) );
 
 		//Ajout de la barre de scroll
 		this.scrollPane = new JScrollPane ( this.tableau );

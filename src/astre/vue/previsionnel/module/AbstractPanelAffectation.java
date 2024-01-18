@@ -21,7 +21,6 @@ import astre.modele.elements.Heure;
 import astre.modele.elements.Intervenant;
 import astre.modele.elements.Intervient;
 import astre.modele.elements.ModuleIUT;
-import astre.modele.outils.Utilitaire;
 import astre.vue.outils.Tableau;
 import astre.vue.previsionnel.module.avecGroupe.PanelAffectationAvecGroupes;
 

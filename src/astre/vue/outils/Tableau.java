@@ -23,8 +23,11 @@ import javax.swing.table.*;
 
 public final class Tableau extends JTable
 {
-	private static final int DECALAGE_DEFAUT = 0;
-	private ModeleTableau modele;
+	private static final int                      DECALAGE_DEFAUT = 0;
+	private static final DefaultTableCellRenderer RENDU_DEFAUT = new RenduCelluleTableau ( );
+
+	private ModeleTableau            modele;
+	private DefaultTableCellRenderer renduCellule;
 
 	/*---------------------------------------*/
 	/*             CONSTRUCTEUR              */
@@ -58,7 +61,7 @@ public final class Tableau extends JTable
 		//super.setAutoCreateRowSorter ( true ); //Permet de trier les colonnes
 
 		// Affichage
-		this.majRendus ( decalage );
+		this.setRenduCellule ( RENDU_DEFAUT );
 		this.ajusterTailleColonnes ( );
 	}
 
@@ -210,6 +213,21 @@ public final class Tableau extends JTable
 	public void setEditable      ( int col, int lig, boolean editable ) { this.modele.setEditable ( col, lig, editable ); }
 	public void setLigneEditable ( int lig, boolean editable          ) { this.modele.setLigneEditable ( lig, editable ); }
 
+	/**
+	 * Modifie le rendu des cellules du tableau
+	 * @param rendu
+	 * @notice un rendu null est remplacé par le rendu par défaut
+	 * @see RenduCelluleTableau
+	 */
+	//TODO: regarder si on peut pas remplacer par this.setDefaultRenderer ( Object.class, rendu ); mais ça pourrait ne pas marcher à cause de l'autre rendu qu'on applique pour les modifications
+	public void setRenduCellule ( DefaultTableCellRenderer rendu )
+	{
+		if ( rendu == null )
+			rendu = RENDU_DEFAUT;
+		this.renduCellule = rendu;
+		this.majRendus ( this.modele.getDecalage ( ) );
+	}
+
 
 	/*---------------------------------------*/
 	/*                METHODES               */
@@ -224,7 +242,7 @@ public final class Tableau extends JTable
 		for ( int i = 0; i < this.getColumnCount ( ); i++ )
 		{
 			TableColumn colonne = this.getColumnModel ( ).getColumn ( i );
-			colonne.setCellRenderer ( new RenduCelluleTableau ( ) ); //rendu dans le tableau
+			colonne.setCellRenderer ( this.renduCellule ); //rendu dans le tableau
 
 			if ( this.modele.getValeursDefaut ( i + decalage ) instanceof List )
 				colonne.setCellEditor ( new EditionComboBoxCelluleTableau ( ( List ) this.modele.getValeursDefaut( i + decalage ) ) ); //rendu dans l'edition

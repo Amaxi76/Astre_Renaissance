@@ -9,7 +9,7 @@ import astre.modele.elements.Contrat;
 import astre.modele.elements.Heure;
 import astre.modele.elements.Intervenant;
 import astre.vue.previsionnel.module.*;
-import astre.vue.rendus.OperationRenduTableauIntervient;
+import astre.vue.rendus.RenduCelluleTableauIntervient;
 
 /** Classe PanelAffectationAvecGroupe
   * @author : Maxime Lemoine, Maximilien Lesterlin
@@ -32,11 +32,8 @@ public class PanelAffectationAvecGroupes extends AbstractPanelAffectation
 		super.colEqtd            = 6;
 		super.colCommentaire     = 7;
 
-		// Permet de gérer les différents rendus des cellulese (Notamment pur nb Semaine et nb Groupe|nb Heure)
-		//FIXME: pas possible encore
-		/*for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
-			super.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervient ( true ) );*/
-
+		// Permet de gérer les différents rendus des cellules (Notamment pur nb Semaine et nb Groupe|nb Heure)
+		this.tableau.setRenduCellule ( new RenduCelluleTableauIntervient ( ) );
 	}
 
 	/* ------------------------- */
