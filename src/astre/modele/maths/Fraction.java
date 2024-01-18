@@ -1,4 +1,4 @@
-package astre.modele.outils;
+package astre.modele.maths;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +18,7 @@ public class Fraction
 
 	private int numerateur;
 	private int denominateur;
+	//TODO: stocker aussi une valeur en simplifiée lorsque l'on crée une fraction à partir d'un nombre décimal -> permet de résoudre les problèmes d'affichage de nombres à virgule infinie
 
 	/*---------------------------------------*/
 	/*             CONSTRUCTEURS             */
