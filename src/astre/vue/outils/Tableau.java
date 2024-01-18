@@ -1,5 +1,9 @@
 package astre.vue.outils;
 
+import astre.modele.outils.ModeleTableau;
+import astre.vue.rendus.EditionComboBoxCelluleTableau;
+import astre.vue.rendus.RenduCelluleTableau;
+
 import javax.swing.*;
 import java.awt.Component;
 import java.util.List;
@@ -10,6 +14,9 @@ import javax.swing.table.*;
  * @author Maxime Lemoine et Maximilien Lesterlin
  * @version : 3.0 - 18/01/2024
  * @date : 06/12/2023
+ * @see ModeleTableau modele pour ce tableau
+ * @see RenduCelluleTableau rendu des cellules du tableau
+ * @see EditionComboBoxCelluleTableau edition des cellules du tableau
  */
 
 //TODO: adapter les largeurs des colonnes en fonction des tailles des cellules et des entetes et des types de données ? (String plus grand que int ?)

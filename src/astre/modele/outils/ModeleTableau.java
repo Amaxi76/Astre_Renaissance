@@ -1,12 +1,13 @@
 package astre.modele.outils;
 
 import java.util.Arrays;
-
 import javax.swing.table.AbstractTableModel;
 
 /**
  * Classe des données et d'affichage du tableau.
- * @author Matéo, Maxime, Maximilien
+ * @version : 2.1 - 18/01/2024
+ * @date : 06/12/2023
+ * @author Matéo Sa, Maxime Lemoine, Maximilien Lesterlin
  */
 
 public class ModeleTableau extends AbstractTableModel
@@ -17,15 +18,13 @@ public class ModeleTableau extends AbstractTableModel
 	public static final char AJOUTER   = 'A';
 	public static final char DEFAUT    = 'D';
 
-	private String []  ensEntete;
-	private Object []  ensDefaut;
-	private boolean[]  ensModifiable;
-	private Object[][] tabDonnees;
-	private int        decalage;
+	private String []   ensEntete;
+	private Object []   ensValeursDefaut;
+	private Boolean[]   ensColonnesModifiables;
+	private Boolean[][] tabCellulesModifiables;
+	private int         decalage;
+	private Object[][]  tabDonnees;
 
-	//permet de définir les lignes qui ne sont pas modifiables
-	private boolean[]  ensEditableLigne;
-	//TODO: pareil pour les colonnes un jour
 
 	/*---------------------------------------*/
 	/*              CONSTRUCTEUR             */
@@ -35,68 +34,81 @@ public class ModeleTableau extends AbstractTableModel
 	 * Constructeur par défaut
 	 * Prends tout en paramètres
 	 */
-	public ModeleTableau ( String[] ensEntete, Object[] ensDefaut, boolean[] ensModifiable, int decalage , Object[][] tabDonnees )
+	public ModeleTableau ( String[] ensEntete, Object[] ensValeursDefaut, boolean[] ensColonnesModifiables, int decalage , Object[][] tabDonnees )
 	{
-		this.ensEntete     = ensEntete;
-		this.ensDefaut     = ensDefaut;
-		this.ensModifiable = ensModifiable;
-		this.decalage      = decalage;
-		this.tabDonnees    = tabDonnees;
+		this.ensEntete              = ensEntete;
+		this.ensValeursDefaut       = ensValeursDefaut;
+		this.ensColonnesModifiables = Utilitaire.booleanToObjet ( ensColonnesModifiables );
+		this.decalage               = decalage;
+		this.tabDonnees             = tabDonnees;
+
+		this.initTabCellulesModifiables ( );
 	}
+
+
+	/*---------------------------------------*/
+	/*          OUTILS CONSTRUCTEUR          */
+	/*---------------------------------------*/
+
+	private void initTabCellulesModifiables ( )
+	{
+		this.tabCellulesModifiables = new Boolean[this.tabDonnees.length][this.ensColonnesModifiables.length];
+
+		for ( int lig = 0; lig < this.tabDonnees.length; lig++ )
+			for ( int col = 0; col < this.tabDonnees[lig].length; col++ )
+				this.tabCellulesModifiables[lig][col] = this.ensColonnesModifiables[col];
+	}
+
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
 
-	@Override public int               getColumnCount  (                  ) { return this.ensDefaut.length - decalage;          }
-	@Override public int               getRowCount     (                  ) { return this.tabDonnees.length; }
-	@Override public Object            getValueAt      ( int row, int col ) { return this.tabDonnees[row][col + decalage];      }
-	@Override public Class<?>          getColumnClass  ( int c            ) { return this.ensDefaut[c + decalage].getClass ( ); }
-	@Override public String            getColumnName   ( int c            ) { return this.ensEntete[c + decalage];              }
+	@Override public int               getColumnCount (                  ) { return this.ensValeursDefaut.length - decalage;          }
+	@Override public int               getRowCount    (                  ) { return this.tabDonnees.length;                           }
+	@Override public Object            getValueAt     ( int row, int col ) { return this.tabDonnees[row][col + decalage];             }
+	@Override public Class<?>          getColumnClass ( int c            ) { return this.ensValeursDefaut[c + decalage].getClass ( ); }
+	@Override public String            getColumnName  ( int c            ) { return this.ensEntete[c + decalage];                     } //remplace l'ancienne méthode "getNomColonne"
 
-	public String     getNomColonne ( int col          ) { return this.ensEntete[col];        } //à supprimer ?
-	public Object     getObjet      ( int lig, int col ) { return this.tabDonnees[lig][col];  }
-	public Object[][] getDonnees    (                  ) { return this.tabDonnees;            }
-	public String[]   getEntete     (                  ) { return this.ensEntete;             }
+	public Object     getValeursDefaut ( int col          ) { return this.ensValeursDefaut[col];}
+	public Object     getObjet         ( int lig, int col ) { return this.tabDonnees[lig][col]; }
+	public Object[][] getDonnees       (                  ) { return this.tabDonnees;           } //FIXME: avec les JCombobox ça peut retourner des String ou des List<String>
+	public String[]   getEntete        (                  ) { return this.ensEntete;            }
+	public int        getDecalage      (                  ) { return this.decalage;             }
+
 
 
 	/*---------------------------------------*/
 	/*                TESTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * Donne la liste des cellules éditables.
-	 */
-	@Override
-	public boolean isCellEditable ( int row, int col )
+	@Override public boolean isCellEditable ( int row, int col )
 	{
-		return this.ensModifiable[col+decalage];
+		return this.tabCellulesModifiables[row][col + decalage]; 
 	}
 
-	public boolean estVide ( )
-	{
-		return this.tabDonnees == null || this.tabDonnees.length == 0;
-	}
+	public boolean estVide ( ) { return this.tabDonnees == null || this.tabDonnees.length == 0; }
+
 
 	/*---------------------------------------*/
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
-	/**
-	 * Permet d'éditer ou non toutes les colonnes.
-	 */
-	public void setEditable ( boolean modifiable )
-	{
-		for ( int i = decalage; i < this.ensEntete.length; i++ )
-			this.ensModifiable[ i ] = modifiable;
-	}
+	//public void setEditable ( boolean modifiable );
+	//public void setEditable ( boolean[] ensModifiable );
 
 	/**
-	 * Permet de modifier la liste des cellules éditables
+	 * Permet de modifier l'état d'une cellule visible
 	 */
-	public void setEditable ( boolean[] ensModifiable )
+	public void setEditable ( int lig, int col, boolean modifiable ) { this.tabCellulesModifiables[lig][col + decalage] = modifiable; }
+
+	/**
+	 * Permet de modifier l'état d'une ligne
+	 */
+	public void setLigneEditable ( int lig, boolean modifiable )
 	{
-		this.ensModifiable = ensModifiable;
+		for ( int col = 0; col < this.tabCellulesModifiables[lig].length; col++ )
+			this.tabCellulesModifiables[lig][col] = modifiable;
 	}
 
 	/**
@@ -116,13 +128,15 @@ public class ModeleTableau extends AbstractTableModel
 	}
 
 	/**
-	 * Permet de cacher une colonne
+	 * Permet de cacher les premières colonnes
+	 * @param d le nombre de colonnes à cacher
 	 */
 	public void setDecalage ( int d )
 	{
 		this.decalage = d;
-		this.fireTableDataChanged ( );
+		this.fireTableStructureChanged ( );
 	}
+
 
 	/*---------------------------------------*/
 	/*                METHODES               */
@@ -136,15 +150,14 @@ public class ModeleTableau extends AbstractTableModel
 		int nbLignes = this.tabDonnees.length;
 
 		// tester si la ligne précédente n'est pas déjà vide
-		if ( this.tabDonnees.length == 0 || ! Arrays.equals ( this.tabDonnees[nbLignes-1], this.ensDefaut ) )
+		if ( this.tabDonnees.length == 0 || ! Arrays.equals ( this.tabDonnees[nbLignes - 1], this.ensValeursDefaut ) )
 		{
 			// initialiser un nouveau tableau avec la taille pour une ligne en PLUS
+			this.ensValeursDefaut[0] = AJOUTER;
+			this.tabDonnees = Utilitaire.copier ( this.tabDonnees, this.ensValeursDefaut );
+			this.tabCellulesModifiables = Utilitaire.tabObjetToTabType ( Utilitaire.copier ( this.tabCellulesModifiables, this.ensColonnesModifiables ), Boolean.class );
 
-			this.ensDefaut[0] = AJOUTER;
-			Object[][] nouveauTableau = Utilitaire.copier ( this.tabDonnees, this.ensDefaut );
-
-			// mettre à jour les nouvelles valeurs
-			this.majDonnees ( nouveauTableau );
+			this.fireTableRowsInserted ( nbLignes, nbLignes );
 		}
 	}
 
@@ -159,8 +172,7 @@ public class ModeleTableau extends AbstractTableModel
 		if ( action != AJOUTER && action !=  SUPPRIMER && action != IGNORER )
 			this.tabDonnees[index][0] = MODIFIER;
 
-		// mettre à jour les nouvelles valeurs
-		this.majDonnees ( this.tabDonnees );
+		this.fireTableRowsUpdated ( index, index );
 	}
 
 	/**
@@ -176,8 +188,7 @@ public class ModeleTableau extends AbstractTableModel
 		else
 			this.tabDonnees[index][0] = IGNORER;
 
-		// mettre à jour les nouvelles valeurs
-		this.majDonnees ( this.tabDonnees );
+		this.fireTableRowsDeleted ( index, index ); //TODO: à modifier avec le rowSorter
 	}
 
 	/**
