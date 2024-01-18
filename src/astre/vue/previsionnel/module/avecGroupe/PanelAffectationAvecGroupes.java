@@ -1,8 +1,7 @@
 package astre.vue.previsionnel.module.avecGroupe;
 
+import java.util.List;
 import java.util.Map;
-
-import javax.swing.JComboBox;
 
 import astre.Controleur;
 
@@ -34,8 +33,9 @@ public class PanelAffectationAvecGroupes extends AbstractPanelAffectation
 		super.colCommentaire     = 7;
 
 		// Permet de gérer les différents rendus des cellulese (Notamment pur nb Semaine et nb Groupe|nb Heure)
-		for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
-			super.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervient ( true ) );
+		//FIXME: pas possible encore
+		/*for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
+			super.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervient ( true ) );*/
 
 	}
 
@@ -44,13 +44,13 @@ public class PanelAffectationAvecGroupes extends AbstractPanelAffectation
 	/* ------------------------- */
 
 	@Override
-	protected JComboBox<String> creerCbHeure ( )
+	protected List<String> creerListeHeure ( )
 	{
-		JComboBox<String> cb = super.creerCbHeure ( );
+		List<String> ens = super.creerListeHeure ( );
 
-		cb.addItem ( "HP" );
+		ens.add ( "HP" );
 
-		return cb;
+		return ens;
 	}
 	
 	@Override

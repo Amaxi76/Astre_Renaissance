@@ -86,12 +86,13 @@ public class PanelSemestre extends JPanel implements ActionListener
 		pnlListeModule.setBorder ( new EmptyBorder ( 0, 10, 10, ConstantesVue.MARGE_EXTERIEURE_COMPOSANT ) );
 
 		Object[] typeDefaut = { "", 0, "", "", "", false };
-		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) );
+		this.tableauEnsembleModule = Tableau.initialiserTableau ( null, typeDefaut, false, 2, this.ctrl.getTableauParticulier ( "f_selectModuleParSemestre(" + numSemestre + ")" ) ); //TODO: enlever cette requette sql
 		this.tableauEnsembleModule.setShowGrid ( false );
 		this.tableauEnsembleModule.setIntercellSpacing ( new Dimension ( 0, 0 ) );
 
-		for ( int i = 0; i < this.tableauEnsembleModule.getColumnCount ( ); i++ )
-			this.tableauEnsembleModule.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauSemestre ( ) );
+		//FIXME: on peut pas encore faire ça
+		/*for ( int i = 0; i < this.tableauEnsembleModule.getColumnCount ( ); i++ )
+			this.tableauEnsembleModule.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauSemestre ( ) );*/
 
 		// Ajout du titre et rend la liste défilable
 		JScrollPane spTab = new JScrollPane ( this.tableauEnsembleModule );
@@ -147,7 +148,7 @@ public class PanelSemestre extends JPanel implements ActionListener
 			int nbSem  = Integer.parseInt ( this.txtNbSemaine.getText ( ) );
 
 			// Mise à jour de la base de donnée
-			this.ctrl.update ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) );
+			this.ctrl.update ( new Semestre ( this.numSemestre, nbGpTP, nbGpTD, nbEtud, nbSem ) ); //FIXME: utiliser la factory
 
 			// Affichage du message d'enregistrement pendant 3 secondes
 			this.lblMessageEnregistrement.setText ( "Enregistré !" );

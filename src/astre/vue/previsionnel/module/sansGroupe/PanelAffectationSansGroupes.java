@@ -73,6 +73,6 @@ public class PanelAffectationSansGroupes extends AbstractPanelAffectation
 		if ( tabValeurs != null && tabValeurs.length > 0 )
 			tabValeurs = Utilitaire.supprimerColonne ( tabValeurs, 4 );
 
-		this.tableau.modifDonnees ( tabValeurs );
+		this.tableau.setDonnees ( tabValeurs );
 	}
 }

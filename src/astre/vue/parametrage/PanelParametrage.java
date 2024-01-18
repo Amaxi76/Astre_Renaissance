@@ -18,8 +18,6 @@ import astre.Controleur;
 import astre.modele.elements.Heure;
 import astre.vue.outils.ConstantesVue;
 import astre.vue.outils.Tableau;
-import astre.vue.rendus.OperationRenduTableau;
-import astre.vue.rendus.OperationRenduTableauSemestre;
 
 /** Classe PanelParametrage
   * @author : Maximilien LESTERLIN
@@ -107,12 +105,12 @@ public class PanelParametrage extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnEnregistrer )
 		{
 			this.ctrl.majTableauBD ( this.tab.getDonnees ( ), this.classe );
-			this.tab.modifDonnees  ( this.ctrl.getTableau ( this.classe ) );
+			this.tab.setDonnees  ( this.ctrl.getTableau ( this.classe ) );
 		}
 
 		if ( e.getSource ( ) == this.btnAnnuler )
 		{
-			this.tab.modifDonnees ( this.ctrl.getTableau ( this.classe ) );
+			this.tab.setDonnees ( this.ctrl.getTableau ( this.classe ) );
 		}
 	}
 

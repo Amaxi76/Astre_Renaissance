@@ -2,6 +2,7 @@ package astre.vue.intervenants;
 
 import astre.Controleur;
 import astre.modele.elements.*;
+import astre.modele.maths.ValeurFractionnable;
 import astre.modele.outils.Utilitaire;
 import astre.vue.outils.*;
 import astre.vue.rendus.OperationRenduTableauIntervenants;
@@ -25,9 +26,9 @@ import java.awt.GridLayout;
 public class PanelIntervenants extends JPanel implements ActionListener
 {
 	// paramètres du tableau
-	private static final String[]  NOMS_COL   = { "action", "Id" ,"Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP", "S1" , "S3" , "S5" , "sTot", "S2" , "S4" , "S6" , "sTot", "Total" };
-	private static final Object[]  DEFAUT_COL = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , "0"      , 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0       };
-	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , true     , false, false, false, false , false, false, false, false , false   };
+	private static final String[]  NOMS_COL   = { "action", "Id" ,"Catégorie", "Nom", "Prénom", "hServ", "hMax", "Coef TP"                          , "S1" , "S3" , "S5" , "sTot", "S2" , "S4" , "S6" , "sTot", "Total" };
+	private Object[]               defautCol  = { 'D'     , 0    , ""        , ""   , ""      , 0      , 0     , new ValeurFractionnable(0.0), 0    , 0    , 0    , 0     , 0    , 0    , 0    , 0     , 0       };
+	private static final boolean[] MODIF_COL  = { false   , false, true      , true , true    , true   , true  , true                               , false, false, false, false , false, false, false, false , false   };
 	private static final int       DECALAGE   = 2;
 	
 	// requetes
@@ -72,19 +73,16 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		/* Création des composants   */
 		/* ------------------------- */
 
+
+		this.defautCol[2] = this.ctrl.getTable ( Contrat.class );
+		//TODO: verifier qu'on a les bonnes valeurs sinon faudra recreer un tableau avec une boucle et mettre un c.getNom ( ) sur les Contrats
+
 		//Création du tableau
-		this.tableau = Tableau.initialiserTableau ( NOMS_COL, DEFAUT_COL, MODIF_COL, DECALAGE, this.ctrl.getTableauParticulier ( REQUETE ) );
+		this.tableau = Tableau.initialiserTableau ( NOMS_COL, this.defautCol, MODIF_COL, DECALAGE, this.ctrl.getTableauParticulier ( REQUETE ) );
 
-		for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
-			this.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervenants ( ) );
-
-		//Ajout d'une JComboBox au tableau
-		JComboBox<String> cbEdit = new JComboBox<> ( );
-		for ( Contrat c : this.ctrl.getTable ( Contrat.class ) )
-		{
-			cbEdit.addItem ( c.getNom ( ) );
-		}
-		this.tableau.getColumnModel ( ).getColumn ( 0 ).setCellEditor ( new DefaultCellEditor ( cbEdit ) );
+		//FIXME: pour l'instant le Tableau ne peut pas prendre en compte de nouveaux rendus - Je corrigerais ça - Maxime
+		/*for ( int i = 0; i < this.tableau.getColumnCount ( ); i++ )
+			this.tableau.getColumnModel ( ).getColumn ( i ).setCellRenderer ( new OperationRenduTableauIntervenants ( ) );*/
 
 		//Ajout de la barre de scroll
 		this.scrollPane = new JScrollPane ( this.tableau );
@@ -200,7 +198,6 @@ public class PanelIntervenants extends JPanel implements ActionListener
 		if ( e.getSource ( ) == this.btnSupprimer )
 		{
 			this.tableau.supprimerLigne ( );
-			this.tableau.ajusterTailleColonnes ( );
 			this.repaint ( );
 		}
 
@@ -212,12 +209,12 @@ public class PanelIntervenants extends JPanel implements ActionListener
 			
 			this.tableau.ajusterTailleColonnes ( );
 
-			this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
+			this.tableau.setDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
 		}
 
 		if ( e.getSource (  ) == this.btnAnnuler )
 		{
-			this.tableau.modifDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
+			this.tableau.setDonnees ( this.ctrl.getTableauParticulier ( REQUETE ) );
 		}
 	}
 
@@ -225,7 +222,7 @@ public class PanelIntervenants extends JPanel implements ActionListener
 	 * Raccourcir le tableau de l'affichage pour mettre à jour la base de données
 	 */
 	private Object[][] preparerTableau ( Object[][] tab  )
-	{
+	{ //FIXME: vérifier quand on récupère qu'on récupère pas une List (cas où on enregiste un Intervenant sans le modifier)
 		// Enlever les colonnes en trop
 		Object[][] tab2 = Utilitaire.formater ( tab, 7 );
 		

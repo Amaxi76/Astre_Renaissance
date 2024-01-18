@@ -4,6 +4,7 @@ import astre.Controleur;
 import astre.vue.outils.ConstantesVue;
 import astre.modele.elements.Contrat;
 import astre.modele.elements.Heure;
+import astre.modele.maths.ValeurFractionnable;
 
 import javax.swing.*;
 
@@ -31,8 +32,8 @@ public class PanelEnsParametre extends JTabbedPane
 		String[] enTeteContrat   = { "action", "id", "Nom", "Heure Service Contrat", "Heure Max Contrat", "Ratio TP" };
 		String[] enTeteTypeHeure = { "action", "id_Heure" , "Nom Heure"            , " Coeff TD" };
 
-		Object[] tabObjectsContrat   = { ' ', 0, "Nom du contrat", 0, 0, 1.0 };
-		Object[] tabObjectsTypeHeure = { ' ', 0, "Nom de l'heure", 1.0       };
+		Object[] tabObjectsContrat   = { ' ', 0, "Nom du contrat", 0, 0, new ValeurFractionnable(1.0) };
+		Object[] tabObjectsTypeHeure = { ' ', 0, "Nom de l'heure", new ValeurFractionnable(1.0)       };
 			
 		boolean[] tabEditableContrat   = { false, false, true, true, true, true };
 		boolean[] tabEditableTypeHeure = { false, false, false , true           };

@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
@@ -94,17 +96,13 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		/*  Création des composants  */
 		/* ------------------------- */
 		
+		// Création des "combobox"
+		this.ensTypeDefaut[colHeure] = creerListeHeure ( );
+		this.ensTypeDefaut[colIntervenant] = creerListeIntervenant ( );
+
 		// Création du tableau
 		this.tableau = Tableau.initialiserTableau ( this.ensEntete, this.ensTypeDefaut, this.ensModifiable, DECALAGE_TABLEAU, null );
 		this.scrollPane = new JScrollPane ( this.tableau );
-
-		//Ajout d'une JComboBox pour les intervenants au tableau
-		JComboBox<String> cbEditInter = creerCbIntervenant ( );
-		this.tableau.getColumnModel ( ).getColumn ( colIntervenant-DECALAGE_TABLEAU ).setCellEditor ( new DefaultCellEditor ( cbEditInter ) );
-
-				//Ajout d'une JComboBox pour les intervenants au tableau
-		JComboBox<String> cbEditHeure = creerCbHeure ( );
-		this.tableau.getColumnModel ( ).getColumn ( colHeure-DECALAGE_TABLEAU ).setCellEditor ( new DefaultCellEditor ( cbEditHeure ) );
 
 		// Création des boutons
 		this.btnAjouter   = new JButton ( "Ajouter"   );
@@ -128,6 +126,7 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 		this.btnAjouter  .addActionListener ( this );
 		this.btnSupprimer.addActionListener ( this );
 
+		/* inutile mtn normalement
 		cbEditInter.addActionListener ( e ->
 		{
 			int selectedRow = this.tableau.getSelectedRow ( );
@@ -136,7 +135,7 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 				Intervenant selectedIntervenant = this.ctrl.getTable ( Intervenant.class ).get ( cbEditInter.getSelectedIndex ( ) );
 				this.tableau.setValueAt ( selectedIntervenant.getId ( ), selectedRow, -1 );
 			}
-		} );
+		} );*/
 
 		this.tableau.addKeyListener ( frmModule );
 
@@ -147,30 +146,22 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 	/*  Méthodes initialisation  */
 	/* ------------------------- */
 
-	/**
-	 * Méthode qui permet de générer les combobox d'heure
-	 */
-	protected JComboBox<String> creerCbHeure ( )
+	protected List<String> creerListeHeure ( )
 	{
-		//Ajout d'une JComboBox pour les intervenants au tableau
-		JComboBox<String> cbEditHeure = new JComboBox<> ( );
+		List<String> ensHeure = new ArrayList<> ( );
 		for ( String heure : this.ensIntituleTypeHeure )
-			cbEditHeure.addItem ( heure );
+			ensHeure.add ( heure );
 
-		return cbEditHeure;
+		return ensHeure;
 	}
 
-	/**
-	 * Méthode qui permet de générer les combobox d'Intervenant
-	 */
-	protected JComboBox<String> creerCbIntervenant ( )
+	protected List<String> creerListeIntervenant ( )
 	{
-		//Ajout d'une JComboBox pour les intervenants au tableau
-		JComboBox<String> cbEditInter = new JComboBox<> ( );
+		List<String> ensIntervenant = new ArrayList<> ( );
 		for ( Intervenant i : this.ctrl.getTable ( Intervenant.class ) )
-			cbEditInter.addItem ( i.getNom ( ) + " " + i.getPrenom ( ) );
+		ensIntervenant.add ( i.getNom ( ) + " " + i.getPrenom ( ) );
 
-		return cbEditInter;
+		return ensIntervenant;
 	}
 
 	/**
@@ -211,7 +202,7 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 	 */
 	public void setValeurs ( Object[][] tabValeurs )
 	{
-		this.tableau.modifDonnees ( tabValeurs );
+		this.tableau.setDonnees ( tabValeurs );
 	}
 
 	/*
@@ -264,8 +255,8 @@ public abstract class AbstractPanelAffectation extends JPanel implements ActionL
 			tab [ligne][2] = h;                                                                                                 // Heure
 			tab [ligne][3] = module;                                                                                            // Module
 			tab [ligne][4] = ( this instanceof PanelAffectationAvecGroupes ) ? (int)tabLocalIHM[ligne][colNbSemaine] : (int) 1; // Nombre de semaine
-			tab [ligne][5] = tabLocalIHM[ligne][colNbHeureOuGroupe];                                                       // Nombre de groupe
-			tab [ligne][6] = Double.parseDouble(tabLocalIHM[ligne][colEqtd           ].toString ( ) );                    // Nombre d'heure //TODO: temporaire : mettre en double 
+			tab [ligne][5] = tabLocalIHM[ligne][colNbHeureOuGroupe];                                                            // Nombre de groupe
+			tab [ligne][6] = Double.parseDouble(tabLocalIHM[ligne][colEqtd           ].toString ( ) );                          // Nombre d'heure //TODO: temporaire : mettre en double 
 			tab [ligne][7] = tabLocalIHM[ligne][colCommentaire    ];                                                            // Commentaire
 		}
 
