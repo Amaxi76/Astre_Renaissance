@@ -1016,10 +1016,10 @@ public class BD
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, i.getNom          ( ) );
-			ps.setString ( 2, i.getPrenom       ( ) );
-			ps.setDouble ( 3, i.getnbHeureService ( ) );
-			ps.setDouble ( 4, i.getmaxHeureService ( ) );
+			ps.setString ( 1, i.getNom             ( )        );
+			ps.setString ( 2, i.getPrenom          ( )        );
+			ps.setDouble ( 3, i.getNbHeureService  ( )        );
+			ps.setDouble ( 4, i.getMaxHeureService ( )        );
 			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
 			ps.executeUpdate ( );
 
@@ -1060,11 +1060,11 @@ public class BD
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setInt    ( 1, h.getHeure     ( ).getId   ( ) );
-			ps.setString ( 2, h.getModule    ( ).getCode ( ) );
-			ps.setInt    ( 3, h.getNbHeurePN ( )             );
-			ps.setInt    ( 4, h.getNbHeure   ( )             );
-			ps.setInt    ( 5, h.getNbSemaine ( )             );
+			ps.setInt    ( 1, h.getHeure          ( ).getId   ( ) );
+			ps.setString ( 2, h.getModule         ( ).getCode ( ) );
+			ps.setDouble ( 3, h.getNbHeurePN      ( )             );
+			ps.setDouble ( 4, h.getNbHeureSemaine ( )             );
+			ps.setInt    ( 5, h.getNbSemaine      ( )             );
 			ps.executeUpdate ( );
 
 			ps.close ( );
@@ -1307,8 +1307,8 @@ public class BD
 		{
 			ps = co.prepareStatement ( req );
 			ps.setString ( 1, c.getNom                 ( ) );
-			ps.setInt    ( 2, c.getHeureServiceContrat ( ) );
-			ps.setInt    ( 3, c.getHeureMaxContrat     ( ) );
+			ps.setDouble ( 2, c.getHeureServiceContrat ( ) );
+			ps.setDouble ( 3, c.getHeureMaxContrat     ( ) );
 			ps.setDouble ( 4, c.getRatioTP             ( ) );
 			ps.setInt    ( 5, c.getId                  ( ) );
 			ps.executeUpdate ( );
@@ -1369,12 +1369,12 @@ public class BD
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setString ( 1, i.getNom          ( ) );
-			ps.setString ( 2, i.getPrenom       ( ) );
-			ps.setInt    ( 3, i.getheureService ( ) );
-			ps.setInt    ( 4, i.getHeureMaximum ( ) );
-			ps.setInt    ( 5, i.getContrat      ( ).getId ( ) );
-			ps.setInt    ( 6, i.getId           ( ) );
+			ps.setString ( 1, i.getNom             ( ) );
+			ps.setString ( 2, i.getPrenom          ( ) );
+			ps.setDouble ( 3, i.getNbHeureService  ( ) );
+			ps.setDouble ( 4, i.getMaxHeureService ( ) );
+			ps.setInt    ( 5, i.getContrat         ( ).getId ( ) );
+			ps.setInt    ( 6, i.getId              ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );
@@ -1414,11 +1414,11 @@ public class BD
 		try
 		{
 			ps = co.prepareStatement ( req );
-			ps.setInt    ( 1, h.getNbSemaine ( )             );
-			ps.setInt    ( 2, h.getNbHeurePN ( )             );
-			ps.setInt    ( 3, h.getNbHeure   ( )             );
-			ps.setInt    ( 4, h.getHeure     ( ).getId   ( ) );
-			ps.setString ( 5, h.getModule    ( ).getCode ( ) );
+			ps.setInt    ( 1, h.getNbSemaine      ( )             );
+			ps.setDouble ( 2, h.getNbHeurePN      ( )             );
+			ps.setDouble ( 3, h.getNbHeureSemaine ( )             );
+			ps.setInt    ( 4, h.getHeure          ( ).getId   ( ) );
+			ps.setString ( 5, h.getModule         ( ).getCode ( ) );
 			ps.executeUpdate ( );
 
 			ps.close ( );

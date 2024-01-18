@@ -113,7 +113,7 @@ public class Horaire
 	/** Retourne le nombre d'heure par semaine d'une horaire
 	 * @return le nombre d'heure par semaine
 	 */
-	public double    getnbHeureSemaine   ( ) { return this.nbHeureSemaine; }
+	public double    getNbHeureSemaine   ( ) { return this.nbHeureSemaine; }
 	
 	/** Retourne le nombre de semaine d'une horaire
 	 * @return le nombreb de semaine
