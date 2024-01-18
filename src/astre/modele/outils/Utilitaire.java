@@ -4,7 +4,7 @@ package astre.modele.outils;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.lang.reflect.Array;
 // classes
 import java.lang.reflect.Field;
 
@@ -159,6 +159,18 @@ public abstract class Utilitaire
 		return tableauTmp;
 	}
 
+	public static Boolean[] booleanToObjet ( boolean[] liste )
+	{
+		Boolean[] listeObjet = new Boolean[liste.length];
+
+		for ( int cpt = 0; cpt < liste.length; cpt++ )
+		{
+			listeObjet[cpt] = liste[cpt];
+		}
+
+		return listeObjet;
+	}
+
 	/**
 	 * Copie profonde d'un tableau
 	 */
@@ -276,6 +288,26 @@ public abstract class Utilitaire
 		}
 
 		return liste;
+	}
+
+	/**
+	 * Permet de typer des objets d'un tableau en fonction du tableau de type passé en paramètres
+	 * @author : IA
+	 */
+	public static <T> T[][] tabObjetToTabType ( Object[][] tableau, Class<T> type )
+	{
+		int lignes = tableau.length;
+		int colonnes = (lignes > 0) ? tableau[0].length : 0;
+
+		T[][] tableauConverti = (T[][]) Array.newInstance(type, lignes, colonnes);
+
+		for (int i = 0; i < lignes; i++) {
+			for (int j = 0; j < colonnes; j++) {
+				tableauConverti[i][j] = type.cast(tableau[i][j]);
+			}
+		}
+
+		return tableauConverti;
 	}
 
 	/**
