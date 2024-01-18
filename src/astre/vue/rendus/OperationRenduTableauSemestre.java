@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import astre.modele.outils.ModeleTableau;
 import astre.vue.outils.ConstantesVue;
 
+//FIXME: UTILISER LA NOUVELLE CLASSE ET NOUVEAU NOM : RenduCelluleTableau
 /** Rendu des cellules de tableau EnsSemestre
   * @author : Maxime Lemoine, Maximilien Lesterlin
   * @version : 1.0 - 10/08/2024

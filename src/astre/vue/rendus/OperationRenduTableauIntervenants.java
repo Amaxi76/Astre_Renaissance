@@ -8,6 +8,7 @@ import javax.swing.JTable;
 
 import astre.modele.outils.ModeleTableau;
 
+//FIXME: UTILISER LA NOUVELLE CLASSE ET NOUVEAU NOM : RenduCelluleTableau
 /** Rendu des cellules de tableau EnsSemestre
   * @author : Maxime Lemoine, Maximilien Lesterlin
   * @version : 1.0 - 08/08/2024
