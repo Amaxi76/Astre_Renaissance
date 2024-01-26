@@ -7,7 +7,11 @@
 
 \i creation/creation_schemas.sql
 \i creation/creation_tables.sql
-\i creation/creation_fonctions.sql
+\i creation/creation_fonctionsOutils.sql
+\i creation/creation_fonctionsSelection.sql
+\i creation/creation_fonctionsInsertion.sql
+\i creation/creation_fonctionsSuppression.sql
+\i creation/creation_fonctionsUpdate.sql
 \i creation/creation_vues.sql
 \i creation/creation_triggers.sql
 
