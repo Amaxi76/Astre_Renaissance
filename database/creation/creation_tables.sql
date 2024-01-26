@@ -1,7 +1,7 @@
 /**
  * Permet de créer toutes les tables d'ASTRE
  * @author Alizéa LEBARON, Maxime LEMOINE
- * @version 2.1.0 - 15/01/2024
+ * @version 2.2.0 - 26/01/2024
  * @date 06/12/2023 
  */
 
@@ -16,22 +16,22 @@ CREATE TABLE astre.Annee
 
 CREATE TABLE astre.Semestre
 (
-	idSemestre SERIAL                    ,
-	nbGroupeTP INTEGER NOT NULL DEFAULT 0,
-	nbGroupeTD INTEGER NOT NULL DEFAULT 0,
-	nbEtudiant INTEGER NOT NULL DEFAULT 0,
-	nbSemaine  INTEGER NOT NULL DEFAULT 0,
+	idSemestre  SERIAL                    ,
+	nbGroupesTP INTEGER NOT NULL DEFAULT 0,
+	nbGroupesTD INTEGER NOT NULL DEFAULT 0,
+	nbEtudiants INTEGER NOT NULL DEFAULT 0,
+	nbSemaines  INTEGER NOT NULL DEFAULT 0,
 
 	PRIMARY KEY ( idSemestre )
 );
 
 CREATE TABLE astre.Contrat
 (
-	idContrat       SERIAL                             ,
-	nom             VARCHAR ( 50   ) NOT NULL          ,
-	nbHeureService  DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
-	maxHeureService DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
-	coefTP          DOUBLE PRECISION NOT NULL DEFAULT 1,
+	idContrat        SERIAL                             ,
+	nom              VARCHAR ( 50   ) NOT NULL          ,
+	nbHeuresService  DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	maxHeuresService DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	coefTP           DOUBLE PRECISION NOT NULL DEFAULT 1,
 
 	PRIMARY KEY ( idContrat )
 );
@@ -47,15 +47,15 @@ CREATE TABLE astre.Heure
 
 CREATE TABLE astre.ModuleIUT
 (
-	idModuleIUT        SERIAL                                  ,
-	code               VARCHAR ( 5  )    NOT NULL              ,
-	libLong            VARCHAR ( 60 )    NOT NULL              ,
-	libCourt           VARCHAR ( 15 )    NOT NULL              ,
-	typeModule         VARCHAR ( 20 )    NOT NULL              ,
-	valide             BOOLEAN           NOT NULL DEFAULT false,
-	idSemestre         INTEGER           NOT NULL              ,
-	totalHeurePN       DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0    ,
-	totalHeureAffectee DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0    ,
+	idModuleIUT          SERIAL                                  ,
+	code                 VARCHAR ( 5  )    NOT NULL              ,
+	libLong              VARCHAR ( 60 )    NOT NULL              ,
+	libCourt             VARCHAR ( 15 )    NOT NULL              ,
+	typeModule           VARCHAR ( 20 )    NOT NULL              ,
+	valide               BOOLEAN           NOT NULL DEFAULT false,
+	idSemestre           INTEGER           NOT NULL              ,
+	totalHeuresPN        DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0    ,
+	totalHeuresAffectees DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0    ,
 
 	PRIMARY KEY ( idModuleIUT ),
 	FOREIGN KEY ( idSemestre ) REFERENCES astre.Semestre ( idSemestre )
@@ -63,13 +63,13 @@ CREATE TABLE astre.ModuleIUT
 
 CREATE TABLE astre.Intervenant
 (
-	idIntervenant   SERIAL                             ,
-	nom             VARCHAR ( 50 )   NOT NULL          ,
-	prenom          VARCHAR ( 50 )   NOT NULL          ,
-	nbHeureService  DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
-	maxHeureService DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
-	coefTP          DOUBLE PRECISION NOT NULL          ,
-	idContrat       INTEGER          NOT NULL          ,
+	idIntervenant    SERIAL                             ,
+	nom              VARCHAR ( 50 )   NOT NULL          ,
+	prenom           VARCHAR ( 50 )   NOT NULL          ,
+	nbHeuresService  DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	maxHeuresService DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	coefTP           DOUBLE PRECISION NOT NULL          ,
+	idContrat        INTEGER          NOT NULL          ,
 
 	PRIMARY KEY ( idIntervenant ),
 	FOREIGN KEY ( idContrat ) REFERENCES astre.Contrat ( idContrat )
@@ -80,9 +80,9 @@ CREATE TABLE astre.Intervient
 	idIntervenant INTEGER          NOT NULL          ,
 	idHeure       INTEGER          NOT NULL          ,
 	idModuleIUT   INTEGER          NOT NULL          ,
-	nbSemaine     INTEGER          NOT NULL DEFAULT 0,
-	nbGroupe      INTEGER          NOT NULL DEFAULT 0,
-	nbHeure       DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	nbSemaines    INTEGER          NOT NULL DEFAULT 0,
+	nbGroupes     INTEGER          NOT NULL DEFAULT 0,
+	nbHeures      DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
 	commentaire   VARCHAR ( 50 )   NOT NULL          ,
 
 	PRIMARY KEY ( idIntervenant, idHeure, idModuleIUT ),
@@ -95,9 +95,9 @@ CREATE TABLE astre.Horaire
 ( 
 	idHeure         INTEGER          NOT NULL          ,
 	idModuleIUT     INTEGER          NOT NULL          ,
-	nbHeurePN       DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
-	nbHeureSemaine  DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
-	nbSemaine       INTEGER          NOT NULL DEFAULT 0,
+	nbHeuresPN      DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	nbHeureSemaines DECIMAL ( 6, 2 ) NOT NULL DEFAULT 0,
+	nbSemaines      INTEGER          NOT NULL DEFAULT 0,
 	
 	PRIMARY KEY ( idHeure, idModuleIUT ),
 	FOREIGN KEY ( idHeure     ) REFERENCES astre.Heure     ( idHeure     ),
