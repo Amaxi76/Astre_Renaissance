@@ -2,6 +2,7 @@ package astre.vue.parametrage;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
@@ -15,15 +16,18 @@ import astre.vue.outils.ConstantesVue;
 
 public class FrameParametrage extends AFrame
 {
+	private static final String    TITRE     = "Paramètrage";
+	private static final Dimension DIMENSION = new Dimension ( 800, 700 );
+
 	private PanelEnsParametre pnlEnsParametre;
 	
 	public FrameParametrage ( Controleur ctrl )
 	{
 		super ( ctrl );
-		
-		this.setTitle              ( "Paramètrage" );
-		this.setSize               ( 800, 700      );
-		this.setLocationRelativeTo ( null          );
+
+		this.setTitle              ( TITRE     );
+		this.setSize               ( DIMENSION );
+		this.setLocationRelativeTo ( null      );
 
 		JPanel panelBordure = new JPanel ( new BorderLayout ( ) );
 		panelBordure.setBorder ( ConstantesVue.MARGE_INTERIEURE_FENETRE );

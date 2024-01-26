@@ -25,12 +25,16 @@ import javax.swing.JPanel;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
+import astre.vue.outils.ConstantesVue;
 
 public class FrameAccueil extends AFrame implements ActionListener
 {
 	/*-------------*/
 	/*--Attributs--*/
 	/*-------------*/
+
+	private static final Dimension DIMENSION = new Dimension ( 1000, 700 );
+	private static final String    TITRE     = "ASTRE";
 
 	/** Un Controleur pour pouvoir accéder au controleur
 	 * 
@@ -54,10 +58,10 @@ public class FrameAccueil extends AFrame implements ActionListener
 	{
 		super( ctrl );
 
-		this.setSize               ( 1000, 700  );
-		this.setTitle              ( "ASTRE"    );
-		this.setLocationRelativeTo ( null       );
-		this.setLayout ( new GridLayout ( 2,1 ) );
+		this.setTitle              ( TITRE                  );
+		this.setSize               ( DIMENSION              );
+		this.setLocationRelativeTo ( null                   );
+		this.setLayout             ( new GridLayout ( 2,1 ) );
 
 		/* ------------------------- */
 		/*  Création des composants  */
@@ -72,7 +76,7 @@ public class FrameAccueil extends AFrame implements ActionListener
 		panelButton.setBorder ( BorderFactory.createEmptyBorder ( 10, (largeur/3), 10, (largeur/3) ) );
 
 		JLabel lblAnnee     = new JLabel ("Année en cours : " + this.ctrl.getAnnee ( ) );
-		JLabel j = new JLabel ( new ImageIcon ( Toolkit.getDefaultToolkit ( ).getImage ( "./data/images/astre.png" ) ) );
+		JLabel j = new JLabel ( new ImageIcon ( ConstantesVue.IMAGE_ACCUEIL ) );
 
 		this.btnParametre    = new JButton ( "Paramètre"                    );
 		this.btnPrevisionnel = new JButton ( "Prévisionnel"                 );

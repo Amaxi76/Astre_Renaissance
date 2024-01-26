@@ -8,6 +8,7 @@ package astre.vue.previsionnel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import astre.Controleur;
 import astre.vue.outils.AFrame;
@@ -20,7 +21,9 @@ public class FramePrevisionnel extends AFrame
 	/*--Attributs--*/
 	/*-------------*/
 
-	private static final int SEMESTRE_DEFAUT = 1;
+	private static final String    TITRE     = "Connectez-vous";
+	private static final Dimension DIMENSION = new Dimension ( 1000, 700 );
+	private static final int       SEMESTRE_DEFAUT = 1;
 
 	private PanelBouton pnlBouton;
 	private PanelEnsSemestre pnlEnsSemestre;
@@ -37,10 +40,10 @@ public class FramePrevisionnel extends AFrame
 	public FramePrevisionnel ( Controleur ctrl, int semestreDefaut )
 	{
 		super ( ctrl );
-
-		this.setSize               ( 1000, 700      );
-		this.setTitle              ( "Prévisionnel" );
-		this.setLocationRelativeTo ( null           );
+		
+		this.setTitle              ( TITRE     );
+		this.setSize               ( DIMENSION );
+		this.setLocationRelativeTo ( null      );
 			
 		/* ------------------------- */
 		/* Création des composants   */

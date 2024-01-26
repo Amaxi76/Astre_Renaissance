@@ -7,6 +7,7 @@ package astre.vue;
   */
 
 import java.awt.GridBagLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,9 @@ import astre.Controleur;
 
 public class FrameIdentifiant extends JFrame implements ActionListener
 {
+	private static final String    TITRE     = "Connectez-vous";
+	private static final Dimension DIMENSION = new Dimension ( 500, 250 );
+
 	private JTextField     txtId;
 	private JPasswordField txtMdp;
 
@@ -27,9 +31,9 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 
 	public FrameIdentifiant ( )
 	{
-		this.setTitle              ( "Connectez-vous" );
-		this.setSize               ( 500, 250      );
-		this.setLocationRelativeTo ( null          );
+		this.setTitle              ( "Connectez-vous"  );
+		this.setSize               ( DIMENSION_FENETRE );
+		this.setLocationRelativeTo ( null              );
 
 		this.setLayout ( new GridBagLayout ( ) );
 		GridBagConstraints gbc = new GridBagConstraints( );
@@ -62,6 +66,7 @@ public class FrameIdentifiant extends JFrame implements ActionListener
 		this.setVisible ( true );
 	}
 
+	//FIXME: bruh - pourquoi cette duplication de code de folie :sob:
 	@Override
 	public void actionPerformed ( ActionEvent e )
 	{

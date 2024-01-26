@@ -1,6 +1,7 @@
 package astre.vue.nouvelleAnnee;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,9 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 	/*--------------------*/
 	/*      Attributs     */
 	/*--------------------*/
+
+	private static final String    TITRE     = "Gestion des années";
+	private static final Dimension DIMENSION = new Dimension ( 500, 500 );
 
 	private Controleur ctrl;
 
@@ -46,8 +50,8 @@ public class FrameNouvelleAnnee extends AFrame implements ActionListener
 		/*           Option de la frame            */
 		/* --------------------------------------- */
 
-		this.setTitle ( "Gestion des années" );
-		this.setSize  ( 500, 500      );
+		this.setTitle ( TITRE     );
+		this.setSize  ( DIMENSION );
 
 		this.setLayout ( new BorderLayout ( 10, 10 ) );
 

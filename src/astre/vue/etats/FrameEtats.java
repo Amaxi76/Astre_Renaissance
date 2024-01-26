@@ -1,5 +1,7 @@
 package astre.vue.etats;
 
+import java.awt.Dimension;
+
 /** Page de gestion des Etats
   * @author : Matéo Sa
   * @version : 1.0 - 14/12/2023
@@ -11,6 +13,9 @@ import astre.vue.outils.AFrame;
 
 public class FrameEtats extends AFrame
 {
+	private static final String    TITRE     = "Etats";
+	private static final Dimension DIMENSION = new Dimension ( 500, 420 );
+
 	private PanelEtats panel;
 	
 	/** Constructeur de FrameEtats
@@ -22,9 +27,9 @@ public class FrameEtats extends AFrame
 		
 		this.panel = new PanelEtats ( this.ctrl );
 		
-		this.setTitle              ( "Etats"    );
-		this.setSize               ( 500, 420   );
-		this.setLocationRelativeTo ( null       );
+		this.setTitle              ( TITRE     );
+		this.setSize               ( DIMENSION );
+		this.setLocationRelativeTo ( null      );
 		
 		this.add ( this.panel );
 

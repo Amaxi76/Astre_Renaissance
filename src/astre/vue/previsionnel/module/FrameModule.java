@@ -39,6 +39,9 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 	/*-------------*/
 	/*--Attributs--*/
 	/*-------------*/
+	
+	private static final String    TITRE     = "Prévisionnel : Module";
+	private static final Dimension DIMENSION = new Dimension ( 1500, 1000 );
 
 	private Controleur          ctrl;
 
@@ -65,7 +68,7 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 	 */
 	public FrameModule ( Controleur ctrl, FramePrevisionnel parent, String typeModule, int numSemestre, char action )
 	{
-		super ( parent, "Prévisionnel : Module", true ); //JDialog pour garder le focus sur la fenêtre
+		super ( parent, TITRE, true ); //JDialog pour garder le focus sur la fenêtre
 		
 		this.ctrl = ctrl;
 
@@ -78,8 +81,8 @@ public class FrameModule extends JDialog implements KeyListener //JDialog pour g
 			default          -> new String[] {}; //Cas en cas de type de module innexistant
 		};
 
-		this.setSize               ( 1500, 1000 );
-		this.setLocationRelativeTo ( parent     );
+		this.setSize               ( DIMENSION );
+		this.setLocationRelativeTo ( parent    );
 
 		/* ------------------------- */
 		/* Création des composants   */

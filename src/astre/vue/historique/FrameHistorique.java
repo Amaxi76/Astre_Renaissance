@@ -1,6 +1,7 @@
 package astre.vue.historique;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,9 @@ import astre.vue.outils.AFrame;
 
 public class FrameHistorique extends AFrame implements ActionListener
 {
+	private static final String    TITRE     = "Historique";
+	private static final Dimension DIMENSION = new Dimension ( 1000, 600 );
+
 	private PanelHistorique panel;
 	private JButton         btnRetour;
 	
@@ -27,10 +31,10 @@ public class FrameHistorique extends AFrame implements ActionListener
 	{
 		super ( ctrl );
 
-		this.setLayout             ( new BorderLayout ( 10, 10 ) );
-		this.setTitle              ( "Historique"                );
-		this.setSize               ( 1000, 600                   );
+		this.setTitle              ( TITRE                       );
+		this.setSize               ( DIMENSION                   );
 		this.setLocationRelativeTo ( null                        );
+		this.setLayout             ( new BorderLayout ( 10, 10 ) );
 		
 		this.panel     = new PanelHistorique ( this.ctrl );
 		this.btnRetour = new JButton         ( "Retour"  );
