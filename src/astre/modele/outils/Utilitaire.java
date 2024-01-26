@@ -137,6 +137,8 @@ public abstract class Utilitaire
 	 */
 	public static Object[][] formater ( Object[][] tableau, int indDeb, int indFin )
 	{
+		tableau = Utilitaire.copier ( tableau ); // copie profonde
+
 		int taille = indFin - indDeb + 1;
 		Object[][] tableauTmp = new Object[tableau.length][taille];
 
@@ -259,16 +261,16 @@ public abstract class Utilitaire
 		liste[ind2] = tmp;
 	}
 
-	//TODO: sur les méthodes typer, il n'y a peut être pas de copie profonde (le retour serait inutile)
-
 	/**
 	 * Permet de typer des objets d'un tableau en fonction du tableau de type passé en paramètres
 	 */
 	public static Object[][] typer ( Object[][] tableau, Class<?>[] types )
 	{
+		Object[][] tableauTmp = new Object[tableau.length][tableau[0].length];
+
 		for ( int cptLig = 0; cptLig < tableau.length; cptLig++ )
 		{
-			Utilitaire.typer ( tableau[cptLig], types );
+			tableauTmp[ cptLig] = Utilitaire.typer ( tableau[cptLig], types );
 		}
 
 		return tableau;
@@ -279,11 +281,13 @@ public abstract class Utilitaire
 	 */
 	public static Object[] typer ( Object[] liste, Class<?>[] types )
 	{
+		Object[] listeTmp = new Object[liste.length];
+
 		for ( int cpt = 0; cpt < liste.length; cpt++ )
 		{
 			if ( liste[cpt] != null )
 			{
-				liste[cpt] = types[cpt].cast ( liste[cpt] );
+				listeTmp[cpt] = types[cpt].cast ( liste[cpt] );
 			}
 		}
 
@@ -315,6 +319,8 @@ public abstract class Utilitaire
 	 */
 	public static Object[][] supprimerColonne ( Object[][] tableau, int index )
 	{
+		tableau = Utilitaire.copier ( tableau ); // copie profonde
+
 		Object[][] tableauTmp = new Object[tableau.length][tableau[0].length-1];
 
 		for ( int cptLig = 0; cptLig < tableau.length; cptLig++ )
