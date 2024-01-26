@@ -5,6 +5,7 @@
  * @date 11/12/2023
  */
 
+DELETE FROM astre.Annee       CASCADE;
 DELETE FROM astre.Intervient  CASCADE; 
 DELETE FROM astre.Horaire     CASCADE;
 DELETE FROM astre.ModuleIUT   CASCADE;

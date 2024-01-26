@@ -5,6 +5,7 @@
  * @date 06/12/2023 
  */
 
+--FIXME: est ce que cette table est vraiment utile ? et si oui, il faudrait la mettre en dehors du schma peut être ?
 CREATE TABLE astre.Annee
 (
 	idAnnee  SERIAL                                          ,
