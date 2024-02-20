@@ -6,6 +6,19 @@
  */
 
 
+-- Selectionner
+DROP FUNCTION IF EXISTS f_selectIdAnneeActuelle ( );
+CREATE OR REPLACE FUNCTION f_selectAnneeActuelle ( ) RETURNS TABLE ( idAnnee INTEGER ) AS
+$$
+BEGIN
+
+	RETURN QUERY
+		SELECT idAnnee
+		FROM   Annee
+		WHERE  actuelle = true;
+
+END;
+$$ LANGUAGE plpgsql;
 
 /*
 CE QUI EST DESSOUS A ETE COPIE COLLE DEPUIS L'ANCIEN FICHIER
@@ -14,8 +27,6 @@ FIXME: maj des paramètres (noms et nombre)
 FIXME: vérifier l'utilité de chaque fonction
 FIXME: factoriser ?
 */
-
-
 
 -- Sélection de tous les modules (vue particulière) d'un semestre
 DROP FUNCTION IF EXISTS f_selectModuleParSemestre ( numSemestre INTEGER );
