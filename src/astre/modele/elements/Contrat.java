@@ -8,6 +8,7 @@ package astre.modele.elements;
 
 public class Contrat
 {
+	private int    idAnnee;
 	private int    id;
 	private String nom;
 	private double heureServiceContrat;
@@ -15,14 +16,16 @@ public class Contrat
 	private double ratioTP;
 
 	/** Constructeur unique de contrat
+	 * @param idAnnee identifiant de l'année
 	 * @param id identifiant du contrat
 	 * @param nom nom du contrat
 	 * @param heureServiceContrat nombre d'heure de service du contrat
 	 * @param heureMaxContrat nombre d'heure maximum du contrat
 	 * @param ratioTP ratio TP du contrat
 	 */
-	private Contrat ( int id, String nom, double heureServiceContrat, double heureMaxContrat, double ratioTP )
-	{
+	private Contrat ( int idAnnee ,int id, String nom, double heureServiceContrat, double heureMaxContrat, double ratioTP )
+	{;
+		this.idAnnee             = idAnnee;
 		this.id                  = id;
 		this.nom                 = nom;
 		this.heureServiceContrat = heureServiceContrat;
@@ -41,28 +44,32 @@ public class Contrat
 	 */
 	public static Contrat creation ( Object[] contrat )
 	{
-		Object i   = contrat[0];
-		Object n   = contrat[1];
-		Object hsc = contrat[2];
-		Object hmc = contrat[3];
-		Object rt  = contrat[4];
+		Object idA = contrat[0];
+		Object i   = contrat[1];
+		Object n   = contrat[2];
+		Object hsc = contrat[3];
+		Object hmc = contrat[4];
+		Object rt  = contrat[5];
 
+		if ( ! ( idA instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant de l'année n'est pas du bon type"         );
 		if ( ! ( i   instanceof Integer ) ) throw new IllegalArgumentException ( "L'identifiant n'est pas du bon type"                    );
 		if ( ! ( n   instanceof String  ) ) throw new IllegalArgumentException ( "Le nom n'est pas du bon type"                           );
 		if ( ! ( hsc instanceof Number  ) ) throw new IllegalArgumentException ( "Le nombre d'heures de services ne sont pas du bon type" );
 		if ( ! ( hmc instanceof Number  ) ) throw new IllegalArgumentException ( "Le nombre d'heures max ne sont pas du bon type"         );
 		if ( ! ( rt  instanceof Number  ) ) throw new IllegalArgumentException ( "Le ratio TP n'est pas du bon type"                      );
 		
+		int    idAnnee             = ( int ) idA;
 		int    id                  = ( int ) i;
 		double heureServiceContrat = Double.parseDouble ( hsc.toString ( ) );
 		double heureMaxContrat     = Double.parseDouble ( hmc.toString ( ) );
 		String nom                 = n.toString ( );
 		double ratioTP             = Double.parseDouble ( rt.toString ( ) );
 
-		return Contrat.creation ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
+		return Contrat.creation ( idAnnee, id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
 	/** Fabrique de contrat prenant en paramètres toutes les données d'un contrat
+	 * @param idAnnee l'identifiant de l'année
 	 * @param id l'indentifiant du contrat
 	 * @param nom le nom du contrat
 	 * @param heureServiceContrat le nombre d'heure de service du contrat
@@ -70,8 +77,11 @@ public class Contrat
 	 * @param ratioTP le ratio TP du contrat
 	 * @return Le contrat en question
 	 */
-	public static Contrat creation ( int id, String nom, double heureServiceContrat, double heureMaxContrat, double ratioTP )
+	public static Contrat creation ( int idAnnee, int id, String nom, double heureServiceContrat, double heureMaxContrat, double ratioTP )
 	{
+		// Teste que l'identifiant de l'année est correct
+		if ( idAnnee < 0                           ) throw new IllegalArgumentException ( "L'identifiant de l'année est incorrect"                 );
+		
 		// Teste que l'identifiant est correct
 		if ( id < 0                                ) throw new IllegalArgumentException ( "L'identifiant est incorrect"                            );
 		
@@ -88,15 +98,20 @@ public class Contrat
 		if ( heureServiceContrat > heureMaxContrat ) throw new IllegalArgumentException ( "Les heures de services sont supérieur à ses heures max" );
 
 		// Coef TD
-		if ( ratioTP <= 0 )                          throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0"                       );
+		if ( ratioTP <= 0                          ) throw new IllegalArgumentException ( "Le coef TD ne peut pas être de 0"                       );
 		
-		return new Contrat ( id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
+		return new Contrat ( idAnnee, id, nom, heureServiceContrat, heureMaxContrat, ratioTP );
 	}
 
 
 	/*---------------------------------------*/
 	/*                GETTEUR                */
 	/*---------------------------------------*/
+
+	/** Retourne l'identifiant de l'année
+	 * @return L'identifiant de l'année
+	 */
+	public int    getIdAnnee             ( ) { return this.idAnnee;             }
 
 	/** Retourne l'identifiant d'un contrat
 	 * @return L'identifiant du contrat
@@ -128,6 +143,11 @@ public class Contrat
 	/*                SETTEUR                */
 	/*---------------------------------------*/
 
+	/** Permet de modifier l'identifiant de l'année
+	 * @param idAnnee l'identifiant de l'année
+	 */
+	public void setIdAnnee             ( int    idAnnee             ) { this.idAnnee             = idAnnee;             }
+
 	/** Permet de modifier l'ID
 	 * @param id l'ID
 	 */
@@ -154,7 +174,6 @@ public class Contrat
 	public void setRatioTP             ( double ratioTP             ) { this.ratioTP             = ratioTP;             }
 
 
-
 	/*---------------------------------------*/
 	/*                METHODES               */
 	/*---------------------------------------*/
@@ -170,7 +189,8 @@ public class Contrat
 
 		Contrat c = ( Contrat ) o;
 
-		return this.id                  == c.id                  &&
+		return this.idAnnee             == c.idAnnee             &&
+		       this.id                  == c.id                  &&
 		       this.nom.equals ( c.nom )                         &&
 		       this.heureServiceContrat == c.heureServiceContrat &&
 		       this.heureMaxContrat     == c.heureMaxContrat     &&
@@ -178,11 +198,11 @@ public class Contrat
 	}
 
 	/** Donne une description d'un contrat
-	 * @return
+	 * @return afffichage d'un contrat
 	 */
 	@Override
 	public String toString ( )
 	{
-		return String.format ( "Contrat%nNom                   : %-22s%nHeure service contrat : %,.2f%nHeure max contrat     : %,.2f%nRatio TP              : %,.2f", this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
+		return String.format ( "Année                 : %d%nID                    : %d%nNom                   : %s%nHeure service contrat : %,.2f%nHeure max contrat     : %,.2f%nRatio TP              : %,.2f", this.idAnnee, this.id, this.nom, this.heureServiceContrat, this.heureMaxContrat, this.ratioTP );
 	}
 }
